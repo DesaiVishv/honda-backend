@@ -17,7 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const { courseName,description,isActive, ctid, duration, timing, mode, documentRequired, validity, systemRequirement, certificate } = req.body;
+         const { image,description } = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -28,7 +28,7 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id || !courseName || !ctid || !isActive==null || !description || !duration || !timing || !mode || !documentRequired || !validity || !systemRequirement || !certificate) {
+         if (!id || !image || !description) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
@@ -41,7 +41,7 @@
  
          try {
  
-             let Item = await global.models.GLOBAL.COURSENAME.findById(id);
+             let Item = await global.models.GLOBAL.OVERVIEW.findById(id);
 
              if(!Item) {
                  const data4createResponseObject = {
@@ -53,9 +53,8 @@
                  };
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
-                const checkMenu = await global.models.GLOBAL.COURSENAME.find({courseName:courseName, ctid:ctid});
-                console.log("checkMEnu", checkMenu)
-                if(checkMenu.length==0){
+                const checkMenu = await global.models.GLOBAL.OVERVIEW.find({id});
+                if(checkMenu.length>0){
                     const data4createResponseObject = {
                         req: req,
                         result: -400,
@@ -63,24 +62,10 @@
                         payload: {},
                         logPayload: false
                     };
-                    console.log("im not found", checkMenu.length)
                     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                     return;
                 }
-                const Itemupdate = {
-                    courseName:courseName,
-                    description:description,
-                    isActive:isActive,
-                    ctid:ctid,
-                    duration: duration,
-                    timing: timing,
-                    mode: mode,
-                    documentRequired: documentRequired,
-                    validity: validity,
-                    systemRequirement: systemRequirement,
-                    certificate: certificate
-                }
-                Item = await global.models.GLOBAL.COURSENAME.update({_id:id},Itemupdate);
+                Item = await global.models.GLOBAL.MENU.update({_id:id},{$set:{image:image, description:description}});
                  const data4createResponseObject = {
                      req: req,
                      result: 0,

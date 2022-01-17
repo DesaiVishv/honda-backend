@@ -11,6 +11,8 @@ module.exports = exports = {
     // route validation
     validation: Joi.object({
         courseName: Joi.string().required(),
+        description: Joi.string().required(),
+        isActive: Joi.boolean().required(),
         ctid: Joi.string().required(),
         duration:Joi.string(),
         timing:Joi.string(),
@@ -23,7 +25,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { courseName, ctid,duration,timing,mode,documentRequired,validity,systemRequirement,certificate } = req.body;
+        const { courseName,description,isActive, ctid,duration,timing,mode,documentRequired,validity,systemRequirement,certificate } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -35,7 +37,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!courseName || !ctid) {
+        if (!courseName || !ctid || !description) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -62,6 +64,8 @@ module.exports = exports = {
             }
             let AmenintiesCreate = {
                courseName:courseName,
+               description:description,
+               isActive:isActive,
                ctid:ctid,
                duration:duration,
                timing:timing,

@@ -41,7 +41,7 @@ module.exports = exports = {
         .json(utils.createResponseObject(data4createResponseObject));
     }
     // phone = phone.removeSpaces();
-
+    const roleExist = await global.models.GLOBAL.ROLE.findOne({_id:role});
     // Find the phone no and code object and then delete it.
     let verificationEntry;
     try {
@@ -84,7 +84,9 @@ module.exports = exports = {
 
     // Check number of attempts and expiryTime
     const now = moment();
+  console.log("noe ", now);
     const expirationDate = moment(verificationEntry.expirationDate); // another date
+    console.log("expired Date", expirationDate);
     if (now.isAfter(expirationDate)) {
       let data4createResponseObject = {
         req: req,
@@ -172,6 +174,12 @@ module.exports = exports = {
 
       // Generate token and enter into the registration collection
       const uid = new ObjectId();
+      // const tokendata = {
+      //   phone: phone,
+      //   rolename: roleExist.roleName,
+      //   date: new Date(),
+      //   scope: "verification",
+      // }
       const payload = {
         _id: uid,
         email: email,
@@ -187,20 +195,21 @@ module.exports = exports = {
         },
         modificationDate: Date.now(),
         registractionDate: Date.now(),
-        scope: "verification",
+        // token: jwt.sign(data4token, jwtOptions.secretOrKey),
+        // token_type: "Bearer",
       };
       const newAdmin = global.models.GLOBAL.ADMIN(payload);
       logger.info("/verify-code - Saving registration-code in database");
       try {
         await newAdmin.save();
-        const data4createResponseObject = {
-          req: req,
-          result: 0,
-          message: messages.REGISTER_SUCCESS,
-          payload: payload,
-          logPayload: false
-      };
-      res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+      //   const data4createResponseObject = {
+      //     req: req,
+      //     result: 0,
+      //     message: messages.REGISTER_SUCCESS,
+      //     payload: payload,
+      //     logPayload: false
+      // };
+      // res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
       } catch (error) {
         logger.error(
           `/verify-code - rejoice Error encountered while saving registration-code: ${error.message}\n${error.stack}`
@@ -216,6 +225,47 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
           .json(utils.createResponseObject(data4createResponseObject));
       }
+      // User found - create JWT and return it
+      const data4token = {
+        // id: user._id,
+        // date: new Date(),
+        // environment: process.env.APP_ENVIRONMENT,
+        // phone: phone,
+        // email: user.email,
+        // scope: "login",
+        // roleId: user.role,
+        // rolename: user.role.roleName,
+
+
+        id: newAdmin._id,
+        date: new Date(),
+        environment: process.env.APP_ENVIRONMENT,
+        phone: phone,
+        scope: "login",
+        type: roleExist.roleName,
+        rolename: roleExist.roleName,
+      };
+      newAdmin.token = null;
+
+      const tokenadmin = {
+        user: newAdmin,
+        userExist: true,
+        verified: true,
+        token: jwt.sign(data4token, jwtOptions.secretOrKey),
+        token_type: "Bearer",
+      };
+      let data4createResponseObject = {
+        req: req,
+        result: 0,
+        message: messages.REGISTER_SUCCESS,
+        payload: tokenadmin,
+        logPayload: false,
+      };
+      // verificationEntry.delete();
+      // !delete verification entry [Prodcution]
+      return res
+        .status(enums.HTTP_CODES.OK)
+        .json(utils.createResponseObject(data4createResponseObject));
       // const datatoken = {
       //   id: user._id,
       //   date: new Date(),

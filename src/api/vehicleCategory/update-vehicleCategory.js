@@ -17,7 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const { vehicleType } = req.body;
+         const { vehicleType,description,isActive } = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -28,7 +28,7 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id || !vehicleType) {
+         if (!id || !vehicleType || !description || isActive==null ) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
@@ -54,7 +54,7 @@
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
                 const checkMenu = await global.models.GLOBAL.VEHICLECATEGORY.find({vehicleType:vehicleType});
-                if(checkMenu.length>0){
+                if(checkMenu.length==0){
                     const data4createResponseObject = {
                         req: req,
                         result: -400,
@@ -65,7 +65,8 @@
                     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                     return;
                 }
-                Item = await global.models.GLOBAL.VEHICLECATEGORY.update({_id:id},{$set:{ vehicleType:vehicleType}});
+                
+                Item = await global.models.GLOBAL.VEHICLECATEGORY.update({_id:id},{$set:{ vehicleType:vehicleType, description:description, isActive:isActive}});
                  const data4createResponseObject = {
                      req: req,
                      result: 0,

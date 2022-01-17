@@ -10,15 +10,13 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-        courseType: Joi.string().required(),
-        vcid: Joi.string().required(),
+        image: Joi.string().required(),
         description: Joi.string().required(),
-        isActive: Joi.boolean().required()
         // imagePath: Joi.string().allow("")
     }),
 
     handler: async (req, res) => {
-        const { courseType, vcid, description, isActive } = req.body;
+        const { image,description } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -30,7 +28,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!courseType || !vcid || !description ) {
+        if (!image || !description) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -43,7 +41,7 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.COURSETYPE.find({ courseType:courseType, vcid:vcid });
+            const checkMenu = await global.models.GLOBAL.OVERVIEW.find({ image:image });
             if (checkMenu.length > 0) {
                 const data4createResponseObject = {
                     req: req,
@@ -56,12 +54,10 @@ module.exports = exports = {
                 return;
             }
             let AmenintiesCreate = {
-               courseType:courseType,
-               vcid:vcid,
-               description:description,
-               isActive:isActive
+                image:image,
+                description:description
             };
-            const newAmeninties = await global.models.GLOBAL.COURSETYPE(AmenintiesCreate);
+            const newAmeninties = await global.models.GLOBAL.OVERVIEW(AmenintiesCreate);
             newAmeninties.save();
             const data4createResponseObject = {
                 req: req,

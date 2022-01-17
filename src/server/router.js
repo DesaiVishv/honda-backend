@@ -12,6 +12,7 @@ module.exports = (app, logger) => {
     const trainingDateRoute = require("../routes/trainingDate/index")
     const personalInformationRoute = require("../routes/Personal-Information/index")
     const documentRoute = require("../routes/DocumentUpload/index")
+    const overviewRoute = require("../routes/overView/index")
     const propertyRoute = require("../routes/property/index")
     const amenitiesRoute = require("../routes/amenities/index")
     const contactusRoute = require("../routes/contactus/index")
@@ -37,6 +38,8 @@ module.exports = (app, logger) => {
     app.use(["/api/v1/trainingDate"],  trainingDateRoute);
     app.use(["/api/v1/information"],  personalInformationRoute);
     app.use(["/api/v1/document"],  documentRoute);
+    app.use(["/api/v1/overview"],  overviewRoute);
+
     app.use(["/api/v1/amenities"],  amenitiesRoute);
     app.use(["/api/v1/property"],  propertyRoute);
     app.use(["/api/v1/contactus"],  contactusRoute);

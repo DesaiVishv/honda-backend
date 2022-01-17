@@ -11,11 +11,13 @@ module.exports = exports = {
     // route validation
     validation: Joi.object({
         vehicleType: Joi.string().required(),
+        description: Joi.string().required(),
+        isActive: Joi.boolean().required()
         // imagePath: Joi.string().allow("")
     }),
 
     handler: async (req, res) => {
-        const { vehicleType } = req.body;
+        const { vehicleType,description, isActive } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -53,7 +55,9 @@ module.exports = exports = {
                 return;
             }
             let AmenintiesCreate = {
-               vehicleType:vehicleType
+               vehicleType:vehicleType,
+               description:description,
+               isActive:isActive
             };
             const newAmeninties = await global.models.GLOBAL.VEHICLECATEGORY(AmenintiesCreate);
             newAmeninties.save();

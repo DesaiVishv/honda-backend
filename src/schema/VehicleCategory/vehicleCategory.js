@@ -6,6 +6,8 @@ module.exports = (connection) => {
     const vehicleCategorySchema = new mongoose.Schema({
         
         vehicleType:{ type: String, require:true },
+        description:{type:String, require:true},
+        isActive :{type:Boolean, default:false},
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
         createdBy: {

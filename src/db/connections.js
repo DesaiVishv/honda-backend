@@ -33,6 +33,8 @@ module.exports = async () => {
                     TRAININGDATE: require("../schema/TrainingDate/trainingDate")(connection_IN_HONDA),
                     PERSONALINFORMATION: require("../schema/Personal-Information/information")(connection_IN_HONDA),
                     DOCUMENT: require("../schema/DocumentUpload/documentUpload")(connection_IN_HONDA),
+                    OVERVIEW: require("../schema/overView/overview")(connection_IN_HONDA),
+                    
                     FILEMANAGER: require("../schema/FileManager/filemanager")(connection_IN_HONDA),
                     MENU: require("../schema/menu/menu")(connection_IN_HONDA),
                     SUBMENU: require("../schema/submenu/submenu")(connection_IN_HONDA),

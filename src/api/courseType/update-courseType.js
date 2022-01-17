@@ -17,7 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const { courseType, vcid } = req.body;
+         const { courseType, vcid,description, isActive } = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -28,7 +28,7 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id || !courseType || !vcid) {
+         if (!id || !courseType || !vcid || !description || isActive== null) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
@@ -54,7 +54,7 @@
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
                 const checkMenu = await global.models.GLOBAL.COURSETYPE.find({courseType:courseType, vcid:vcid});
-                if(checkMenu.length>0){
+                if(checkMenu.length==0){
                     const data4createResponseObject = {
                         req: req,
                         result: -400,
@@ -65,7 +65,7 @@
                     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                     return;
                 }
-                Item = await global.models.GLOBAL.COURSETYPE.update({_id:id},{$set:{ courseType:courseType, vcid:vcid}});
+                Item = await global.models.GLOBAL.COURSETYPE.update({_id:id},{$set:{ courseType:courseType, vcid:vcid, description:description, isActive:isActive}});
                  const data4createResponseObject = {
                      req: req,
                      result: 0,
