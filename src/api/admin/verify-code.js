@@ -2,23 +2,30 @@ const _ = require("lodash");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const moment = require("moment-timezone");
+const ObjectId = require("mongodb").ObjectId;
+
 const enums = require("../../../json/enums.json");
 const messages = require("../../../json/messages.json");
 const jwtOptions = require("../../auth/jwt-options");
 const logger = require("../../logger");
 const utils = require("../../utils");
+const role = require("../../routes/role");
+
 
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    code: Joi.string().required(),
-    // email: Joi.string().required(),
+    state: Joi.string().required(),
+    IDTRcenter: Joi.string().required(),
     phone: Joi.number().required(),
+    email: Joi.string().required(),
+    code: Joi.string().required(),
+    role: Joi.string().required()
   }),
 
   // route handler
   handler: async (req, res) => {
-    let { code, phone } = req.body;
+    let { code, phone,email,IDTRcenter,state,role } = req.body;
 
     if (phone.length === 0 || code.length === 0) {
       logger.error("/verify-code - Phone number and code cannot be empty!");
@@ -39,8 +46,9 @@ module.exports = exports = {
     let verificationEntry;
     try {
       verificationEntry = await global.models.GLOBAL.CODE_VERIFICATION.findOne({
-        phone:phone,
+        phone: phone,
       });
+      console.log("verification Entry", verificationEntry)
     } catch (error) {
       logger.error(
         `/verify-code - Error encountered while verifying phone: ${error.message}\n${error.stack}`
@@ -121,17 +129,26 @@ module.exports = exports = {
     if (user !== null) {
       // User found - create JWT and return it
       const data4token = {
+        // id: user._id,
+        // date: new Date(),
+        // environment: process.env.APP_ENVIRONMENT,
+        // phone: phone,
+        // email: user.email,
+        // scope: "login",
+        // roleId: user.role,
+        // rolename: user.role.roleName,
+
+
         id: user._id,
         date: new Date(),
         environment: process.env.APP_ENVIRONMENT,
         phone: phone,
-        email: user.email,
         scope: "login",
-        roleId: user.role,
-        rolename: user.role.roleName,
+        type: roleExist.roleName,
+        rolename: roleExist.roleName,
       };
       user.token = null;
-     
+
       const payload = {
         user: user,
         userExist: true,
@@ -142,7 +159,7 @@ module.exports = exports = {
       let data4createResponseObject = {
         req: req,
         result: 0,
-        message: "Code verified",
+        message: messages.LOGIN_SUCCESS,
         payload: payload,
         logPayload: false,
       };
@@ -152,24 +169,41 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.OK)
         .json(utils.createResponseObject(data4createResponseObject));
     } else {
+
       // Generate token and enter into the registration collection
+      const uid = new ObjectId();
       const payload = {
+        _id: uid,
+        email: email,
+        code:code,
+        state: state,
         phone: phone,
-        date: new Date(),
+        IDTRcenter: IDTRcenter,
+        role: ObjectId(role).toString(),
+
+        status: {
+          name: enums.USER_STATUS.ACTIVE,
+          modificationDate: Date.now().toString()
+        },
+        modificationDate: Date.now(),
+        registractionDate: Date.now(),
         scope: "verification",
       };
-      const token = jwt.sign(payload, jwtOptions.secretOrKey);
-      const entry = global.models.GLOBAL.CODE_REGISTRATION({
-        phone: phone,
-        code: token,
-        date: Date.now(),
-      });
+      const newAdmin = global.models.GLOBAL.ADMIN(payload);
       logger.info("/verify-code - Saving registration-code in database");
       try {
-        await entry.save();
+        await newAdmin.save();
+        const data4createResponseObject = {
+          req: req,
+          result: 0,
+          message: messages.REGISTER_SUCCESS,
+          payload: payload,
+          logPayload: false
+      };
+      res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
       } catch (error) {
         logger.error(
-          `/verify-code - Error encountered while saving registration-code: ${error.message}\n${error.stack}`
+          `/verify-code - rejoice Error encountered while saving registration-code: ${error.message}\n${error.stack}`
         );
         let data4createResponseObject = {
           req: req,
@@ -182,23 +216,46 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
           .json(utils.createResponseObject(data4createResponseObject));
       }
+      // const datatoken = {
+      //   id: user._id,
+      //   date: new Date(),
+      //   environment: process.env.APP_ENVIRONMENT,
+      //   phone: phone,
+      //   scope: "login",
+      //   type: roleExist.roleName,
+      //   rolename: roleExist.roleName,
+      //   // date: new Date(),
+      //   // scope: "verification",
+      // };
+      // const tokenLogin = {
+      //   user: user,
+      //   token: jwt.sign(datatoken, jwtOptions.secretOrKey),
+      //   token_type: "Bearer",
+      // }
+      // const token = jwt.sign(tokenLogin, jwtOptions.secretOrKey);
+      // const entry = global.models.GLOBAL.CODE_REGISTRATION({
+      //   phone: phone,
+      //   code: token,
+      //   date: Date.now(),
+      // });
       
-      let data4createResponseObject = {
-        req: req,
-        result: 0,
-        message: "Code verified",
-        payload: {
-          userExist: false,
-          verified: true,
-          token: token,
-          
-        },
-        logPayload: false,
-       
-      };
-      res
-        .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
+
+      // let data4createResponseObject = {
+      //   req: req,
+      //   result: 0,
+      //   message: "Code verified",
+      //   payload: {
+      //     userExist: false,
+      //     verified: true,
+      //     token: tokenLogin,
+
+      //   },
+      //   logPayload: false,
+
+      // };
+      // res
+      //   .status(enums.HTTP_CODES.OK)
+      //   .json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };

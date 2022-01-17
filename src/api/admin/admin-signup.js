@@ -20,6 +20,7 @@
          IDTRcenter:Joi.string().required(),
         phone:Joi.number().required(),
         email:Joi.string().required(),
+        code:Joi.string().required(),
         role:Joi.string().required()
      }),
  
@@ -27,7 +28,7 @@
      handler: async (req, res) => {
          let { state,IDTRcenter,email, phone, role } = req.body;
         //  console.log("password-----req", password)
-         if (!email || !state || !phone || !IDTRcenter || !role) {
+         if (!email || !state || !phone || !IDTRcenter || !code || !role) {
              logger.error(messages.FILL_DETAILS);
              const data4createResponseObject = {
                  req: req,
@@ -80,6 +81,8 @@
              res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              return;
          }
+         
+
          
          /* Save into mongodb */
          const uid = new ObjectId();
