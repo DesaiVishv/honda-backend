@@ -12,6 +12,7 @@ const resetPassword = require("./reset-Password")
 const deleteAdmin = require("./delete-admin")
 // const forgotPassword = require("./forgot-password")
 const afterforgotPassword = require("./after-forgot")
+const registration = require("./registration")
 const verifyCode = require("./verify-code")
 const verifyPhone = require("./verify-phone")
 const isAprove = require ("./isAprove")
@@ -32,6 +33,7 @@ module.exports = exports = {
      resetPassword,
      deleteAdmin,
      afterforgotPassword,
+     registration,
      verifyCode,
      verifyPhone,
      isAprove,

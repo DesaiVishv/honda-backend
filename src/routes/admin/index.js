@@ -20,7 +20,7 @@ router.get("/get-request", passport.authenticate(["jwt"], { session: false }), a
 router.post("/login", validate("body", adminApi.adminLogin.validation), adminApi.adminLogin.handler);
 
 // Signup
-router.post("/signup", validate("body", adminApi.adminSignup.validation), adminApi.adminSignup.handler);
+router.post("/signup", validate("body", adminApi.registration.validation), adminApi.registration.handler);
 router.put("/signup2/:id", validate("body", adminApi.signup2.validation), adminApi.signup2.handler);
 // Reset Password
 router.post("/reset", passport.authenticate(["jwt"], { session: false }), validate("body", adminApi.resetPassword.validation), adminApi.resetPassword.handler);
