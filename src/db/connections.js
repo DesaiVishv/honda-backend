@@ -34,6 +34,11 @@ module.exports = async () => {
                     PERSONALINFORMATION: require("../schema/Personal-Information/information")(connection_IN_HONDA),
                     DOCUMENT: require("../schema/DocumentUpload/documentUpload")(connection_IN_HONDA),
                     OVERVIEW: require("../schema/overView/overview")(connection_IN_HONDA),
+                    VISION: require("../schema/vision/vision")(connection_IN_HONDA),
+                    FACILITIES: require("../schema/facility/facility")(connection_IN_HONDA),
+                    GALLERY: require("../schema/Gallery/gallery")(connection_IN_HONDA),
+                    REGISTER: require("../schema/register/register")(connection_IN_HONDA),
+                    CMS: require("../schema/CMS/cms")(connection_IN_HONDA),
                     
                     FILEMANAGER: require("../schema/FileManager/filemanager")(connection_IN_HONDA),
                     MENU: require("../schema/menu/menu")(connection_IN_HONDA),

@@ -53,7 +53,7 @@
                  };
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
-                const checkMenu = await global.models.GLOBAL.COURSETYPE.find({courseType:courseType, vcid:vcid});
+                const checkMenu = await global.models.GLOBAL.COURSETYPE.find({id:id});
                 if(checkMenu.length==0){
                     const data4createResponseObject = {
                         req: req,

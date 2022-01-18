@@ -3,13 +3,11 @@ const mongoose = require("mongoose");
 // const enums = require("../../../json/enums.json");
 
 module.exports = (connection) => {
-    const courseTypeSchema = new mongoose.Schema({
+    const visionSchema = new mongoose.Schema({
         
-        courseType:{ type: String, require:true },
-        description:{type:String, require:true},
-        isActive :{type:Boolean, default:true},
-        vcid:{ type: mongoose.Schema.Types.ObjectId , require:true },
-
+        image:{ type: Array, default:null },
+        
+        description:{ type: String, require:true },
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
         createdBy: {
@@ -25,6 +23,6 @@ module.exports = (connection) => {
     });
 
     // return logsSchema;
-    return connection.model("courseType", courseTypeSchema, "courseType");
+    return connection.model("vision", visionSchema, "vision");
 };
 

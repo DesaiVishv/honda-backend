@@ -13,6 +13,13 @@ module.exports = (app, logger) => {
     const personalInformationRoute = require("../routes/Personal-Information/index")
     const documentRoute = require("../routes/DocumentUpload/index")
     const overviewRoute = require("../routes/overView/index")
+    const visionRoute = require("../routes/vision/index")
+    const facilityRoute = require("../routes/facility/index")
+    const galleryRoute = require("../routes/Gallery/index")
+    const registerRoute = require("../routes/register/index")
+    const cmsRoute = require("../routes/cms/index")
+
+
     const propertyRoute = require("../routes/property/index")
     const amenitiesRoute = require("../routes/amenities/index")
     const contactusRoute = require("../routes/contactus/index")
@@ -39,6 +46,11 @@ module.exports = (app, logger) => {
     app.use(["/api/v1/information"],  personalInformationRoute);
     app.use(["/api/v1/document"],  documentRoute);
     app.use(["/api/v1/overview"],  overviewRoute);
+    app.use(["/api/v1/vision"],  visionRoute);
+    app.use(["/api/v1/facility"],  facilityRoute);
+    app.use(["/api/v1/gallery"],  galleryRoute);
+    app.use(["/api/v1/register"],  registerRoute);
+    app.use(["/api/v1/cms"],  cmsRoute);
 
     app.use(["/api/v1/amenities"],  amenitiesRoute);
     app.use(["/api/v1/property"],  propertyRoute);

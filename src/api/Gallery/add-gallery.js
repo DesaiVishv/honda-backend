@@ -10,13 +10,15 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-        image: Joi.array().required(),
-        description: Joi.string().required(),
-        // imagePath: Joi.string().allow("")
+        infrastructure: Joi.array().required(),
+       trainingProgram:Joi.array().required(),
+       Technology:Joi.array().required(),
+       COVIDmeasures:Joi.array().required(),
+      Event:Joi.array().required(),
     }),
 
     handler: async (req, res) => {
-        const { image,description } = req.body;
+        const { infrastructure,trainingProgram,Technology,COVIDmeasures,Event } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -28,7 +30,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!image || !description) {
+        if (!infrastructure || !trainingProgram || !Technology || !COVIDmeasures || !Event) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -41,7 +43,7 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.OVERVIEW.find({ image:image });
+            const checkMenu = await global.models.GLOBAL.GALLERY.find({ infrastructure:infrastructure });
             if (checkMenu.length > 0) {
                 const data4createResponseObject = {
                     req: req,
@@ -54,10 +56,13 @@ module.exports = exports = {
                 return;
             }
             let AmenintiesCreate = {
-                image:image,
-                description:description
+                infrastructure:infrastructure,
+                trainingProgram:trainingProgram,
+                Technology:Technology,
+                COVIDmeasures:COVIDmeasures,
+                Event:Event
             };
-            const newAmeninties = await global.models.GLOBAL.OVERVIEW(AmenintiesCreate);
+            const newAmeninties = await global.models.GLOBAL.GALLERY(AmenintiesCreate);
             newAmeninties.save();
             const data4createResponseObject = {
                 req: req,
