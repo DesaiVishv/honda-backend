@@ -25,7 +25,6 @@ module.exports = (app, logger) => {
     const contactusRoute = require("../routes/contactus/index")
     const roleRoute = require("../routes/role/index")
     const menuRoute = require("../routes/menu/index")
-    const invoiceRoute = require("../routes/invoice/index")
     const filemanagerRoute = require("../routes/FileManager/index")
     const submenuRoute = require("../routes/submenu/index")
     const questionRoute = require("../routes/Question/index")
@@ -57,7 +56,6 @@ module.exports = (app, logger) => {
     app.use(["/api/v1/contactus"],  contactusRoute);
     app.use(["/api/v1/role"],  roleRoute);
     app.use(["/api/v1/menu"],  menuRoute);
-    app.use(["/api/v1/invoice"],  invoiceRoute);
     app.use(["/api/v1/filemanager"],  filemanagerRoute);
     app.use(["/api/v1/submenu"],  submenuRoute);
     app.use(["/api/v1/question"],  questionRoute);
