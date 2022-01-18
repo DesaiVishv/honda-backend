@@ -15,6 +15,8 @@ const role = require("../../routes/role");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
+    firstName: Joi.string().required(),
+        fatherName: Joi.string().required(),
     state: Joi.string().required(),
     IDTRcenter: Joi.string().required(),
     phone: Joi.number().required(),
@@ -25,7 +27,7 @@ module.exports = exports = {
 
   // route handler
   handler: async (req, res) => {
-    let { code, phone,email,IDTRcenter,state,role } = req.body;
+    let { firstName,fatherName,code, phone,email,IDTRcenter,state,role } = req.body;
 
     if (phone.length === 0 || code.length === 0) {
       logger.error("/verify-code - Phone number and code cannot be empty!");
@@ -182,6 +184,8 @@ module.exports = exports = {
       // }
       const payload = {
         _id: uid,
+        firstName:firstName,
+        fatherName:fatherName,
         email: email,
         code:code,
         state: state,
