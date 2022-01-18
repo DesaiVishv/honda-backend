@@ -10,7 +10,7 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-        date: Joi.string().required(),
+        date: Joi.date().required(),
         cnid:Joi.string().required()
         // imagePath: Joi.string().allow("")
     }),

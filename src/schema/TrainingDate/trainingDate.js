@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 module.exports = (connection) => {
     const trainingDateSchema = new mongoose.Schema({
         
-        date:{ type: String, require:true },
+        date:{ type: Date, require:true },
         
         cnid:{ type: mongoose.Schema.Types.ObjectId , require:true },
         createdAt: { type: Date, default: Date.now },

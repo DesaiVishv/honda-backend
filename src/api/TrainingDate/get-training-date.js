@@ -19,7 +19,7 @@ module.exports = exports = {
             let limit = parseInt(req.query.limit);
             let skip = (parseInt(req.query.page) - 1) * limit;
 
-            let ids=req.body.date;
+            let ids=req.query.date;
 
             
             let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'},date:{$in:ids}} : {date:{$in:ids}};
