@@ -20,15 +20,20 @@ module.exports = exports = {
             let skip = (parseInt(req.query.page) - 1) * limit;
 
             let ids=req.body.courseType;
-
+            let id = req.body.vehicleType;
 
             
             let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'},ctid:{$in:ids}} : {ctid:{$in:ids}};
+            const findvehicle = await global.models.GLOBAL.VEHICLECATEGORY.find({_id:{$in:id}})
+            console.log("findvehciel",findvehicle)
             const Menus = await global.models.GLOBAL.COURSETYPE.find({_id:{$in:ids}}).distinct("vcid");
+            console.log("menus",Menus)
             const subMenus = await global.models.GLOBAL.COURSETYPE.find({_id:{$in:ids}})
+            console.log("submenus",subMenus)
             const count = await global.models.GLOBAL.COURSENAME.find(search).count();
             const Questions = await global.models.GLOBAL.COURSENAME.find(search).skip(skip).limit(limit);
-            if(Questions.length==0){
+            console.log("Quesitons",Questions)
+            if(Questions.length==0 || findvehicle.length==0){
                 const data4createResponseObject = {
                     req: req,
                     result: -400,
@@ -43,7 +48,7 @@ module.exports = exports = {
                 req: req,
                 result: 0,
                 message: messages.SUCCESS,
-                payload: { Question:Questions,Menu:Menus,subMenu:subMenus ,count:count},
+                payload: { courseName:Questions,vehicleType:Menus,courseType:subMenus,findvehicle:findvehicle ,count:count},
                 logPayload: false
             };
             res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
