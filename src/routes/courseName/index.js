@@ -16,6 +16,9 @@ router.post("/addCourseName", passport.authenticate(["jwt"], { session: false })
 // // Put Methods
 router.put("/updateCourseName/:id", passport.authenticate(["jwt"], { session: false }), courseNameApi.updateCourseName.handler);
 
+router.put("/updateStaus/:id", passport.authenticate(["jwt"], { session: false }), courseNameApi.updateStatus.handler);
+
+
 // // Delete Methods
 router.delete("/deleteCourseName/:id", passport.authenticate(["jwt"], { session: false }), courseNameApi.deleteCourseName.handler);
 
