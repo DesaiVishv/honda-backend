@@ -20,44 +20,44 @@ module.exports = exports = {
     // const locale = utils.getLocale(req);
     let entry;
     // If codes already exists for this phone number in the database delete them
-    // let findUser = await global.models.GLOBAL.ADMIN.findOne({
-    //   phone: { $eq: phone },
-    // });
-    // console.log("PHONE--->>", findUser);
-    // try {
-    //   if (toString(findUser.phone) === toString(phone)) {
-    //     if (!phone) {
-    //       let data4createResponseObject = {
-    //         req: req,
-    //         result: -1,
-    //         message: messages.INVALID_PARAMETERS,
-    //         payload: {},
-    //         logPayload: false,
-    //       };
-    //       return res
-    //         .status(enums.HTTP_CODES.BAD_REQUEST)
-    //         .json(utils.createResponseObject(data4createResponseObject));
-    //     } else {
-    //       await global.models.GLOBAL.CODE_VERIFICATION.deleteMany({
-    //         phone: phone,
-    //       });
-    //     }
-    //   }
-    // } catch (error) {
-    //   logger.error(
-    //     `${req.originalUrl} - Error while deleting the old codes from the database: ${error.message}\n${error.stack}`
-    //   );
-    //   let data4createResponseObject = {
-    //     req: req,
-    //     result: -1,
-    //     message: messages.FAILED_VERIFICATION,
-    //     payload: {},
-    //     logPayload: false,
-    //   };
-    //   return res
-    //     .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-    //     .json(utils.createResponseObject(data4createResponseObject));
-    // }
+    let findUser = await global.models.GLOBAL.ADMIN.findOne({
+      phone: { $eq: phone },
+    });
+    console.log("PHONE--->>", findUser);
+    try {
+      
+        if (!phone) {
+          let data4createResponseObject = {
+            req: req,
+            result: -1,
+            message: messages.INVALID_PARAMETERS,
+            payload: {},
+            logPayload: false,
+          };
+          return res
+            .status(enums.HTTP_CODES.BAD_REQUEST)
+            .json(utils.createResponseObject(data4createResponseObject));
+        } else {
+          await global.models.GLOBAL.CODE_VERIFICATION.deleteMany({
+            phone: phone,
+          });
+        }
+      
+    } catch (error) {
+      logger.error(
+        `${req.originalUrl} - Error while deleting the old codes from the database: ${error.message}\n${error.stack}`
+      );
+      let data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.FAILED_VERIFICATION,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
 
     // When USE_TEST_PIN is true (config.json)
 

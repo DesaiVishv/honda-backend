@@ -12,7 +12,7 @@ module.exports = exports = {
   validation: Joi.object({
     code: Joi.string().required(),
     // email: Joi.string().required(),
-    phone: Joi.string().required(),
+    phone: Joi.number().required(),
   }),
   // route handler
   handler: async (req, res) => {
@@ -30,8 +30,9 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.BAD_REQUEST)
         .json(utils.createResponseObject(data4createResponseObject));
     }
-    phone = phone.removeSpaces();
+    // const phone = phone.removeSpaces();
     // Find the phone no and code object and then delete it.
+    const roleExist = await global.models.GLOBAL.ROLE.findOne({roleName:"superadmin"});
     let verificationEntry;
     try {
       verificationEntry = await global.models.GLOBAL.CODE_VERIFICATION.findOne({
@@ -70,7 +71,9 @@ module.exports = exports = {
     }
     // Check number of attempts and expiryTime
     const now = moment();
+    console.log("now", now);
     const expirationDate = moment(verificationEntry.expirationDate); // another date
+    console.log("expired Date", expirationDate);
     if (now.isAfter(expirationDate)) {
       let data4createResponseObject = {
         req: req,
@@ -102,7 +105,7 @@ module.exports = exports = {
       `/verify-code - SMS verification for USER (phone: ${phone}) successful!`
     );
     // Find the phone no in user data if it exists or not.
-    let user = await global.models.GLOBAL.USER.findOne({
+    let user = await global.models.GLOBAL.ADMIN.findOne({
       phone: phone,
     }).populate({
       path: "role",
@@ -112,26 +115,35 @@ module.exports = exports = {
     if (user !== null) {
       // User found - create JWT and return it
       const data4token = {
+        // id: user._id,
+        // date: new Date(),
+        // environment: process.env.APP_ENVIRONMENT,
+        // phone: phone,
+        // email: user.email,
+        // scope: "login",
+        // roleId: user.role,
+        // rolename: user.role.roleName,
         id: user._id,
         date: new Date(),
         environment: process.env.APP_ENVIRONMENT,
         phone: phone,
-        email: user.email,
         scope: "login",
-        roleId: user.role,
-        rolename: user.role.roleName,
+        type: roleExist.roleName,
+        rolename: roleExist.roleName,
+
+
       };
       user.token = null;
-      let findNavigation = await global.models.GLOBAL.NAVIGATION.find({
-        roleId: user.role._id
-      });
+    //   let findNavigation = await global.models.GLOBAL.NAVIGATION.find({
+    //     roleId: user.role._id
+    //   });
       const payload = {
         user: user,
         userExist: true,
         verified: true,
         token: jwt.sign(data4token, jwtOptions.secretOrKey),
         token_type: "Bearer",
-        Navigation: findNavigation
+        // Navigation: findNavigation
       };
       let data4createResponseObject = {
         req: req,
