@@ -53,18 +53,19 @@
                  };
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
-                const checkMenu = await global.models.GLOBAL.VEHICLECATEGORY.find({vehicleCategory:vehicleCategory});
-                if(checkMenu.length==0){
-                    const data4createResponseObject = {
-                        req: req,
-                        result: -400,
-                        message: messages.NOT_FOUND,
-                        payload: {},
-                        logPayload: false
-                    };
-                    res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-                    return;
-                }
+                // const checkMenu = await global.models.GLOBAL.VEHICLECATEGORY.find({vehicleCategory:vehicleCategory});
+                // console.log("checkMenu", checkMenu)
+                // if(checkMenu.length==0){
+                //     const data4createResponseObject = {
+                //         req: req,
+                //         result: -400,
+                //         message: messages.NOT_FOUND,
+                //         payload: {},
+                //         logPayload: false
+                //     };
+                //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+                //     return;
+                // }
                 
                 Item = await global.models.GLOBAL.VEHICLECATEGORY.update({_id:id},{$set:{ vehicleCategory:vehicleCategory, description:description, isActive:isActive}});
                  const data4createResponseObject = {
