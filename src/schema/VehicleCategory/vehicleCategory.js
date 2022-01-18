@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 module.exports = (connection) => {
     const vehicleCategorySchema = new mongoose.Schema({
         
-        vehicleType:{ type: String, require:true },
+        vehicleCategory:{ type: String, require:true },
         description:{type:String, require:true},
         isActive :{type:Boolean, default:false},
         createdAt: { type: Date, default: Date.now },

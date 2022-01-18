@@ -10,14 +10,14 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-        vehicleType: Joi.string().required(),
+        vehicleCategory: Joi.string().required(),
         description: Joi.string().required(),
         isActive: Joi.boolean().required()
         // imagePath: Joi.string().allow("")
     }),
 
     handler: async (req, res) => {
-        const { vehicleType,description, isActive } = req.body;
+        const { vehicleCategory,description, isActive } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -29,7 +29,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!vehicleType) {
+        if (!vehicleCategory) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -42,7 +42,7 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.VEHICLECATEGORY.find({ vehicleType:vehicleType });
+            const checkMenu = await global.models.GLOBAL.VEHICLECATEGORY.find({ vehicleCategory:vehicleCategory });
             if (checkMenu.length > 0) {
                 const data4createResponseObject = {
                     req: req,
@@ -55,7 +55,7 @@ module.exports = exports = {
                 return;
             }
             let AmenintiesCreate = {
-               vehicleType:vehicleType,
+                vehicleCategory:vehicleCategory,
                description:description,
                isActive:isActive
             };
