@@ -2,6 +2,7 @@ const addCourseType = require("./add-couseType");
 const getAllCourseType = require("./get-all-courseType");
 const getCoursetypeByVehiclecategory = require("./get-coursetype-by-vehiclecategory");
 const updateCourseType = require("./update-courseType");
+const updateStatus = require("./update-status")
 const deleteCourseType = require("./delete-courseType");
 
 
@@ -10,6 +11,7 @@ const deleteCourseType = require("./delete-courseType");
     getAllCourseType,
     getCoursetypeByVehiclecategory,
     updateCourseType,
+    updateStatus,
     deleteCourseType
  
 }

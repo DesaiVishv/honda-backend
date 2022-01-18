@@ -2,6 +2,7 @@ const addCourseName = require("./add-courseName");
 const getAllCourseName = require("./get-all-courseName");
 const getCoursenameByCoursetype = require("./get-coursename-by-coursetype")
 const updateCourseName = require("./update-courseName");
+const  updateStatus = require("./updateStatus")
 const deleteCourseName = require("./delete-courseName");
 
 
@@ -10,6 +11,7 @@ const deleteCourseName = require("./delete-courseName");
     getAllCourseName,
     getCoursenameByCoursetype,
     updateCourseName,
+    updateStatus,
     deleteCourseName
  
 }
