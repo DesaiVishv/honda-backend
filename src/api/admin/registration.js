@@ -20,7 +20,7 @@ module.exports = exports = {
     state: Joi.string().required(),
     IDTRcenter: Joi.string().required(),
     phone: Joi.number().required(),
-    email: Joi.string().required(),
+    email: Joi.string(),
     code: Joi.string().required(),
     role: Joi.string().required()
   }),
