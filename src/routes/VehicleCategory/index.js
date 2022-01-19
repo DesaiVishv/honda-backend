@@ -14,7 +14,7 @@ router.post("/addVehicleCategory", passport.authenticate(["jwt"], { session: fal
 // // Put Methods
 router.put("/updateVehicleCategory/:id", passport.authenticate(["jwt"], { session: false }), vehicleCategoryApi.updateVehicleCategory.handler);
 
-router.put("/updateStaus/:id", passport.authenticate(["jwt"], { session: false }), vehicleCategoryApi.updateStatus.handler);
+router.put("/updateStatus/:id", passport.authenticate(["jwt"], { session: false }), vehicleCategoryApi.updateStatus.handler);
 
 
 // // Delete Methods

@@ -11,14 +11,14 @@ module.exports = exports = {
     // route validation
     validation: Joi.object({
         courseType: Joi.string().required(),
-        vcid: Joi.string().required(),
+        vcid: Joi.string(),
         description: Joi.string().required(),
         isActive: Joi.boolean().required()
         // imagePath: Joi.string().allow("")
     }),
 
     handler: async (req, res) => {
-        const { courseType, vcid, description, isActive } = req.body;
+        const { courseType, description, isActive } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -30,7 +30,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!courseType || !vcid || !description ) {
+        if (!courseType ||  !description ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -43,7 +43,7 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.COURSETYPE.find({ courseType:courseType, vcid:vcid });
+            const checkMenu = await global.models.GLOBAL.COURSETYPE.find({ courseType:courseType});
             if (checkMenu.length > 0) {
                 const data4createResponseObject = {
                     req: req,
@@ -57,7 +57,7 @@ module.exports = exports = {
             }
             let AmenintiesCreate = {
                courseType:courseType,
-               vcid:vcid,
+            
                description:description,
                isActive:isActive
             };

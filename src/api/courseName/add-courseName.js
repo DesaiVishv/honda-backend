@@ -13,7 +13,7 @@ module.exports = exports = {
         courseName: Joi.string().required(),
         description: Joi.string().required(),
         isActive: Joi.boolean().required(),
-        ctid: Joi.string().required(),
+        ctid: Joi.string(),
         duration:Joi.string(),
         timing:Joi.string(),
         mode:Joi.string(),
@@ -25,7 +25,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { courseName,description,isActive, ctid,duration,timing,mode,documentRequired,validity,systemRequirement,certificate } = req.body;
+        const { courseName,description,isActive,duration,timing,mode,documentRequired,validity,systemRequirement,certificate } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -37,7 +37,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!courseName || !ctid || !description) {
+        if (!courseName || !description) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -50,7 +50,7 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.COURSENAME.find({ courseName:courseName, ctid:ctid });
+            const checkMenu = await global.models.GLOBAL.COURSENAME.find({ courseName:courseName });
             if (checkMenu.length > 0) {
                 const data4createResponseObject = {
                     req: req,
@@ -66,7 +66,7 @@ module.exports = exports = {
                courseName:courseName,
                description:description,
                isActive:isActive,
-               ctid:ctid,
+              
                duration:duration,
                timing:timing,
                mode:mode,

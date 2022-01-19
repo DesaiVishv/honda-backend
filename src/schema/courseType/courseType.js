@@ -8,7 +8,7 @@ module.exports = (connection) => {
         courseType:{ type: String, require:true },
         description:{type:String, require:true},
         isActive :{type:Boolean, default:false},
-        vcid:{ type: mongoose.Schema.Types.ObjectId , require:true },
+        vcid:{ type: mongoose.Schema.Types.ObjectId},
 
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
