@@ -13,6 +13,7 @@ module.exports = exports = {
         vcid:Joi.string().required(),
         ctid:Joi.string().required(),
         cnid:Joi.string().required(),
+        lcid:Joi.string().required(),
         fname:Joi.string().required(),
         mname:Joi.string().required(),
         lname:Joi.string().required(),
@@ -30,14 +31,17 @@ module.exports = exports = {
         issueDate:Joi.date().required(),
         validTill:Joi.date().required(),
         Authority:Joi.string().required(),
-        uploadPhoto:Joi.array().required(),
-        uploadLMV:Joi.array().required(),
+        passportPhoto:Joi.array().required(),
+        drivingLicense:Joi.array().required(),
+        IDproof:Joi.array().required(),
+        medicalCertificate:Joi.array().required(),
+        bloodGroup:Joi.string().required(),
         paymentId:Joi.string()
 
     }),
 
     handler: async (req, res) => {
-        const { vcid,ctid,cnid,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,permanentDLnumber,issueDate,validTill,Authority,uploadLMV,uploadPhoto,paymentId } = req.body;
+        const { vcid,ctid,cnid,lcid,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,permanentDLnumber,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -49,7 +53,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!vcid || !ctid || !cnid || !phone || !permanentDLnumber || !uploadLMV || !uploadPhoto || !issueDate || !validTill ) {
+        if (!vcid || !ctid || !cnid || !lcid || !phone || !permanentDLnumber || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -78,6 +82,7 @@ module.exports = exports = {
                 vcid:vcid,
                 ctid:ctid,
                 cnid:cnid,
+                lcid:lcid,
                 fname:fname,
                 mname:mname,
                 lname:lname,
@@ -95,8 +100,11 @@ module.exports = exports = {
                 issueDate:issueDate,
                 validTill:validTill,
                 Authority:Authority,
-                uploadPhoto:uploadPhoto,
-                uploadLMV:uploadLMV,
+                passportPhoto:passportPhoto,
+                drivingLicense:drivingLicense,
+                IDproof:IDproof,
+                medicalCertificate:medicalCertificate,
+                bloodGroup:bloodGroup,
                 paymentId:paymentId
             };
             const newAmeninties = await global.models.GLOBAL.REGISTER(AmenintiesCreate);

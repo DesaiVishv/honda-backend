@@ -27,6 +27,7 @@ module.exports = async () => {
                     ADMIN: require("../schema/admin/admin")(connection_IN_HONDA),
                     USER: require("../schema/user/user")(connection_IN_HONDA),
                     VEHICLECATEGORY: require("../schema/VehicleCategory/vehicleCategory")(connection_IN_HONDA),
+                    LICENSECATEGORY: require("../schema/licenseCategory/licenseCategory")(connection_IN_HONDA),
                     COURSETYPE: require("../schema/courseType/courseType")(connection_IN_HONDA),
                     COURSENAME: require("../schema/courseName/courseName")(connection_IN_HONDA),
                     TRAININGDATE: require("../schema/TrainingDate/trainingDate")(connection_IN_HONDA),

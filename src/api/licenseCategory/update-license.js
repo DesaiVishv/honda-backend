@@ -17,7 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const { vcid,ctid,cnid,lcid,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,permanentDLnumber,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
+         const { licenseCategory,description,isActive } = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -28,7 +28,7 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id || !vcid || !ctid || !cnid || !lcid || !phone || !permanentDLnumber || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill) {
+         if (!id || !licenseCategory || !description ) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
@@ -41,7 +41,7 @@
  
          try {
  
-             let Item = await global.models.GLOBAL.REGISTER.findById(id);
+             let Item = await global.models.GLOBAL.LICENSECATEGORY.findById(id);
 
              if(!Item) {
                  const data4createResponseObject = {
@@ -53,48 +53,21 @@
                  };
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
-                const checkMenu = await global.models.GLOBAL.REGISTER.find({id});
-                if(checkMenu.length>0){
-                    const data4createResponseObject = {
-                        req: req,
-                        result: -400,
-                        message: messages.NOT_FOUND,
-                        payload: {},
-                        logPayload: false
-                    };
-                    res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-                    return;
-                }
-                Itemupdate = {
-                    vcid:vcid,
-                    ctid:ctid,
-                    cnid:cnid,
-                    lcid:lcid,
-                    fname:fname,
-                    mname:mname,
-                    lname:lname,
-                    DoB:DoB,
-                    qualification:qualification,
-                    gender:gender,
-                    address:address,
-                    state:state,
-                    city:city,
-                    district:district,
-                    email:email,
-                    phone:phone,
-                    pincode:pincode,
-                    permanentDLnumber:permanentDLnumber,
-                    issueDate:issueDate,
-                    validTill:validTill,
-                    Authority:Authority,
-                    passportPhoto:passportPhoto,
-                    drivingLicense:drivingLicense,
-                    IDproof:IDproof,
-                    medicalCertificate:medicalCertificate,
-                    bloodGroup:bloodGroup,
-                    paymentId:paymentId
-                }
-                Item = await global.models.GLOBAL.REGISTER.update({_id:id},Itemupdate);
+                // const checkMenu = await global.models.GLOBAL.VEHICLECATEGORY.find({vehicleCategory:vehicleCategory});
+                // console.log("checkMenu", checkMenu)
+                // if(checkMenu.length==0){
+                //     const data4createResponseObject = {
+                //         req: req,
+                //         result: -400,
+                //         message: messages.NOT_FOUND,
+                //         payload: {},
+                //         logPayload: false
+                //     };
+                //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+                //     return;
+                // }
+                
+                Item = await global.models.GLOBAL.LICENSECATEGORY.update({_id:id},{$set:{ licenseCategory:licenseCategory, description:description, isActive:isActive}});
                  const data4createResponseObject = {
                      req: req,
                      result: 0,

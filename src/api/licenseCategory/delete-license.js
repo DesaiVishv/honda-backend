@@ -17,7 +17,6 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const { vcid,ctid,cnid,lcid,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,permanentDLnumber,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -28,11 +27,11 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id || !vcid || !ctid || !cnid || !lcid || !phone || !permanentDLnumber || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill) {
+         if (!id) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
-                 message: messages.FILL_DETAILS,
+                 message: messages.INVALID_PARAMETERS,
                  payload: {},
                  logPayload: false
              };
@@ -41,9 +40,8 @@
  
          try {
  
-             let Item = await global.models.GLOBAL.REGISTER.findById(id);
-
-             if(!Item) {
+             const deletedItem = await global.models.GLOBAL.LICENSECATEGORY.findByIdAndRemove(id);
+             if(!deletedItem) {
                  const data4createResponseObject = {
                      req: req,
                      result: 0,
@@ -53,52 +51,10 @@
                  };
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
-                const checkMenu = await global.models.GLOBAL.REGISTER.find({id});
-                if(checkMenu.length>0){
-                    const data4createResponseObject = {
-                        req: req,
-                        result: -400,
-                        message: messages.NOT_FOUND,
-                        payload: {},
-                        logPayload: false
-                    };
-                    res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-                    return;
-                }
-                Itemupdate = {
-                    vcid:vcid,
-                    ctid:ctid,
-                    cnid:cnid,
-                    lcid:lcid,
-                    fname:fname,
-                    mname:mname,
-                    lname:lname,
-                    DoB:DoB,
-                    qualification:qualification,
-                    gender:gender,
-                    address:address,
-                    state:state,
-                    city:city,
-                    district:district,
-                    email:email,
-                    phone:phone,
-                    pincode:pincode,
-                    permanentDLnumber:permanentDLnumber,
-                    issueDate:issueDate,
-                    validTill:validTill,
-                    Authority:Authority,
-                    passportPhoto:passportPhoto,
-                    drivingLicense:drivingLicense,
-                    IDproof:IDproof,
-                    medicalCertificate:medicalCertificate,
-                    bloodGroup:bloodGroup,
-                    paymentId:paymentId
-                }
-                Item = await global.models.GLOBAL.REGISTER.update({_id:id},Itemupdate);
                  const data4createResponseObject = {
                      req: req,
                      result: 0,
-                     message: messages.ITEM_UPDATED,
+                     message: messages.ITEM_DELETED,
                      payload: {},
                      logPayload: false
                  };
