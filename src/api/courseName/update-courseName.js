@@ -18,7 +18,7 @@
          const { id } = req.params;
          console.log("Hii")
          const { user } = req;
-         const { courseName,description,isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate,ctid} = req.body;
+         const { courseName,description,isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate,ctid,price} = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -29,7 +29,7 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id || !courseName  || !isActive==null ) {
+         if (!id || !courseName  || !isActive==null || !price) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
@@ -73,6 +73,7 @@
                     description:description,
                     isActive:isActive,
                    ctid:ctid,
+                   price:price,
                     duration: duration,
                     timing: timing,
                     mode: mode,

@@ -21,12 +21,12 @@ module.exports = exports = {
         validity: Joi.string(),
         systemRequirement: Joi.string(),
         certificate: Joi.string(),
-        // price:Joi.number().required()
+        price:Joi.number().required()
         // imagePath: Joi.string().allow("")
     }),
 
     handler: async (req, res) => {
-        const { courseName, description, isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate, ctid } = req.body;
+        const { courseName, description, isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate, price,ctid } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -38,7 +38,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!courseName || !description) {
+        if (!courseName || !description || !price) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -84,6 +84,7 @@ module.exports = exports = {
                 description: description,
                 isActive: isActive,
                 ctid: ctid,
+                price:price,
                 duration: duration,
                 timing: timing,
                 mode: mode,
