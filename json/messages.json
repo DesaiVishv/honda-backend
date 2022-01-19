@@ -93,6 +93,7 @@
     "SUBSCRIPTION_CREATED":"Subscriprion created sucessfully",
     "SUCCESS": "Success",
     "SUCCESS_PAYMENT": "Payment Successfully",
+    "PAYMENT_FAILED":"Payment Failed",
     "REFUND_INITIATED": "Refund of your amount is initiated Successfully",
     "INITIATION_SUCCESS": "Chats initiated successfully",
     "SUPPORT_TICKET_CREATED":"New support ticket genrated and Via email and support Center We will get back to you within 24 hours",

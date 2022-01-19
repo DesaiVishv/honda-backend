@@ -18,7 +18,7 @@
          const { id } = req.params;
          console.log("Hii")
          const { user } = req;
-         const { courseName,description,isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate } = req.body;
+         const { courseName,description,isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate} = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -41,9 +41,9 @@
          }
  
          try {
- console.log("yes")
+
              let Item = await global.models.GLOBAL.COURSENAME.findById(id);
-console.log("joonnnnnnnnnnnn",Item)
+
              if(!Item) {
                  const data4createResponseObject = {
                      req: req,

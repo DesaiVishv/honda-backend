@@ -4,24 +4,11 @@ const mongoose = require("mongoose");
 
 module.exports = (connection) => {
     const paymentSchema = new mongoose.Schema({
-        Aid: {
-            type: mongoose.Schema.Types.ObjectId,
-            // required: true,
-            ref: "Admin",
-        },
+        
         PaymentId: {
             type: Object,
             required: false,
             default: null
-        },
-        menus: [mongoose.Schema.Types.ObjectId],
-        email: {
-            type: String,
-            required: true,
-        },
-        paymentAmount: {
-            type: String,
-            required: true,
         },
         created: {
             type: Date,

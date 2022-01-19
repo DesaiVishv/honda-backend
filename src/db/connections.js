@@ -47,7 +47,6 @@ module.exports = async () => {
                     RESPONSE: require("../schema/Response/response")(connection_IN_HONDA),
                     PAYMENT: require("../schema/payment/payment")(connection_IN_HONDA),
                     PAYMENTREFUND: require("../schema/payment-refund/paymentRefund")(connection_IN_HONDA),
-                    PURCHASEHISTORY: require("../schema/PurchaseHistory/purchasehistory")(connection_IN_HONDA),
                     AMENITIES: require("../schema/amenities/amenities")(connection_IN_HONDA),
                     PROPERTY: require("../schema/property/property")(connection_IN_HONDA),
                     CONTACTUS: require("../schema/contactus/contactus")(connection_IN_HONDA),

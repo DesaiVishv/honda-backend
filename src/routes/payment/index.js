@@ -8,8 +8,7 @@ const { validate } = require("../../middlewares");
 const passport = require("passport");
 
 
-router.post("/pay", passport.authenticate(["jwt"], { session: false }), paymentCtrl.pay);
-router.post("/confirmPayment", passport.authenticate(["jwt"], { session: false }), paymentCtrl.confirmPayment);
+router.put("/pay", paymentCtrl.pay);
 // router.post("/pay-product", auth, paymentCtrl.payProduct);
 // router.post("/donate", auth, paymentCtrl.Donate);
 // router.post("/confirmDonation", auth, paymentCtrl.confirmDonation);

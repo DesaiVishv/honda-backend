@@ -21,6 +21,7 @@ module.exports = exports = {
         validity:Joi.string(),
         systemRequirement: Joi.string(),
         certificate:Joi.string(),
+        // price:Joi.number().required()
         // imagePath: Joi.string().allow("")
     }),
 
@@ -37,7 +38,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!courseName || !description) {
+        if (!courseName || !description ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
