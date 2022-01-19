@@ -14,19 +14,19 @@ module.exports = exports = {
         description: Joi.string().required(),
         isActive: Joi.boolean().required(),
         ctid: Joi.string(),
-        duration:Joi.string(),
-        timing:Joi.string(),
-        mode:Joi.string(),
-        documentRequired:Joi.string(),
-        validity:Joi.string(),
+        duration: Joi.string(),
+        timing: Joi.string(),
+        mode: Joi.string(),
+        documentRequired: Joi.string(),
+        validity: Joi.string(),
         systemRequirement: Joi.string(),
-        certificate:Joi.string(),
+        certificate: Joi.string(),
         // price:Joi.number().required()
         // imagePath: Joi.string().allow("")
     }),
 
     handler: async (req, res) => {
-        const { courseName,description,isActive,duration,timing,mode,documentRequired,validity,systemRequirement,certificate,ctid } = req.body;
+        const { courseName, description, isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate, ctid } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -38,7 +38,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!courseName || !description ) {
+        if (!courseName || !description) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -50,8 +50,24 @@ module.exports = exports = {
         }
 
         try {
-
-            const checkMenu = await global.models.GLOBAL.COURSENAME.find({ courseName:courseName });
+            // const findCoursetype = await global.models.GLOBAL.COURSETYPE.findById({ _id: ctid }).populate({
+            //     path: "_id",
+            //     model: "courseType",
+            //     select:"_id"
+            // })
+            // console.log("findCoursetype",findCoursetype)
+            // if(!findCoursetype){
+            //     const data4createResponseObject = {
+            //         req: req,
+            //         result: -400,
+            //         message: messages.NOT_FOUND,
+            //         payload: {},
+            //         logPayload: false
+            //     };
+            //     res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+            //     return;
+            // }
+            const checkMenu = await global.models.GLOBAL.COURSENAME.find({ courseName: courseName });
             if (checkMenu.length > 0) {
                 const data4createResponseObject = {
                     req: req,
@@ -64,17 +80,17 @@ module.exports = exports = {
                 return;
             }
             let AmenintiesCreate = {
-               courseName:courseName,
-               description:description,
-               isActive:isActive,
-              ctid:ctid,
-               duration:duration,
-               timing:timing,
-               mode:mode,
-               documentRequired:documentRequired,
-               validity:validity,
-               systemRequirement:systemRequirement,
-               certificate:certificate
+                courseName: courseName,
+                description: description,
+                isActive: isActive,
+                ctid: ctid,
+                duration: duration,
+                timing: timing,
+                mode: mode,
+                documentRequired: documentRequired,
+                validity: validity,
+                systemRequirement: systemRequirement,
+                certificate: certificate
 
             };
             const newAmeninties = await global.models.GLOBAL.COURSENAME(AmenintiesCreate);

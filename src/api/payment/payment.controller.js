@@ -67,8 +67,9 @@ module.exports = exports = {
       paymentId:paymentId,
       price:findCoursename.price
     })
-    const updateRegister = await global.models.GLOBAL.REGISTER.findByIdAndUpdate({_id:cnid},{paymentId:paymentId})
-    console.log("updateRegister",updateRegister)
+
+    const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({cnid:cnid},{paymentId:paymentId})
+    
     if(!updateRegister){
       const data4createResponseObject = {
         req: req,
