@@ -18,7 +18,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { courseType, description, isActive } = req.body;
+        const { courseType, vcid,description, isActive } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -30,7 +30,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!courseType ||  !description ) {
+        if (!courseType || !vcid ||  !description ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -57,7 +57,7 @@ module.exports = exports = {
             }
             let AmenintiesCreate = {
                courseType:courseType,
-            
+                vcid:vcid,
                description:description,
                isActive:isActive
             };

@@ -17,7 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const { courseType,description } = req.body;
+         const { courseType,description,vcid } = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -28,7 +28,7 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if ( !courseType || !description ) {
+         if ( !courseType || !description || !vcid) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
@@ -65,7 +65,7 @@
                 //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                 //     return;
                 // }
-                Item = await global.models.GLOBAL.COURSETYPE.update({_id:id},{$set:{ courseType:courseType, description:description}});
+                Item = await global.models.GLOBAL.COURSETYPE.update({_id:id},{$set:{ courseType:courseType, description:description, vcid:vcid}});
                  const data4createResponseObject = {
                      req: req,
                      result: 0,

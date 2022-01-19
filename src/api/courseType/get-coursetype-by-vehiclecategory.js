@@ -43,7 +43,7 @@ module.exports = exports = {
                 req: req,
                 result: 0,
                 message: messages.SUCCESS,
-                payload: { subMenu:subMenus ,Menu:Menus,count:count},
+                payload: { courseType:subMenus ,vehicleCategory:Menus,count:count},
                 logPayload: false
             };
             res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
