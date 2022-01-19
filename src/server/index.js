@@ -40,8 +40,8 @@ const runServer = async () => {
     const server = http.createServer(app);
 
     // Init Socket.io
-  
-    
+
+
     // const io = require("socket.io")(http, {
     //     cors: {
     //         origin: "*",
@@ -50,7 +50,7 @@ const runServer = async () => {
     //         credentials: true
     //     }
     // });
-    
+
     // function setupSocket() {
     //     const routes = require("./socket-io");
     //     routes.setup(io);

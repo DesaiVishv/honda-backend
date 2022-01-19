@@ -1,12 +1,15 @@
 const express = require("express");
 const helmet = require("helmet");
 const passport = require("passport");
+const bodyParser = require("body-parser");
 
 const path = require("path");
 const cors = require("cors");
 
 const { NODE_ENV = "local" } = process.env;
 const isRemote = NODE_ENV !== "local";
+var multer = require('multer');
+var upload = multer();
 
 
 module.exports = (app, logger) => {
@@ -14,7 +17,7 @@ module.exports = (app, logger) => {
     const corsOpts = {
         origin: "*",
         methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-      };
+    };
     app.use(cors(corsOpts));
     app.use(express.json({ limit: "10mb" })); // support parsing of application/json type post data
     app.use(express.urlencoded({ extended: true })); // support parsing of application/x-www-form-urlencoded post data
@@ -43,6 +46,11 @@ module.exports = (app, logger) => {
         middlewares.logIncomingRequest
     );
 
+    // Parse json data
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+    // For multi form data
+    app.use(upload.array());
     // if (isRemote) {
     //     app.use(middlewares.filterIncomingRequest);
     // }
