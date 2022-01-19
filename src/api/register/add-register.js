@@ -14,6 +14,8 @@ module.exports = exports = {
         ctid:Joi.string().required(),
         cnid:Joi.string().required(),
         lcid:Joi.string().required(),
+        dateofCourse:Joi.date().required(),
+        drivingLicenseNumber:Joi.string().required(),
         fname:Joi.string().required(),
         mname:Joi.string().required(),
         lname:Joi.string().required(),
@@ -41,7 +43,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { vcid,ctid,cnid,lcid,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,permanentDLnumber,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
+        const { vcid,ctid,cnid,lcid,dateofCourse,drivingLicenseNumber,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,permanentDLnumber,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -53,7 +55,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!vcid || !ctid || !cnid || !lcid || !phone || !permanentDLnumber || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill ) {
+        if (!vcid || !ctid || !cnid || !lcid || !dateofCourse || !drivingLicenseNumber || !phone || !permanentDLnumber || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -83,6 +85,8 @@ module.exports = exports = {
                 ctid:ctid,
                 cnid:cnid,
                 lcid:lcid,
+                dateofCourse:dateofCourse,
+                drivingLicenseNumber:drivingLicenseNumber,
                 fname:fname,
                 mname:mname,
                 lname:lname,

@@ -17,7 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const { vcid,ctid,cnid,lcid,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,permanentDLnumber,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
+         const { vcid,ctid,cnid,lcid,dateofCourse,drivingLicenseNumber,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,permanentDLnumber,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -28,7 +28,7 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id || !vcid || !ctid || !cnid || !lcid || !phone || !permanentDLnumber || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill) {
+         if (!id || !vcid || !ctid || !cnid || !lcid || !dateofCourse || !drivingLicenseNumber || !phone || !permanentDLnumber || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
@@ -70,6 +70,8 @@
                     ctid:ctid,
                     cnid:cnid,
                     lcid:lcid,
+                    dateofCourse:dateofCourse,
+                    drivingLicenseNumber:drivingLicenseNumber,
                     fname:fname,
                     mname:mname,
                     lname:lname,
