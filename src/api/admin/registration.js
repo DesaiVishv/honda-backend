@@ -16,7 +16,7 @@ module.exports = exports = {
   // route validation
   validation: Joi.object({
     firstName: Joi.string().required(),
-        fatherName: Joi.string().required(),
+        fatherName: Joi.string(),
     state: Joi.string().required(),
     IDTRcenter: Joi.string().required(),
     phone: Joi.number().required(),
