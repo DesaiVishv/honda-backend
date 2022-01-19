@@ -26,7 +26,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { courseName,description,isActive,duration,timing,mode,documentRequired,validity,systemRequirement,certificate } = req.body;
+        const { courseName,description,isActive,duration,timing,mode,documentRequired,validity,systemRequirement,certificate,ctid } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -67,7 +67,7 @@ module.exports = exports = {
                courseName:courseName,
                description:description,
                isActive:isActive,
-              
+              ctid:ctid,
                duration:duration,
                timing:timing,
                mode:mode,

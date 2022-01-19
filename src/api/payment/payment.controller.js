@@ -43,7 +43,7 @@ module.exports = exports = {
       const data4createResponseObject = {
         req: req,
         result: -1,
-        message: messages.PAYMENT_FAILED,
+        message: messages.FILL_DETAILS,
         payload: {},
         logPayload: false
     };
@@ -67,6 +67,18 @@ module.exports = exports = {
       paymentId:paymentId,
       price:findCoursename.price
     })
+    const updateRegister = await global.models.GLOBAL.REGISTER.findByIdAndUpdate({_id:cnid},{paymentId:paymentId})
+    console.log("updateRegister",updateRegister)
+    if(!updateRegister){
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_FOUND,
+        payload: {},
+        logPayload: false
+    };
+    return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+    }
     await paymentData.save()
     res.send(paymentData)
   }     

@@ -18,7 +18,7 @@
          const { id } = req.params;
          console.log("Hii")
          const { user } = req;
-         const { courseName,description,isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate} = req.body;
+         const { courseName,description,isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate,ctid} = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -72,7 +72,7 @@
                     courseName:courseName,
                     description:description,
                     isActive:isActive,
-                   
+                   ctid:ctid,
                     duration: duration,
                     timing: timing,
                     mode: mode,
