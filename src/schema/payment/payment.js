@@ -4,8 +4,10 @@ const mongoose = require("mongoose");
 
 module.exports = (connection) => {
     const paymentSchema = new mongoose.Schema({
-        
-        PaymentId: {
+        cnid:{
+            type: mongoose.Schema.Types.ObjectId
+        },
+        paymentId: {
             type: Object,
             required: false,
             default: null

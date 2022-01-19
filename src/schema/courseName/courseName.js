@@ -7,7 +7,7 @@ module.exports = (connection) => {
 
         courseName: { type: String, require: true },
         description:{type:String, require:true},
-        isActive :{type:Boolean, default:false},
+        isActive :{type:Boolean, default:true},
         ctid: { type: mongoose.Schema.Types.ObjectId },
         duration: { type: String, default:null },
         timing: { type: String, default:null },

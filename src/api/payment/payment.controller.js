@@ -64,8 +64,10 @@ module.exports = exports = {
   
     const paymentData = await global.models.GLOBAL.PAYMENT({
       cnid:cnid,
-      paymentId:paymentId
+      paymentId:paymentId,
+      price:findCoursename.price
     })
     await paymentData.save()
+    res.send(paymentData)
   }     
 }  
