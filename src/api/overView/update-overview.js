@@ -65,7 +65,7 @@
                     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                     return;
                 }
-                Item = await global.models.GLOBAL.MENU.update({_id:id},{$set:{image:image, description:description}});
+                Item = await global.models.GLOBAL.OVERVIEW.update({_id:id},{$set:{image:image, description:description}});
                  const data4createResponseObject = {
                      req: req,
                      result: 0,

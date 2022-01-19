@@ -47,7 +47,7 @@
     format.timestamp(),
     format.prettyPrint(),
     format.printf(({ level, message, label, timestamp }) => {
-        timestamp = getMomentByServerTime().format("YYYY.MM.DD HH:mm:ss");
+        timestamp = moment().tz(timezone).format("DD.MM.YYYY HH:mm:ss");
         return `[${timestamp}] ${level.toUpperCase().padEnd(8)} ${getHostAndProcessInfo()} ${message}`;
     })
     // ,newrelicFormatter()

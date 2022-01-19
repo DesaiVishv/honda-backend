@@ -26,7 +26,6 @@ module.exports = async () => {
                 GLOBAL: {
                     ADMIN: require("../schema/admin/admin")(connection_IN_HONDA),
                     USER: require("../schema/user/user")(connection_IN_HONDA),
-                    INVOICE: require("../schema/invoice/invoice")(connection_IN_HONDA),
                     VEHICLECATEGORY: require("../schema/VehicleCategory/vehicleCategory")(connection_IN_HONDA),
                     COURSETYPE: require("../schema/courseType/courseType")(connection_IN_HONDA),
                     COURSENAME: require("../schema/courseName/courseName")(connection_IN_HONDA),
@@ -34,6 +33,11 @@ module.exports = async () => {
                     PERSONALINFORMATION: require("../schema/Personal-Information/information")(connection_IN_HONDA),
                     DOCUMENT: require("../schema/DocumentUpload/documentUpload")(connection_IN_HONDA),
                     OVERVIEW: require("../schema/overView/overview")(connection_IN_HONDA),
+                    VISION: require("../schema/vision/vision")(connection_IN_HONDA),
+                    FACILITIES: require("../schema/facility/facility")(connection_IN_HONDA),
+                    GALLERY: require("../schema/Gallery/gallery")(connection_IN_HONDA),
+                    REGISTER: require("../schema/register/register")(connection_IN_HONDA),
+                    CMS: require("../schema/CMS/cms")(connection_IN_HONDA),
                     
                     FILEMANAGER: require("../schema/FileManager/filemanager")(connection_IN_HONDA),
                     MENU: require("../schema/menu/menu")(connection_IN_HONDA),

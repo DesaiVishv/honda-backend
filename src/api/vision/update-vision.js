@@ -17,18 +17,18 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const {  image, invoicenumber, companyname, businessAddress, Template, city, country, phone, email, taxrate} = req.body;
-        //  if(user.type !== enums.USER_TYPE.SUPERADMIN){
-        //      const data4createResponseObject = {
-        //          req: req,
-        //          result: -1,
-        //          message: messages.NOT_AUTHORIZED,
-        //          payload: {},
-        //          logPayload: false
-        //      };
-        //      return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
-        //  }
-         if (!id || !invoicenumber || !companyname || !businessAddress  || !city || !country || !phone || !email || !taxrate) {
+         const { image,description } = req.body;
+         if(user.type !== enums.USER_TYPE.SUPERADMIN){
+             const data4createResponseObject = {
+                 req: req,
+                 result: -1,
+                 message: messages.NOT_AUTHORIZED,
+                 payload: {},
+                 logPayload: false
+             };
+             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
+         }
+         if (!id || !image || !description) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
@@ -41,7 +41,7 @@
  
          try {
  
-             let Item = await global.models.GLOBAL.INVOICE.findById({_id:id});
+             let Item = await global.models.GLOBAL.VISION.findById(id);
 
              if(!Item) {
                  const data4createResponseObject = {
@@ -53,8 +53,8 @@
                  };
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
-                const checkMenu = await global.models.GLOBAL.INVOICE.find({phone:phone, email:email});
-                if(checkMenu.length == 0){
+                const checkMenu = await global.models.GLOBAL.VISION.find({id});
+                if(checkMenu.length>0){
                     const data4createResponseObject = {
                         req: req,
                         result: -400,
@@ -65,24 +65,12 @@
                     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                     return;
                 }
-                let updateInvoice = {
-                    image:image,
-                    invoicenumber: invoicenumber, 
-                    companyname:companyname,
-                    businessAddress: businessAddress,
-                    Template: Template,
-                    city: city,
-                    country: country,
-                    phone: phone,
-                    email: email,
-                    taxrate: taxrate
-                }
-                Item = await global.models.GLOBAL.INVOICE.update({_id:id},updateInvoice);
+                Item = await global.models.GLOBAL.VISION.update({_id:id},{$set:{image:image, description:description}});
                  const data4createResponseObject = {
                      req: req,
                      result: 0,
                      message: messages.ITEM_UPDATED,
-                     payload: {updateInvoice},
+                     payload: {},
                      logPayload: false
                  };
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));

@@ -9,7 +9,7 @@ router.get("/getOverview/:id", overviewApi.getOverview.handler);
 // router.get("/getAllMenu", menuApi.getAllMenu.handler);
 
 // Post Methods
-router.post("/addOverview", passport.authenticate(["jwt"], { session: false }), validate("body", overviewApi.addOverview.validation), overviewApi.addOverview.handler);
+router.post("/addOverview", validate("body", overviewApi.addOverview.validation), overviewApi.addOverview.handler);
 
 // // Put Methods
 router.put("/updateOverview/:id", passport.authenticate(["jwt"], { session: false }), overviewApi.updateOverview.handler);

@@ -17,6 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
+         const { infrastructure,trainingProgram,Technology,COVIDmeasures,Event } = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -27,11 +28,11 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id) {
+         if (!id || !infrastructure || !trainingProgram || !Technology || !COVIDmeasures || !Event) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
-                 message: messages.INVALID_PARAMETERS,
+                 message: messages.FILL_DETAILS,
                  payload: {},
                  logPayload: false
              };
@@ -40,8 +41,9 @@
  
          try {
  
-             const deletedItem = await global.models.GLOBAL.OVERVIEW.findByIdAndRemove(id);
-             if(!deletedItem) {
+             let Item = await global.models.GLOBAL.GALLERY.findById(id);
+
+             if(!Item) {
                  const data4createResponseObject = {
                      req: req,
                      result: 0,
@@ -51,10 +53,30 @@
                  };
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
+                const checkMenu = await global.models.GLOBAL.GALLERY.find({id});
+                if(checkMenu.length>0){
+                    const data4createResponseObject = {
+                        req: req,
+                        result: -400,
+                        message: messages.NOT_FOUND,
+                        payload: {},
+                        logPayload: false
+                    };
+                    res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+                    return;
+                }
+                const Itemupdate ={
+                    infrastructure:infrastructure,
+                    trainingProgram:trainingProgram,
+                    Technology:Technology,
+                    COVIDmeasures:COVIDmeasures,
+                    Event:Event
+                }
+                Item = await global.models.GLOBAL.GALLERY.update({_id:id},Itemupdate);
                  const data4createResponseObject = {
                      req: req,
                      result: 0,
-                     message: messages.ITEM_DELETED,
+                     message: messages.ITEM_UPDATED,
                      payload: {},
                      logPayload: false
                  };

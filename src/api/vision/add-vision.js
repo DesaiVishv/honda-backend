@@ -41,7 +41,7 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.OVERVIEW.find({ image:image });
+            const checkMenu = await global.models.GLOBAL.VISION.find({ image:image });
             if (checkMenu.length > 0) {
                 const data4createResponseObject = {
                     req: req,
@@ -57,7 +57,7 @@ module.exports = exports = {
                 image:image,
                 description:description
             };
-            const newAmeninties = await global.models.GLOBAL.OVERVIEW(AmenintiesCreate);
+            const newAmeninties = await global.models.GLOBAL.VISION(AmenintiesCreate);
             newAmeninties.save();
             const data4createResponseObject = {
                 req: req,

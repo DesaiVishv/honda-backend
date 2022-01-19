@@ -10,21 +10,34 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-      image:Joi.string(),
-      invoicenumber:Joi.number().required(),
-      companyname:Joi.string().required(),
-      businessAddress:Joi.string().required(),
-      Template:Joi.string(),
-      city:Joi.string().required(),
-      country:Joi.string().required(),
-      phone:Joi.number().required(),
-      email:Joi.string().required(),
-      taxrate:Joi.number().required(),
-        // imagePath: Joi.string().allow("")
+        vcid:Joi.string().required(),
+        ctid:Joi.string().required(),
+        cnid:Joi.string().required(),
+        fname:Joi.string().required(),
+        mname:Joi.string().required(),
+        lname:Joi.string().required(),
+        DoB: Joi.date().required(),
+        qualification:Joi.string().required(),
+        gender:Joi.string().required(),
+        address:Joi.string().required(),
+        state:Joi.string().required(),
+        city:Joi.string().required(),
+        district:Joi.string().required(),
+        pincode:Joi.number().required(),
+        email:Joi.string().required(),
+        phone:Joi.number().required(),
+        permanentDLnumber:Joi.number().required(),
+        issueDate:Joi.date().required(),
+        validTill:Joi.date().required(),
+        Authority:Joi.string().required(),
+        uploadPhoto:Joi.array().required(),
+        uploadLMV:Joi.array().required(),
+        paymentId:Joi.string()
+
     }),
 
     handler: async (req, res) => {
-        const { image, invoicenumber, companyname, businessAddress, Template, city, country, phone, email, taxrate } = req.body;
+        const { vcid,ctid,cnid,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,permanentDLnumber,issueDate,validTill,Authority,uploadLMV,uploadPhoto,paymentId } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -36,7 +49,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if ( !invoicenumber || !companyname || !businessAddress  || !city || !country || !phone || !email || !taxrate) {
+        if (!vcid || !ctid || !cnid || !phone || !permanentDLnumber || !uploadLMV || !uploadPhoto || !issueDate || !validTill ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -49,8 +62,8 @@ module.exports = exports = {
 
         try {
 
-            const checkInvoice = await global.models.GLOBAL.INVOICE.find({ phone:phone, email:email });
-            if (checkInvoice.length > 0) {
+            const checkMenu = await global.models.GLOBAL.REGISTER.find({ phone:phone });
+            if (checkMenu.length > 0) {
                 const data4createResponseObject = {
                     req: req,
                     result: -400,
@@ -62,18 +75,31 @@ module.exports = exports = {
                 return;
             }
             let AmenintiesCreate = {
-                image:image,
-                invoicenumber: invoicenumber, 
-                companyname:companyname,
-                businessAddress: businessAddress,
-                Template: Template,
-                city: city,
-                country: country,
-                phone: phone,
-                email: email,
-                taxrate: taxrate
+                vcid:vcid,
+                ctid:ctid,
+                cnid:cnid,
+                fname:fname,
+                mname:mname,
+                lname:lname,
+                DoB:DoB,
+                qualification:qualification,
+                gender:gender,
+                address:address,
+                state:state,
+                city:city,
+                district:district,
+                email:email,
+                phone:phone,
+                pincode:pincode,
+                permanentDLnumber:permanentDLnumber,
+                issueDate:issueDate,
+                validTill:validTill,
+                Authority:Authority,
+                uploadPhoto:uploadPhoto,
+                uploadLMV:uploadLMV,
+                paymentId:paymentId
             };
-            const newAmeninties = await global.models.GLOBAL.INVOICE(AmenintiesCreate);
+            const newAmeninties = await global.models.GLOBAL.REGISTER(AmenintiesCreate);
             newAmeninties.save();
             const data4createResponseObject = {
                 req: req,

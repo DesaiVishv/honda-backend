@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 // const enums = require("../../../json/enums.json");
 
 module.exports = (connection) => {
-    const vehicleCategorySchema = new mongoose.Schema({
+    const facilitiesSchema = new mongoose.Schema({
         
-        vehicleCategory:{ type: String, require:true },
-        description:{type:String, require:true},
-        isActive :{type:Boolean, default:true},
+        image:{ type: Array, default:null },
+        
+        description:{ type: String, require:true },
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
         createdBy: {
@@ -23,6 +23,6 @@ module.exports = (connection) => {
     });
 
     // return logsSchema;
-    return connection.model("vehicleCategory", vehicleCategorySchema, "vehicleCategory");
+    return connection.model("facilities", facilitiesSchema, "facilities");
 };
 

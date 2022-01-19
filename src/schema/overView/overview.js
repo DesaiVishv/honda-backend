@@ -7,7 +7,7 @@ module.exports = (connection) => {
         
         image:{ type: Array, default:null },
         
-        description:{ type: Number, require:true },
+        description:{ type: String, require:true },
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
         createdBy: {

@@ -10,25 +10,25 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-        image: Joi.array().required(),
-        description: Joi.string().required(),
-        // imagePath: Joi.string().allow("")
+       overView:Joi.object().required(),
+       Vision:Joi.object().required(),
+       facilities:Joi.object().required()
     }),
 
     handler: async (req, res) => {
-        const { image,description } = req.body;
+        const { overView,Vision,facilities } = req.body;
         const { user } = req;
-        // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-        //     const data4createResponseObject = {
-        //         req: req,
-        //         result: -1,
-        //         message: messages.NOT_AUTHORIZED,
-        //         payload: {},
-        //         logPayload: false
-        //     };
-        //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
-        // }
-        if (!image || !description) {
+        if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+            const data4createResponseObject = {
+                req: req,
+                result: -1,
+                message: messages.NOT_AUTHORIZED,
+                payload: {},
+                logPayload: false
+            };
+            return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
+        }
+        if (!overView || !Vision || !facilities) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -41,7 +41,7 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.OVERVIEW.find({ image:image });
+            const checkMenu = await global.models.GLOBAL.CMS.find({ overView:overView });
             if (checkMenu.length > 0) {
                 const data4createResponseObject = {
                     req: req,
@@ -54,10 +54,12 @@ module.exports = exports = {
                 return;
             }
             let AmenintiesCreate = {
-                image:image,
-                description:description
+              overView:overView,
+              Vision:Vision,
+              facilities:facilities
+
             };
-            const newAmeninties = await global.models.GLOBAL.OVERVIEW(AmenintiesCreate);
+            const newAmeninties = await global.models.GLOBAL.CMS(AmenintiesCreate);
             newAmeninties.save();
             const data4createResponseObject = {
                 req: req,

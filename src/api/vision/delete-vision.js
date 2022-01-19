@@ -17,16 +17,16 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-        //  if(user.type !== enums.USER_TYPE.SUPERADMIN){
-        //      const data4createResponseObject = {
-        //          req: req,
-        //          result: -1,
-        //          message: messages.NOT_AUTHORIZED,
-        //          payload: {},
-        //          logPayload: false
-        //      };
-        //      return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
-        //  }
+         if(user.type !== enums.USER_TYPE.SUPERADMIN){
+             const data4createResponseObject = {
+                 req: req,
+                 result: -1,
+                 message: messages.NOT_AUTHORIZED,
+                 payload: {},
+                 logPayload: false
+             };
+             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
+         }
          if (!id) {
              const data4createResponseObject = {
                  req: req,
@@ -40,7 +40,7 @@
  
          try {
  
-             const deletedItem = await global.models.GLOBAL.INVOICE.findByIdAndRemove(id);
+             const deletedItem = await global.models.GLOBAL.VISION.findByIdAndRemove(id);
              if(!deletedItem) {
                  const data4createResponseObject = {
                      req: req,
