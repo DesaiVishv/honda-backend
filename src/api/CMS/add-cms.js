@@ -10,13 +10,13 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-       overView:Joi.object().required(),
-       Vision:Joi.object().required(),
-       facilities:Joi.object().required()
+       titleName:Joi.string().required(),
+       image:Joi.array().required(),
+       description:Joi.string().required()
     }),
 
     handler: async (req, res) => {
-        const { overView,Vision,facilities } = req.body;
+        const { titleName,image,description} = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -28,7 +28,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!overView || !Vision || !facilities) {
+        if (!titleName || !image || !description) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -41,7 +41,7 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.CMS.find({ overView:overView });
+            const checkMenu = await global.models.GLOBAL.CMS.find({ titleName:titleName });
             if (checkMenu.length > 0) {
                 const data4createResponseObject = {
                     req: req,
@@ -54,10 +54,9 @@ module.exports = exports = {
                 return;
             }
             let AmenintiesCreate = {
-              overView:overView,
-              Vision:Vision,
-              facilities:facilities
-
+              titleName:titleName,
+              image:image,
+              description:description  
             };
             const newAmeninties = await global.models.GLOBAL.CMS(AmenintiesCreate);
             newAmeninties.save();

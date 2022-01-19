@@ -17,7 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const {overView,Vision,facilities} = req.body;
+         const {titleName,image,description} = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -28,7 +28,7 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id || !overView || !Vision || !facilities) {
+         if (!id || !titleName || !image || !description) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
@@ -65,7 +65,7 @@
                     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                     return;
                 }
-                Item = await global.models.GLOBAL.CMS.update({_id:id},{$set:{overView:overView,Vision:Vision,facilities:facilities}});
+                Item = await global.models.GLOBAL.CMS.update({_id:id},{$set:{titleName:titleName,image:image,description:description}});
                  const data4createResponseObject = {
                      req: req,
                      result: 0,
