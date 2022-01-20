@@ -102,7 +102,7 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS_PAYMENT,
-        payload: {},
+        payload: {paymentData},
         logPayload: false
       };
       return res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
