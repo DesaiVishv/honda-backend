@@ -96,6 +96,25 @@ module.exports = exports = {
       }
     }
     await paymentData.save()
-    res.send(paymentData)
+    // res.send(paymentData)
+    if(paymentData){
+      const data4createResponseObject = {
+        req: req,
+        result: 0,
+        message: messages.SUCCESS_PAYMENT,
+        payload: {},
+        logPayload: false
+      };
+      return res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+    }else{
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.PAYMENT_FAILED,
+        payload: {},
+        logPayload: false
+      };
+      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+    }
   }
 }  
