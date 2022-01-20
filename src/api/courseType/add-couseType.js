@@ -18,7 +18,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { courseType, vcid,description, isActive } = req.body;
+        const { courseType, vcid, description, isActive } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -30,7 +30,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!courseType || !vcid ||  !description ) {
+        if (!courseType || !vcid || !description) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -43,23 +43,23 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.COURSETYPE.find({ courseType:courseType});
-            if (checkMenu.length > 0) {
-                const data4createResponseObject = {
-                    req: req,
-                    result: -400,
-                    message: messages.EXISTS_MENU,
-                    payload: {},
-                    logPayload: false
-                };
-                res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-                return;
-            }
+            // const checkMenu = await global.models.GLOBAL.COURSETYPE.find({ courseType:courseType});
+            // if (checkMenu.length > 0) {
+            //     const data4createResponseObject = {
+            //         req: req,
+            //         result: -400,
+            //         message: messages.EXISTS_MENU,
+            //         payload: {},
+            //         logPayload: false
+            //     };
+            //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+            //     return;
+            // }
             let AmenintiesCreate = {
-               courseType:courseType,
-                vcid:vcid,
-               description:description,
-               isActive:isActive
+                courseType: courseType,
+                vcid: vcid,
+                description: description,
+                isActive: isActive
             };
             const newAmeninties = await global.models.GLOBAL.COURSETYPE(AmenintiesCreate);
             newAmeninties.save();
