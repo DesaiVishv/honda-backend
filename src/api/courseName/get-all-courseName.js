@@ -13,11 +13,11 @@ module.exports = exports = {
     handler: async (req, res) => {
         
         try {
-            // req.query.page = req.query.page ? req.query.page : 1;
-            // let page = parseInt(req.query.page);
-            // req.query.limit = req.query.limit ? req.query.limit : 10;
-            // let limit = parseInt(req.query.limit);
-            // let skip = (parseInt(req.query.page) - 1) * limit;
+            req.query.page = req.query.page ? req.query.page : 1;
+            let page = parseInt(req.query.page);
+            req.query.limit = req.query.limit ? req.query.limit : 10;
+            let limit = parseInt(req.query.limit);
+            let skip = (parseInt(req.query.page) - 1) * limit;
 
            
             // let id = req.params.id;
@@ -29,7 +29,7 @@ module.exports = exports = {
             // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
             // console.log("findCoursetype",findCoursetype)
             const count = await global.models.GLOBAL.COURSENAME.find(search).count();
-            const Questions = await global.models.GLOBAL.COURSENAME.find(search).sort({createdAt:-1}).populate({
+            const Questions = await global.models.GLOBAL.COURSENAME.find(search).skip(skip).limit(limit).sort({createdAt:-1}).populate({
                 path:"ctid",
                 model:"courseType"
             });
