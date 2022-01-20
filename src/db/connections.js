@@ -39,6 +39,7 @@ module.exports = async () => {
                     GALLERY: require("../schema/Gallery/gallery")(connection_IN_HONDA),
                     REGISTER: require("../schema/register/register")(connection_IN_HONDA),
                     CMS: require("../schema/CMS/cms")(connection_IN_HONDA),
+                    FEEDBACK: require("../schema/feedBack/feedback")(connection_IN_HONDA),
                     
                     FILEMANAGER: require("../schema/FileManager/filemanager")(connection_IN_HONDA),
                     MENU: require("../schema/menu/menu")(connection_IN_HONDA),
@@ -51,7 +52,6 @@ module.exports = async () => {
                     AMENITIES: require("../schema/amenities/amenities")(connection_IN_HONDA),
                     PROPERTY: require("../schema/property/property")(connection_IN_HONDA),
                     CONTACTUS: require("../schema/contactus/contactus")(connection_IN_HONDA),
-                    CONTACTUSADMIN: require("../schema/contactus/contactusadmin")(connection_IN_HONDA),
                     CODE_REGISTRATION: require("../schema/code/code-registration")(mongooseConnections.GLOBAL.HONDA),
                     CODE_VERIFICATION: require("../schema/code/code-verification")(mongooseConnections.GLOBAL.HONDA),
                     LOG: require("../schema/log/log")(mongooseConnections.GLOBAL.HONDA),

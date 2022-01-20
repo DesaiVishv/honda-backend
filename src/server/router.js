@@ -19,7 +19,7 @@ module.exports = (app, logger) => {
     const galleryRoute = require("../routes/Gallery/index")
     const registerRoute = require("../routes/register/index")
     const cmsRoute = require("../routes/cms/index")
-
+    const feedbackRoute = require("../routes/feedBack/index")
 
     const propertyRoute = require("../routes/property/index")
     const amenitiesRoute = require("../routes/amenities/index")
@@ -52,6 +52,7 @@ module.exports = (app, logger) => {
     app.use(["/api/v1/gallery"],  galleryRoute);
     app.use(["/api/v1/register"],  registerRoute);
     app.use(["/api/v1/cms"],  cmsRoute);
+    app.use(["/api/v1/feedback"],  feedbackRoute);
 
     app.use(["/api/v1/amenities"],  amenitiesRoute);
     app.use(["/api/v1/property"],  propertyRoute);

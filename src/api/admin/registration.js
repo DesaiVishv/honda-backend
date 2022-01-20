@@ -22,12 +22,13 @@ module.exports = exports = {
     phone: Joi.number().required(),
     email: Joi.string(),
     code: Joi.string().required(),
+    password:Joi.string(),
     role: Joi.string().required()
   }),
 
   // route handler
   handler: async (req, res) => {
-    let { firstName,fatherName,code, phone,email,IDTRcenter,state,role } = req.body;
+    let { firstName,fatherName,code, phone,email,password,IDTRcenter,state,role } = req.body;
 
     if (phone.length === 0 || code.length === 0) {
       logger.error("/verify-code - Phone number and code cannot be empty!");
@@ -190,6 +191,7 @@ module.exports = exports = {
         code:code,
         state: state,
         phone: phone,
+        password:password,
         IDTRcenter: IDTRcenter,
         role: ObjectId(role).toString(),
 

@@ -8,16 +8,20 @@ const passport = require("passport");
 // router.get("/exists", validate("query", commonApi.exists.validation), commonApi.exists.handler);
 // router.get("/search", validate("query", commonApi.search.validation), commonApi.search.handler);
 // router.get("/getContactus",passport.authenticate(["jwt"], { session: false }),  contactusApi.getContactus.handler);
-router.get("/getContactusadmin",passport.authenticate(["jwt"], { session: false }),  contactusApi.getContactusadmin.handler);
+router.get("/getContactus", contactusApi.getContactus.handler);
 
 
 // Post Methods
 // router.post("/addContactus", validate("body", contactusApi.addContactus.validation), contactusApi.addContactus.handler);
-router.post("/addContactusadmin", validate("body", contactusApi.addContactusadmin.validation), contactusApi.addContactusadmin.handler);
+router.post("/addContactus", validate("body", contactusApi.addContactus.validation), contactusApi.addContactus.handler);
 // router.post("/verify-phone", validate("body", commonApi.verifyPhone.validation), commonApi.verifyPhone.handler);
 
+
+router.put("/updateContactus/:id", passport.authenticate(["jwt"], { session: false }), contactusApi.updateContactus.handler);
+
+
 // Delete Method
-router.delete("/deleteContactusadmin/:id",passport.authenticate(["jwt"], { session: false }), contactusApi.deleteContactusadmin.handler);
+router.delete("/deleteContactus/:id",passport.authenticate(["jwt"], { session: false }), contactusApi.deleteContactus.handler);
 
 
 module.exports = exports = router;

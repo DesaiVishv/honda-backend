@@ -12,16 +12,16 @@ module.exports = exports = {
   // router validation
   validation: Joi.object({
     phone: Joi.number().required(),
-    // password: Joi.string().required(),
+    password: Joi.string().required(),
   }),
 
   // route handler
   handler: async (req, res) => {
     let {
       phone,
-      // password
+      password
     } = req.body;
-    if (!phone) {
+    if (!phone || !password) {
       logger.error(messages.FIELD_REQUIRE);
       const data4createResponseObject = {
         req: req,
@@ -91,12 +91,21 @@ module.exports = exports = {
       console.log("roleName", rolename)
       // User found - create JWT and return it
       const data4token = {
+        // id: admin._id,
+        // date: new Date(),
+        // environment: process.env.APP_ENVIRONMENT,
+        // phone: phone,
+        // scope: "login",
+        // type: role,
+
         id: admin._id,
         date: new Date(),
         environment: process.env.APP_ENVIRONMENT,
         phone: phone,
         scope: "login",
-        type: role,
+        type: rolename.roleName,
+        rolename: rolename.roleName,
+
       };
       delete admin._doc.password;
       const payload = {

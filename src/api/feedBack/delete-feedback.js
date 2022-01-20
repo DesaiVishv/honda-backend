@@ -40,7 +40,7 @@
  
          try {
  
-             const deletedItem = await global.models.GLOBAL.CONTACTUS.findByIdAndRemove(id);
+             const deletedItem = await global.models.GLOBAL.FEEDBACK.findByIdAndRemove(id);
              if(!deletedItem) {
                  const data4createResponseObject = {
                      req: req,

@@ -3,11 +3,11 @@ const enums = require("../../../json/enums.json");
 
 module.exports = (connection) => {
     const contactusSchema = new mongoose.Schema({
-        aid: { type: mongoose.Schema.Types.ObjectId ,ref:"admin"},
-        pid: { type: mongoose.Schema.Types.ObjectId ,ref:"property"},
-        name:{ type: String },
-        email:{ type: String },
-        phone:{ type: String },
+        name:{ type: String, require:true },
+        email:{ type: String, require:true },
+        phone:{ type: String, require:true },
+        subject:{type:String, require:true},
+        description:{type:String, require:true},
         creationDate: { type: Date, default: Date.now() },
         modificationData: { type: Date, default: Date.now() },
     }, {

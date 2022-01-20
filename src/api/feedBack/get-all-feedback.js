@@ -11,36 +11,29 @@ module.exports = exports = {
     // route validation
 
     handler: async (req, res) => {
-        // console.log("ttttttttttttttttt")
+        
         try {
-            const {user}=req;
-
-            if(user.type != enums.USER_TYPE.SUPERADMIN){
-                const data4createResponseObject = {
-                    req: req,
-                    result: -1,
-                    message: messages.NOT_AUTHORIZED,
-                    payload: {},
-                    logPayload: false
-                };
-                return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
-            }
             req.query.page = req.query.page ? req.query.page : 1;
             let page = parseInt(req.query.page);
             req.query.limit = req.query.limit ? req.query.limit : 10;
             let limit = parseInt(req.query.limit);
-            let skip = (parseInt(page) - 1) * limit;
+            let skip = (parseInt(req.query.page) - 1) * limit;
+
+           
+            // let id = req.params.id;
+
+
             
-            let search = req.query.search ?  {$and:[
-                {name: { $regex: req.query.search , $options: 'i'}},
-                {subject: { $regex: req.query.search , $options: 'i'}},
-                {email: { $regex: req.query.search , $options: 'i'}},
-                {message: { $regex: req.query.search , $options: 'i'}},
-            ]}: {};
+            let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
             
-            const count = await global.models.GLOBAL.CONTACTUSADMIN.find(search).count();
-            const Contactus = await global.models.GLOBAL.CONTACTUSADMIN.find(search).skip(skip).limit(limit);
-            if(Contactus.length==0){
+            // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
+            // console.log("findCoursetype",findCoursetype)
+            const count = await global.models.GLOBAL.FEEDBACK.find(search).count();
+            const Questions = await global.models.GLOBAL.FEEDBACK.find(search).skip(skip).limit(limit).sort({createdAt:-1}).populate({
+                path:"ctid",
+                model:"courseType"
+            });
+            if(Questions.length==0){
                 const data4createResponseObject = {
                     req: req,
                     result: -400,
@@ -55,7 +48,7 @@ module.exports = exports = {
                 req: req,
                 result: 0,
                 message: messages.SUCCESS,
-                payload: { Contactus:Contactus ,count:count},
+                payload: { Question:Questions ,count:count},
                 logPayload: false
             };
             res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));

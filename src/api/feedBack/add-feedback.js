@@ -11,16 +11,17 @@ module.exports = exports = {
     // route validation
     validation: Joi.object({
         name:Joi.string().required(),
-        email:Joi.string().required(),
+        email:Joi.string(),
         phone:Joi.number().required(),
-        subject:Joi.string().required(),
-        description:Joi.string().required()
+        feedbackCategory:Joi.string().required(),
+        rating:Joi.number().required(),
+        description:Joi.string()
     }),
 
     handler: async (req, res) => {
-        const { name,email,phone,subject,description } = req.body;
-        //const { user } = req;
-        // if(user.type !== enums.USER_TYPE.SUPERADMIN){
+        const { name,email,phone,feedbackCategory,rating,description} = req.body;
+        const { user } = req;
+        // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
         //         req: req,
         //         result: -1,
@@ -30,11 +31,11 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!name || !email || !phone || !subject || !description) {
+        if (!name || !phone || !feedbackCategory || !rating) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
-                message: messages.INVALID_PARAMETERS,
+                message: messages.FILL_DETAILS,
                 payload: {},
                 logPayload: false
             };
@@ -42,14 +43,34 @@ module.exports = exports = {
         }
 
         try {
-            let data={ description:description, subject:subject, name:name, email:email, phone:phone};
-            const saveData = await global.models.GLOBAL.CONTACTUS(data);
-            saveData.save();
+
+            const checkMenu = await global.models.GLOBAL.FEEDBACK.find({ phone:phone });
+            if (checkMenu.length > 0) {
+                const data4createResponseObject = {
+                    req: req,
+                    result: -400,
+                    message: messages.EXISTS_MENU,
+                    payload: {},
+                    logPayload: false
+                };
+                res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+                return;
+            }
+            let AmenintiesCreate = {
+                name:name,
+                email:email,
+                phone:phone,
+                feedbackCategory:feedbackCategory,
+                rating:rating,
+                description:description
+            };
+            const newAmeninties = await global.models.GLOBAL.FEEDBACK(AmenintiesCreate);
+            newAmeninties.save();
             const data4createResponseObject = {
                 req: req,
                 result: 0,
-                message: messages.SUCCESS,
-                payload: { data },
+                message: messages.ITEM_INSERTED,
+                payload: { newAmeninties },
                 logPayload: false
             };
             res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));

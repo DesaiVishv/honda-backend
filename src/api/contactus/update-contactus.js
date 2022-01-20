@@ -17,6 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
+         const {name,email,phone,subject,description} = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -27,11 +28,11 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id) {
+         if (!id || !name || !email || !phone || !subject || !description) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
-                 message: messages.INVALID_PARAMETERS,
+                 message: messages.FILL_DETAILS,
                  payload: {},
                  logPayload: false
              };
@@ -40,8 +41,9 @@
  
          try {
  
-             const deletedItem = await global.models.GLOBAL.CONTACTUS.findByIdAndRemove(id);
-             if(!deletedItem) {
+             let Item = await global.models.GLOBAL.CONTACTUS.findById(id);
+
+             if(!Item) {
                  const data4createResponseObject = {
                      req: req,
                      result: 0,
@@ -51,10 +53,23 @@
                  };
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
+                const checkMenu = await global.models.GLOBAL.CONTACTUS.findById(id);
+                if(checkMenu.length>0){
+                    const data4createResponseObject = {
+                        req: req,
+                        result: -400,
+                        message: messages.NOT_FOUND,
+                        payload: {},
+                        logPayload: false
+                    };
+                    res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+                    return;
+                }
+                Item = await global.models.GLOBAL.CONTACTUS.update({_id:id},{$set:{description:description, subject:subject, name:name, email:email, phone:phone}});
                  const data4createResponseObject = {
                      req: req,
                      result: 0,
-                     message: messages.ITEM_DELETED,
+                     message: messages.ITEM_UPDATED,
                      payload: {},
                      logPayload: false
                  };

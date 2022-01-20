@@ -11,6 +11,7 @@ module.exports = (connection) => {
     phone: { type: Number, required: true },
     state: { type: String, required: true },
     IDTRcenter: { type: String, required: true },
+    password:{type:String},
     registrationDate: { type: Date, default: Date.now() },
     modificationData: { type: Date, default: Date.now() },
     role: { type: mongoose.Schema.Types.ObjectId, ref: "role" },
