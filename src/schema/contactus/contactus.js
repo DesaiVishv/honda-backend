@@ -3,17 +3,17 @@ const enums = require("../../../json/enums.json");
 
 module.exports = (connection) => {
     const contactusSchema = new mongoose.Schema({
-        location: {
-            type: {
-                type: String, // Don't do `{ location: { type: String } }`
-                enum: ['Point'], // 'location.type' must be 'Point'
-                required: true
-            },
-            coordinates: {
-                type: [Number],
-                required: true
-            }
-        },
+        // location: {
+        //     type: {
+        //         type: String, // Don't do `{ location: { type: String } }`
+        //         enum: ['Point'], // 'location.type' must be 'Point'
+        //         required: true
+        //     },
+        //     coordinates: {
+        //         type: [Number],
+        //         required: true
+        //     }
+        // },
         name: { type: String, require: true },
         email: { type: String, require: true },
         phone: { type: String, require: true },
