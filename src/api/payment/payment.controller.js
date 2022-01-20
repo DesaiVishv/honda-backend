@@ -31,56 +31,71 @@ const Razorpay = require('razorpay');
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    cnid:Joi.string().required(), 
-    paymentId:Joi.string().required()
+    cnid: Joi.string().required(),
+    paymentId: Joi.string().required()
     // imagePath: Joi.string().allow("")
   }),
 
   pay: async (req, res) => {
-    const { cnid,paymentId } = req.body;
+    const { cnid, paymentId } = req.body;
     const { user } = req;
-    if(!cnid){
+    if (!cnid) {
       const data4createResponseObject = {
         req: req,
         result: -1,
         message: messages.FILL_DETAILS,
         payload: {},
         logPayload: false
-    };
-    return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      };
+      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
 
-    const findCoursename = await global.models.GLOBAL.COURSENAME.findById({_id:cnid})
-    if(!findCoursename){
+    const findCoursename = await global.models.GLOBAL.COURSENAME.findOne({ _id: cnid })
+    console.log("findCoutrsename", findCoursename)
+    if (!findCoursename) {
       const data4createResponseObject = {
         req: req,
         result: -1,
         message: messages.NOT_FOUND,
         payload: {},
         logPayload: false
-    };
-    return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      };
+      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
-  
+
     const paymentData = await global.models.GLOBAL.PAYMENT({
-      cnid:cnid,
-      paymentId:paymentId,
-      price:findCoursename.price
+      cnid: cnid,
+      paymentId: paymentId,
+      price: findCoursename.price
     })
-
-    const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({cnid:cnid},{paymentId:paymentId})
-    
-    if(!updateRegister){
+    console.log("paymentDate",paymentData)
+    const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({ cnid: cnid }, { paymentId: paymentId })
+    console.log("updateRegister",updateRegister)
+    if (!updateRegister) {
       const data4createResponseObject = {
         req: req,
         result: -1,
         message: messages.NOT_FOUND,
         payload: {},
         logPayload: false
-    };
-    return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      };
+      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+    }
+    if (paymentData) {
+      const updateSeat = await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate({cnid:cnid},{$inc:{ seat:-1 }})
+      console.log("uploadSeat", updateSeat)
+      if (!updateSeat) {
+        const data4createResponseObject = {
+          req: req,
+          result: -1,
+          message: messages.NOT_FOUND,
+          payload: {},
+          logPayload: false
+        };
+        return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      }
     }
     await paymentData.save()
     res.send(paymentData)
-  }     
+  }
 }  
