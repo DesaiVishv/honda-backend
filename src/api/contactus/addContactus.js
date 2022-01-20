@@ -10,6 +10,7 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
+        location:Joi.object().required(),
         name:Joi.string().required(),
         email:Joi.string().required(),
         phone:Joi.number().required(),
@@ -18,7 +19,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { name,email,phone,subject,description } = req.body;
+        const { location,name,email,phone,subject,description } = req.body;
         //const { user } = req;
         // if(user.type !== enums.USER_TYPE.SUPERADMIN){
         //     const data4createResponseObject = {
@@ -42,7 +43,7 @@ module.exports = exports = {
         }
 
         try {
-            let data={ description:description, subject:subject, name:name, email:email, phone:phone};
+            let data={ location:location,description:description, subject:subject, name:name, email:email, phone:phone};
             const saveData = await global.models.GLOBAL.CONTACTUS(data);
             saveData.save();
             const data4createResponseObject = {

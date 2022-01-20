@@ -17,7 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const {name,email,phone,subject,description} = req.body;
+         const {location,name,email,phone,subject,description} = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -65,7 +65,7 @@
                     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                     return;
                 }
-                Item = await global.models.GLOBAL.CONTACTUS.update({_id:id},{$set:{description:description, subject:subject, name:name, email:email, phone:phone}});
+                Item = await global.models.GLOBAL.CONTACTUS.update({_id:id},{$set:{location:location,description:description, subject:subject, name:name, email:email, phone:phone}});
                  const data4createResponseObject = {
                      req: req,
                      result: 0,
