@@ -9,6 +9,7 @@ module.exports = (connection) => {
         description:{type:String, require:true},
         isActive :{type:Boolean, default:true},
         ctid: { type: mongoose.Schema.Types.ObjectId },
+        vcid: { type: mongoose.Schema.Types.ObjectId },
         duration: { type: String, default:null },
         timing: { type: String, default:null },
         mode: { type: String, default:null },

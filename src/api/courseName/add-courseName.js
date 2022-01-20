@@ -13,6 +13,7 @@ module.exports = exports = {
         courseName: Joi.string().required(),
         description: Joi.string().required(),
         isActive: Joi.boolean().required(),
+        vcid:Joi.string(),
         ctid: Joi.string(),
         duration: Joi.string(),
         timing: Joi.string(),
@@ -26,7 +27,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { courseName, description, isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate, price,ctid } = req.body;
+        const { courseName, description, isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate, price,vcid,ctid } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -83,6 +84,7 @@ module.exports = exports = {
                 courseName: courseName,
                 description: description,
                 isActive: isActive,
+                vcid:vcid,
                 ctid: ctid,
                 price:price,
                 duration: duration,
