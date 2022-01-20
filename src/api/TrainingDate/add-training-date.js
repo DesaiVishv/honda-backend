@@ -11,12 +11,13 @@ module.exports = exports = {
     // route validation
     validation: Joi.object({
         date: Joi.date().required(),
+        seat:Joi.number(),
         cnid:Joi.string().required()
         // imagePath: Joi.string().allow("")
     }),
 
     handler: async (req, res) => {
-        const { date, cnid } = req.body;
+        const { date,seat, cnid } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -55,6 +56,7 @@ module.exports = exports = {
             }
             let AmenintiesCreate = {
                 date:date,
+                seat:seat,
                 cnid:cnid
             };
             const newAmeninties = await global.models.GLOBAL.TRAININGDATE(AmenintiesCreate);
