@@ -33,10 +33,10 @@ module.exports = exports = {
         issueDate:Joi.date().required(),
         validTill:Joi.date().required(),
         Authority:Joi.string().required(),
-        passportPhoto:Joi.array().required(),
-        drivingLicense:Joi.array().required(),
-        IDproof:Joi.array().required(),
-        medicalCertificate:Joi.array().required(),
+        passportPhoto:Joi.string().required(),
+        drivingLicense:Joi.string().required(),
+        IDproof:Joi.string().required(),
+        medicalCertificate:Joi.string().required(),
         bloodGroup:Joi.string().required(),
         paymentId:Joi.string()
 
