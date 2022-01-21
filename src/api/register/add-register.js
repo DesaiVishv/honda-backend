@@ -10,6 +10,7 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
+        uid:Joi.string().required(),
         vcid:Joi.string().required(),
         ctid:Joi.string().required(),
         cnid:Joi.string().required(),
@@ -43,7 +44,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { vcid,ctid,cnid,lcid,dateofCourse,drivingLicenseNumber,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
+        const { uid,vcid,ctid,cnid,lcid,dateofCourse,drivingLicenseNumber,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -55,7 +56,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!vcid || !ctid || !cnid || !lcid || !dateofCourse || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill ) {
+        if (!uid || !vcid || !ctid || !cnid || !lcid || !dateofCourse || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -81,6 +82,7 @@ module.exports = exports = {
                 return;
             }
             let AmenintiesCreate = {
+                uid:uid,
                 vcid:vcid,
                 ctid:ctid,
                 cnid:cnid,

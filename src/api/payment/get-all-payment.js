@@ -13,24 +13,26 @@ module.exports = exports = {
     handler: async (req, res) => {
         
         try {
+            console.log("Hii")
+            req.query.page = req.query.page ? req.query.page : 1;
+            let page = parseInt(req.query.page);
+            req.query.limit = req.query.limit ? req.query.limit : 10;
+            let limit = parseInt(req.query.limit);
+            let skip = (parseInt(req.query.page) - 1) * limit;
+
+           
+            // let id = req.params.id;
+
+
             
-            let id = req.params.id;
-            if(!id){
-                const data4createResponseObject = {
-                    req: req,
-                    result: -1,
-                    message: messages.INVALID_PARAMETERS,
-                    payload: {},
-                    logPayload: false
-                };
-                res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-                return;
-            }
-            const Propertys = await global.models.GLOBAL.REGISTER.findOne({_id:id}).populate({
-                path:"uid",
-                model:"admin"
+            let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
+            
+            const count = await global.models.GLOBAL.PAYMENT.find(search).count();
+            const Questions = await global.models.GLOBAL.PAYMENT.find(search).skip(skip).limit(limit).sort({createdAt:-1}).populate({
+                path:"cnid",
+                model:"courseName"
             });
-            if(!Propertys){
+            if(Questions.length==0){
                 const data4createResponseObject = {
                     req: req,
                     result: -400,
@@ -41,12 +43,11 @@ module.exports = exports = {
                 res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                 return;
             }
-            // const nearProperty=await global.models.GLOBAL.PERSONALINFORMATION.find({_id:{$ne:id} });
             const data4createResponseObject = {
                 req: req,
                 result: 0,
                 message: messages.SUCCESS,
-                payload: { Property:Propertys},
+                payload: { Question:Questions ,count:count},
                 logPayload: false
             };
             res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
@@ -63,4 +64,3 @@ module.exports = exports = {
         }
     }
 };
-
