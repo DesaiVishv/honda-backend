@@ -12,9 +12,9 @@ router.get("/getDate", trainingDateApi.getDateByCourseName.handler);
 router.post("/addDate", passport.authenticate(["jwt"], { session: false }), validate("body", trainingDateApi.addDate.validation), trainingDateApi.addDate.handler);
 
 // // Put Methods
-// router.put("/updateVehicleCategory/:id", passport.authenticate(["jwt"], { session: false }), vehicleCategoryApi.updateVehicleCategory.handler);
+router.put("/updateDate/:id", passport.authenticate(["jwt"], { session: false }), trainingDateApi.updateDate.handler);
 
 // // Delete Methods
-// router.delete("/deleteVehicleCategory/:id", passport.authenticate(["jwt"], { session: false }), vehicleCategoryApi.deleteVehicleCategory.handler);
+router.delete("/deleteDate/:id", passport.authenticate(["jwt"], { session: false }), trainingDateApi.deleteDate.handler);
 
 module.exports = exports = router;
