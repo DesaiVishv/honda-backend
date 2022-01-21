@@ -24,7 +24,7 @@ module.exports = (connection) => {
         pincode:{type:String, required:true},
         email:{type:String, required:true},
         phone:{type:Number, required:true},
-        permanentDLnumber:{type:Number, required:true},
+        // permanentDLnumber:{type:Number, required:true},
         issueDate:{type:Date, required:true},
         validTill:{type:Date, required:true},
         Authority:{type:String, required:true},

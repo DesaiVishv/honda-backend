@@ -29,7 +29,7 @@ module.exports = exports = {
         pincode:Joi.number().required(),
         email:Joi.string().required(),
         phone:Joi.number().required(),
-        permanentDLnumber:Joi.number().required(),
+        // permanentDLnumber:Joi.number().required(),
         issueDate:Joi.date().required(),
         validTill:Joi.date().required(),
         Authority:Joi.string().required(),
@@ -43,7 +43,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { vcid,ctid,cnid,lcid,dateofCourse,drivingLicenseNumber,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,permanentDLnumber,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
+        const { vcid,ctid,cnid,lcid,dateofCourse,drivingLicenseNumber,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -55,7 +55,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!vcid || !ctid || !cnid || !lcid || !dateofCourse || !drivingLicenseNumber || !phone || !permanentDLnumber || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill ) {
+        if (!vcid || !ctid || !cnid || !lcid || !dateofCourse || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -100,7 +100,7 @@ module.exports = exports = {
                 email:email,
                 phone:phone,
                 pincode:pincode,
-                permanentDLnumber:permanentDLnumber,
+                // permanentDLnumber:permanentDLnumber,
                 issueDate:issueDate,
                 validTill:validTill,
                 Authority:Authority,
