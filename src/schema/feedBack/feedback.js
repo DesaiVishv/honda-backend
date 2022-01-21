@@ -10,7 +10,7 @@ module.exports = (connection) => {
         phone:{type:Number, require:true},
         feedbackCategory:{type:String, require:true},
         rating:{type:Number, require:true},
-        description:{type:String, require:true},
+        description:{type:String},
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
         createdBy: {

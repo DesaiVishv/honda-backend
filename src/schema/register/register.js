@@ -9,7 +9,7 @@ module.exports = (connection) => {
         ctid: { type: mongoose.Schema.Types.ObjectId, require: true },
         cnid: { type: mongoose.Schema.Types.ObjectId, require: true },
         lcid: { type: String, require: true },
-        dateofCourse: { type: Date, required: true },
+        tdid:{type: mongoose.Schema.Types.ObjectId},
         drivingLicenseNumber: { type: String, required: true },
         fname: { type: String, required: true },
         mname: { type: String, required: true },
