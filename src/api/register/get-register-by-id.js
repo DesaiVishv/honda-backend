@@ -40,10 +40,7 @@ module.exports = exports = {
             }).populate({
                 path: "cnid",
                 model: "courseName"
-            }).populate({
-                path: "lcid",
-                model: "licenseCategory"
-            });
+            })
             if (!Propertys) {
                 const data4createResponseObject = {
                     req: req,

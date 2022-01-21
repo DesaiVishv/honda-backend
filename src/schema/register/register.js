@@ -8,7 +8,7 @@ module.exports = (connection) => {
         vcid: { type: mongoose.Schema.Types.ObjectId, require: true },
         ctid: { type: mongoose.Schema.Types.ObjectId, require: true },
         cnid: { type: mongoose.Schema.Types.ObjectId, require: true },
-        lcid: { type: mongoose.Schema.Types.ObjectId, require: true },
+        lcid: { type: String, require: true },
         dateofCourse: { type: Date, required: true },
         drivingLicenseNumber: { type: String, required: true },
         fname: { type: String, required: true },
