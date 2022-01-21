@@ -32,6 +32,9 @@ module.exports = exports = {
             const Questions = await global.models.GLOBAL.COURSENAME.find(search).skip(skip).limit(limit).sort({createdAt:-1}).populate({
                 path:"ctid",
                 model:"courseType"
+            }).populate({
+                path:"vcid",
+                model:"vehicleCategory"
             });
             if(Questions.length==0){
                 const data4createResponseObject = {
