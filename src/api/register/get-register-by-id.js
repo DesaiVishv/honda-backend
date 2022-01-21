@@ -11,11 +11,11 @@ module.exports = exports = {
     // route validation
 
     handler: async (req, res) => {
-        
+
         try {
-            
+
             let uid = req.params.id;
-            if(!uid){
+            if (!uid) {
                 const data4createResponseObject = {
                     req: req,
                     result: -1,
@@ -28,11 +28,23 @@ module.exports = exports = {
             }
             // const findUser = await global.models.GLOBAL.REGISTER.find({uid:uid})
             // console.log("findUser",findUser);
-            const Propertys = await global.models.GLOBAL.REGISTER.find({uid:uid}).populate({
-                path:"uid",
-                model:"admin"
+            const Propertys = await global.models.GLOBAL.REGISTER.find({ uid: uid }).populate({
+                path: "uid",
+                model: "admin"
+            }).populate({
+                path: "ctid",
+                model: "courseType"
+            }).populate({
+                path: "vcid",
+                model: "vehicleCategory"
+            }).populate({
+                path: "cnid",
+                model: "courseName"
+            }).populate({
+                path: "lcid",
+                model: "licenseCategory"
             });
-            if(!Propertys){
+            if (!Propertys) {
                 const data4createResponseObject = {
                     req: req,
                     result: -400,
@@ -48,7 +60,7 @@ module.exports = exports = {
                 req: req,
                 result: 0,
                 message: messages.SUCCESS,
-                payload: { Property:Propertys},
+                payload: { Property: Propertys },
                 logPayload: false
             };
             res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));

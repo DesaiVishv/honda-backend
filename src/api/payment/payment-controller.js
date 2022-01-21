@@ -68,21 +68,21 @@ module.exports = exports = {
       paymentId: paymentId,
       price: findCoursename.price
     })
-    console.log("paymentDate",paymentData)
-    const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({ cnid: cnid }, { paymentId: paymentId })
-    console.log("updateRegister",updateRegister)
-    if (!updateRegister) {
-      const data4createResponseObject = {
-        req: req,
-        result: -1,
-        message: messages.NOT_FOUND,
-        payload: {},
-        logPayload: false
-      };
-      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
-    }
+    console.log("paymentDate", paymentData)
+    // const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({ cnid: cnid }, { paymentId: paymentId })
+    // console.log("updateRegister",updateRegister)
+    // if (!updateRegister) {
+    //   const data4createResponseObject = {
+    //     req: req,
+    //     result: -1,
+    //     message: messages.NOT_FOUND,
+    //     payload: {},
+    //     logPayload: false
+    //   };
+    //   return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+    // }
     if (paymentData) {
-      const updateSeat = await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate({cnid:cnid},{$inc:{ seat:-1 }})
+      const updateSeat = await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate({ cnid: cnid }, { $inc: { seat: -1 } })
       console.log("uploadSeat", updateSeat)
       if (!updateSeat) {
         const data4createResponseObject = {
@@ -97,16 +97,16 @@ module.exports = exports = {
     }
     await paymentData.save()
     // res.send(paymentData)
-    if(paymentData){
+    if (paymentData) {
       const data4createResponseObject = {
         req: req,
         result: 0,
         message: messages.SUCCESS_PAYMENT,
-        payload: {paymentData},
+        payload: { paymentData },
         logPayload: false
       };
       return res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-    }else{
+    } else {
       const data4createResponseObject = {
         req: req,
         result: -1,
