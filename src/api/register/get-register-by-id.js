@@ -14,8 +14,8 @@ module.exports = exports = {
         
         try {
             
-            let id = req.params.id;
-            if(!id){
+            let uid = req.params.id;
+            if(!uid){
                 const data4createResponseObject = {
                     req: req,
                     result: -1,
@@ -26,7 +26,9 @@ module.exports = exports = {
                 res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                 return;
             }
-            const Propertys = await global.models.GLOBAL.REGISTER.findOne({_id:id}).populate({
+            // const findUser = await global.models.GLOBAL.REGISTER.find({uid:uid})
+            // console.log("findUser",findUser);
+            const Propertys = await global.models.GLOBAL.REGISTER.find({uid:uid}).populate({
                 path:"uid",
                 model:"admin"
             });
