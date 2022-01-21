@@ -41,6 +41,7 @@ module.exports = async () => {
                     CMS: require("../schema/CMS/cms")(connection_IN_HONDA),
                     FEEDBACK: require("../schema/feedBack/feedback")(connection_IN_HONDA),
                     INFORMATION: require("../schema/information/information")(connection_IN_HONDA),
+                    ANNOUNCEMENT: require("../schema/Announcement/Announcement")(connection_IN_HONDA),
                     
                     FILEMANAGER: require("../schema/FileManager/filemanager")(connection_IN_HONDA),
                     MENU: require("../schema/menu/menu")(connection_IN_HONDA),

@@ -21,6 +21,7 @@ module.exports = (app, logger) => {
     const cmsRoute = require("../routes/cms/index")
     const feedbackRoute = require("../routes/feedBack/index")
     const informationRoute = require("../routes/information/index")
+    const announcementRoute = require("../routes/Announcement/index")
 
     const propertyRoute = require("../routes/property/index")
     const amenitiesRoute = require("../routes/amenities/index")
@@ -55,6 +56,7 @@ module.exports = (app, logger) => {
     app.use(["/api/v1/cms"],  cmsRoute);
     app.use(["/api/v1/feedback"],  feedbackRoute);
     app.use(["/api/v1/information"],  informationRoute);
+    app.use(["/api/v1/announcement"],  announcementRoute);
 
     app.use(["/api/v1/amenities"],  amenitiesRoute);
     app.use(["/api/v1/property"],  propertyRoute);
