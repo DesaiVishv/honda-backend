@@ -15,7 +15,7 @@ module.exports = exports = {
         ctid:Joi.string().required(),
         cnid:Joi.string().required(),
         lcid:Joi.string().required(),
-        dateofCourse:Joi.date().required(),
+        tdid:Joi.string().required(),
         drivingLicenseNumber:Joi.string().required(),
         fname:Joi.string().required(),
         mname:Joi.string().required(),
@@ -44,7 +44,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { uid,vcid,ctid,cnid,lcid,dateofCourse,drivingLicenseNumber,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
+        const { uid,vcid,ctid,cnid,lcid,tdid,drivingLicenseNumber,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -56,7 +56,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!uid || !vcid || !ctid || !cnid || !lcid || !dateofCourse || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill ) {
+        if (!uid || !vcid || !ctid || !cnid || !lcid || !tdid || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -69,25 +69,26 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.REGISTER.find({ phone:phone });
-            if (checkMenu.length > 0) {
-                const data4createResponseObject = {
-                    req: req,
-                    result: -400,
-                    message: messages.EXISTS_MENU,
-                    payload: {},
-                    logPayload: false
-                };
-                res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-                return;
-            }
+            // const checkMenu = await global.models.GLOBAL.REGISTER.find({ phone:phone });
+            // if (checkMenu.length > 0) {
+            //     const data4createResponseObject = {
+            //         req: req,
+            //         result: -400,
+            //         message: messages.EXISTS_MENU,
+            //         payload: {},
+            //         logPayload: false
+            //     };
+            //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+            //     return;
+            // }
             let AmenintiesCreate = {
                 uid:uid,
                 vcid:vcid,
                 ctid:ctid,
                 cnid:cnid,
                 lcid:lcid,
-                dateofCourse:dateofCourse,
+                tdid:tdid,
+                // dateofCourse:dateofCourse,
                 drivingLicenseNumber:drivingLicenseNumber,
                 fname:fname,
                 mname:mname,
@@ -115,6 +116,15 @@ module.exports = exports = {
             };
             const newAmeninties = await global.models.GLOBAL.REGISTER(AmenintiesCreate);
             newAmeninties.save();
+            let addHis ={
+                uid:uid,
+                tdid:tdid,
+                cnid:cnid,
+                type:true,
+                count:1
+            }
+            const addHistory = await global.models.GLOBAL.HISTORY(addHis);
+            addHistory.save();
             const data4createResponseObject = {
                 req: req,
                 result: 0,

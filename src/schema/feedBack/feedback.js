@@ -9,8 +9,8 @@ module.exports = (connection) => {
         email:{type:String},
         phone:{type:Number, require:true},
         feedbackCategory:{type:String, require:true},
-        rating:{type:Number, require:true},
-        description:{type:String, require:true},
+        rating:{type:Number},
+        description:{type:String},
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
         createdBy: {

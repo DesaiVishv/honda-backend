@@ -17,7 +17,7 @@ module.exports = exports = {
     handler: async (req, res) => {
         const { id } = req.params;
         const { user } = req;
-        const { name, email, phone, feedbackCategory, rating, description } = req.body;
+        const { date, seat, cnid } = req.body;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
                 req: req,
@@ -28,7 +28,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!id || !phone || !feedbackCategory ) {
+        if (!id || !date || !cnid) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -41,7 +41,7 @@ module.exports = exports = {
 
         try {
 
-            let Item = await global.models.GLOBAL.FEEDBACK.findById(id);
+            let Item = await global.models.GLOBAL.TRAININGDATE.findById(id);
 
             if (!Item) {
                 const data4createResponseObject = {
@@ -53,26 +53,25 @@ module.exports = exports = {
                 };
                 res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
             } else {
-                const checkMenu = await global.models.GLOBAL.FEEDBACK.find({ id });
-                if (checkMenu.length > 0) {
-                    const data4createResponseObject = {
-                        req: req,
-                        result: -400,
-                        message: messages.NOT_FOUND,
-                        payload: {},
-                        logPayload: false
-                    };
-                    res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-                    return;
-                }
-                Item = await global.models.GLOBAL.FEEDBACK.update({ _id: id }, {
+                // const checkMenu = await global.models.GLOBAL.VEHICLECATEGORY.find({vehicleCategory:vehicleCategory});
+                // console.log("checkMenu", checkMenu)
+                // if(checkMenu.length==0){
+                //     const data4createResponseObject = {
+                //         req: req,
+                //         result: -400,
+                //         message: messages.NOT_FOUND,
+                //         payload: {},
+                //         logPayload: false
+                //     };
+                //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+                //     return;
+                // }
+
+                Item = await global.models.GLOBAL.TRAININGDATE.update({ _id: id }, {
                     $set: {
-                        name: name,
-                        email: email,
-                        phone: phone,
-                        feedbackCategory: feedbackCategory,
-                        rating: rating,
-                        description: description
+                        date: date,
+                        seat: seat,
+                        cnid: cnid
                     }
                 });
                 const data4createResponseObject = {
