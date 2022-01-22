@@ -18,7 +18,7 @@ module.exports = (connection) => {
         email: { type: String, require: true },
         phone: { type: String, require: true },
         subject: { type: String, require: true },
-        description: { type: String, require: true },
+        description: { type: String },
         creationDate: { type: Date, default: Date.now() },
         modificationData: { type: Date, default: Date.now() },
     }, {

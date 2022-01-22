@@ -15,7 +15,7 @@ module.exports = exports = {
         email: Joi.string().required(),
         phone: Joi.number().required(),
         subject: Joi.string().required(),
-        description: Joi.string().required()
+        description: Joi.string().allow('')
     }),
 
     handler: async (req, res) => {
