@@ -39,7 +39,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!courseName || !description || !price) {
+        if (!courseName || !description ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
