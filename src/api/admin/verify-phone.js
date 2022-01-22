@@ -17,6 +17,7 @@ module.exports = exports = {
     const { phone } = req.body;
     console.log("PHONE BODY--->>", phone);
     let code = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
+    console.log("code", code);
     // const locale = utils.getLocale(req);
     let entry;
     // If codes already exists for this phone number in the database delete them
@@ -61,8 +62,7 @@ module.exports = exports = {
 
     // When USE_TEST_PIN is true (config.json)
 
-    
-      if (config.MONGODB.GLOBAL.USE_TEST_PIN) {
+      if (config.MONGODB.GLOBAL.USE_TEST_PIN === true) {
         // If (dummyAccount) {
         code = 1235;
 
@@ -107,12 +107,11 @@ module.exports = exports = {
       } else {
         const event = { ...events.GENERAL };
         event.message = messages.SMS_VERIFICATION_CODE.format([code]);
-        const messageDetails = await utils.sendMessage({
-          event: event,
-          lang: locale.lang,
-          name: "",
-          phone: phone,
-        });
+        const messageDetails = await utils.sendMessage(
+          phone,
+          "bhargav"
+        );
+        console.log("messageDetails1", messageDetails);
 
         if (!messageDetails) {
           logger.error(
@@ -132,7 +131,7 @@ module.exports = exports = {
 
         /* save the code in database */
         entry = global.models.GLOBAL.CODE_VERIFICATION({
-          phone: phone.removeSpaces(),
+          phone: phone,
           code: code,
           date: Date.now(),
           expirationDate: Date.now() + 300 * 1000,

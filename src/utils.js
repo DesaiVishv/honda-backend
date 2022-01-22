@@ -11,6 +11,8 @@
  
  const logger = require("./logger");
 const { default: jwtDecode } = require("jwt-decode");
+var axios = require('axios');
+var qs = require('qs');
  
 //  const geocoder = require("node-geocoder")({
 //      provider: "google",
@@ -199,66 +201,76 @@ functions.checkStatus = async (user) => {
     //  };
  
  /* Send SMS */
- functions.sendMessage = async (parameters) => {
-     logger.info("#sendMessage - parameters: " + JSON.stringify(parameters, null, 4));
-     const event = parameters.event || {};
-     const ignoreEnvironment = parameters.ignoreEnvironment || false;
-     const lang = parameters.lang || "en";
-     const name = parameters.name || "";
-     const phone = parameters.phone || "";
+ functions.sendMessage = async (phoneToUse, nameToUse) => {
+     console.log("parameters- phone", phoneToUse);
+     console.log("parameters- nameToUse", nameToUse);
+    //  logger.info("#sendMessage - parameters: " + JSON.stringify(parameters, null, 3));
+     const name = nameToUse || "";
+     const phone = phoneToUse || "";
  
-     if (_.isEmpty(phone)) {
+     if (!phone) {
          logger.info("#sendMessage - The phone number cannot be empty. No SMS will be sent out.");
          return null;
      }
- 
-     let messageToSend = "";
-     if (_.isEmpty(event.message[lang])) {
-         messageToSend = event.message["en"]; // (!_.isEmpty(event.summary[ "en" ]) ? (event.summary[ "en" ] + " " + name + ",\n") : "") + event.message[ "en" ];
-     } else {
-         messageToSend = event.message[lang]; // (!_.isEmpty(event.summary[ lang ]) ? (event.summary[ lang ] + " " + name + ",\n") : "") + event.message[ lang ];
+  
+     let phone4twilio = phone;
+     console.log("phone4twilio", phone4twilio.toString().includes("+"));
+     if (phone4twilio.toString().includes("00") !== 0 && phone4twilio.toString().includes("+") !== 0) {
+         phone4twilio = "91" + phone4twilio;
+     } else if (phone4twilio.toString().indexOf("00") === 0) {
+         phone4twilio = "+" + phone4twilio.slice(2);
      }
- 
-    //  let phone4twilio = phone;
-    //  if (phone4twilio.indexOf("00") !== 0 && phone4twilio.indexOf("+") !== 0) {
-    //      phone4twilio = "+91" + phone4twilio;
-    //  } else if (phone4twilio.indexOf("00") === 0) {
-    //      phone4twilio = "+" + phone4twilio.slice(2);
-    //  }
- 
-    //  const phoneDetails = await functions.validatePhoneNumber(phone4twilio);
-    //  if (phoneDetails) {
-    //      // logger.info('#sendMessage - phoneDetails: ' + JSON.stringify(phoneDetails, null, 4));
-    //      if (functions.isProduction() || ignoreEnvironment) {
-    //          try {
-    //              const messageDetails = await twilio.messages.create({
-    //                  body: messageToSend,
-    //                  from: "", // '',
-    //                  to: phone4twilio
-    //              });
- 
-    //              if (!messageDetails) {
-    //                  logger.error("#sendMessage - Message sending failed to " + phone4twilio + ". Reason: n.a.");
-    //                  return null;
-    //              } else if (messageDetails.errorCode !== null) {
-    //                  logger.error("#sendMessage - Message sending failed to " + phone4twilio + ". result: " + JSON.stringify(messageDetails));
-    //                  return null;
-    //              } else {
-    //                  messageDetails.countryCode = phoneDetails.countryCode;
-    //                  logger.info("#sendMessage - Message sent to " + phone4twilio + " on " + messageDetails.dateCreated);
-    //                  return messageDetails;
-    //              }
-    //          } catch (error) {
-    //              logger.error("#sendMessage - Message sending failed to " + phone4twilio + ". Reason: " + error);
-    //              return null;
-    //          }
-    //      } else {
-    //          logger.info(`No SMS are sent out in ${process.env.APP_ENVIRONMENT.toUpperCase()} environment`);
-    //          return null;
-    //      }
-    //  } else {
-    //      return null;
-    //  }
+
+     console.log("phone4twilio", phone4twilio);
+     const url = 'https://sms.anayamail.com/sendsms'
+
+     var dataForSms = qs.stringify({
+        'api_key': '16dd72a429c90c0c6fc0b32406a721fc',
+        'number': phone4twilio,
+        'message': `hellow + ${name}`
+      });
+      var config = {
+        method: 'post',
+        url: 'https://sms.anayamail.com/sendsms',
+        headers: { 
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data : dataForSms
+      };
+
+     try {
+        const resp = await axios(config)
+        .then(function (response) {
+          console.log("Responseeee",response);
+          console.log("Responseeee",JSON.stringify(response.data));
+            if(parseInt(response.status / 100) === 2) {
+                logger.info("#sendMessage - Message sent to " + phone4twilio + " successfully.");
+                return response.data;
+            }
+        })
+        .catch(function (error) {
+          console.log("ERROR", error);
+          logger.error("#sendMessage - Message sending failed to " + phone4twilio + ". Reason: n.a.");
+          return null;
+        });
+
+        return resp;
+
+        // if (!messageDetails) {
+        //     logger.error("#sendMessage - Message sending failed to " + phone4twilio + ". Reason: n.a.");
+        //     return null;
+        // } else if (messageDetails.errorCode !== null) {
+        //     logger.error("#sendMessage - Message sending failed to " + phone4twilio + ". result: " + JSON.stringify(messageDetails));
+        //     return null;
+        // } else {
+        //     messageDetails.countryCode = phoneDetails.countryCode;
+        //     logger.info("#sendMessage - Message sent to " + phone4twilio + " on " + messageDetails.dateCreated);
+        //     return messageDetails;
+        // }
+    } catch (error) {
+        logger.error("#sendMessage - Message sending failed to " + phone4twilio + ". Reason: " + error);
+        return null;
+    }
  };
  
  /** Sort a JSON by keys */
