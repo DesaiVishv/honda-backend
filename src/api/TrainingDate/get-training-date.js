@@ -48,7 +48,7 @@ module.exports = exports = {
             const count = await global.models.GLOBAL.TRAININGDATE.find(getData).count();
             const subMenus = await global.models.GLOBAL.TRAININGDATE.find(getData).skip(skip).limit(limit)
             console.log("submenus", subMenus)
-            if (subMenus.length == 0) {
+            if (subMenus.length == 0 ) {
                 const data4createResponseObject = {
                     req: req,
                     result: -400,
