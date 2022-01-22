@@ -6,7 +6,7 @@ const passport = require("passport");
 
 // Get Methods
 router.get("/getDate", trainingDateApi.getDateByCourseName.handler);
-// router.post("/getSubmenuByMenu",   vehicleCategoryApi.getSubmenuByMenu.handler);
+router.get("/getAllDate",   trainingDateApi.getAllDate.handler);
 
 // Post Methods
 router.post("/addDate", passport.authenticate(["jwt"], { session: false }), validate("body", trainingDateApi.addDate.validation), trainingDateApi.addDate.handler);
