@@ -10,41 +10,41 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-        uid:Joi.string().required(),
-        vcid:Joi.string().required(),
-        ctid:Joi.string().required(),
-        cnid:Joi.string().required(),
-        lcid:Joi.string().required(),
-        tdid:Joi.string().required(),
-        drivingLicenseNumber:Joi.string().required(),
-        fname:Joi.string(),
-        mname:Joi.string(),
-        lname:Joi.string(),
+        uid: Joi.string().required(),
+        vcid: Joi.string().required(),
+        ctid: Joi.string().required(),
+        cnid: Joi.string().required(),
+        lcid: Joi.string().required(),
+        tdid: Joi.string().required(),
+        drivingLicenseNumber: Joi.string().required(),
+        fname: Joi.string(),
+        mname: Joi.string(),
+        lname: Joi.string(),
         DoB: Joi.date().required(),
-        qualification:Joi.string().required(),
-        gender:Joi.string().required(),
-        address:Joi.string().required(),
-        state:Joi.string().required(),
-        city:Joi.string().required(),
-        district:Joi.string().required(),
-        pincode:Joi.number().required(),
-        email:Joi.string().required(),
-        phone:Joi.number().required(),
+        qualification: Joi.string().required(),
+        gender: Joi.string().required(),
+        address: Joi.string().required(),
+        state: Joi.string().required(),
+        city: Joi.string().required(),
+        district: Joi.string().required(),
+        pincode: Joi.number().required(),
+        email: Joi.string().required(),
+        phone: Joi.number().required(),
         // permanentDLnumber:Joi.number().required(),
-        issueDate:Joi.date().required(),
-        validTill:Joi.date().required(),
-        Authority:Joi.string().required(),
-        passportPhoto:Joi.string().required(),
-        drivingLicense:Joi.string().required(),
-        IDproof:Joi.string().required(),
-        medicalCertificate:Joi.string().required(),
-        bloodGroup:Joi.string().required(),
-        paymentId:Joi.string()
+        issueDate: Joi.date().required(),
+        validTill: Joi.date().required(),
+        Authority: Joi.string().required(),
+        passportPhoto: Joi.string().required(),
+        drivingLicense: Joi.string().required(),
+        IDproof: Joi.string(),
+        medicalCertificate: Joi.string(),
+        bloodGroup: Joi.string(),
+        paymentId: Joi.string()
 
     }),
 
     handler: async (req, res) => {
-        const { uid,vcid,ctid,cnid,lcid,tdid,drivingLicenseNumber,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
+        const { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -56,7 +56,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!uid || !vcid || !ctid || !cnid || !lcid || !tdid || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill ) {
+        if (!uid || !vcid || !ctid || !cnid || !lcid || !tdid || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !issueDate || !validTill) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -82,46 +82,46 @@ module.exports = exports = {
             //     return;
             // }
             let AmenintiesCreate = {
-                uid:uid,
-                vcid:vcid,
-                ctid:ctid,
-                cnid:cnid,
-                lcid:lcid,
-                tdid:tdid,
+                uid: uid,
+                vcid: vcid,
+                ctid: ctid,
+                cnid: cnid,
+                lcid: lcid,
+                tdid: tdid,
                 // dateofCourse:dateofCourse,
-                drivingLicenseNumber:drivingLicenseNumber,
-                fname:fname,
-                mname:mname,
-                lname:lname,
-                DoB:DoB,
-                qualification:qualification,
-                gender:gender,
-                address:address,
-                state:state,
-                city:city,
-                district:district,
-                email:email,
-                phone:phone,
-                pincode:pincode,
+                drivingLicenseNumber: drivingLicenseNumber,
+                fname: fname,
+                mname: mname,
+                lname: lname,
+                DoB: DoB,
+                qualification: qualification,
+                gender: gender,
+                address: address,
+                state: state,
+                city: city,
+                district: district,
+                email: email,
+                phone: phone,
+                pincode: pincode,
                 // permanentDLnumber:permanentDLnumber,
-                issueDate:issueDate,
-                validTill:validTill,
-                Authority:Authority,
-                passportPhoto:passportPhoto,
-                drivingLicense:drivingLicense,
-                IDproof:IDproof,
-                medicalCertificate:medicalCertificate,
-                bloodGroup:bloodGroup,
-                paymentId:paymentId
+                issueDate: issueDate,
+                validTill: validTill,
+                Authority: Authority,
+                passportPhoto: passportPhoto,
+                drivingLicense: drivingLicense,
+                IDproof: IDproof,
+                medicalCertificate: medicalCertificate,
+                bloodGroup: bloodGroup,
+                paymentId: paymentId
             };
             const newAmeninties = await global.models.GLOBAL.REGISTER(AmenintiesCreate);
             newAmeninties.save();
-            let addHis ={
-                uid:uid,
-                tdid:tdid,
-                cnid:cnid,
-                type:true,
-                count:1
+            let addHis = {
+                uid: uid,
+                tdid: tdid,
+                cnid: cnid,
+                type: true,
+                count: 1
             }
             const addHistory = await global.models.GLOBAL.HISTORY(addHis);
             addHistory.save();
