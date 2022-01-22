@@ -10,18 +10,18 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-        date: Joi.date().required(),
-        seat:Joi.number(),
-        vcid:Joi.array().required(),
-        ctid:Joi.array().required(),
-        cnid:Joi.array().required(),
-        startTime:Joi.string(),
-        endTime:Joi.string()
+        date: Joi.string().required(),
+        seat: Joi.number(),
+        vcid: Joi.array().required(),
+        ctid: Joi.array().required(),
+        cnid: Joi.array().required(),
+        startTime: Joi.string(),
+        endTime: Joi.string()
         // imagePath: Joi.string().allow("")
     }),
 
     handler: async (req, res) => {
-        const { date,seat,vcid,ctid, cnid,startTime,endTime } = req.body;
+        const { date, seat, vcid, ctid, cnid, startTime, endTime } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -59,26 +59,26 @@ module.exports = exports = {
             //     return;
             // }
             let AmenintiesCreate = {
-                date:date,
-                seat:seat,
-                vcid:vcid,
-                ctid:ctid,
-                cnid:cnid,
-                startTime:startTime,
-                endTime:endTime
+                date: date,
+                seat: seat,
+                vcid: vcid,
+                ctid: ctid,
+                cnid: cnid,
+                startTime: startTime,
+                endTime: endTime
             };
             const newAmeninties = await global.models.GLOBAL.TRAININGDATE(AmenintiesCreate);
             newAmeninties.save();
             let addHis = {
-                uid:user._id,
-                tdid:newAmeninties._id,
-                vcid:vcid,
-                ctid:ctid,
-                cnid:cnid,
-                type:true,
-                startTime:startTime,
-                endTime:endTime,
-                count:seat
+                uid: user._id,
+                tdid: newAmeninties._id,
+                vcid: vcid,
+                ctid: ctid,
+                cnid: cnid,
+                type: true,
+                startTime: startTime,
+                endTime: endTime,
+                count: seat
             }
             const addHistory = await global.models.GLOBAL.HISTORY(addHis);
             addHistory.save();

@@ -6,6 +6,7 @@ const messages = require("../../../json/messages.json");
 const logger = require("../../logger");
 const utils = require("../../utils");
 const moment = require('moment');
+const { ObjectId } = require("mongodb");
 
 // Add category by admin
 module.exports = exports = {
@@ -25,11 +26,14 @@ module.exports = exports = {
             // let starttime = req.query.startTime;
             // let endtime = req.query.endTime;
             let { date, cnid, startTime, endTime } = req.query;
-            let startDate = moment(date).toISOString();
-            let endDate = moment(date).add(5, "days").toISOString();
+            let startDate = moment(date).add(1, "days").format("YYYY-MM-DD");
+            let endDate = moment(date).add(5, "days").format("YYYY-MM-DD");
             console.log("startDate", startDate);
             console.log("endDate", endDate);
-            let filter0 = date ? { date: { $gte: new Date(startDate.toString()), $lte: new Date(endDate.toString()) }, cnid: cnid } : {}
+            // startDate = new Date(startDate.toString());
+            // endDate = new Date(endDate.toString())
+            // { $gte: startDate.toString(), $lte: endDate.toString() }
+            let filter0 = date ? { date: date, cnid: ObjectId(cnid) } : {}
             console.log(filter0)
             let filter1 = startTime != null ? {
                 $and: [
@@ -48,7 +52,7 @@ module.exports = exports = {
             const count = await global.models.GLOBAL.TRAININGDATE.find(getData).count();
             const subMenus = await global.models.GLOBAL.TRAININGDATE.find(getData).skip(skip).limit(limit)
             console.log("submenus", subMenus)
-            if (subMenus.length == 0 ) {
+            if (subMenus.length == 0) {
                 const data4createResponseObject = {
                     req: req,
                     result: -400,
