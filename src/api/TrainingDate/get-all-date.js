@@ -27,7 +27,16 @@ module.exports = exports = {
             let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
             
             const count = await global.models.GLOBAL.TRAININGDATE.find(search).count();
-            const Questions = await global.models.GLOBAL.TRAININGDATE.find(search).skip(skip).limit(limit).sort({createdAt:-1});
+            const Questions = await global.models.GLOBAL.TRAININGDATE.find(search).skip(skip).limit(limit).sort({createdAt:-1}).populate({
+                path:"ctid",
+                model:"courseType"
+            }).populate({
+                path:"cnid",
+                model:"courseName"
+            }).populate({
+                path:"vcid",
+                model:"vehicleCategory"
+            });
             if(Questions.length==0){
                 const data4createResponseObject = {
                     req: req,
