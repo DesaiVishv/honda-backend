@@ -5,6 +5,7 @@ const messages = require("../../../json/messages.json");
 
 const logger = require("../../logger");
 const utils = require("../../utils");
+const moment = require('moment');
 
 // Add category by admin
 module.exports = exports = {
@@ -23,8 +24,12 @@ module.exports = exports = {
             // let id=req.query.cnid;
             // let starttime = req.query.startTime;
             // let endtime = req.query.endTime;
-            let { date, cnid,startTime, endTime } = req.query;
-            let filter0 = date ? { date: date, cnid: cnid } : {}
+            let { date, cnid, startTime, endTime } = req.query;
+            let startDate = moment(date).toISOString();
+            let endDate = moment(date).add(5, "days").toISOString();
+            console.log("startDate", startDate);
+            console.log("endDate", endDate);
+            let filter0 = date ? { date: { $gte: new Date(startDate.toString()), $lte: new Date(endDate.toString()) }, cnid: cnid } : {}
             console.log(filter0)
             let filter1 = startTime != null ? {
                 $and: [
@@ -35,7 +40,7 @@ module.exports = exports = {
                 ]
 
             } : {}
-            let getData = {$and:[filter0,filter1]}
+            let getData = { $and: [filter0, filter1] }
             // let search = req.query.search ? { name: { $regex: req.query.search, $options: 'i' },date:{$in:ids},cnid:{$in:id},startTime:{$in:starttime},endTime:{$in:endtime} } : { date:{$in:ids},cnid:{$in:id},startTime:{$in:starttime},endTime:{$in:endtime} };
             // console.log("search",search)
             // const findCourse = await global.models.GLOBAL.TRAININGDATE.
