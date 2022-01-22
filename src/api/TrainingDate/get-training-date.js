@@ -11,7 +11,7 @@ module.exports = exports = {
     // route validation
 
     handler: async (req, res) => {
-        
+
         try {
             req.query.page = req.query.page ? req.query.page : 1;
             let page = parseInt(req.query.page);
@@ -19,20 +19,31 @@ module.exports = exports = {
             let limit = parseInt(req.query.limit);
             let skip = (parseInt(req.query.page) - 1) * limit;
 
-            let ids=req.query.date;
+            // let ids=req.query.date;
+            // let id=req.query.cnid;
+            // let starttime = req.query.startTime;
+            // let endtime = req.query.endTime;
+            let { date, cnid,startTime, endTime } = req.query;
+            let filter0 = date ? { date: date, cnid: cnid } : {}
+            console.log(filter0)
+            let filter1 = startTime != null ? {
+                $and: [
+                    { date: date },
+                    { cnid: cnid },
+                    { startTime: startTime },
+                    { endTime: endTime },
+                ]
 
-            
-            let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'},date:{$in:ids}} : {date:{$in:ids}};
-            
-            // const Menus = await global.models.GLOBAL.DETAILSOFCOURSENAME.find({_id:{$in:ids}})
-            // console.log("tttttttttt", Menus)
-         
-            const count = await global.models.GLOBAL.TRAININGDATE.find(search).count();
-            const subMenus = await global.models.GLOBAL.TRAININGDATE.find(search).skip(skip).limit(limit).populate({
-                path: "cnid",
-                model: "courseName",
-            });
-            if(subMenus.length==0){
+            } : {}
+            let getData = {$and:[filter0,filter1]}
+            // let search = req.query.search ? { name: { $regex: req.query.search, $options: 'i' },date:{$in:ids},cnid:{$in:id},startTime:{$in:starttime},endTime:{$in:endtime} } : { date:{$in:ids},cnid:{$in:id},startTime:{$in:starttime},endTime:{$in:endtime} };
+            // console.log("search",search)
+            // const findCourse = await global.models.GLOBAL.TRAININGDATE.
+            // let search = req.query.search ? {name:{$regex:req.query.search,$options:'i'}, filter0:filter0} :{filter0:filter0}
+            const count = await global.models.GLOBAL.TRAININGDATE.find(getData).count();
+            const subMenus = await global.models.GLOBAL.TRAININGDATE.find(getData).skip(skip).limit(limit)
+            console.log("submenus", subMenus)
+            if (subMenus.length == 0) {
                 const data4createResponseObject = {
                     req: req,
                     result: -400,
@@ -47,7 +58,7 @@ module.exports = exports = {
                 req: req,
                 result: 0,
                 message: messages.SUCCESS,
-                payload: { subMenu:subMenus ,count:count},
+                payload: { subMenu: subMenus, count: count },
                 logPayload: false
             };
             res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
