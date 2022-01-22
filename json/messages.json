@@ -27,6 +27,7 @@
     "FAILED_REGISTRATION": "Sorry, there was an error during the registration.\nPlease try again. If the problem persists, kindly call support.",
     "FAILED_VERIFICATION_MAX_ATTEMPTS": "Sorry! Your phone number could not be verified.\nYou entered wrong code too many times. Please contact our support team.",
     "FAILED_VERIFICATION": "Sorry, your email could not be verified.\nPlease try again. If the problem persists, kindly call support.",
+    "FAILED_PHONE": "Sorry, your Phone could not be verified.\nPlease try again. If the problem persists, kindly call support.",
     "FAILED_OTP": "You entered wrong code.",
     "FIELD_REQUIRE":"Email and Password is required to login",
     "GENERAL": "Sorry! Something went wrong with the request. Please try again later.",

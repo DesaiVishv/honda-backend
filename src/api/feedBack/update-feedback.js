@@ -28,7 +28,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!id || !phone || !feedbackCategory || !rating) {
+        if (!id || !phone || !feedbackCategory ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
