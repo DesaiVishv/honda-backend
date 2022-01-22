@@ -12,12 +12,16 @@ module.exports = exports = {
     validation: Joi.object({
         date: Joi.date().required(),
         seat:Joi.number(),
-        cnid:Joi.string().required()
+        vcid:Joi.array().required(),
+        ctid:Joi.array().required(),
+        cnid:Joi.array().required(),
+        startTime:Joi.string(),
+        endTime:Joi.string()
         // imagePath: Joi.string().allow("")
     }),
 
     handler: async (req, res) => {
-        const { date,seat, cnid } = req.body;
+        const { date,seat,vcid,ctid, cnid,startTime,endTime } = req.body;
         const { user } = req;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -29,7 +33,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!date || !cnid) {
+        if (!date || !vcid || !ctid || !cnid || !startTime || !endTime) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -42,25 +46,42 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.TRAININGDATE.find({ date:date, cnid:cnid});
-            if (checkMenu.length > 0) {
-                const data4createResponseObject = {
-                    req: req,
-                    result: -400,
-                    message: messages.EXISTS_MENU,
-                    payload: {},
-                    logPayload: false
-                };
-                res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-                return;
-            }
+            // const checkMenu = await global.models.GLOBAL.TRAININGDATE.find({ date:date});
+            // if (checkMenu.length > 0) {
+            //     const data4createResponseObject = {
+            //         req: req,
+            //         result: -400,
+            //         message: messages.EXISTS_MENU,
+            //         payload: {},
+            //         logPayload: false
+            //     };
+            //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+            //     return;
+            // }
             let AmenintiesCreate = {
                 date:date,
                 seat:seat,
-                cnid:cnid
+                vcid:vcid,
+                ctid:ctid,
+                cnid:cnid,
+                startTime:startTime,
+                endTime:endTime
             };
             const newAmeninties = await global.models.GLOBAL.TRAININGDATE(AmenintiesCreate);
             newAmeninties.save();
+            let addHis = {
+                uid:user._id,
+                tdid:newAmeninties._id,
+                vcid:vcid,
+                ctid:ctid,
+                cnid:cnid,
+                type:true,
+                startTime:startTime,
+                endTime:endTime,
+                count:seat
+            }
+            const addHistory = await global.models.GLOBAL.HISTORY(addHis);
+            addHistory.save();
             const data4createResponseObject = {
                 req: req,
                 result: 0,

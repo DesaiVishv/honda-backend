@@ -17,7 +17,7 @@ module.exports = exports = {
     handler: async (req, res) => {
         const { id } = req.params;
         const { user } = req;
-        const { date, seat, cnid } = req.body;
+        const { date,seat,vcid,ctid, cnid,startTime,endTime } = req.body;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
                 req: req,
@@ -28,7 +28,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!id || !date || !cnid) {
+        if (!id || !date || !vcid || !ctid || !cnid || !startTime || !endTime) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -69,11 +69,28 @@ module.exports = exports = {
 
                 Item = await global.models.GLOBAL.TRAININGDATE.update({ _id: id }, {
                     $set: {
-                        date: date,
-                        seat: seat,
-                        cnid: cnid
+                        date:date,
+                        seat:seat,
+                        vcid:vcid,
+                        ctid:ctid,
+                        cnid:cnid,
+                        startTime:startTime,
+                        endTime:endTime
                     }
                 });
+                let addHis = {
+                    uid:user._id,
+                    tdid:newAmeninties._id,
+                    vcid:vcid,
+                    ctid:ctid,
+                    cnid:cnid,
+                    type:true,
+                    startTime:startTime,
+                    endTime:endTime,
+                    count:seat
+                }
+                const addHistory = await global.models.GLOBAL.HISTORY(addHis);
+                addHistory.save();
                 const data4createResponseObject = {
                     req: req,
                     result: 0,

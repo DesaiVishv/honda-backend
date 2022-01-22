@@ -11,6 +11,7 @@ module.exports = (app, logger) => {
     const courseTypeRoute = require("../routes/courseType/index")
     const courseNameRoute = require("../routes/courseName/index")
     const trainingDateRoute = require("../routes/trainingDate/index")
+    const historyRoute = require("../routes/history/index")
     const personalInformationRoute = require("../routes/Personal-Information/index")
     const documentRoute = require("../routes/DocumentUpload/index")
     const overviewRoute = require("../routes/overView/index")
@@ -46,6 +47,7 @@ module.exports = (app, logger) => {
     app.use(["/api/v1/courseType"],  courseTypeRoute);
     app.use(["/api/v1/courseName"],  courseNameRoute);
     app.use(["/api/v1/trainingDate"],  trainingDateRoute);
+    app.use(["/api/v1/history"],  historyRoute);
     app.use(["/api/v1/personalinformation"],  personalInformationRoute);
     app.use(["/api/v1/document"],  documentRoute);
     app.use(["/api/v1/overview"],  overviewRoute);

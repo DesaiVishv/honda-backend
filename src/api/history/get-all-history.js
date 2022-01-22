@@ -11,40 +11,32 @@ module.exports = exports = {
     // route validation
 
     handler: async (req, res) => {
-
+        
         try {
+            req.query.page = req.query.page ? req.query.page : 1;
+            let page = parseInt(req.query.page);
+            req.query.limit = req.query.limit ? req.query.limit : 10;
+            let limit = parseInt(req.query.limit);
+            let skip = (parseInt(req.query.page) - 1) * limit;
 
-            let uid = req.params.id;
-            if (!uid) {
-                const data4createResponseObject = {
-                    req: req,
-                    result: -1,
-                    message: messages.INVALID_PARAMETERS,
-                    payload: {},
-                    logPayload: false
-                };
-                res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-                return;
-            }
-            // const findUser = await global.models.GLOBAL.REGISTER.find({uid:uid})
-            // console.log("findUser",findUser);
-            const Propertys = await global.models.GLOBAL.REGISTER.find({ uid: uid }).populate({
-                path: "uid",
-                model: "admin"
-            }).populate({
-                path: "ctid",
-                model: "courseType"
-            }).populate({
-                path: "vcid",
-                model: "vehicleCategory"
-            }).populate({
-                path: "cnid",
-                model: "courseName"
-            }).populate({
+           
+            // let id = req.params.id;
+
+
+            
+            let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
+            
+            // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
+            // console.log("findCoursetype",findCoursetype)
+            const count = await global.models.GLOBAL.HISTORY.find(search).count();
+            const Questions = await global.models.GLOBAL.HISTORY.find(search).skip(skip).limit(limit).sort({createdAt:-1}).populate({
                 path:"tdid",
                 model:"trainingDate"
+            }).populate({
+                path:"cnid",
+                model:"courseName"
             })
-            if (!Propertys) {
+            if(Questions.length==0){
                 const data4createResponseObject = {
                     req: req,
                     result: -400,
@@ -55,12 +47,11 @@ module.exports = exports = {
                 res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                 return;
             }
-            // const nearProperty=await global.models.GLOBAL.PERSONALINFORMATION.find({_id:{$ne:id} });
             const data4createResponseObject = {
                 req: req,
                 result: 0,
                 message: messages.SUCCESS,
-                payload: { Property: Propertys },
+                payload: { Question:Questions ,count:count},
                 logPayload: false
             };
             res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
@@ -77,4 +68,3 @@ module.exports = exports = {
         }
     }
 };
-

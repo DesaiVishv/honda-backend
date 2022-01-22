@@ -3,15 +3,13 @@ const mongoose = require("mongoose");
 // const enums = require("../../../json/enums.json");
 
 module.exports = (connection) => {
-    const trainingDateSchema = new mongoose.Schema({
+    const historySchema = new mongoose.Schema({
         
-        date:{ type: Date, require:true },
-        seat:{type:Number, default:null},
-        vcid:{type: Array , require:true},
-        ctid:{type: mongoose.Schema.Types.ObjectId , require:true},
-        cnid:{ type: mongoose.Schema.Types.ObjectId , require:true },
-        startTime:{type:String},
-        endTime:{type:String},
+        cnid:{type:mongoose.Schema.Types.ObjectId},
+        uid:{type:mongoose.Schema.Types.ObjectId},
+        tdid:{type:mongoose.Schema.Types.ObjectId},
+        type:{type:Boolean},
+        count:{type:Number},
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
         createdBy: {
@@ -27,6 +25,6 @@ module.exports = (connection) => {
     });
 
     // return logsSchema;
-    return connection.model("trainingDate", trainingDateSchema, "trainingDate");
+    return connection.model("history", historySchema, "history");
 };
 

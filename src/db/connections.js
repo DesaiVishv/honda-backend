@@ -31,6 +31,7 @@ module.exports = async () => {
                     COURSETYPE: require("../schema/courseType/courseType")(connection_IN_HONDA),
                     COURSENAME: require("../schema/courseName/courseName")(connection_IN_HONDA),
                     TRAININGDATE: require("../schema/TrainingDate/trainingDate")(connection_IN_HONDA),
+                    HISTORY: require("../schema/history/history")(connection_IN_HONDA),
                     PERSONALINFORMATION: require("../schema/Personal-Information/information")(connection_IN_HONDA),
                     DOCUMENT: require("../schema/DocumentUpload/documentUpload")(connection_IN_HONDA),
                     OVERVIEW: require("../schema/overView/overview")(connection_IN_HONDA),
