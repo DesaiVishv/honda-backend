@@ -27,8 +27,10 @@ module.exports = exports = {
             let search = req.query.search ? { name: { $regex: req.query.search, $options: 'i' } } : {}
 
             const count = await global.models.GLOBAL.ANNOUNCEMENT.find(search).count();
+            let totalPage = Math.ceil(count / limit)
+
             const Questions = await global.models.GLOBAL.ANNOUNCEMENT.find(search).skip(skip).limit(limit).sort({ createdAt: -1 });
-            if (Questions.length == 0) {
+            if (Questions.length == 0 || totalPage.length>totalPage.length) {
                 const data4createResponseObject = {
                     req: req,
                     result: -400,
@@ -43,7 +45,7 @@ module.exports = exports = {
                 req: req,
                 result: 0,
                 message: messages.SUCCESS,
-                payload: { Question: Questions, count: count, totalPage: Math.ceil(count / limit), currentPage: parseInt(page) },
+                payload: { Question: Questions, count: count, totalPage:totalPage, currentPage: parseInt(page) },
                 logPayload: false
             };
             res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
