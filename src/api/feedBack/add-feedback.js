@@ -10,16 +10,16 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-        name:Joi.string().required(),
-        email:Joi.string(),
-        phone:Joi.number().required(),
-        feedbackCategory:Joi.string().required(),
-        rating:Joi.number(),
-        description:Joi.string()
+        name: Joi.string().required(),
+        email: Joi.string().allow(''),
+        phone: Joi.number().required(),
+        feedbackCategory: Joi.string().required(),
+        rating: Joi.number(),
+        description: Joi.string().allow('')
     }),
 
     handler: async (req, res) => {
-        const { name,email,phone,feedbackCategory,rating,description} = req.body;
+        const { name, email, phone, feedbackCategory, rating, description } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -31,7 +31,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!name || !phone || !feedbackCategory ) {
+        if (!name || !phone || !feedbackCategory) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -57,12 +57,12 @@ module.exports = exports = {
             //     return;
             // }
             let AmenintiesCreate = {
-                name:name,
-                email:email,
-                phone:phone,
-                feedbackCategory:feedbackCategory,
-                rating:rating,
-                description:description
+                name: name,
+                email: email,
+                phone: phone,
+                feedbackCategory: feedbackCategory,
+                rating: rating,
+                description: description
             };
             const newAmeninties = await global.models.GLOBAL.FEEDBACK(AmenintiesCreate);
             newAmeninties.save();
