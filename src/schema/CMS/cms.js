@@ -4,11 +4,11 @@ const mongoose = require("mongoose");
 
 module.exports = (connection) => {
     const cmsSchema = new mongoose.Schema({
-        name: {
-            titleName: { type: String, require: true },
-            image: { type: Array, default: null },
-            description: { type: String, require: true }
-        },
+
+        titleName: { type: String, require: true },
+        image: { type: Array, default: null },
+        description: { type: String, require: true },
+
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
         createdBy: {

@@ -15,7 +15,7 @@ module.exports = exports = {
         try {
             req.query.page = req.query.page ? req.query.page : 1;
             let page = parseInt(req.query.page);
-            req.query.limit = req.query.limit ? req.query.limit : 10;
+            req.query.limit = req.query.limit ? req.query.limit : 5;
             let limit = parseInt(req.query.limit);
             let skip = (parseInt(req.query.page) - 1) * limit;
 
