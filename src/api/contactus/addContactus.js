@@ -31,7 +31,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!name || !email || !phone || !subject || !description) {
+        if (!name || !email || !phone || !subject) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
