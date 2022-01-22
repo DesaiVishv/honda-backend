@@ -148,7 +148,7 @@ module.exports = exports = {
       let data4createResponseObject = {
         req: req,
         result: 0,
-        message: "Code verified",
+        message: messages.LOGIN_SUCCESS,
         payload: payload,
         logPayload: false,
       };
@@ -192,7 +192,7 @@ module.exports = exports = {
       let data4createResponseObject = {
         req: req,
         result: 0,
-        message: "Code verified",
+        message: messages.LOGIN_SUCCESS,
         payload: {
           userExist: false,
           verified: true,
