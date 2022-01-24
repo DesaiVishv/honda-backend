@@ -34,12 +34,13 @@ module.exports = exports = {
     vcid: Joi.string().required(),
     ctid: Joi.string().required(),
     cnid: Joi.string().required(),
+    tdid:Joi.string().required(),
     paymentId: Joi.string().required()
     // imagePath: Joi.string().allow("")
   }),
 
   pay: async (req, res) => {
-    const { vcid,ctid,cnid, paymentId } = req.body;
+    const { vcid,ctid,cnid,tdid,paymentId } = req.body;
     const { user } = req;
     if (!cnid) {
       const data4createResponseObject = {
@@ -85,11 +86,23 @@ module.exports = exports = {
       };
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
-
+    const findDate = await global.models.GLOBAL.TRAININGDATE.findOne({ _id: tdid })
+    console.log("findCoutrsename", findCoursename)
+    if (!findDate) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_FOUND,
+        payload: {},
+        logPayload: false
+      };
+      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+    }
     const paymentData = await global.models.GLOBAL.PAYMENT({
       vcid:vcid,
       ctid:ctid,
       cnid: cnid,
+      tdid:tdid,
       paymentId: paymentId,
       price: findCoursename.price
     })
@@ -107,7 +120,7 @@ module.exports = exports = {
     //   return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     // }
     if (paymentData) {
-      const updateSeat = await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate({ vcid:vcid,ctid:ctid,cnid:cnid }, { $inc: { seat: -1 } })
+      const updateSeat = await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate({ vcid:vcid,ctid:ctid,cnid:cnid,tdid:tdid }, { $inc: { seat: -1 } })
       console.log("uploadSeat", updateSeat)
       if (!updateSeat) {
         const data4createResponseObject = {

@@ -13,6 +13,9 @@ module.exports = (connection) => {
         cnid:{
             type: mongoose.Schema.Types.ObjectId
         },
+        tdid:{
+            type: mongoose.Schema.Types.ObjectId
+        },
         paymentId: {
             type: Object,
             default: null
