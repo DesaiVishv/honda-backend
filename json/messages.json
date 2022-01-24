@@ -47,6 +47,7 @@
     "ROLE_FETCH_SUCCESS":"role fetch successfully",
     "ITEM_FETCHED": "Item fetched successfully",
     "ITEM_INSERTED": "added successfully",
+    "FEEDBACK_ADDED":"Thanks for Your Feedback, Your Response is Added Successfully",
     "ITEM_NOT_CREATED": "Some error occurred while creating the item",
     "ITEM_NOT_DELETED": "Some error occurred while deleting the item",
     "ITEM_NOT_FOUND": "Sorry! The requested resource could not be found!",
