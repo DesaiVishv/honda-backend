@@ -25,7 +25,6 @@ module.exports = exports = {
             let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'},vcid:{$in:ids}} : {vcid:{$in:ids}};
             
             const Menus = await global.models.GLOBAL.VEHICLECATEGORY.find({_id:{$in:ids}})
-            // console.log("tttttttttt", Menus)
             const count = await global.models.GLOBAL.COURSETYPE.find(search).count();
             const subMenus = await global.models.GLOBAL.COURSETYPE.find(search).skip(skip).limit(limit);
             if(subMenus.length==0){

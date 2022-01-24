@@ -16,7 +16,6 @@
      // route handler
      handler: async (req, res) => {
          const { id } = req.params;
-         console.log("Hii")
          const { user } = req;
          const { courseName,description,isActive, duration, timing, mode, documentRequired, validity, systemRequirement, certificate,vcid,ctid,price} = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
@@ -55,7 +54,6 @@
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
                 const checkMenu = await global.models.GLOBAL.COURSENAME.findById(id);
-                console.log("checkMEnu", checkMenu)
                 if(checkMenu.length==0){
                     const data4createResponseObject = {
                         req: req,
@@ -64,7 +62,6 @@
                         payload: {},
                         logPayload: false
                     };
-                    console.log("im not found", checkMenu.length)
                     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                     return;
                 }

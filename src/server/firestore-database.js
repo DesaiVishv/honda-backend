@@ -17,7 +17,6 @@ module.exports = async (logger) => {
     //     country: 'Japan'
     // });
     
-    // console.log('Added document with ID: ', res.id);
 
     // log the result
     // logger.info(`Added document with ID: ${res.id}`);

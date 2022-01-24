@@ -13,11 +13,8 @@ module.exports = exports = {
     newPassword: Joi.string().required(),
   }),
   handler: async (req, res) => {
-    // console.log("gggggggggggggggggggiiiiiiiiiiiiiii");
     const { user } = req;
-    console.log("USER-->>", user);
     const { password, newPassword } = req.body;
-    // console.log("BODY-->>", req.body);
     if (!password || !newPassword) {
       const data4createResponseObject = {
         req: req,
@@ -34,12 +31,7 @@ module.exports = exports = {
       let findUser = await global.models.GLOBAL.ADMIN.findOne({
         email: user.email,
       });
-      // let findUser = await global.models.GLOBAL.USER.findOne({
-      //   _id: user._id,
-      // });
-      // // console.log("FINDUSEER--->>", findUser);
-      // console.log("PASS-->>", password);
-      // console.log("FIND PASS--->>", findUser.password);
+      
       if (findUser.password !== password) {
         const data4createResponseObject = {
           req: req,
@@ -52,7 +44,6 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
-        console.log("PASS-->>", newPassword);
         await global.models.GLOBAL.ADMIN.findByIdAndUpdate(
           user._id,
           {

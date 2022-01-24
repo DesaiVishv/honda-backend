@@ -28,13 +28,11 @@ module.exports = exports = {
             let { date, cnid, startTime, endTime } = req.query;
             let startDate = moment(date).add(1, "days").format("YYYY-MM-DD");
             let endDate = moment(date).add(5, "days").format("YYYY-MM-DD");
-            console.log("startDate", startDate);
-            console.log("endDate", endDate);
+            
             // startDate = new Date(startDate.toString());
             // endDate = new Date(endDate.toString())
             // { $gte: startDate.toString(), $lte: endDate.toString() }
             let filter0 = date ? { date: date, cnid: ObjectId(cnid),seat:{$ne:0}} : {}
-            console.log(filter0)
             let filter1 = startTime != null ? {
                 $and: [
                     { date: date },
@@ -46,12 +44,10 @@ module.exports = exports = {
             } : {}
             let getData = { $and: [filter0, filter1] }
             // let search = req.query.search ? { name: { $regex: req.query.search, $options: 'i' },date:{$in:ids},cnid:{$in:id},startTime:{$in:starttime},endTime:{$in:endtime} } : { date:{$in:ids},cnid:{$in:id},startTime:{$in:starttime},endTime:{$in:endtime} };
-            // console.log("search",search)
             // const findCourse = await global.models.GLOBAL.TRAININGDATE.
             // let search = req.query.search ? {name:{$regex:req.query.search,$options:'i'}, filter0:filter0} :{filter0:filter0}
             const count = await global.models.GLOBAL.TRAININGDATE.find(getData).count();
             const subMenus = await global.models.GLOBAL.TRAININGDATE.find(getData).skip(skip).limit(limit)
-            console.log("submenus", subMenus)
             if (subMenus.length == 0) {
                 const data4createResponseObject = {
                     req: req,

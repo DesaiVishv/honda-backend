@@ -13,7 +13,6 @@ module.exports = exports = {
     // route handler
     handler: async (req, res) => {
         const { user } = req;
-        console.log("1", user)
 
         if (user.type == enums.USER_TYPE.USER) {
             const data4createResponseObject = {
@@ -26,7 +25,6 @@ module.exports = exports = {
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
         try {
-            console.log("2")
 
 
 

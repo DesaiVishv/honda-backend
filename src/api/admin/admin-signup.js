@@ -29,7 +29,6 @@ module.exports = exports = {
     // route handler
     handler: async (req, res) => {
         let { firstName, fatherName, state, IDTRcenter, email, phone, role } = req.body;
-        //  console.log("password-----req", password)
         if (!firstName || !fatherName || !email || !state || !phone || !IDTRcenter || !code || !role) {
             logger.error(messages.FILL_DETAILS);
             const data4createResponseObject = {
@@ -48,7 +47,6 @@ module.exports = exports = {
         //  const hash = await bcrypt.hash(password, salt);
         //  const isMatch = await bcrypt.compare(password, user.password);
         const roleExist = await global.models.GLOBAL.ROLE.findOne({ _id: role });
-        console.log("roleExist", roleExist)
         // check if email already exist
         const emailExist = await global.models.GLOBAL.ADMIN.findOne({ $or: [{ email: email }, { phone: phone }] }).populate({
             path: "role",
@@ -71,7 +69,6 @@ module.exports = exports = {
             token: jwt.sign(datatoken, jwtOptions.secretOrKey),
             token_type: "Bearer",
         }
-        console.log("emailExist", emailExist)
         if (emailExist) {
             const data4createResponseObject = {
                 req: req,

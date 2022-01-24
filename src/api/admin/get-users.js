@@ -32,7 +32,6 @@
             let skip = (parseInt(page) - 1) * limit;
             
             let search = req.query.search ? {$or:[{fname:{$regex: req.query.search, $options: "i"}},{lname:{$regex: req.query.search, $options: "i"}},{email:{$regex: req.query.search, $options: "i"}},{phone:{$regex: req.query.search, $options: "i"}}]} : {};
-            console.log(search)
             
              
             let rolename=await global.models.GLOBAL.ROLE.findOne({roleName:"user"});

@@ -14,9 +14,7 @@ module.exports = exports = {
     }),
     handler: async (req, res) => {
         // const { user } = req;
-        // console.log("USER-->>", user);
         const { email, password } = req.body;
-        // console.log("BODY-->>", req.body);
         if (!email || !password) {
             const data4createResponseObject = {
                 req: req,
@@ -33,12 +31,6 @@ module.exports = exports = {
             let findUser = await global.models.GLOBAL.ADMIN.findOne({
                 email: email,
             });
-    //   let findUser = await global.models.GLOBAL.ADMIN.findOne({
-    //     _id: user._id,
-    //   });
-      console.log("FINDUSEER--->>", findUser);
-      console.log("PASS-->>", password);
-      console.log("FIND PASS--->>", findUser.password);
       if (findUser.email == null) {
         const data4createResponseObject = {
           req: req,
@@ -51,7 +43,6 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       } else{
-        console.log("PASS-->>", password);
         await global.models.GLOBAL.ADMIN.findByIdAndUpdate(
             findUser._id,
             {

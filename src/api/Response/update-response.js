@@ -42,7 +42,6 @@ module.exports = exports = {
         try {
 
             let Item = await global.models.GLOBAL.RESPONSE.findById(id);
-            console.log("ttttttt")
             if (!Item) {
                 const data4createResponseObject = {
                     req: req,

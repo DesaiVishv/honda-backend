@@ -51,7 +51,6 @@ module.exports = exports = {
       verificationEntry = await global.models.GLOBAL.CODE_VERIFICATION.findOne({
         phone: phone,
       });
-      console.log("verification Entry", verificationEntry)
     } catch (error) {
       logger.error(
         `/verify-code - Error encountered while verifying phone: ${error.message}\n${error.stack}`
@@ -87,9 +86,7 @@ module.exports = exports = {
 
     // Check number of attempts and expiryTime
     const now = moment();
-  console.log("noe ", now);
     const expirationDate = moment(verificationEntry.expirationDate); // another date
-    console.log("expired Date", expirationDate);
     if (now.isAfter(expirationDate)) {
       let data4createResponseObject = {
         req: req,

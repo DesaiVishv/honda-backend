@@ -15,16 +15,13 @@ module.exports = exports = {
   // route handler
   handler: async (req, res) => {
     const { phone } = req.body;
-    console.log("PHONE BODY--->>", phone);
     let code = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
-    console.log("code", code);
     // const locale = utils.getLocale(req);
     let entry;
     // If codes already exists for this phone number in the database delete them
     let findUser = await global.models.GLOBAL.ADMIN.findOne({
       phone: { $eq: phone },
     });
-    console.log("PHONE--->>", findUser);
     try {
 
       if (!phone) {
@@ -61,7 +58,6 @@ module.exports = exports = {
     }
 
     // When USE_TEST_PIN is true (config.json)
-    console.log("config.MONGODB.GLOBAL.USE_TEST_PIN === true", config.MONGODB.GLOBAL.USE_TEST_PIN);
     if (config.MONGODB.GLOBAL.USE_TEST_PIN) {
       // If (dummyAccount) {
       code = 1235;
@@ -111,7 +107,6 @@ module.exports = exports = {
         phone,
         "bhargav"
       );
-      console.log("messageDetails1", messageDetails);
 
       if (!messageDetails) {
         logger.error(

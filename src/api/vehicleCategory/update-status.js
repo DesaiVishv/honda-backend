@@ -26,7 +26,6 @@ module.exports = exports = {
         }
         try {
             const property = await global.models.GLOBAL.VEHICLECATEGORY.findByIdAndUpdate({_id:id},{$set:{isActive:isActive}},{new:true});
-            console.log("property", property)
             const data4createResponseObject = {
                 req: req,
                 result: 0,

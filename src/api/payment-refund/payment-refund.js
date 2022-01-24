@@ -17,9 +17,7 @@ const APIResponse = require("../../APIResponse");
 // const Primeuser = require("../subscription/primeuser.model");
 // const Transaction = require("../subscription/subscription.model");
 const stripe = require("stripe")('sk_test_51KCd8BSJCVT2nRrfQYCseB55tVSxR3l1tRYO66TJDeTk89GlfGOsVjT4bsB8DrtlBUMFM63i4eT6gR6dFe2pA4Jk00FSac3rjg');
-// console.log("stripetttttttttttttttttt", stripe);
 // const paymentIntent = require('stripe')('pi_3KEuJ2SJCVT2nRrf1muzKPiO_secret_qGjxrLcSPyQhL4d3Qe0MmXuZw')
-// console.log("paymenttttttttttttttt", paymentIntent)
 // const stripe = require("stripe")(`${process.env.stripe_sk_test}`);
 var ObjectID = require("mongodb").ObjectID;
 const nodemailer = require("nodemailer");
@@ -65,10 +63,8 @@ module.exports = {
             };
             return res.status(enums.HTTP_CODES.BAD_REQUEST).json(Utils.createResponseObject(data4createResponseObject));
         }
-        console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
         try {
             const userExist = await global.models.GLOBAL.PURCHASEHISTORY.find({ email: email, PaymentId: PaymentId });
-            console.log("userExist", userExist)
             if (!userExist) {
                 return res
                     .status(httpStatus.NOT_FOUND)
@@ -79,7 +75,6 @@ module.exports = {
             // const refund = await stripe.refunds.create(
             //  paymentIntent
             // )
-            // console.log("refund done", refund)
             // const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
             // const refund = await paymentIntent.refunds.create({
@@ -88,7 +83,6 @@ module.exports = {
             // const refunds = await stripe.refunds.retrieve(
             //     PaymentId.clientSecret
             //   );
-            // console.log("refund ", refunds)
             // const paymentIntent = await stripe.paymentIntents.update(
             //     'pi_3KEv00SJCVT2nRrf0bXloFNg',
             //     {status: "requires_payment_method"}
@@ -100,22 +94,17 @@ module.exports = {
                 'pi_3KFASMSJCVT2nRrf0AVk3g1e'
             
             );
-            console.log("payment Intent", paymentIntent)
             res.send(paymentIntent)
             // const paymentIntent = await stripe.paymentIntents.cancel(
             //     'pi_3KF9XmSJCVT2nRrf0AB5Lt9I'
             //   );
-            //   console.log("refund ", paymentIntent)
             //   res.send("update done")
             //   const paymentIntents = await stripe.paymentIntents.capture(
             //     'pi_3KEv00SJCVT2nRrf0bXloFNg'
             //   );
-            //     console.log("paymentIntent ", paymentIntents)
 
 
-            // console.log("refund", refund)
             // var d = await usersubscribe.find({ Event_id: req.body.Event_id }).remove().exec()
-            // console.log("darta query ",d)
             // debugger;
             // return res.send({ "msg": "refund", "res": refund })
             // const datacreateResponseObject = {
@@ -129,7 +118,6 @@ module.exports = {
 
 
 
-            // console.log("saverefund", saverefund)
             // let saverefund = await global.models.GLOBAL.PAYMENTREFUND({
             //     refundId: refundId,
             //     PaymentId: PaymentId,

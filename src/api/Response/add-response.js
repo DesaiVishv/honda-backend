@@ -74,23 +74,18 @@ module.exports = exports = {
             const Propertys = await global.models.GLOBAL.RESPONSE.findOne({_id:newAmeninties._id});
             let loq=[];
             let t=0,v=0;
-            console.log("length of ListofQA", Propertys.ListofQA.length)
             for(i=0 ;i<Propertys.ListofQA.length;i++){
                 let testans=[]
                 for(j=0;j<Propertys.ListofQA[i].Option.length;j++){
-                    console.log("tttttt",Propertys.ListofQA[i].Option[j].istrue)
                    if(Propertys.ListofQA[i].Option[j].istrue==true){
                        testans.push(Propertys.ListofQA[i].Option[j].no)
                    }
                 }
-                // console.log("true ans",testans);
                 if(testans.sort().join(',')=== Propertys.ListofQA[i].Answer.sort().join(',')){
-                    console.log("true vishvans",{...Propertys.ListofQA[i]._doc,isRight:true});
                     v++;
                    loq.push({...Propertys.ListofQA[i]._doc,isRight:true})
                 }else
                 {
-                    console.log("true vishvans",{...Propertys.ListofQA[i]._doc,isRight:false});
                      loq.push({...Propertys.ListofQA[i]._doc,isRight:false})
 
                 }
@@ -187,7 +182,6 @@ module.exports = exports = {
                 
                 </html>`,
             });
-            console.log("Message sent: %s", info.messageId);
             // const datacreateResponseObject = {
             //     req: req,
             //     result: 0,

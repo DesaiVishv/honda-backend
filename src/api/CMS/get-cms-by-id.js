@@ -15,7 +15,6 @@ module.exports = exports = {
         try {
             
             let id = req.params.id;
-            console.log("Hiiiii")
             if(!id){
                 const data4createResponseObject = {
                     req: req,

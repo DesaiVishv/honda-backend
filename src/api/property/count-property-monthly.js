@@ -13,7 +13,6 @@
      // route handler
      handler: async (req, res) => {
         const { user } = req;
-        console.log("1", user)
 
         if(user.type !== enums.USER_TYPE.SUPERADMIN){
             const data4createResponseObject = {
@@ -26,7 +25,6 @@
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
          try {
-             console.log("2")
              
              
              

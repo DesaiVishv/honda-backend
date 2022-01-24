@@ -24,7 +24,6 @@ module.exports = exports = {
 
             let search = req.query.search ? { name: { $regex: req.query.search, $options: 'i' } } : {};
             const PURCHASEHISTORYDATA = await global.models.GLOBAL.PURCHASEHISTORY.find({ Aid: id , isAprove:true}).sort({ startDate: -1 });
-            // console.log("PURCHASEHISTORYDATA",PURCHASEHISTORYDATA[0].menus )
             try{
             search = req.query.id ? { ...search, _id: { $in: PURCHASEHISTORYDATA[0].menus } } : search
             }catch(e){
@@ -41,7 +40,6 @@ module.exports = exports = {
             }
             const count = await global.models.GLOBAL.MENU.find(search).count();
             const Menus = await global.models.GLOBAL.MENU.find(search).skip(skip).limit(limit).sort({ createdAt: -1 });
-            console.log("Menus",Menus)
             // const findAprove = await  global.models.GLOBAL.ADMIN.find({isAprove: true})
             // if(!findAprove){
             //     const data4createResponseObject = {

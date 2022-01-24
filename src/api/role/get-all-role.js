@@ -20,9 +20,7 @@ module.exports = exports = {
     // if (roleStatus) {
         try {
         let allRole = await global.models.GLOBAL.ROLE.find(criteria);
-        // console.log(allRole)
         // allRole = JSON.parse(JSON.stringify(allRole));
-        // console.log(allRole)
 
         if (!allRole) {
           let data4createResponseObject = {

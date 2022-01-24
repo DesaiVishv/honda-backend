@@ -28,22 +28,17 @@ module.exports = exports = {
             }
             const Propertys = await global.models.GLOBAL.RESPONSE.findOne({_id:id});
             let loq=[];
-            console.log("length of ListofQA", Propertys.ListofQA.length)
             for(i=0 ;i<Propertys.ListofQA.length;i++){
                 let testans=[]
                 for(j=0;j<Propertys.ListofQA[i].Option.length;j++){
-                    console.log("tttttt",Propertys.ListofQA[i].Option[j].istrue)
                    if(Propertys.ListofQA[i].Option[j].istrue==true){
                        testans.push(Propertys.ListofQA[i].Option[j].no)
                    }
                 }
-                // console.log("true ans",testans);
                 if(testans.sort().join(',')=== Propertys.ListofQA[i].Answer.sort().join(',')){
-                    console.log("true vishvans",{...Propertys.ListofQA[i]._doc,isRight:true});
                    loq.push({...Propertys.ListofQA[i]._doc,isRight:true})
                 }else
                 {
-                    console.log("true vishvans",{...Propertys.ListofQA[i]._doc,isRight:false});
                      loq.push({...Propertys.ListofQA[i]._doc,isRight:false})
 
                 }

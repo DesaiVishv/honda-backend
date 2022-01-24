@@ -42,7 +42,6 @@ module.exports = exports = {
         }
 
         try {
-            console.log("ttttttttttttt")
             const checkMenu = await global.models.GLOBAL.QUESTION.find({Sid:Sid,Qname:Qname});
             if(checkMenu.length>0){
                 const data4createResponseObject = {

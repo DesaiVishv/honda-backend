@@ -17,7 +17,6 @@ const APIResponse = require("../../APIResponse");
 // const Primeuser = require("../subscription/primeuser.model");
 // const Transaction = require("../subscription/subscription.model");
 const stripe = require("stripe")('sk_test_51KCd8BSJCVT2nRrfQYCseB55tVSxR3l1tRYO66TJDeTk89GlfGOsVjT4bsB8DrtlBUMFM63i4eT6gR6dFe2pA4Jk00FSac3rjg');
-console.log("stripe", stripe);
 // const stripe = require("stripe")(`${process.env.stripe_sk_test}`);
 var ObjectID = require("mongodb").ObjectID;
 const nodemailer = require("nodemailer");
@@ -75,7 +74,6 @@ module.exports = exports = {
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
     const findCoursename = await global.models.GLOBAL.COURSENAME.findOne({ _id: cnid })
-    console.log("findCoutrsename", findCoursename)
     if (!findCoursename) {
       const data4createResponseObject = {
         req: req,
@@ -87,7 +85,6 @@ module.exports = exports = {
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
     const findDate = await global.models.GLOBAL.TRAININGDATE.findOne({ _id: tdid })
-    console.log("findCoutrsename", findCoursename)
     if (!findDate) {
       const data4createResponseObject = {
         req: req,
@@ -106,9 +103,7 @@ module.exports = exports = {
       paymentId: paymentId,
       price: findCoursename.price
     })
-    console.log("paymentDate", paymentData)
     // const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({ cnid: cnid }, { paymentId: paymentId })
-    // console.log("updateRegister",updateRegister)
     // if (!updateRegister) {
     //   const data4createResponseObject = {
     //     req: req,
@@ -121,7 +116,6 @@ module.exports = exports = {
     // }
     if (paymentData) {
       const updateSeat = await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate({ vcid:vcid,ctid:ctid,cnid:cnid,tdid:tdid }, { $inc: { seat: -1 } })
-      console.log("uploadSeat", updateSeat)
       if (!updateSeat) {
         const data4createResponseObject = {
           req: req,

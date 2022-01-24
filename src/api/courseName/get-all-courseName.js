@@ -27,7 +27,6 @@ module.exports = exports = {
             let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
             
             // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
-            // console.log("findCoursetype",findCoursetype)
             const count = await global.models.GLOBAL.COURSENAME.find(search).count();
             const Questions = await global.models.GLOBAL.COURSENAME.find(search).skip(skip).limit(limit).sort({createdAt:-1}).populate({
                 path:"ctid",

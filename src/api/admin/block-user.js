@@ -48,8 +48,7 @@ module.exports = exports = {
         }
         criteria["status.modificationDate"] = Date.now().toString()
 
-        console.log("criteria", criteria);
-        console.log("id", req.body)
+        
         try {
           if(id){
             const userExist = await global.models.GLOBAL.ADMIN.findById(id);

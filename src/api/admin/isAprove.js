@@ -44,7 +44,6 @@
             }
             let admin = await global.models.GLOBAL.ADMIN.findByIdAndUpdate({_id:checkphone.Aid},{isMenuVisible:true})
              let isAprove = await global.models.GLOBAL.PURCHASEHISTORY.findByIdAndUpdate({_id:id}, {isAprove:true});
-            //  console.log(new Date())
              isAprove = await global.models.GLOBAL.PURCHASEHISTORY.find({_id:id}, {
                 role:0,
                 password:0

@@ -68,12 +68,10 @@
                  phone: phone,
                  modificationData: new Date()
              });
-             console.log("admin",admin)
              admin = await global.models.GLOBAL.ADMIN.find({_id:id}, {
                 role:0,
                 password:0
             });
-            console.log("admin",admin)
 
              const data4createResponseObject = {
                  req: req,

@@ -26,7 +26,6 @@ module.exports = exports = {
         //     res.status(enums.HTTP_CODES.DUPLICATE_VALUE).json(utils.createResponseObject(data4createResponseObject));
         //     return;
         // }
-        console.log("MAIL SENDING");
         let transporter = nodemailer.createTransport({
             service: "gmail",
             host: "smtp.gmail.com",
@@ -120,7 +119,6 @@ module.exports = exports = {
             
             </html>`,
             });
-            console.log("Message sent: %s", info.messageId);
         }
             const data4createResponseObject = {
                 req: req,
@@ -135,7 +133,6 @@ module.exports = exports = {
             // if (config.MONGODB.GLOBAL.USE_TEST_PIN) {
             //     // If (dummyAccount) {
             //     // code = code;
-            //     console.log("CODE NEw----=======>>>>>", code);
             //     // Save the code in database
             //     entry = global.models.GLOBAL.CODE_VERIFICATION({
             //         email: email,

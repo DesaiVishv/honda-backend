@@ -13,7 +13,6 @@ module.exports = exports = {
     handler: async (req, res) => {
         
         try {
-            console.log("Hii")
             req.query.page = req.query.page ? req.query.page : 1;
             let page = parseInt(req.query.page);
             req.query.limit = req.query.limit ? req.query.limit : 10;

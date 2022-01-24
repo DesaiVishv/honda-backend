@@ -54,7 +54,6 @@ module.exports = exports = {
                 res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
             } else {
                 // const checkMenu = await global.models.GLOBAL.VEHICLECATEGORY.find({vehicleCategory:vehicleCategory});
-                // console.log("checkMenu", checkMenu)
                 // if(checkMenu.length==0){
                 //     const data4createResponseObject = {
                 //         req: req,

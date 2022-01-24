@@ -13,7 +13,6 @@ module.exports = exports = {
     // route handler
     handler: async (req, res) => {
         const { user } = req;
-        console.log("1", user)
 
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
@@ -26,7 +25,6 @@ module.exports = exports = {
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
         try {
-            // console.log("2")
 
             req.query.page = req.query.page ? req.query.page : 1;
             let page = parseInt(req.query.page);
@@ -35,7 +33,6 @@ module.exports = exports = {
             let skip = (parseInt(page) - 1) * limit;
 
             let search = req.query.search ? { $or: [{ fname: { $regex: req.query.search, $options: "i" } }, { lname: { $regex: req.query.search, $options: "i" } }, { email: { $regex: req.query.search, $options: "i" } }, { phone: { $regex: req.query.search, $options: "i" } }] } : {};
-            console.log(search)
 
 
             let rolename = await global.models.GLOBAL.ROLE.findOne({ roleName: "superadmin" });
@@ -49,7 +46,6 @@ module.exports = exports = {
                 registrationDate: 1,
                 modificationDate: 1
             });
-            // console.log("3")
 
             const data4createResponseObject = {
                 req: req,

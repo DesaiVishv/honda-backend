@@ -43,7 +43,6 @@ module.exports = exports = {
 
 
       const aadmin = await global.models.GLOBAL.ADMIN.find({});
-      console.log(aadmin);
       const admin = await global.models.GLOBAL.ADMIN.findOne({ phone: phone } ).populate({
         path: "role",
         model: "role",
@@ -88,7 +87,6 @@ module.exports = exports = {
       else if (rolename.roleName === "user") {
         role = enums.USER_TYPE.USER;
       }
-      console.log("roleName", rolename)
       // User found - create JWT and return it
       const data4token = {
         // id: admin._id,

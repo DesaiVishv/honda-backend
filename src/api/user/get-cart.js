@@ -50,7 +50,6 @@ module.exports = exports = {
               deliveryCharge = productData.shopId.deliveryCharge.chargeType
             }
 
-            console.log("deliveryCharge", productData.shopId.deliveryCharge)
             
             const itemObj = {
               shopId: productData.shopId._id,

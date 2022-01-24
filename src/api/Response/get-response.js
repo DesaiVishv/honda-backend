@@ -29,25 +29,20 @@ module.exports = exports = {
             const count = await global.models.GLOBAL.RESPONSE.find(search).count();
             const response = await global.models.GLOBAL.RESPONSE.find(search).skip(skip).limit(limit);
             let all=[];
-            // console.log("rrrrrrrrrrrrrr", response.ListofQA.length)
             for (k = 0; k <response.length; k++) {
                 let t = 0, v = 0;
                 let loq = [];    
                 for (i = 0; i < response[k].ListofQA.length; i++) {
                     let testans = []
                     for (j = 0; j < response[k].ListofQA[i].Option.length; j++) {
-                        // console.log("op----", response[k].ListofQA[i].Option[j].istrue)
                         if (response[k].ListofQA[i].Option[j].istrue == true) {
                             testans.push(response[k].ListofQA[i].Option[j].no)
                         }
                     }
-                    console.log("true ans",testans);
                     if (testans.sort().join(',') === response[k].ListofQA[i].Answer.sort().join(',')) {
-                        console.log("true vishvans");
                         v++
                         loq.push({ ...response[k].ListofQA[i]._doc, isRight: true })
                     } else {
-                        console.log("false vishvans");
                         loq.push({ ...response[k].ListofQA[i]._doc, isRight: false })
 
                     }

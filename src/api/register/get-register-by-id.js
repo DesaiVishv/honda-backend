@@ -27,7 +27,6 @@ module.exports = exports = {
                 return;
             }
             // const findUser = await global.models.GLOBAL.REGISTER.find({uid:uid})
-            // console.log("findUser",findUser);
             const Propertys = await global.models.GLOBAL.REGISTER.find({ uid: uid }).populate({
                 path: "uid",
                 model: "admin"

@@ -71,9 +71,7 @@ module.exports = exports = {
     }
     // Check number of attempts and expiryTime
     const now = moment();
-    console.log("now", now);
     const expirationDate = moment(verificationEntry.expirationDate); // another date
-    console.log("expired Date", expirationDate);
     if (now.isAfter(expirationDate)) {
       let data4createResponseObject = {
         req: req,

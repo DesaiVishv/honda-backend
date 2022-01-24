@@ -20,7 +20,6 @@ module.exports = exports = {
     handler: async (req, res) => {
         const {  Aid, name,  ListofQuestion,description } = req.body;
         const { user } = req;
-        // console.log("tttttttttttttttttttttttttttttttt",user)
         if(user.type !== enums.USER_TYPE.ADMIN){
             const data4createResponseObject = {
                 req: req,

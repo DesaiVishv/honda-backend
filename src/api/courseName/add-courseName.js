@@ -56,7 +56,6 @@ module.exports = exports = {
             //     model: "courseType",
             //     select:"_id"
             // })
-            // console.log("findCoursetype",findCoursetype)
             // if(!findCoursetype){
             //     const data4createResponseObject = {
             //         req: req,
