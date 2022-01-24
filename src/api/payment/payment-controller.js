@@ -33,13 +33,13 @@ module.exports = exports = {
     vcid: Joi.string().required(),
     ctid: Joi.string().required(),
     cnid: Joi.string().required(),
-    tdid:Joi.string().required(),
+    tdid: Joi.string().required(),
     paymentId: Joi.string().required()
     // imagePath: Joi.string().allow("")
   }),
 
   pay: async (req, res) => {
-    const { vcid,ctid,cnid,tdid,paymentId } = req.body;
+    const { vcid, ctid, cnid, tdid, paymentId } = req.body;
     const { user } = req;
     if (!cnid) {
       const data4createResponseObject = {
@@ -51,8 +51,9 @@ module.exports = exports = {
       };
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
-    const findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.findOne({_id:vcid})
-    if(!findVehicle){
+    const findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.findOne({ _id: vcid })
+    console.log("FindVehicle", findVehicle);
+    if (!findVehicle) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -62,8 +63,10 @@ module.exports = exports = {
       };
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
-    const findcourseType = await global.models.GLOBAL.COURSETYPE.findOne({_id:ctid})
-    if(!findcourseType){
+    const findcourseType = await global.models.GLOBAL.COURSETYPE.findOne({ _id: ctid })
+    console.log("FindType", findcourseType);
+
+    if (!findcourseType) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -74,6 +77,8 @@ module.exports = exports = {
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
     const findCoursename = await global.models.GLOBAL.COURSENAME.findOne({ _id: cnid })
+    console.log("FindName", findCoursename);
+
     if (!findCoursename) {
       const data4createResponseObject = {
         req: req,
@@ -85,6 +90,7 @@ module.exports = exports = {
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
     const findDate = await global.models.GLOBAL.TRAININGDATE.findOne({ _id: tdid })
+    console.log("findDate", findDate);
     if (!findDate) {
       const data4createResponseObject = {
         req: req,
@@ -96,10 +102,10 @@ module.exports = exports = {
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
     const paymentData = await global.models.GLOBAL.PAYMENT({
-      vcid:vcid,
-      ctid:ctid,
+      vcid: vcid,
+      ctid: ctid,
       cnid: cnid,
-      tdid:tdid,
+      tdid: tdid,
       paymentId: paymentId,
       price: findCoursename.price
     })
@@ -115,7 +121,8 @@ module.exports = exports = {
     //   return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     // }
     if (paymentData) {
-      const updateSeat = await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate({ vcid:vcid,ctid:ctid,cnid:cnid,tdid:tdid }, { $inc: { seat: -1 } })
+      const updateSeat = await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate({ vcid: vcid, ctid: ctid, cnid: cnid, _id: tdid }, { $inc: { seat: -1 } })
+      console.log("updateSeat", updateSeat);
       if (!updateSeat) {
         const data4createResponseObject = {
           req: req,
