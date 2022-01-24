@@ -33,7 +33,7 @@ module.exports = exports = {
             // startDate = new Date(startDate.toString());
             // endDate = new Date(endDate.toString())
             // { $gte: startDate.toString(), $lte: endDate.toString() }
-            let filter0 = date ? { date: date, cnid: ObjectId(cnid) } : {}
+            let filter0 = date ? { date: date, cnid: ObjectId(cnid),seat:{$ne:0}} : {}
             console.log(filter0)
             let filter1 = startTime != null ? {
                 $and: [
