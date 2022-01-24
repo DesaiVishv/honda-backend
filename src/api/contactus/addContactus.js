@@ -49,7 +49,7 @@ module.exports = exports = {
             const data4createResponseObject = {
                 req: req,
                 result: 0,
-                message: messages.SUCCESS,
+                message: messages.SUCCESS_CONTACTUS,
                 payload: { data },
                 logPayload: false
             };

@@ -80,7 +80,7 @@ module.exports = exports = {
                 });
                 let addHis = {
                     uid:user._id,
-                    tdid:newAmeninties._id,
+                    tdid:id,
                     vcid:vcid,
                     ctid:ctid,
                     cnid:cnid,
