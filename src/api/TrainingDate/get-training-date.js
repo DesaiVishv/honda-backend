@@ -28,11 +28,16 @@ module.exports = exports = {
             let { date, cnid, startTime, endTime } = req.query;
             let startDate = moment(date).add(1, "days").format("YYYY-MM-DD");
             let endDate = moment(date).add(5, "days").format("YYYY-MM-DD");
-            
+
             // startDate = new Date(startDate.toString());
             // endDate = new Date(endDate.toString())
             // { $gte: startDate.toString(), $lte: endDate.toString() }
-            let filter0 = date ? { date: date, cnid: ObjectId(cnid),seat:{$ne:0}} : {}
+            let date1 = new Date(date);
+            let date2 = new Date(date);
+            date1.setHours(0); date1.setMinutes(0); date1.setSeconds(0); date1.setMilliseconds(0);
+            date2.setHours(23); date2.setMinutes(59); date2.setSeconds(59); date2.setMilliseconds(59);
+            let filter0 = date ? { $and: [{ date: { $gte: date1 } }, { date: { $lte: date2 } }], cnid: ObjectId(cnid), seat: { $ne: 0 } } : {}
+            console.log("filter", filter0, date1, date2);
             let filter1 = startTime != null ? {
                 $and: [
                     { date: date },
@@ -42,12 +47,15 @@ module.exports = exports = {
                 ]
 
             } : {}
+            console.log("filter1 ", filter1);
             let getData = { $and: [filter0, filter1] }
+            console.log("getDate", getData);
             // let search = req.query.search ? { name: { $regex: req.query.search, $options: 'i' },date:{$in:ids},cnid:{$in:id},startTime:{$in:starttime},endTime:{$in:endtime} } : { date:{$in:ids},cnid:{$in:id},startTime:{$in:starttime},endTime:{$in:endtime} };
             // const findCourse = await global.models.GLOBAL.TRAININGDATE.
             // let search = req.query.search ? {name:{$regex:req.query.search,$options:'i'}, filter0:filter0} :{filter0:filter0}
             const count = await global.models.GLOBAL.TRAININGDATE.find(getData).count();
             const subMenus = await global.models.GLOBAL.TRAININGDATE.find(getData).skip(skip).limit(limit)
+            console.log("subMenus", subMenus);
             if (subMenus.length == 0) {
                 const data4createResponseObject = {
                     req: req,
