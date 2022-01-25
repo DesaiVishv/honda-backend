@@ -10,7 +10,7 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-       titleName:Joi.string().required(),
+       titleName:Joi.string().allow(""),
        image:Joi.string().required(),
        description:Joi.string().required()
     }),
@@ -28,7 +28,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!titleName || !image || !description) {
+        if ( !image || !description) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,

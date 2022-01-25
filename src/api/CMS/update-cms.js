@@ -28,7 +28,7 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id || !titleName || !image || !description) {
+         if (!id || !image || !description) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
