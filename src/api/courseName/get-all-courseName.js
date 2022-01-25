@@ -24,7 +24,7 @@ module.exports = exports = {
 
 
             
-            let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
+            let search = req.query.search ? {courseName: { $regex: req.query.search , $options: 'i'}} : {}
             
             // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
             const count = await global.models.GLOBAL.COURSENAME.find(search).count();
