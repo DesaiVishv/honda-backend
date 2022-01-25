@@ -7,9 +7,9 @@ module.exports = (connection) => {
 
         date: { type: String, require: true },
         seat: { type: Number, default: null },
-        vcid: [{ type: mongoose.Schema.Types.ObjectId, require: true }],
-        ctid: [{ type: mongoose.Schema.Types.ObjectId, require: true }],
-        cnid: [{ type: mongoose.Schema.Types.ObjectId, require: true }],
+        vcid: { type: mongoose.Schema.Types.ObjectId, require: true },
+        ctid: { type: mongoose.Schema.Types.ObjectId, require: true },
+        cnid: { type: mongoose.Schema.Types.ObjectId, require: true },
         startTime: { type: String },
         endTime: { type: String },
         createdAt: { type: Date, default: Date.now },
