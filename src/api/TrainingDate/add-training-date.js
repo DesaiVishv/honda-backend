@@ -12,9 +12,9 @@ module.exports = exports = {
     validation: Joi.object({
         date: Joi.string().required(),
         seat: Joi.number(),
-        vcid: Joi.array().required(),
-        ctid: Joi.array().required(),
-        cnid: Joi.array().required(),
+        vcid: Joi.string().required(),
+        ctid: Joi.string().required(),
+        cnid: Joi.string().required(),
         startTime: Joi.string(),
         endTime: Joi.string()
         // imagePath: Joi.string().allow("")
