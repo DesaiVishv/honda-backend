@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 module.exports = (connection) => {
     const trainingDateSchema = new mongoose.Schema({
 
-        date: { type: String, require: true },
+        date: { type: Date, require: true },
         seat: { type: Number, default: null },
         vcid: { type: mongoose.Schema.Types.ObjectId, require: true },
         ctid: { type: mongoose.Schema.Types.ObjectId, require: true },
