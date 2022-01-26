@@ -8,6 +8,8 @@ const { validate } = require("../../middlewares");
 const passport = require("passport");
 
 router.get("/getAllPayment",paymentCtrl.getAllPayment.handler)
+router.get("/getAll",paymentCtrl.getAllForDownload.handler)
+
 
 router.put("/pay", paymentCtrl.createPayment.pay);
 // router.post("/pay-product", auth, paymentCtrl.payProduct);
