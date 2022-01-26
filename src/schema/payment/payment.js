@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 
 module.exports = (connection) => {
     const paymentSchema = new mongoose.Schema({
+        uid:{
+            type:mongoose.Schema.Types.ObjectId
+        },
         vcid:{
             type: mongoose.Schema.Types.ObjectId
         },
@@ -19,6 +22,9 @@ module.exports = (connection) => {
         paymentId: {
             type: Object,
             default: null
+        },
+        price:{
+            type:Number
         },
         created: {
             type: Date,

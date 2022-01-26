@@ -36,6 +36,9 @@ module.exports = (connection) => {
         medicalCertificate: { type: String },
         bloodGroup: { type: String },
         paymentId: { type: String, default: null },
+        type:{type:String, required:true},
+        dateofMakePayment:{type:Date},
+        isPaymentDone:{type:Boolean, default:false},
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
         createdBy: {

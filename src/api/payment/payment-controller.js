@@ -30,6 +30,7 @@ const Razorpay = require('razorpay');
 module.exports = exports = {
   // route validation
   validation: Joi.object({
+    uid:Joi.string().required(),
     vcid: Joi.string().required(),
     ctid: Joi.string().required(),
     cnid: Joi.string().required(),
@@ -39,13 +40,24 @@ module.exports = exports = {
   }),
 
   pay: async (req, res) => {
-    const { vcid, ctid, cnid, tdid, paymentId } = req.body;
+    const { uid,vcid, ctid, cnid, tdid, paymentId } = req.body;
     const { user } = req;
     if (!cnid) {
       const data4createResponseObject = {
         req: req,
         result: -1,
         message: messages.FILL_DETAILS,
+        payload: {},
+        logPayload: false
+      };
+      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+    }
+    const findUser = await global.models.GLOBAL.ADMIN.find({_id:uid})
+    if(!findUser){
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_FOUND,
         payload: {},
         logPayload: false
       };
@@ -136,6 +148,7 @@ module.exports = exports = {
     }
     await paymentData.save()
     // res.send(paymentData)
+    console.log("payment price",paymentData)
     if (paymentData) {
       const data4createResponseObject = {
         req: req,

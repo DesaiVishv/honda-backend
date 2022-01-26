@@ -28,9 +28,21 @@ module.exports = exports = {
             
             const count = await global.models.GLOBAL.PAYMENT.find(search).count();
             const Questions = await global.models.GLOBAL.PAYMENT.find(search).skip(skip).limit(limit).sort({createdAt:-1}).populate({
-                path:"cnid",
-                model:"courseName"
-            });
+                path: "uid",
+                model: "admin"
+            }).populate({
+                path: "ctid",
+                model: "courseType"
+            }).populate({
+                path: "vcid",
+                model: "vehicleCategory"
+            }).populate({
+                path: "cnid",
+                model: "courseName"
+            }).populate({
+                path:"tdid",
+                model:"trainingDate"
+            })
             if(Questions.length==0){
                 const data4createResponseObject = {
                     req: req,

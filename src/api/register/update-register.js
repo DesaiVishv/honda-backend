@@ -17,7 +17,7 @@ module.exports = exports = {
     handler: async (req, res) => {
         const { id } = req.params;
         const { user } = req;
-        const { uid, vcid, ctid, cnid, lcid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId } = req.body;
+        const { uid, vcid, ctid, cnid, lcid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId,type,dateofMakePayment,isPaymentDone } = req.body;
         if (user.type !== enums.USER_TYPE.SUPERADMIN) {
             const data4createResponseObject = {
                 req: req,
@@ -97,7 +97,10 @@ module.exports = exports = {
                     IDproof: IDproof,
                     medicalCertificate: medicalCertificate,
                     bloodGroup: bloodGroup,
-                    paymentId: paymentId
+                    paymentId: paymentId,
+                    type: type,
+                    dateofMakePayment: dateofMakePayment,
+                    isPaymentDone: isPaymentDone
                 }
                 Item = await global.models.GLOBAL.REGISTER.update({ _id: id }, Itemupdate);
                 const data4createResponseObject = {

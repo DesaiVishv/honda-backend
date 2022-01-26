@@ -41,12 +41,15 @@ module.exports = exports = {
         IDproof: Joi.string().allow(null),
         medicalCertificate: Joi.string().allow(null),
         bloodGroup: Joi.string().allow(''),
-        paymentId: Joi.string()
+        paymentId: Joi.string(),
+        type:Joi.string().required(),
+        dateofMakePayment:Joi.string(),
+        isPaymentDone:Joi.boolean()
 
     }),
 
     handler: async (req, res) => {
-        const { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId } = req.body;
+        const { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId,type,dateofMakePayment,isPaymentDone } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -58,7 +61,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!uid || !vcid || !ctid || !cnid || !lcid || !tdid || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !issueDate || !validTill) {
+        if (!uid || !vcid || !ctid || !cnid || !lcid || !tdid || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !issueDate || !validTill || !type) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -116,7 +119,10 @@ module.exports = exports = {
                 IDproof: IDproof,
                 medicalCertificate: medicalCertificate,
                 bloodGroup: bloodGroup,
-                paymentId: paymentId
+                paymentId: paymentId,
+                type:type,
+                dateofMakePayment:dateofMakePayment,
+                isPaymentDone:isPaymentDone
             };
             const newAmeninties = await global.models.GLOBAL.REGISTER(AmenintiesCreate);
             newAmeninties.save();
