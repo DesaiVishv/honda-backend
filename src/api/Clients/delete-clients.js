@@ -40,7 +40,7 @@
  
          try {
  
-             const deletedItem = await global.models.GLOBAL.FACILITIES.findByIdAndRemove(id);
+             const deletedItem = await global.models.GLOBAL.CLIENT.findByIdAndRemove(id);
              if(!deletedItem) {
                  const data4createResponseObject = {
                      req: req,

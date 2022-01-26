@@ -17,7 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const { image,description } = req.body;
+         const { image} = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -28,7 +28,7 @@
              };
              return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
          }
-         if (!id || !image || !description) {
+         if (!id || !image ) {
              const data4createResponseObject = {
                  req: req,
                  result: -1,
@@ -41,7 +41,7 @@
  
          try {
  
-             let Item = await global.models.GLOBAL.FACILITIES.findById(id);
+             let Item = await global.models.GLOBAL.CLIENT.findById(id);
 
              if(!Item) {
                  const data4createResponseObject = {
@@ -53,7 +53,7 @@
                  };
                  res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
              } else {
-                const checkMenu = await global.models.GLOBAL.FACILITIES.find({id});
+                const checkMenu = await global.models.GLOBAL.CLIENT.find({id});
                 if(checkMenu.length>0){
                     const data4createResponseObject = {
                         req: req,
@@ -65,7 +65,7 @@
                     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                     return;
                 }
-                Item = await global.models.GLOBAL.FACILITIES.update({_id:id},{$set:{image:image, description:description}});
+                Item = await global.models.GLOBAL.CLIENT.update({_id:id},{$set:{image:image}});
                  const data4createResponseObject = {
                      req: req,
                      result: 0,

@@ -26,7 +26,7 @@ module.exports = exports = {
                 res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
                 return;
             }
-            const Propertys = await global.models.GLOBAL.FACILITIES.findOne({_id:id});
+            const Propertys = await global.models.GLOBAL.CLIENT.findOne({_id:id});
             if(!Propertys){
                 const data4createResponseObject = {
                     req: req,

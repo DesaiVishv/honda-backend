@@ -10,13 +10,12 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-        image: Joi.array().required(),
-        description: Joi.string().required(),
+        image: Joi.string().required(),
         // imagePath: Joi.string().allow("")
     }),
 
     handler: async (req, res) => {
-        const { image,description } = req.body;
+        const { image } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -28,7 +27,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!image || !description) {
+        if (!image ) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -41,7 +40,7 @@ module.exports = exports = {
 
         try {
 
-            const checkMenu = await global.models.GLOBAL.FACILITIES.find({ image:image });
+            const checkMenu = await global.models.GLOBAL.CLIENT.find({ image:image });
             if (checkMenu.length > 0) {
                 const data4createResponseObject = {
                     req: req,
@@ -54,10 +53,9 @@ module.exports = exports = {
                 return;
             }
             let AmenintiesCreate = {
-                image:image,
-                description:description
+                image:image
             };
-            const newAmeninties = await global.models.GLOBAL.FACILITIES(AmenintiesCreate);
+            const newAmeninties = await global.models.GLOBAL.CLIENT(AmenintiesCreate);
             newAmeninties.save();
             const data4createResponseObject = {
                 req: req,
