@@ -24,6 +24,8 @@ module.exports = (app, logger) => {
     const informationRoute = require("../routes/information/index")
     const announcementRoute = require("../routes/Announcement/index")
     const faqRoute = require("../routes/FAQ/index")
+    const bannerRoute = require("../routes/Banner/index")
+    const contentRoute = require("../routes/HomeContent/index")
 
     const propertyRoute = require("../routes/property/index")
     const amenitiesRoute = require("../routes/amenities/index")
@@ -61,6 +63,8 @@ module.exports = (app, logger) => {
     app.use(["/api/v1/information"],  informationRoute);
     app.use(["/api/v1/announcement"],  announcementRoute);
     app.use(["/api/v1/faq"],  faqRoute);
+    app.use(["/api/v1/banner"],  bannerRoute);
+    app.use(["/api/v1/content"],  contentRoute);
 
     app.use(["/api/v1/amenities"],  amenitiesRoute);
     app.use(["/api/v1/property"],  propertyRoute);

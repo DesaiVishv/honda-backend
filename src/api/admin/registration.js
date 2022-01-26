@@ -16,19 +16,19 @@ module.exports = exports = {
   // route validation
   validation: Joi.object({
     firstName: Joi.string().required(),
-        fatherName: Joi.string(),
+    fatherName: Joi.string().required(),
     state: Joi.string().required(),
     IDTRcenter: Joi.string().required(),
     phone: Joi.number().required(),
     email: Joi.string(),
     code: Joi.string().required(),
-    password:Joi.string(),
+    password: Joi.string(),
     role: Joi.string().required()
   }),
 
   // route handler
   handler: async (req, res) => {
-    let { firstName,fatherName,code, phone,email,password,IDTRcenter,state,role } = req.body;
+    let { firstName, fatherName, code, phone, email, password, IDTRcenter, state, role } = req.body;
 
     if (phone.length === 0 || code.length === 0) {
       logger.error("/verify-code - Phone number and code cannot be empty!");
@@ -44,7 +44,7 @@ module.exports = exports = {
         .json(utils.createResponseObject(data4createResponseObject));
     }
     // phone = phone.removeSpaces();
-    const roleExist = await global.models.GLOBAL.ROLE.findOne({_id:role});
+    const roleExist = await global.models.GLOBAL.ROLE.findOne({ _id: role });
     // Find the phone no and code object and then delete it.
     let verificationEntry;
     try {
@@ -182,13 +182,13 @@ module.exports = exports = {
       // }
       const payload = {
         _id: uid,
-        firstName:firstName,
-        fatherName:fatherName,
+        firstName: firstName,
+        fatherName: fatherName,
         email: email,
-        code:code,
+        code: code,
         state: state,
         phone: phone,
-        password:password,
+        password: password,
         IDTRcenter: IDTRcenter,
         role: ObjectId(role).toString(),
 
@@ -205,14 +205,14 @@ module.exports = exports = {
       logger.info("/verify-code - Saving registration-code in database");
       try {
         await newAdmin.save();
-      //   const data4createResponseObject = {
-      //     req: req,
-      //     result: 0,
-      //     message: messages.REGISTER_SUCCESS,
-      //     payload: payload,
-      //     logPayload: false
-      // };
-      // res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+        //   const data4createResponseObject = {
+        //     req: req,
+        //     result: 0,
+        //     message: messages.REGISTER_SUCCESS,
+        //     payload: payload,
+        //     logPayload: false
+        // };
+        // res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
       } catch (error) {
         logger.error(
           `/verify-code - rejoice Error encountered while saving registration-code: ${error.message}\n${error.stack}`
@@ -291,7 +291,7 @@ module.exports = exports = {
       //   code: token,
       //   date: Date.now(),
       // });
-      
+
 
       // let data4createResponseObject = {
       //   req: req,
