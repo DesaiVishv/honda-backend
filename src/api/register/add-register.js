@@ -34,6 +34,8 @@ module.exports = exports = {
         issueDate: Joi.date().required(),
         validTill: Joi.date().required(),
         Authority: Joi.string().required(),
+        licenseCity: Joi.string().required(),
+        licenseDistrict: Joi.string().required(),
         passportPhoto: Joi.string().required(),
         drivingLicense: Joi.string().required(),
         IDproof: Joi.string().allow(null),
@@ -44,7 +46,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId } = req.body;
+        const { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority,licenseCity,licenseDistrict ,passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -107,6 +109,8 @@ module.exports = exports = {
                 issueDate: issueDate,
                 validTill: validTill,
                 Authority: Authority,
+                licenseCity:licenseCity,
+                licenseDistrict:licenseDistrict,
                 passportPhoto: passportPhoto,
                 drivingLicense: drivingLicense,
                 IDproof: IDproof,

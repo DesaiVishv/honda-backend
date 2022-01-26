@@ -17,7 +17,7 @@
      handler: async (req, res) => {
          const { id } = req.params;
          const { user } = req;
-         const { uid,vcid,ctid,cnid,lcid,drivingLicenseNumber,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,issueDate,validTill,Authority,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
+         const { uid,vcid,ctid,cnid,lcid,drivingLicenseNumber,fname,mname,lname,DoB,qualification,gender,address,state,city,district,pincode,email,phone,issueDate,validTill,Authority,licenseCity,licenseDistrict,passportPhoto,drivingLicense,IDproof,medicalCertificate,bloodGroup,paymentId } = req.body;
          if(user.type !== enums.USER_TYPE.SUPERADMIN){
              const data4createResponseObject = {
                  req: req,
@@ -90,6 +90,8 @@
                     issueDate:issueDate,
                     validTill:validTill,
                     Authority:Authority,
+                    licenseCity:licenseCity,
+                    licenseDistrict:licenseDistrict,
                     passportPhoto:passportPhoto,
                     drivingLicense:drivingLicense,
                     IDproof:IDproof,

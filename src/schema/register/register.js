@@ -28,6 +28,8 @@ module.exports = (connection) => {
         issueDate: { type: Date, required: true },
         validTill: { type: Date, required: true },
         Authority: { type: String, required: true },
+        licenseCity:{type: String, required: true},
+        licenseDistrict:{type: String, required: true},
         passportPhoto: { type: String, required: true },
         drivingLicense: { type: String, required: true },
         IDproof: { type: String},
