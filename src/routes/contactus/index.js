@@ -9,6 +9,8 @@ const passport = require("passport");
 // router.get("/search", validate("query", commonApi.search.validation), commonApi.search.handler);
 // router.get("/getContactus",passport.authenticate(["jwt"], { session: false }),  contactusApi.getContactus.handler);
 router.get("/getContactus", contactusApi.getContactus.handler);
+router.get("/getAll", contactusApi.getAllForDownload.handler);
+
 
 
 // Post Methods

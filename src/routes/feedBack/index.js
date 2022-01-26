@@ -6,6 +6,8 @@ const passport = require("passport");
 
 // Get Methods
 router.get("/getAllFeedback", feedbackApi.getAllFeedback.handler);
+router.get("/getAll", feedbackApi.getAllForDownload.handler);
+
 // router.get("/getAllMenu", menuApi.getAllMenu.handler);
 
 // Post Methods
