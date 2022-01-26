@@ -5,7 +5,7 @@ const enums = require("../../../json/enums.json");
 module.exports = (connection) => {
   const adminSchema = new mongoose.Schema({
     firstName: { type: String },
-    fatherName: { type: String },
+    fatherName: { type: String,required: true  },
     email: { type: String },
     // lname:{ type: String },
     phone: { type: Number, required: true },
