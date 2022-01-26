@@ -52,7 +52,8 @@ module.exports = exports = {
       };
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
-    const findUser = await global.models.GLOBAL.ADMIN.find({_id:uid})
+    const findUser = await global.models.GLOBAL.ADMIN.findOne({_id:uid})
+    console.log("findUser",findUser);
     if(!findUser){
       const data4createResponseObject = {
         req: req,
@@ -114,6 +115,7 @@ module.exports = exports = {
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
     const paymentData = await global.models.GLOBAL.PAYMENT({
+      uid:uid,
       vcid: vcid,
       ctid: ctid,
       cnid: cnid,
@@ -133,7 +135,7 @@ module.exports = exports = {
     //   return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     // }
     if (paymentData) {
-      const updateSeat = await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate({ vcid: vcid, ctid: ctid, cnid: cnid, _id: tdid }, { $inc: { seat: -1 } })
+      const updateSeat = await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate({vcid: vcid, ctid: ctid, cnid: cnid, _id: tdid }, { $inc: { seat: -1 } })
       console.log("updateSeat", updateSeat);
       if (!updateSeat) {
         const data4createResponseObject = {
