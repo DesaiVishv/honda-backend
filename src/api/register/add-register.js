@@ -49,8 +49,16 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId, type, dateofMakePayment, isPaymentDone,createdByAdmin } = req.body;
+        const { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId, type, dateofMakePayment, isPaymentDone } = req.body;
         const { user } = req;
+        
+        // console.log("user",user);
+        let createdByAdmin = false
+        if (user.type == enums.USER_TYPE.SUPERADMIN){
+            createdByAdmin = true,
+            isPaymentDone = false
+        }
+        console.log("Hii");
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
         //         req: req,
@@ -122,7 +130,8 @@ module.exports = exports = {
                 paymentId: paymentId,
                 type: type,
                 dateofMakePayment: dateofMakePayment,
-                isPaymentDone: isPaymentDone
+                isPaymentDone: isPaymentDone,
+                createdByAdmin:createdByAdmin
             };
             const newAmeninties = await global.models.GLOBAL.REGISTER(AmenintiesCreate);
             newAmeninties.save();

@@ -133,7 +133,7 @@
                      
                  }
  
-                 model = global.models.GLOBAL.USER;
+                 model = global.models.GLOBAL.ADMIN;
                  // If the phone is not present in the JWT payload then get the user details based on id
                  if (isEmpty(phone)) {
                      criteria = { "_id": id, "status.name": { $ne: enums.USER_STATUS.DISABLED } };

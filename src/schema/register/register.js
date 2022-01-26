@@ -38,7 +38,7 @@ module.exports = (connection) => {
         paymentId: { type: String, default: null },
         type:{type:String, required:true},
         dateofMakePayment:{type:Date},
-        isPaymentDone:{type:Boolean, default:false},
+        isPaymentDone:{type:Boolean, default:true},
         createdByAdmin:{ type:Boolean, default:false},
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },

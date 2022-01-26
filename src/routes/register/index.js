@@ -12,7 +12,7 @@ router.get("/getRegister/:id", registerApi.getRegister.handler);
 // router.get("/getAllMenu", menuApi.getAllMenu.handler);
 
 // Post Methods
-router.post("/addRegister", validate("body", registerApi.addRegister.validation), registerApi.addRegister.handler);
+router.post("/addRegister", validate("body", registerApi.addRegister.validation),passport.authenticate(["jwt"], { session: false }), registerApi.addRegister.handler);
 
 // // Put Methods
 router.put("/updateRegister/:id", passport.authenticate(["jwt"], { session: false }), registerApi.updateRegister.handler);
