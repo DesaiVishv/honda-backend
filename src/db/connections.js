@@ -44,7 +44,7 @@ module.exports = async () => {
                     INFORMATION: require("../schema/information/information")(connection_IN_HONDA),
                     ANNOUNCEMENT: require("../schema/Announcement/Announcement")(connection_IN_HONDA),
                     FAQ: require("../schema/FAQ/faq")(connection_IN_HONDA),
-                    BANNER: require("../schema/Banner/banner")(connection_IN_HONDA),
+                    BANNER: require("../schema/Banner/Banner")(connection_IN_HONDA),
                     CONTENT: require("../schema/HomeContent/Content")(connection_IN_HONDA),
                     CLIENT: require("../schema/Client/client")(connection_IN_HONDA),
                     
