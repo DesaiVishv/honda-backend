@@ -6,6 +6,8 @@ const passport = require("passport");
 
 // Get Methods
 router.get("/getAllRegister", registerApi.getAllRegister.handler);
+router.get("/getAll", registerApi.getAllForDownload.handler);
+
 router.get("/getRegister/:id", registerApi.getRegister.handler);
 // router.get("/getAllMenu", menuApi.getAllMenu.handler);
 
