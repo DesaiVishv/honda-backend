@@ -6,6 +6,8 @@ const passport = require("passport");
 
 // Get Methods
 router.get("/getAllCourseName", courseNameApi.getAllCourseName.handler);
+router.get("/getAll", courseNameApi.getAllForDownload.handler);
+
 router.get("/getCoursenameById/:id", courseNameApi.getCourseNameById.handler);
 router.post("/getCoursenameByCoursetype", courseNameApi.getCoursenameByCoursetype.handler);
 
