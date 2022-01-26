@@ -28,7 +28,7 @@ module.exports = exports = {
             };
             return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         }
-        if (!id || !uid || !vcid || !ctid || !cnid || !lcid || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill) {
+        if (!id || !vcid || !ctid || !cnid || !lcid || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !IDproof || !medicalCertificate || !issueDate || !validTill) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,

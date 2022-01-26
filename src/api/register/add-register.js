@@ -10,7 +10,7 @@ const utils = require("../../utils");
 module.exports = exports = {
     // route validation
     validation: Joi.object({
-        uid: Joi.string().required(),
+        uid: Joi.string(),
         vcid: Joi.string().required(),
         ctid: Joi.string().required(),
         cnid: Joi.string().required(),
@@ -42,14 +42,14 @@ module.exports = exports = {
         medicalCertificate: Joi.string().allow(null),
         bloodGroup: Joi.string().allow(''),
         paymentId: Joi.string(),
-        type:Joi.string().required(),
-        dateofMakePayment:Joi.string(),
-        isPaymentDone:Joi.boolean()
+        type: Joi.string().required(),
+        dateofMakePayment: Joi.string(),
+        isPaymentDone: Joi.boolean()
 
     }),
 
     handler: async (req, res) => {
-        const { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId,type,dateofMakePayment,isPaymentDone } = req.body;
+        const { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId, type, dateofMakePayment, isPaymentDone,createdByAdmin } = req.body;
         const { user } = req;
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
         //     const data4createResponseObject = {
@@ -61,7 +61,7 @@ module.exports = exports = {
         //     };
         //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
         // }
-        if (!uid || !vcid || !ctid || !cnid || !lcid || !tdid || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !issueDate || !validTill || !type) {
+        if ( !vcid || !ctid || !cnid || !lcid || !tdid || !drivingLicenseNumber || !phone || !passportPhoto || !drivingLicense || !issueDate || !validTill || !type) {
             const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -120,9 +120,9 @@ module.exports = exports = {
                 medicalCertificate: medicalCertificate,
                 bloodGroup: bloodGroup,
                 paymentId: paymentId,
-                type:type,
-                dateofMakePayment:dateofMakePayment,
-                isPaymentDone:isPaymentDone
+                type: type,
+                dateofMakePayment: dateofMakePayment,
+                isPaymentDone: isPaymentDone
             };
             const newAmeninties = await global.models.GLOBAL.REGISTER(AmenintiesCreate);
             newAmeninties.save();

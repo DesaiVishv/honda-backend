@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 module.exports = (connection) => {
     const registerSchema = new mongoose.Schema({
-        uid: { type: mongoose.Schema.Types.ObjectId, require: true },
+        uid: { type: mongoose.Schema.Types.ObjectId },
         vcid: { type: mongoose.Schema.Types.ObjectId, require: true },
         ctid: { type: mongoose.Schema.Types.ObjectId, require: true },
         cnid: { type: mongoose.Schema.Types.ObjectId, require: true },
@@ -39,6 +39,7 @@ module.exports = (connection) => {
         type:{type:String, required:true},
         dateofMakePayment:{type:Date},
         isPaymentDone:{type:Boolean, default:false},
+        createdByAdmin:{ type:Boolean, default:false},
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
         createdBy: {
