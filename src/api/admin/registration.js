@@ -46,6 +46,19 @@ module.exports = exports = {
     // phone = phone.removeSpaces();
     const roleExist = await global.models.GLOBAL.ROLE.findOne({ _id: role });
     // Find the phone no and code object and then delete it.
+    const emailExist = await global.models.GLOBAL.ADMIN.findOne( { phone: phone });
+    if (emailExist) {
+      const data4createResponseObject = {
+          req: req,
+          result: -400,
+          message: messages.EXISTS_PHONE,
+          payload: {},
+          logPayload: false
+      };
+      res.status(enums.HTTP_CODES.DUPLICATE_VALUE).json(utils.createResponseObject(data4createResponseObject));
+      return;
+  }
+
     let verificationEntry;
     try {
       verificationEntry = await global.models.GLOBAL.CODE_VERIFICATION.findOne({
