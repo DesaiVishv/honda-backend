@@ -224,12 +224,12 @@ functions.checkStatus = async (user) => {
      const url = 'https://sms.anayamail.com/sendsms'
 
      var dataForSms = qs.stringify({
-        'token': 'hZ7iStKjpfX7LFHcj4lq',
+        'token': process.env.TOKEN,
         'number': phone4twilio,
         'message': `Thank you for connecting with MyTeam11. Your OTP is: ${otp} 9HCAFRqi6kt`,
         'msg_type': 'normal',
         'senderid': 'MYTEAM',
-        'callback_url': 'https://trans11.vectorapi.com/callback?track_code=ajoikjjoijf'
+        'callback_url': process.env.CALLBACK_URL
       });
     //   console.log("token",process.env.TOKEN);
     //   console.log("callback",process.env.CALLBACK_URL);
