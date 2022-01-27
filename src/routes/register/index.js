@@ -17,6 +17,8 @@ router.post("/addRegister", validate("body", registerApi.addRegister.validation)
 // // Put Methods
 router.put("/updateRegister/:id", passport.authenticate(["jwt"], { session: false }), registerApi.updateRegister.handler);
 
+router.put("/offlinePayment",registerApi.offlinePayment.handler);
+
 // // Delete Methods
 router.delete("/deleteRegister/:id", passport.authenticate(["jwt"], { session: false }), registerApi.deleteRegister.handler);
 

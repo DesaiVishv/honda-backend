@@ -37,9 +37,10 @@ module.exports = (connection) => {
         bloodGroup: { type: String },
         paymentId: { type: String, default: null },
         type:{type:String, required:true},
-        dateofMakePayment:{type:Date},
-        isPaymentDone:{type:Boolean, default:true},
+        receiptDate:{type:Date},
+        isPaymentDone:{type:Boolean, default:false},
         createdByAdmin:{ type:Boolean, default:false},
+        receiptNumber:{type: mongoose.Schema.Types.ObjectId },
         createdAt: { type: Date, default: Date.now },
         updatedAt: { type: Date, default: Date.now },
         createdBy: {

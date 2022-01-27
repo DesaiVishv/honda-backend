@@ -4,6 +4,7 @@ const getRegister = require("./get-register-by-id");
 const getAllRegister = require("./get-register")
 const updateRegister = require("./update-register");
 const deleteRegister = require("./delete-register");
+const offlinePayment = require("./payment-offline")
 // const getAllMenu = require("./get-all-menu")
 
 
@@ -14,6 +15,7 @@ const deleteRegister = require("./delete-register");
    getRegister,
    getAllRegister,
    updateRegister,
-   deleteRegister
+   deleteRegister,
+   offlinePayment
  };
   
