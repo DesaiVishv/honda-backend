@@ -17,6 +17,7 @@ module.exports = exports = {
         lcid: Joi.string(),
         tdid: Joi.string(),
         drivingLicenseNumber: Joi.string(),
+        dateofCourse:Joi.string(),
         fname: Joi.string(),
         mname: Joi.string().allow(""),
         lname: Joi.string().allow(""),
@@ -49,7 +50,7 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        let { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId, type, dateofMakePayment, isPaymentDone } = req.body;
+        let { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber,dateofCourse, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId, type, dateofMakePayment, isPaymentDone } = req.body;
         const { user } = req;
         
         // console.log("user",user);
@@ -105,6 +106,7 @@ module.exports = exports = {
                 tdid: tdid,
                 // dateofCourse:dateofCourse,
                 drivingLicenseNumber: drivingLicenseNumber,
+                dateofCourse:dateofCourse,
                 fname: fname,
                 mname: mname,
                 lname: lname,
