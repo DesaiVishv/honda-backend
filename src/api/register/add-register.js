@@ -49,14 +49,16 @@ module.exports = exports = {
     }),
 
     handler: async (req, res) => {
-        const { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId, type, dateofMakePayment, isPaymentDone } = req.body;
+        let { uid, vcid, ctid, cnid, lcid, tdid, drivingLicenseNumber, fname, mname, lname, DoB, qualification, gender, address, state, city, district, pincode, email, phone, issueDate, validTill, Authority, authoritycity, authoritydistrict, passportPhoto, drivingLicense, IDproof, medicalCertificate, bloodGroup, paymentId, type, dateofMakePayment, isPaymentDone } = req.body;
         const { user } = req;
         
         // console.log("user",user);
         let createdByAdmin = false
         if (user.type == enums.USER_TYPE.SUPERADMIN){
-            createdByAdmin = true,
-            isPaymentDone = false
+            createdByAdmin = true
+        }
+        if(type==="online"){
+            isPaymentDone=true
         }
         console.log("Hii");
         // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
