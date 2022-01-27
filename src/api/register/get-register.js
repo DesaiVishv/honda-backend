@@ -11,7 +11,7 @@ module.exports = exports = {
     // route validation
 
     handler: async (req, res) => {
-        
+
         try {
             req.query.page = req.query.page ? req.query.page : 1;
             let page = parseInt(req.query.page);
@@ -19,17 +19,51 @@ module.exports = exports = {
             let limit = parseInt(req.query.limit);
             let skip = (parseInt(req.query.page) - 1) * limit;
 
-           
+
             // let id = req.params.id;
 
 
-            
-            let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
-            
+
+            let search = req.query.search ? { name: { $regex: req.query.search, $options: 'i' } } : {}
+
             const count = await global.models.GLOBAL.REGISTER.find(search).count();
-            const Questions = await global.models.GLOBAL.REGISTER.find(search).skip(skip).limit(limit).sort({createdAt:-1})
-        
-            if(Questions.length==0){
+            const Questions = await global.models.GLOBAL.REGISTER.aggregate([
+                {
+                    '$lookup': {
+                        'from': 'vehicleCategory',
+                        'localField': 'vcid',
+                        'foreignField': '_id',
+                        'as': 'vehicleCategory'
+                    }
+                },
+
+                {
+                    '$lookup': {
+                        'from': 'courseType',
+                        'localField': 'ctid',
+                        'foreignField': '_id',
+                        'as': 'courseType'
+                    }
+                },
+                {
+                    '$lookup': {
+                        'from': 'courseName',
+                        'localField': 'cnid',
+                        'foreignField': '_id',
+                        'as': 'courseName'
+                    }
+                },
+                {
+                    '$lookup': {
+                        'from': 'trainingDate',
+                        'localField': 'tdid',
+                        'foreignField': '_id',
+                        'as': 'trainingDate'
+                    }
+                }
+            ]).skip(skip).limit(limit).sort({ createdAt: -1 })
+
+            if (Questions.length == 0) {
                 const data4createResponseObject = {
                     req: req,
                     result: -400,
@@ -44,7 +78,7 @@ module.exports = exports = {
                 req: req,
                 result: 0,
                 message: messages.SUCCESS,
-                payload: { Question:Questions ,count:count},
+                payload: { Question: Questions, count: count },
                 logPayload: false
             };
             res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
