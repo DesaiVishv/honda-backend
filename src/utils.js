@@ -200,11 +200,11 @@ functions.checkStatus = async (user) => {
     //  };
  
  /* Send SMS */
- functions.sendMessage = async (phoneToUse, nameToUse) => {
+ functions.sendMessage = async (phoneToUse, otpToUse) => {
      console.log("parameters- phone", phoneToUse);
-     console.log("parameters- nameToUse", nameToUse);
+     console.log("parameters- nameToUse", otpToUse);
     //  logger.info("#sendMessage - parameters: " + JSON.stringify(parameters, null, 3));
-     const name = nameToUse || "";
+     const otp = otpToUse || "";
      const phone = phoneToUse || "";
  
      if (!phone) {
@@ -224,21 +224,28 @@ functions.checkStatus = async (user) => {
      const url = 'https://sms.anayamail.com/sendsms'
 
      var dataForSms = qs.stringify({
-        'api_key': '16dd72a429c90c0c6fc0b32406a721fc',
+        'token': 'hZ7iStKjpfX7LFHcj4lq',
         'number': phone4twilio,
-        'message': `hellow + ${name}`
+        'message': `Thank you for connecting with MyTeam11. Your OTP is: ${otp} 9HCAFRqi6kt`,
+        'msg_type': 'normal',
+        'senderid': 'MYTEAM',
+        'callback_url': 'https://trans11.vectorapi.com/callback?track_code=ajoikjjoijf'
       });
-      var config = {
+    //   console.log("token",process.env.TOKEN);
+    //   console.log("callback",process.env.CALLBACK_URL);
+// console.log("datafomrs",data);
+    var config = {
         method: 'post',
-        url: 'https://sms.anayamail.com/sendsms',
+        url: 'https://trans11.vectorapi.com/send_sms',
         headers: { 
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         data : dataForSms
-      };
-
+    };
+console.log("config",config);
      try {
         const resp = await axios(config)
+        
         .then(function (response) {
           console.log("Responseeee",response);
           console.log("Responseeee",JSON.stringify(response.data));
@@ -252,7 +259,7 @@ functions.checkStatus = async (user) => {
           logger.error("#sendMessage - Message sending failed to " + phone4twilio + ". Reason: n.a.");
           return null;
         });
-
+        console.log("resp",resp);
         return resp;
 
         // if (!messageDetails) {

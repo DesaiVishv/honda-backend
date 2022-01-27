@@ -58,7 +58,7 @@ module.exports = exports = {
     }
 
     // When USE_TEST_PIN is true (config.json)
-    if (config.MONGODB.GLOBAL.USE_TEST_PIN) {
+    if (config.MONGODB.GLOBAL.USE_TEST_PIN === "true") {
       // If (dummyAccount) {
       code = 1235;
 
@@ -105,7 +105,7 @@ module.exports = exports = {
       event.message = messages.SMS_VERIFICATION_CODE.format([code]);
       const messageDetails = await utils.sendMessage(
         phone,
-        "bhargav"
+        code
       );
 
       if (!messageDetails) {
