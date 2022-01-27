@@ -27,7 +27,7 @@ module.exports = exports = {
             let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
             
             const count = await global.models.GLOBAL.PAYMENT.find(search).count();
-            const Questions = await global.models.GLOBAL.PAYMENT.find(search).sort({createdAt:-1}).populate({
+            const Questions = await global.models.GLOBAL.PAYMENT.find(search).sort({created:-1}).populate({
                 path: "uid",
                 model: "admin"
             }).populate({
