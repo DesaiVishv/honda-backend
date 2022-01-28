@@ -6,6 +6,8 @@ const passport = require("passport");
 
 // Get Methods
 router.get("/getAllAnnouncement", announcementApi.getAllAnnouncement.handler);
+router.get("/getAnnouncement/:id", announcementApi.getAnnouncementById.handler);
+
 // router.post("/getSubmenuByMenu",   vehicleCategoryApi.getSubmenuByMenu.handler);
 // router.get("/getCMS/:id",   cmsApi.getCMSById.handler);
 
