@@ -57,9 +57,11 @@ module.exports = exports = {
                 },
                 {
                     '$match':{
-                        ...search,
-                        ...findCourseType,
-                        ...findCourseName
+                        $or:[
+                            search,
+                            findCourseType,
+                            findCourseName
+                        ]
                     }
                 }
             ]).skip(skip).limit(limit).sort({createdAt:-1})
