@@ -24,10 +24,15 @@ module.exports = exports = {
 
 
 
-            let search = req.query.search ? { name: { $regex: req.query.search, $options: 'i' } } : {}
+            let search = req.query.search ? { fname: { $regex: req.query.search, $options: 'i' } } : {}
 
             const count = await global.models.GLOBAL.REGISTER.find(search).count();
             const Questions = await global.models.GLOBAL.REGISTER.aggregate([
+                {
+                    '$match':
+                        search
+                    
+                },
                 {
                     '$lookup': {
                         'from': 'vehicleCategory',
