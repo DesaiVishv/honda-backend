@@ -24,19 +24,46 @@ module.exports = exports = {
 
 
             
-            let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
-            
+            let search = req.query.search ? {"vehicleCategory.vehicleCategory": { $regex: req.query.search , $options: 'i'}} : {}
+            let findCourseType = req.query.search ? {"courseType.courseType": { $regex: req.query.search , $options: 'i'}} : {}
+            let findCourseName = req.query.search ? {"courseName.courseName": { $regex: req.query.search , $options: 'i'}} : {}
+            console.log("search",search)
             const count = await global.models.GLOBAL.TRAININGDATE.find(search).count();
-            const Questions = await global.models.GLOBAL.TRAININGDATE.find(search).skip(skip).limit(limit).sort({createdAt:-1}).populate({
-                path:"ctid",
-                model:"courseType"
-            }).populate({
-                path:"cnid",
-                model:"courseName"
-            }).populate({
-                path:"vcid",
-                model:"vehicleCategory"
-            });
+            const Questions = await global.models.GLOBAL.TRAININGDATE.aggregate([
+                {
+                    '$lookup': {
+                        'from': 'vehicleCategory',
+                        'localField': 'vcid',
+                        'foreignField': '_id',
+                        'as': 'vehicleCategory'
+                    }
+                },
+
+                {
+                    '$lookup': {
+                        'from': 'courseType',
+                        'localField': 'ctid',
+                        'foreignField': '_id',
+                        'as': 'courseType'
+                    }
+                },
+                {
+                    '$lookup': {
+                        'from': 'courseName',
+                        'localField': 'cnid',
+                        'foreignField': '_id',
+                        'as': 'courseName'
+                    }
+                },
+                {
+                    '$match':{
+                        ...search,
+                        ...findCourseType,
+                        ...findCourseName
+                    }
+                }
+            ]).skip(skip).limit(limit).sort({createdAt:-1})
+            console.log("Question",Questions)
             if(Questions.length==0){
                 const data4createResponseObject = {
                     req: req,

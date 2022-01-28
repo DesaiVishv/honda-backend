@@ -24,7 +24,7 @@ module.exports = exports = {
 
 
             
-            let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
+            let search = req.query.search ? {titleName: { $regex: req.query.search , $options: 'i'}} : {}
             
             const count = await global.models.GLOBAL.CONTENT.find(search).count();
             const Questions = await global.models.GLOBAL.CONTENT.find(search).skip(skip).limit(limit).sort({createdAt:-1});
