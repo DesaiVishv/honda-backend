@@ -23,7 +23,6 @@ module.exports = exports = {
       phone: { $eq: phone },
     });
     try {
-
       if (!phone) {
         let data4createResponseObject = {
           req: req,
@@ -40,7 +39,6 @@ module.exports = exports = {
           phone: phone,
         });
       }
-
     } catch (error) {
       logger.error(
         `${req.originalUrl} - Error while deleting the old codes from the database: ${error.message}\n${error.stack}`
@@ -103,10 +101,7 @@ module.exports = exports = {
     } else {
       const event = { ...events.GENERAL };
       event.message = messages.SMS_VERIFICATION_CODE.format([code]);
-      const messageDetails = await utils.sendMessage(
-        phone,
-        code
-      );
+      const messageDetails = await utils.sendMessage(phone, code);
 
       if (!messageDetails) {
         logger.error(
@@ -156,13 +151,12 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: "SMS sent!",
-        payload: {},
+        payload: { entry },
         logPayload: false,
       };
       return res
         .status(enums.HTTP_CODES.OK)
         .json(utils.createResponseObject(data4createResponseObject));
     }
-
   },
 };

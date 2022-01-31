@@ -250,7 +250,7 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
     phone4twilio = "+" + phone4twilio.slice(2);
   }
 
-  //  console.log("phone4twilio", phone4twilio);
+  console.log("phone4twilio", phone4twilio);
   const url = "https://sms.anayamail.com/sendsms";
 
   var dataForSms = qs.stringify({
@@ -263,7 +263,7 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
   });
   //   console.log("token",process.env.TOKEN);
   //   console.log("callback",process.env.CALLBACK_URL);
-  // console.log("datafomrs",data);
+  console.log("datafomrs", data);
   var config = {
     method: "post",
     url: "https://trans11.vectorapi.com/send_sms",
@@ -285,7 +285,7 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
         }
       })
       .catch(function (error) {
-        //   console.log("ERROR", error);
+        console.log("ERROR", error);
         logger.error(
           "#sendMessage - Message sending failed to " +
             phone4twilio +
@@ -293,7 +293,7 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
         );
         return null;
       });
-    // console.log("resp",resp);
+    console.log("resp", resp);
     return resp;
 
     // if (!messageDetails) {
