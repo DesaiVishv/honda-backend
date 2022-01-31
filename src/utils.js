@@ -228,7 +228,9 @@ functions.checkStatus = async (user) => {
 
 /* Send SMS */
 functions.sendMessage = async (phoneToUse, otpToUse) => {
-  //  logger.info("#sendMessage - parameters: " + JSON.stringify(parameters, null, 3));
+  // logger.info(
+  //   "#sendMessage - parameters: " + JSON.stringify(parameters, null, 3)
+  // );
   const otp = otpToUse || "";
   const phone = phoneToUse || "";
 
@@ -240,7 +242,7 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
   }
 
   let phone4twilio = phone;
-  //  console.log("phone4twilio", phone4twilio.toString().includes("+"));
+  console.log("phone4twilio", phone4twilio.toString().includes("+"));
   if (
     phone4twilio.toString().includes("00") !== 0 &&
     phone4twilio.toString().includes("+") !== 0
@@ -263,7 +265,7 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
   });
   //   console.log("token",process.env.TOKEN);
   //   console.log("callback",process.env.CALLBACK_URL);
-  console.log("datafomrs", data);
+  // console.log("datafomrs", data);
   var config = {
     method: "post",
     url: "https://trans11.vectorapi.com/send_sms",
@@ -275,8 +277,8 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
   try {
     const resp = await axios(config)
       .then(function (response) {
-        //   console.log("Responseeee",response);
-        //   console.log("Responseeee",JSON.stringify(response.data));
+        console.log("Responseeee", response);
+        console.log("Responseeee", JSON.stringify(response.data));
         if (parseInt(response.status / 100) === 2) {
           logger.info(
             "#sendMessage - Message sent to " + phone4twilio + " successfully."

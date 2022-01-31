@@ -92,7 +92,7 @@ module.exports = exports = {
         result: 0,
         message:
           "[USE_TEST_PIN = true] No SMS was sent out to the mobile number.",
-        payload: {},
+        payload: { entry },
         logPayload: false,
       };
       return res
