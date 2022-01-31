@@ -16,7 +16,9 @@ const APIResponse = require("../../APIResponse");
 // const SubscriptionPlan = require("../subscriptionPlan/subscriptionPlan.model");
 // const Primeuser = require("../subscription/primeuser.model");
 // const Transaction = require("../subscription/subscription.model");
-const stripe = require("stripe")('sk_test_51KCd8BSJCVT2nRrfQYCseB55tVSxR3l1tRYO66TJDeTk89GlfGOsVjT4bsB8DrtlBUMFM63i4eT6gR6dFe2pA4Jk00FSac3rjg');
+const stripe = require("stripe")(
+  "sk_test_51KCd8BSJCVT2nRrfQYCseB55tVSxR3l1tRYO66TJDeTk89GlfGOsVjT4bsB8DrtlBUMFM63i4eT6gR6dFe2pA4Jk00FSac3rjg"
+);
 // const stripe = require("stripe")(`${process.env.stripe_sk_test}`);
 var ObjectID = require("mongodb").ObjectID;
 const nodemailer = require("nodemailer");
@@ -25,22 +27,22 @@ const { verifyEmail } = require("../admin");
 // const utils = require("../../utils");
 const messages = require("../../../json/messages.json");
 const logger = require("../../logger");
-const Razorpay = require('razorpay');
+const Razorpay = require("razorpay");
 
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    uid:Joi.string().required(),
+    uid: Joi.string().required(),
     vcid: Joi.string().required(),
     ctid: Joi.string().required(),
     cnid: Joi.string().required(),
     tdid: Joi.string().required(),
-    paymentId: Joi.string().required()
+    paymentId: Joi.string().required(),
     // imagePath: Joi.string().allow("")
   }),
 
   pay: async (req, res) => {
-    const { uid,vcid, ctid, cnid, tdid, paymentId } = req.body;
+    const { uid, vcid, ctid, cnid, tdid, paymentId } = req.body;
     const { user } = req;
     if (!cnid) {
       const data4createResponseObject = {
@@ -48,36 +50,43 @@ module.exports = exports = {
         result: -1,
         message: messages.FILL_DETAILS,
         payload: {},
-        logPayload: false
+        logPayload: false,
       };
-      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
     }
-    const findUser = await global.models.GLOBAL.ADMIN.findOne({_id:uid})
-    console.log("findUser",findUser);
-    if(!findUser){
+    const findUser = await global.models.GLOBAL.ADMIN.findOne({ _id: uid });
+    if (!findUser) {
       const data4createResponseObject = {
         req: req,
         result: -1,
         message: messages.NOT_FOUND,
         payload: {},
-        logPayload: false
+        logPayload: false,
       };
-      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
     }
-    const findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.findOne({ _id: vcid })
-    console.log("FindVehicle", findVehicle);
+    const findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.findOne({
+      _id: vcid,
+    });
     if (!findVehicle) {
       const data4createResponseObject = {
         req: req,
         result: -1,
         message: messages.NOT_FOUND,
         payload: {},
-        logPayload: false
+        logPayload: false,
       };
-      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
     }
-    const findcourseType = await global.models.GLOBAL.COURSETYPE.findOne({ _id: ctid })
-    console.log("FindType", findcourseType);
+    const findcourseType = await global.models.GLOBAL.COURSETYPE.findOne({
+      _id: ctid,
+    });
 
     if (!findcourseType) {
       const data4createResponseObject = {
@@ -85,12 +94,15 @@ module.exports = exports = {
         result: -1,
         message: messages.NOT_FOUND,
         payload: {},
-        logPayload: false
+        logPayload: false,
       };
-      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
     }
-    const findCoursename = await global.models.GLOBAL.COURSENAME.findOne({ _id: cnid })
-    console.log("FindName", findCoursename);
+    const findCoursename = await global.models.GLOBAL.COURSENAME.findOne({
+      _id: cnid,
+    });
 
     if (!findCoursename) {
       const data4createResponseObject = {
@@ -98,31 +110,36 @@ module.exports = exports = {
         result: -1,
         message: messages.NOT_FOUND,
         payload: {},
-        logPayload: false
+        logPayload: false,
       };
-      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
     }
-    const findDate = await global.models.GLOBAL.TRAININGDATE.findOne({ _id: tdid })
-    console.log("findDate", findDate);
+    const findDate = await global.models.GLOBAL.TRAININGDATE.findOne({
+      _id: tdid,
+    });
     if (!findDate) {
       const data4createResponseObject = {
         req: req,
         result: -1,
         message: messages.NOT_FOUND,
         payload: {},
-        logPayload: false
+        logPayload: false,
       };
-      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
     }
     const paymentData = await global.models.GLOBAL.PAYMENT({
-      uid:uid,
+      uid: uid,
       vcid: vcid,
       ctid: ctid,
       cnid: cnid,
       tdid: tdid,
       paymentId: paymentId,
-      price: findCoursename.price
-    })
+      price: findCoursename.price,
+    });
     // const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({ cnid: cnid }, { paymentId: paymentId })
     // if (!updateRegister) {
     //   const data4createResponseObject = {
@@ -135,40 +152,48 @@ module.exports = exports = {
     //   return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     // }
     if (paymentData) {
-      const updateSeat = await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate({vcid: vcid, ctid: ctid, cnid: cnid, _id: tdid }, { $inc: { seat: -1 } })
-      console.log("updateSeat", updateSeat);
+      const updateSeat =
+        await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate(
+          { vcid: vcid, ctid: ctid, cnid: cnid, _id: tdid },
+          { $inc: { seat: -1 } }
+        );
       if (!updateSeat) {
         const data4createResponseObject = {
           req: req,
           result: -1,
           message: messages.NOT_FOUND,
           payload: {},
-          logPayload: false
+          logPayload: false,
         };
-        return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+        return res
+          .status(enums.HTTP_CODES.BAD_REQUEST)
+          .json(utils.createResponseObject(data4createResponseObject));
       }
     }
-    await paymentData.save()
+    await paymentData.save();
     // res.send(paymentData)
-    console.log("payment price",paymentData)
     if (paymentData) {
       const data4createResponseObject = {
         req: req,
         result: 0,
         message: messages.SUCCESS_PAYMENT,
         payload: { paymentData },
-        logPayload: false
+        logPayload: false,
       };
-      return res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+      return res
+        .status(enums.HTTP_CODES.OK)
+        .json(utils.createResponseObject(data4createResponseObject));
     } else {
       const data4createResponseObject = {
         req: req,
         result: -1,
         message: messages.PAYMENT_FAILED,
         payload: {},
-        logPayload: false
+        logPayload: false,
       };
-      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
     }
-  }
-}  
+  },
+};

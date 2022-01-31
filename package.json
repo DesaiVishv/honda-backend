@@ -18,6 +18,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
     "cors": "^2.8.5",
+    "docker": "^1.0.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "firebase-admin": "^9.11.0",
@@ -40,6 +41,7 @@
     "razorpay": "^2.8.0",
     "shortid": "^2.2.16",
     "socket.io": "^2.3.0",
+    "sonarqube-scanner": "^2.8.1",
     "stripe": "^8.195.0",
     "winston": "^3.3.3",
     "winston-splunk-httplogger": "^2.4.1"
