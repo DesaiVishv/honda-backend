@@ -26,6 +26,7 @@ module.exports = (app, logger) => {
   const bannerRoute = require("../routes/Banner/index");
   const contentRoute = require("../routes/HomeContent/index");
   const clientRoute = require("../routes/Client/index");
+  const examinerRoute = require("../routes/Examiner/index");
 
   const amenitiesRoute = require("../routes/amenities/index");
   const contactusRoute = require("../routes/contactus/index");
@@ -59,6 +60,7 @@ module.exports = (app, logger) => {
   app.use(["/api/v1/banner"], bannerRoute);
   app.use(["/api/v1/content"], contentRoute);
   app.use(["/api/v1/client"], clientRoute);
+  app.use(["/api/v1/examiner"], examinerRoute);
 
   app.use(["/api/v1/amenities"], amenitiesRoute);
   app.use(["/api/v1/contactus"], contactusRoute);
