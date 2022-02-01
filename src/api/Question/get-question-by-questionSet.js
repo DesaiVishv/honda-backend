@@ -18,20 +18,25 @@ module.exports = exports = {
       let limit = parseInt(req.query.limit);
       let skip = (parseInt(req.query.page) - 1) * limit;
 
-      // let id = req.params.id;
+      let ids = req.body.questionset;
 
       let search = req.query.search
-        ? { name: { $regex: req.query.search, $options: "i" } }
-        : {};
-
-      const count = await global.models.GLOBAL.EXAMINER.find(search).count();
-      const Examiner = await global.models.GLOBAL.EXAMINER.find(search)
+        ? {
+            name: { $regex: req.query.search, $options: "i" },
+            Qsetid: { $in: ids },
+          }
+        : { Qsetid: { $in: ids } };
+      //   const Menus = await global.models.GLOBAL.QUESTIONSET.find({
+      //     _id: { $in: ids },
+      //   });
+      const QuestionSet = await global.models.GLOBAL.QUESTIONSET.find({
+        _id: { $in: ids },
+      });
+      const count = await global.models.GLOBAL.QUESTION.find(search).count();
+      const Questions = await global.models.GLOBAL.QUESTION.find(search)
         .skip(skip)
-        .limit(limit)
-        .sort({
-          createdAt: -1,
-        });
-      if (Examiner.length == 0) {
+        .limit(limit);
+      if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -48,7 +53,11 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Examiner: Examiner, count: count },
+        payload: {
+          Question: Questions,
+          QuestionSet: QuestionSet,
+          count: count,
+        },
         logPayload: false,
       };
       res

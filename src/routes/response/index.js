@@ -5,19 +5,21 @@ const { validate } = require("../../middlewares");
 const passport = require("passport");
 
 // Get Methods
-router.get("/getResponse", responseApi.getResponse.handler); // params = categoryId / shopId / deviceId
+router.get("/getAllResponse", responseApi.getAllResponse.handler); // params = categoryId / shopId / deviceId
 // router.get("/getoneresponse/:id", responseApi.getOneResponse.handler); // params = categoryId / shopId / deviceId
 router.get("/getResponseById/:id", responseApi.getResponseById.handler); // params = categoryId / shopId / deviceId
 
-
 // Post Methods
-router.post("/addResponse", validate("body", responseApi.addResponse.validation), responseApi.addResponse.handler);
+router.post(
+  "/addResponse",
+  validate("body", responseApi.addResponse.validation),
+  responseApi.addResponse.handler
+);
 
 //PUT Methods
-router.put("/updateResponse/:id", passport.authenticate(["jwt"], { session: false }), responseApi.updateResponse.handler); // params = categoryId / shopId / deviceId
+router.put("/updateResponse/:id", responseApi.updateResponse.handler); // params = categoryId / shopId / deviceId
 
 //DELETE Methods
-router.delete("/deleteResponse/:id", passport.authenticate(["jwt"], { session: false }), responseApi.deleteResponse.handler); // params = categoryId / shopId / deviceId
-
+router.delete("/deleteResponse/:id", responseApi.deleteResponse.handler); // params = categoryId / shopId / deviceId
 
 module.exports = exports = router;

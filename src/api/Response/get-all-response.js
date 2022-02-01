@@ -21,17 +21,35 @@ module.exports = exports = {
       // let id = req.params.id;
 
       let search = req.query.search
-        ? { name: { $regex: req.query.search, $options: "i" } }
+        ? { fname: { $regex: req.query.search, $options: "i" } }
         : {};
 
-      const count = await global.models.GLOBAL.EXAMINER.find(search).count();
-      const Examiner = await global.models.GLOBAL.EXAMINER.find(search)
+      const count = await global.models.GLOBAL.RESPONSE.find(search).count();
+      const Questions = await global.models.GLOBAL.RESPONSE.find(search)
         .skip(skip)
         .limit(limit)
-        .sort({
-          createdAt: -1,
+        .sort({ createdAt: -1 })
+        .populate({
+          path: "uid",
+          model: "admin",
+        })
+        .populate({
+          path: "ctid",
+          model: "courseType",
+        })
+        .populate({
+          path: "vcid",
+          model: "vehicleCategory",
+        })
+        .populate({
+          path: "cnid",
+          model: "courseName",
+        })
+        .populate({
+          path: "tdid",
+          model: "trainingDate",
         });
-      if (Examiner.length == 0) {
+      if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -48,7 +66,7 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Examiner: Examiner, count: count },
+        payload: { Question: Questions, count: count },
         logPayload: false,
       };
       res

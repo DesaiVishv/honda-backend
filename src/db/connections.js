@@ -69,6 +69,11 @@ module.exports = async () => {
         CONTENT: require("../schema/HomeContent/Content")(connection_IN_HONDA),
         CLIENT: require("../schema/Client/client")(connection_IN_HONDA),
         EXAMINER: require("../schema/Examiner/Examiner")(connection_IN_HONDA),
+        QUESTION: require("../schema/Question/question")(connection_IN_HONDA),
+        QUESTIONSET: require("../schema/QuestionSet/questionset")(
+          connection_IN_HONDA
+        ),
+        RESPONSE: require("../schema/Response/response")(connection_IN_HONDA),
 
         FILEMANAGER: require("../schema/FileManager/filemanager")(
           connection_IN_HONDA

@@ -6,7 +6,7 @@ const passport = require("passport");
 
 // Get Methods
 router.get("/getAllExaminer", examinerApi.getAllExaminer.handler);
-// router.get("/getAllMenu", menuApi.getAllMenu.handler);
+router.get("/getAll", examinerApi.getAll.handler);
 
 // Post Methods
 router.post(
@@ -17,6 +17,8 @@ router.post(
 
 // // Put Methods
 router.put("/updateExaminer/:id", examinerApi.updateExaminer.handler);
+
+router.put("/sendQuestionSet", examinerApi.sendQuestionSet.handler);
 
 // // Delete Methods
 router.delete("/deleteExaminer/:id", examinerApi.deleteExaminer.handler);

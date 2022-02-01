@@ -12,26 +12,22 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      req.query.page = req.query.page ? req.query.page : 1;
-      let page = parseInt(req.query.page);
-      req.query.limit = req.query.limit ? req.query.limit : 10;
-      let limit = parseInt(req.query.limit);
-      let skip = (parseInt(req.query.page) - 1) * limit;
-
-      // let id = req.params.id;
-
-      let search = req.query.search
-        ? { name: { $regex: req.query.search, $options: "i" } }
-        : {};
-
-      const count = await global.models.GLOBAL.EXAMINER.find(search).count();
-      const Examiner = await global.models.GLOBAL.EXAMINER.find(search)
-        .skip(skip)
-        .limit(limit)
-        .sort({
-          createdAt: -1,
-        });
-      if (Examiner.length == 0) {
+      let id = req.params.id;
+      if (!id) {
+        const data4createResponseObject = {
+          req: req,
+          result: -1,
+          message: messages.INVALID_PARAMETERS,
+          payload: {},
+          logPayload: false,
+        };
+        res
+          .status(enums.HTTP_CODES.OK)
+          .json(utils.createResponseObject(data4createResponseObject));
+        return;
+      }
+      const Response = await global.models.GLOBAL.RESPONSE.findOne({ _id: id });
+      if (!Response) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -44,11 +40,12 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
+      // const nearProperty=await global.models.GLOBAL.PERSONALINFORMATION.find({_id:{$ne:id} });
       const data4createResponseObject = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Examiner: Examiner, count: count },
+        payload: { Response: Response },
         logPayload: false,
       };
       res

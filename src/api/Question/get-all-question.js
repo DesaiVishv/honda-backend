@@ -24,14 +24,12 @@ module.exports = exports = {
         ? { name: { $regex: req.query.search, $options: "i" } }
         : {};
 
-      const count = await global.models.GLOBAL.EXAMINER.find(search).count();
-      const Examiner = await global.models.GLOBAL.EXAMINER.find(search)
+      const count = await global.models.GLOBAL.QUESTION.find(search).count();
+      const Questions = await global.models.GLOBAL.QUESTION.find(search)
         .skip(skip)
         .limit(limit)
-        .sort({
-          createdAt: -1,
-        });
-      if (Examiner.length == 0) {
+        .sort({ createdAt: -1 });
+      if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -48,7 +46,7 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Examiner: Examiner, count: count },
+        payload: { Question: Questions, count: count },
         logPayload: false,
       };
       res

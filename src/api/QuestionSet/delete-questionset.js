@@ -1,3 +1,4 @@
+const ObjectId = require("mongodb").ObjectId;
 const Joi = require("joi");
 
 const enums = require("../../../json/enums.json");
@@ -6,24 +7,32 @@ const messages = require("../../../json/messages.json");
 const logger = require("../../logger");
 const utils = require("../../utils");
 
-// Add category by admin
+// Delete category with the specified catId in the request
+
 module.exports = exports = {
   // route validation
-  validation: Joi.object({
-    image: Joi.array().required(),
-    description: Joi.string().required(),
-    // imagePath: Joi.string().allow("")
-  }),
 
+  // route handler
   handler: async (req, res) => {
-    const { image, description } = req.body;
+    const { id } = req.params;
     const { user } = req;
-
-    if (!image || !description) {
+    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    //   const data4createResponseObject = {
+    //     req: req,
+    //     result: -1,
+    //     message: messages.NOT_AUTHORIZED,
+    //     payload: {},
+    //     logPayload: false,
+    //   };
+    //   return res
+    //     .status(enums.HTTP_CODES.UNAUTHORIZED)
+    //     .json(utils.createResponseObject(data4createResponseObject));
+    // }
+    if (!id) {
       const data4createResponseObject = {
         req: req,
         result: -1,
-        message: messages.FILL_DETAILS,
+        message: messages.INVALID_PARAMETERS,
         payload: {},
         logPayload: false,
       };
@@ -33,40 +42,31 @@ module.exports = exports = {
     }
 
     try {
-      const checkMenu = await global.models.GLOBAL.FACILITIES.find({
-        image: image,
-      });
-      if (checkMenu.length > 0) {
+      const deletedItem =
+        await global.models.GLOBAL.QUESTIONSET.findByIdAndRemove(id);
+      if (!deletedItem) {
         const data4createResponseObject = {
           req: req,
-          result: -400,
-          message: messages.EXISTS_MENU,
+          result: 0,
+          message: messages.ITEM_NOT_FOUND,
           payload: {},
           logPayload: false,
         };
         res
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
-        return;
+      } else {
+        const data4createResponseObject = {
+          req: req,
+          result: 0,
+          message: messages.ITEM_DELETED,
+          payload: {},
+          logPayload: false,
+        };
+        res
+          .status(enums.HTTP_CODES.OK)
+          .json(utils.createResponseObject(data4createResponseObject));
       }
-      let AmenintiesCreate = {
-        image: image,
-        description: description,
-      };
-      const newAmeninties = await global.models.GLOBAL.FACILITIES(
-        AmenintiesCreate
-      );
-      newAmeninties.save();
-      const data4createResponseObject = {
-        req: req,
-        result: 0,
-        message: messages.ITEM_INSERTED,
-        payload: { newAmeninties },
-        logPayload: false,
-      };
-      res
-        .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
     } catch (error) {
       logger.error(
         `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
