@@ -169,7 +169,7 @@ module.exports = exports = {
                     <table cellpadding="0" cellspacing="0" width="100%">
                         <tr>
                             <td style="padding: 20px 0 30px 0;">
-                                <table align="center" cellpadding="0" cellspacing="0" width="600" style=" border-collapse: collapse; border: 1px solid #ececec; background-color: #fff;">
+                                <table align="center" cellpadding="0" cellspacing="0" width="600" style=" border-collapse: collapse; border: 1px solid #ececec; background-color: #ffccca;">
                                     <tr>
                                         <td align="center" style="position: relative;">
                                             <div
@@ -182,7 +182,7 @@ module.exports = exports = {
                                     <tr>
                                         <td>
                                             <div class="user-information" 
-                                            style="padding: 25px; background-color: #021f4c; width: 91.6%;"
+                                            style="padding: 25px; background-color: #c70c0c; width: 91.6%;"
                                             >
                                             <p align="center" style="color: #fff; font-size: 30px; font-weight: 500; margin: 0 0 1rem 0;">Welcome to SIP Interview®</p>
                                             <span align="center" style="display: block; font-size: 16px; color: #fff;">Thank you for signing up on SIP Interview®</span>
