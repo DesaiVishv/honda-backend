@@ -1,3 +1,4 @@
+const { localeData } = require("moment");
 const enums = require("../../../json/enums.json");
 const messages = require("../../../json/messages.json");
 
@@ -33,11 +34,14 @@ module.exports = exports = {
               .status(enums.HTTP_CODES.BAD_REQUEST)
               .json(utils.createResponseObject(data4createResponseObject));
           } else {
+            let findMenu = await global.models.GLOBAL.MENU.find({
+              assignTo: user.role,
+            });
             let data4createResponseObject = {
               req: req,
               result: 0,
               message: messages.ROLE_FETCH_SUCCESS,
-              payload: { role: allRole },
+              payload: { role: allRole, Menus: findMenu },
               logPayload: false,
             };
             res

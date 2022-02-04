@@ -17,10 +17,7 @@ module.exports = exports = {
 
   // route handler
   handler: async (req, res) => {
-    let {
-      phone,
-      password
-    } = req.body;
+    let { phone, password } = req.body;
     if (!phone || !password) {
       logger.error(messages.FIELD_REQUIRE);
       const data4createResponseObject = {
@@ -28,9 +25,11 @@ module.exports = exports = {
         result: -400,
         message: messages.FIELD_REQUIRE,
         payload: {},
-        logPayload: false
+        logPayload: false,
       };
-      res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+      res
+        .status(enums.HTTP_CODES.OK)
+        .json(utils.createResponseObject(data4createResponseObject));
       return;
     }
 
@@ -41,16 +40,22 @@ module.exports = exports = {
       //     "status.name": { $ne: enums.USER_STATUS.DISABLED.name }
       // };
 
-
+      const findRole = await global.models.GLOBAL.EXAMINER.findOne({
+        phone: phone,
+      });
+      console.log("findRole", findRole);
       const aadmin = await global.models.GLOBAL.ADMIN.find({});
-      const admin = await global.models.GLOBAL.ADMIN.findOne({ phone: phone } ).populate({
+      const admin = await global.models.GLOBAL.ADMIN.findOne({
+        phone: phone,
+      }).populate({
         path: "role",
         model: "role",
         select: "_id roleName",
       });
-      if (!admin) {
+      console.log("admin", admin);
+      if (!admin && !findRole) {
         logger.error(
-          `/login - No ADMIN (email: ${email}) found with the provided password!`
+          `/login - No ADMIN (phone: ${phone}) found with the provided password!`
         );
         const data4createResponseObject = {
           req: req,
@@ -63,7 +68,7 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.NOT_FOUND)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
-        if (admin.password !== password) {
+        if (admin.password !== password && findRole.password !== password) {
           const data4createResponseObject = {
             req: req,
             result: -1,
@@ -76,26 +81,33 @@ module.exports = exports = {
             .json(utils.createResponseObject(data4createResponseObject));
         }
       }
-
-      const rolename = await global.models.GLOBAL.ROLE.findOne({ _id: admin.role });
+      const rolename = await global.models.GLOBAL.ROLE.findOne({
+        _id: admin.role,
+      });
       // if (rolename.roleName === "admin") {
       //   role = enums.USER_TYPE.ADMIN;
       // }
       if (rolename.roleName === "superadmin") {
         role = enums.USER_TYPE.SUPERADMIN;
-      }
-      else if (rolename.roleName === "user") {
+      } else if (rolename.roleName === "user") {
         role = enums.USER_TYPE.USER;
+      } else if (rolename.roleName === "Admin") {
+        role = enums.USER_TYPE.ADMIN;
+      } else if (rolename.roleName === "Examiner") {
+        role = enums.USER_TYPE.EXAMINER;
+      } else if (rolename.roleName === "Data Entry") {
+        role = enums.USER_TYPE.DATAENTRY;
       }
+
+      const menu = await global.models.GLOBAL.ASSIGNMENU.find({
+        assignTo: admin.role,
+      }).populate({
+        path: "menu",
+        model: "menu",
+      });
+      console.log("menu", menu);
       // User found - create JWT and return it
       const data4token = {
-        // id: admin._id,
-        // date: new Date(),
-        // environment: process.env.APP_ENVIRONMENT,
-        // phone: phone,
-        // scope: "login",
-        // type: role,
-
         id: admin._id,
         date: new Date(),
         environment: process.env.APP_ENVIRONMENT,
@@ -103,19 +115,30 @@ module.exports = exports = {
         scope: "login",
         type: rolename.roleName,
         rolename: rolename.roleName,
-
       };
+
       delete admin._doc.password;
+      // delete findRole._doc.password;
+      // console.log("amdin", admin);
+      // if (admin) {
       const payload = {
         admin: admin,
+        menu: menu,
         token: jwt.sign(data4token, jwtOptions.secretOrKey),
         token_type: "Bearer",
       };
+      // } else {
+      //   const payload = {
+      //     admin: findRole,
+      //     token: jwt.sign(data4token1, jwtOptions.secretOrKey),
+      //     token_type: "Bearer",
+      //   };
+      // }
 
       const data4createResponseObject = {
         req: req,
         result: 0,
-        message: messages.LOGIN_SUCCESS ,
+        message: messages.LOGIN_SUCCESS,
         payload: payload,
         logPayload: false,
       };

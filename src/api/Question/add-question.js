@@ -10,15 +10,19 @@ const utils = require("../../utils");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    Qsetid: Joi.string().required(),
     Qname: Joi.string().required(),
+    image: Joi.string(),
     Option: Joi.array().required(),
     type: Joi.string().required(),
     language: Joi.string().required(),
+    weight: Joi.number().required(),
+    Category: Joi.string().required(),
+    isActive: Joi.boolean(),
   }),
 
   handler: async (req, res) => {
-    const { Qsetid, Qname, Option, type, language } = req.body;
+    const { Qname, image, Option, type, language, weight, Category, isActive } =
+      req.body;
     const { user } = req;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //     const data4createResponseObject = {
@@ -30,7 +34,7 @@ module.exports = exports = {
     //     };
     //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
     // }
-    if (!Qsetid || !Qname || !type || !language) {
+    if (!Qname || !type || !language || !weight || !Category) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -65,48 +69,50 @@ module.exports = exports = {
       //     _id: Qsetid,
       //   });
       //   console.log("findQset", findQset.language);
-      const findLanguage = await global.models.GLOBAL.QUESTIONSET.find({
-        _id: Qsetid,
+      // const findLanguage = await global.models.GLOBAL.QUESTIONSET.find({
+      //   _id: Qsetid,
+      //   language: language,
+      // });
+      // console.log("findLan", findLanguage);
+      // if (findLanguage.length == 0) {
+      //   const data4createResponseObject = {
+      //     req: req,
+      //     result: -400,
+      //     message: messages.MATCH_LANGUAGE,
+      //     payload: {},
+      //     logPayload: false,
+      //   };
+      //   return res
+      //     .status(enums.HTTP_CODES.BAD_REQUEST)
+      //     .json(utils.createResponseObject(data4createResponseObject));
+      // }
+      //   console.log("findLanguage", findLanguage);
+
+      let AmenintiesCreate = {
+        Qname: Qname,
+        image: image,
+        Option: Option,
+        type: type,
         language: language,
-      });
-      console.log("findLan", findLanguage);
-      if (findLanguage.length == 0) {
-        const data4createResponseObject = {
-          req: req,
-          result: -400,
-          message: messages.MATCH_LANGUAGE,
-          payload: {},
-          logPayload: false,
-        };
-        return res
-          .status(enums.HTTP_CODES.BAD_REQUEST)
-          .json(utils.createResponseObject(data4createResponseObject));
-      } else {
-        //   console.log("findLanguage", findLanguage);
+        weight: weight,
+        Category: Category,
+        isActive: isActive,
+      };
 
-        let AmenintiesCreate = {
-          Qsetid: Qsetid,
-          Qname: Qname,
-          Option: Option,
-          type: type,
-          language: language,
-        };
-
-        const newAmeninties = await global.models.GLOBAL.QUESTION(
-          AmenintiesCreate
-        );
-        newAmeninties.save();
-        const data4createResponseObject = {
-          req: req,
-          result: 0,
-          message: messages.ITEM_INSERTED,
-          payload: { newAmeninties },
-          logPayload: false,
-        };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
-      }
+      const newAmeninties = await global.models.GLOBAL.QUESTION(
+        AmenintiesCreate
+      );
+      newAmeninties.save();
+      const data4createResponseObject = {
+        req: req,
+        result: 0,
+        message: messages.ITEM_INSERTED,
+        payload: { newAmeninties },
+        logPayload: false,
+      };
+      res
+        .status(enums.HTTP_CODES.OK)
+        .json(utils.createResponseObject(data4createResponseObject));
     } catch (error) {
       logger.error(
         `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`

@@ -14,13 +14,14 @@ module.exports = exports = {
     email: Joi.string(),
     phone: Joi.number(),
     password: Joi.string(),
+    role: Joi.string(),
   }),
 
   handler: async (req, res) => {
-    const { name, email, phone, password } = req.body;
+    const { name, email, phone, password, role } = req.body;
     const { user } = req;
 
-    if (!email || !phone) {
+    if (!email || !phone || !role) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -55,11 +56,14 @@ module.exports = exports = {
         email: email,
         phone: phone,
         password: password,
+        role: role,
       };
       const newAmeninties = await global.models.GLOBAL.EXAMINER(
         AmenintiesCreate
       );
       newAmeninties.save();
+      const adminEntry = await global.models.GLOBAL.ADMIN(AmenintiesCreate);
+      adminEntry.save();
       const data4createResponseObject = {
         req: req,
         result: 0,

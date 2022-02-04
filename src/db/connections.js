@@ -74,6 +74,17 @@ module.exports = async () => {
           connection_IN_HONDA
         ),
         RESPONSE: require("../schema/Response/response")(connection_IN_HONDA),
+        MENU: require("../schema/menu/menu")(connection_IN_HONDA),
+        BATCH: require("../schema/Batch/batch")(connection_IN_HONDA),
+        BATCH: require("../schema/Batch/batch")(connection_IN_HONDA),
+        ASSIGNMENU: require("../schema/AssignMenu/Assignmenu")(
+          connection_IN_HONDA
+        ),
+        TEST: require("../schema/Test/Test")(connection_IN_HONDA),
+        QUESTIONCATEGORY:
+          require("../schema/Question-Category/Question-Category")(
+            connection_IN_HONDA
+          ),
 
         FILEMANAGER: require("../schema/FileManager/filemanager")(
           connection_IN_HONDA

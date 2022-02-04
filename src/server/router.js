@@ -30,6 +30,11 @@ module.exports = (app, logger) => {
   const questionRoute = require("../routes/Question/index");
   const questionsetRoute = require("../routes/QuestionSet/index");
   const responseRoute = require("../routes/response/index");
+  const menuRoute = require("../routes/menu/index");
+  const batchRoute = require("../routes/Batch/index");
+  const assignMenuRoute = require("../routes/AssignMenu/index");
+  const testRoute = require("../routes/Test/index");
+  const categoryRoute = require("../routes/QuestionCategory/index");
 
   const amenitiesRoute = require("../routes/amenities/index");
   const contactusRoute = require("../routes/contactus/index");
@@ -67,6 +72,11 @@ module.exports = (app, logger) => {
   app.use(["/api/v1/question"], questionRoute);
   app.use(["/api/v1/questionset"], questionsetRoute);
   app.use(["/api/v1/response"], responseRoute);
+  app.use(["/api/v1/menu"], menuRoute);
+  app.use(["/api/v1/batch"], batchRoute);
+  app.use(["/api/v1/assginmenu"], assignMenuRoute);
+  app.use(["/api/v1/test"], testRoute);
+  app.use(["/api/v1/category"], categoryRoute);
 
   app.use(["/api/v1/amenities"], amenitiesRoute);
   app.use(["/api/v1/contactus"], contactusRoute);

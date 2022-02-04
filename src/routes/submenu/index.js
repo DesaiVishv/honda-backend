@@ -6,15 +6,28 @@ const passport = require("passport");
 
 // Get Methods
 router.get("/getAllSubMenu/:id", submenuApi.getSubMenu.handler);
-router.post("/getSubmenuByMenu",   submenuApi.getSubmenuByMenu.handler);
+router.post("/getSubmenuByMenu", submenuApi.getSubmenuByMenu.handler);
 
 // Post Methods
-router.post("/addSubMenu", passport.authenticate(["jwt"], { session: false }), validate("body", submenuApi.addSubMenu.validation), submenuApi.addSubMenu.handler);
+router.post(
+  "/addSubMenu",
+  passport.authenticate(["jwt"], { session: false }),
+  validate("body", submenuApi.addSubMenu.validation),
+  submenuApi.addSubMenu.handler
+);
 
 // // Put Methods
-router.put("/updateSubMenu/:id", passport.authenticate(["jwt"], { session: false }), submenuApi.updateSubMenu.handler);
+router.put(
+  "/updateSubMenu/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  submenuApi.updateSubMenu.handler
+);
 
 // // Delete Methods
-router.delete("/deleteSubMenu/:id", passport.authenticate(["jwt"], { session: false }), submenuApi.deleteSubMenu.handler);
+router.delete(
+  "/deleteSubMenu/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  submenuApi.deleteSubMenu.handler
+);
 
 module.exports = exports = router;

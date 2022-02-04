@@ -9,6 +9,7 @@ module.exports = (connection) => {
       email: { type: String },
       phone: { type: Number },
       password: { type: String },
+      role: { type: mongoose.Schema.Types.ObjectId },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {

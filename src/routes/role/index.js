@@ -4,7 +4,6 @@ const api4Role = require("../../api/role/index");
 const { validate } = require("../../middlewares");
 const passport = require("passport");
 
-
 // Post Methods
 router.post(
   "/create",
