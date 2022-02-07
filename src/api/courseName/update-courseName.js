@@ -17,7 +17,7 @@ module.exports = exports = {
     const { id } = req.params;
     const { user } = req;
     const {
-      courseCategory,
+      courseName,
       description,
       isActive,
       duration,
@@ -43,7 +43,7 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.UNAUTHORIZED)
         .json(utils.createResponseObject(data4createResponseObject));
     }
-    if (!id || !courseCategory || !isActive == null || !price) {
+    if (!id || !courseName || !isActive == null || !price) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -86,7 +86,7 @@ module.exports = exports = {
           return;
         }
         const Itemupdate = {
-          courseCategory: courseCategory,
+          courseName: courseName,
           description: description,
           isActive: isActive,
           vcid: vcid,

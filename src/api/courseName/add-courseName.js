@@ -10,7 +10,7 @@ const utils = require("../../utils");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    courseCategory: Joi.string().required(),
+    courseName: Joi.string().required(),
     description: Joi.string().required(),
     isActive: Joi.boolean().required(),
     vcid: Joi.string(),
@@ -28,7 +28,7 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     const {
-      courseCategory,
+      courseName,
       description,
       isActive,
       duration,
@@ -55,7 +55,7 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.UNAUTHORIZED)
         .json(utils.createResponseObject(data4createResponseObject));
     }
-    if (!courseCategory || !description) {
+    if (!courseName || !description) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -98,7 +98,7 @@ module.exports = exports = {
       //     return;
       // }
       let AmenintiesCreate = {
-        courseCategory: courseCategory,
+        courseName: courseName,
         description: description,
         isActive: isActive,
         vcid: vcid,
