@@ -16,19 +16,7 @@ module.exports = exports = {
   handler: async (req, res) => {
     const { id } = req.params;
     const { user } = req;
-    const {
-      email,
-      name,
-      phone,
-      currentProfession,
-      Qsetid,
-      ListofQA,
-      Question,
-      Option,
-      Answer,
-      type,
-      language,
-    } = req.body;
+    const { batch, uid, Esid, ListofQA } = req.body;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
     //     req: req,
@@ -41,7 +29,7 @@ module.exports = exports = {
     //     .status(enums.HTTP_CODES.UNAUTHORIZED)
     //     .json(utils.createResponseObject(data4createResponseObject));
     // }
-    if (!id || !email || !ListofQA || !name || !phone) {
+    if (!id || !batch || !uid || !Esid || !ListofQA) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -86,12 +74,9 @@ module.exports = exports = {
         //   return;
         // }
         let updateres = {
-          email: email,
-          name: name,
-          phone: phone,
-          currentProfession: currentProfession,
-          Qsetid: Qsetid,
-          // Option : Option,
+          batch: batch,
+          uid: uid,
+          Esid: Esid,
           ListofQA: ListofQA,
         };
         Item = await global.models.GLOBAL.RESPONSE.update(

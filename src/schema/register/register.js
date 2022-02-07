@@ -45,6 +45,7 @@ module.exports = (connection) => {
       isAttendence: { type: Boolean, default: false },
       createdByAdmin: { type: Boolean, default: false },
       receiptNumber: { type: mongoose.Schema.Types.ObjectId },
+      totalScore: { type: Number },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {

@@ -12,6 +12,8 @@ module.exports = (connection) => {
       cnid: { type: mongoose.Schema.Types.ObjectId, require: true },
       startTime: { type: String },
       endTime: { type: String },
+      isBooked: { type: Boolean, default: false },
+      batchId: { type: mongoose.Schema.Types.ObjectId, default: null },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {

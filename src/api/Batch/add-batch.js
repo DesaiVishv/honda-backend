@@ -88,9 +88,17 @@ module.exports = exports = {
         DataEntry: DataEntry,
         total: total,
       };
+      console.log("amenities", AmenintiesCreate);
 
       const newAmeninties = await global.models.GLOBAL.BATCH(AmenintiesCreate);
       newAmeninties.save();
+      console.log("new Amenities", newAmeninties._id);
+      const updateDate = await global.models.GLOBAL.TRAININGDATE.updateMany(
+        {
+          _id: { $in: tdid },
+        },
+        { batchId: newAmeninties._id, isBooked: true }
+      );
       const data4createResponseObject = {
         req: req,
         result: 0,

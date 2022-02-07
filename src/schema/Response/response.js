@@ -7,7 +7,7 @@ module.exports = (connection) => {
     {
       batch: { type: mongoose.Schema.Types.ObjectId },
       uid: { type: mongoose.Schema.Types.ObjectId },
-      Qsetid: { type: mongoose.Schema.Types.ObjectId },
+      Esid: { type: mongoose.Schema.Types.ObjectId },
       ListofQA: [
         {
           Qname: { type: String, require: true },
@@ -38,7 +38,6 @@ module.exports = (connection) => {
           type: { type: String, require: true },
           language: { type: String, require: true },
           weight: { type: Number, require: true },
-          Category: { type: mongoose.Schema.Types.ObjectId, require: true },
           isActive: { type: Boolean, default: true },
           createdAt: { type: Date, default: Date.now },
           updatedAt: { type: Date, default: Date.now },
@@ -52,6 +51,8 @@ module.exports = (connection) => {
           },
         },
       ],
+      total: { type: Number },
+      Score: { type: Number },
     },
     {
       autoCreate: true,
