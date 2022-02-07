@@ -12,42 +12,29 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      let id = req.params.id;
-      if (!id) {
-        const data4createResponseObject = {
-          req: req,
-          result: -1,
-          message: messages.INVALID_PARAMETERS,
-          payload: {},
-          logPayload: false,
-        };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
-        return;
-      }
-      const Propertys = await global.models.GLOBAL.COURSENAME.findOne({
-        _id: id,
+      let ids = req.params.id;
+
+      // const Examiner = await global.models.GLOBAL.ADMIN.find({
+      //   _id: { $in: ids },
+      // });
+      const Examset = await global.models.GLOBAL.EXAMSET.findOne({
+        batchId: ids,
       });
-      if (!Propertys) {
-        const data4createResponseObject = {
-          req: req,
-          result: -400,
-          message: messages.NOT_FOUND,
-          payload: {},
-          logPayload: false,
-        };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
-        return;
-      }
-      // const nearProperty=await global.models.GLOBAL.PERSONALINFORMATION.find({_id:{$ne:id} });
+
+      // .populate({
+      //   path: "question",
+      //   model: "question",
+      // })
+      // .populate({
+      //   path: "batch",
+      //   model: "batch",
+      // });
+
       const data4createResponseObject = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Property: Propertys },
+        payload: { Examset: Examset },
         logPayload: false,
       };
       res

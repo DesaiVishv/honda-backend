@@ -11,6 +11,7 @@ module.exports = (connection) => {
       cnid: { type: mongoose.Schema.Types.ObjectId, require: true },
       lcid: { type: String, require: true },
       tdid: { type: mongoose.Schema.Types.ObjectId },
+      batchId: { type: mongoose.Schema.Types.ObjectId, default: null },
       dateofCourse: { type: Date },
       drivingLicenseNumber: { type: String, required: true },
       fname: { type: String },

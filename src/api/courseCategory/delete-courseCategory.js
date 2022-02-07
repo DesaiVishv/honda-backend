@@ -43,7 +43,7 @@ module.exports = exports = {
 
     try {
       const deletedItem =
-        await global.models.GLOBAL.COURSENAME.findByIdAndRemove(id);
+        await global.models.GLOBAL.COURSECATEGORY.findByIdAndRemove(id);
       if (!deletedItem) {
         const data4createResponseObject = {
           req: req,

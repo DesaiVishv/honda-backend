@@ -12,6 +12,8 @@ module.exports = (connection) => {
       DataEntry: { type: mongoose.Schema.Types.ObjectId },
       total: { type: Number },
       complete: { type: Boolean, default: false },
+      isAttendanceTake: { type: Boolean, default: false },
+      isExamGenerate: { type: Boolean, default: false },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {

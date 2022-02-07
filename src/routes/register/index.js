@@ -9,17 +9,31 @@ router.get("/getAllRegister", registerApi.getAllRegister.handler);
 router.get("/getAll", registerApi.getAllForDownload.handler);
 
 router.get("/getRegister/:id", registerApi.getRegister.handler);
+router.get("/getRegisterByBatch/:id", registerApi.getRegisterByBatch.handler);
 // router.get("/getAllMenu", menuApi.getAllMenu.handler);
 
 // Post Methods
-router.post("/addRegister", validate("body", registerApi.addRegister.validation),passport.authenticate(["jwt"], { session: false }), registerApi.addRegister.handler);
+router.post(
+  "/addRegister",
+  validate("body", registerApi.addRegister.validation),
+  passport.authenticate(["jwt"], { session: false }),
+  registerApi.addRegister.handler
+);
 
 // // Put Methods
-router.put("/updateRegister/:id", passport.authenticate(["jwt"], { session: false }), registerApi.updateRegister.handler);
+router.put(
+  "/updateRegister/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  registerApi.updateRegister.handler
+);
 
-router.put("/offlinePayment",registerApi.offlinePayment.handler);
+router.put("/offlinePayment", registerApi.offlinePayment.handler);
 
 // // Delete Methods
-router.delete("/deleteRegister/:id", passport.authenticate(["jwt"], { session: false }), registerApi.deleteRegister.handler);
+router.delete(
+  "/deleteRegister/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  registerApi.deleteRegister.handler
+);
 
 module.exports = exports = router;

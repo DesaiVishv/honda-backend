@@ -7,6 +7,9 @@ const passport = require("passport");
 // Get Methods
 router.get("/getAllBatch", batchApi.getAllBatch.handler);
 router.get("/getBatchById/:id", batchApi.getBatchById.handler);
+router.get("/getBatchByExaminer/:id", batchApi.getBatchByExaminer.handler);
+router.get("/getBatchByDataEntry/:id", batchApi.getBatchByDataEntry.handler);
+router.get("/getExamsetByBatch/:id", batchApi.getExamsetByBatch.handler);
 
 // router.post("/getSubmenuByMenu",   vehicleCategoryApi.getSubmenuByMenu.handler);
 
@@ -24,6 +27,7 @@ router.put(
   passport.authenticate(["jwt"], { session: false }),
   batchApi.updateBatch.handler
 );
+router.put("/completeBatchById/:id", batchApi.CompleteBatchById.handler);
 
 // // Delete Methods
 router.delete(

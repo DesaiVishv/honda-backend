@@ -9,19 +9,37 @@ router.get("/getAllCourseName", courseNameApi.getAllCourseName.handler);
 router.get("/getAll", courseNameApi.getAllForDownload.handler);
 
 router.get("/getCoursenameById/:id", courseNameApi.getCourseNameById.handler);
-router.post("/getCoursenameByCoursetype", courseNameApi.getCoursenameByCoursetype.handler);
-
+router.post(
+  "/getCoursenameByCoursetype",
+  courseNameApi.getCoursenameByCoursetype.handler
+);
 
 // Post Methods
-router.post("/addCourseName", passport.authenticate(["jwt"], { session: false }), validate("body", courseNameApi.addCourseName.validation), courseNameApi.addCourseName.handler);
+router.post(
+  "/addCourseName",
+  passport.authenticate(["jwt"], { session: false }),
+  validate("body", courseNameApi.addCourseName.validation),
+  courseNameApi.addCourseName.handler
+);
 
 // // Put Methods
-router.put("/updateCourseName/:id", passport.authenticate(["jwt"], { session: false }), courseNameApi.updateCourseName.handler);
+router.put(
+  "/updateCourseName/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  courseNameApi.updateCourseName.handler
+);
 
-router.put("/updateStatus/:id", passport.authenticate(["jwt"], { session: false }), courseNameApi.updateStatus.handler);
-
+router.put(
+  "/updateStatus/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  courseNameApi.updateStatus.handler
+);
 
 // // Delete Methods
-router.delete("/deleteCourseName/:id", passport.authenticate(["jwt"], { session: false }), courseNameApi.deleteCourseName.handler);
+router.delete(
+  "/deleteCourseName/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  courseNameApi.deleteCourseName.handler
+);
 
 module.exports = exports = router;

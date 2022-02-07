@@ -18,27 +18,29 @@ module.exports = exports = {
       let limit = parseInt(req.query.limit);
       let skip = (parseInt(req.query.page) - 1) * limit;
 
-      // let id = req.params.id;
+      let ids = req.params.id;
 
       let search = req.query.search
-        ? { courseName: { $regex: req.query.search, $options: "i" } }
-        : {};
+        ? { name: { $regex: req.query.search, $options: "i" }, Examiner: ids }
+        : { Examiner: ids };
 
-      // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
-      const count = await global.models.GLOBAL.COURSENAME.find(search).count();
-      const Questions = await global.models.GLOBAL.COURSENAME.find(search)
+      // const Examiner = await global.models.GLOBAL.ADMIN.find({
+      //   _id: { $in: ids },
+      // });
+      const count = await global.models.GLOBAL.BATCH.find(search).count();
+      const Batch = await global.models.GLOBAL.BATCH.find(search)
         .skip(skip)
-        .limit(limit)
-        .sort({ createdAt: -1 })
-        .populate({
-          path: "ctid",
-          model: "courseType",
-        })
-        .populate({
-          path: "vcid",
-          model: "vehicleCategory",
-        });
-      if (Questions.length == 0) {
+        .limit(limit);
+      // .populate({
+      //   path: "question",
+      //   model: "question",
+      // })
+      // .populate({
+      //   path: "batch",
+      //   model: "batch",
+      // });
+
+      if (Batch.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -55,7 +57,7 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Question: Questions, count: count },
+        payload: { Batch: Batch, count: count },
         logPayload: false,
       };
       res

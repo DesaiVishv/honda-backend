@@ -19,6 +19,7 @@
   "MATCH_LANGUAGE": "Sorry, your language is not match ",
   "EXISTS_QUESTIONSET": "Sorry, QuestionSet already exists.",
   "EXISTS_RESPONSE": "Sorry, Response already exists.",
+  "ITEM_EXISTS": "Sorry, Item already exists.",
   "ALREADY_SEND": "Sorry, you do not send multiple response ",
   "EXISTS_ITEM": "Sorry, the specified item can not be deleted.\nRemove the corrosponding items first then delete.",
   "EXISTS_AMENITIES": "Sorry, the specified amenities can not be deleted.\nRemove the corrosponding amenities first then delete.",
@@ -110,5 +111,6 @@
   "TERMS_AND_CONDITION": "Terms and condition accepted",
   "MESSAGE_SENT": "Message has been sent successfully",
   "MESSAGES_FETCH_SUCCESS": "Messages fetched successfully.",
+  "ADD_MORE": "Please add more Questions.",
   "VENDOR_NOT_FOUND": "Vendor does not exist in the system"
 }

@@ -12,33 +12,14 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      req.query.page = req.query.page ? req.query.page : 1;
-      let page = parseInt(req.query.page);
-      req.query.limit = req.query.limit ? req.query.limit : 10;
-      let limit = parseInt(req.query.limit);
-      let skip = (parseInt(req.query.page) - 1) * limit;
-
-      // let id = req.params.id;
-
-      let search = req.query.search
-        ? { courseName: { $regex: req.query.search, $options: "i" } }
-        : {};
-
-      // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
-      const count = await global.models.GLOBAL.COURSENAME.find(search).count();
-      const Questions = await global.models.GLOBAL.COURSENAME.find(search)
-        .skip(skip)
-        .limit(limit)
-        .sort({ createdAt: -1 })
-        .populate({
-          path: "ctid",
-          model: "courseType",
-        })
-        .populate({
-          path: "vcid",
-          model: "vehicleCategory",
-        });
-      if (Questions.length == 0) {
+      let id = req.params.id;
+      let Examset = await global.models.GLOBAL.EXAMSET.find({ batchId: id });
+      let batch = await global.models.GLOBAL.BATCH.findById(id);
+      let users = await global.models.GLOBAL.REGISTER.find({
+        tdid: { $in: batch.tdid },
+        isAttendence: true,
+      });
+      if (users.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -55,7 +36,7 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Question: Questions, count: count },
+        payload: { users: users, Examset: Examset, count: users.length },
         logPayload: false,
       };
       res

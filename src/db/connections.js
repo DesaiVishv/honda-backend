@@ -37,6 +37,9 @@ module.exports = async () => {
         COURSETYPE: require("../schema/courseType/courseType")(
           connection_IN_HONDA
         ),
+        COURSECATEGORY: require("../schema/courseCategory/courseCategory")(
+          connection_IN_HONDA
+        ),
         COURSENAME: require("../schema/courseName/courseName")(
           connection_IN_HONDA
         ),
@@ -76,7 +79,7 @@ module.exports = async () => {
         RESPONSE: require("../schema/Response/response")(connection_IN_HONDA),
         MENU: require("../schema/menu/menu")(connection_IN_HONDA),
         BATCH: require("../schema/Batch/batch")(connection_IN_HONDA),
-        BATCH: require("../schema/Batch/batch")(connection_IN_HONDA),
+        EXAMSET: require("../schema/QuestionSet/examset")(connection_IN_HONDA),
         ASSIGNMENU: require("../schema/AssignMenu/Assignmenu")(
           connection_IN_HONDA
         ),

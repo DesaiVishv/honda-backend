@@ -16,6 +16,7 @@ module.exports = exports = {
   handler: async (req, res) => {
     const { id } = req.params;
     const { user } = req;
+    const { vcid, ctid, courseCategory, description, isActive } = req.body;
     if (user.type !== enums.USER_TYPE.SUPERADMIN) {
       const data4createResponseObject = {
         req: req,
@@ -28,11 +29,11 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.UNAUTHORIZED)
         .json(utils.createResponseObject(data4createResponseObject));
     }
-    if (!id) {
+    if (!id || !courseCategory) {
       const data4createResponseObject = {
         req: req,
         result: -1,
-        message: messages.INVALID_PARAMETERS,
+        message: messages.FILL_DETAILS,
         payload: {},
         logPayload: false,
       };
@@ -42,9 +43,9 @@ module.exports = exports = {
     }
 
     try {
-      const deletedItem =
-        await global.models.GLOBAL.COURSENAME.findByIdAndRemove(id);
-      if (!deletedItem) {
+      let Item = await global.models.GLOBAL.COURSECATEGORY.findById(id);
+
+      if (!Item) {
         const data4createResponseObject = {
           req: req,
           result: 0,
@@ -56,10 +57,37 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
+        // const checkMenu = await global.models.GLOBAL.COURSENAME.findById(
+        //   id
+        // );
+        // if (checkMenu.length == 0) {
+        //   const data4createResponseObject = {
+        //     req: req,
+        //     result: -400,
+        //     message: messages.NOT_FOUND,
+        //     payload: {},
+        //     logPayload: false,
+        //   };
+        //   res
+        //     .status(enums.HTTP_CODES.OK)
+        //     .json(utils.createResponseObject(data4createResponseObject));
+        //   return;
+        // }
+        const Itemupdate = {
+          vcid: vcid,
+          ctid: ctid,
+          courseCategory: courseCategory,
+          description: description,
+          isActive: isActive,
+        };
+        Item = await global.models.GLOBAL.COURSECATEGORY.update(
+          { isActive: isActive },
+          Itemupdate
+        );
         const data4createResponseObject = {
           req: req,
           result: 0,
-          message: messages.ITEM_DELETED,
+          message: messages.ITEM_UPDATED,
           payload: {},
           logPayload: false,
         };

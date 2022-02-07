@@ -1,14 +1,17 @@
 const mongoose = require("mongoose");
+const question = require("../Question/question");
 
 // const enums = require("../../../json/enums.json");
 
 module.exports = (connection) => {
-  const responseSchema = new mongoose.Schema(
+  const examsetSchema = new mongoose.Schema(
     {
-      batch: { type: mongoose.Schema.Types.ObjectId },
-      uid: { type: mongoose.Schema.Types.ObjectId },
-      Qsetid: { type: mongoose.Schema.Types.ObjectId },
-      ListofQA: [
+      batchId: { type: mongoose.Schema.Types.ObjectId },
+      tdid: [{ type: mongoose.Schema.Types.ObjectId }],
+      language: { type: String, require: true },
+      no: { type: Number, require: true },
+
+      questionsList: [
         {
           Qname: { type: String, require: true },
           image: { type: String },
@@ -34,7 +37,6 @@ module.exports = (connection) => {
               istrue: Boolean,
             },
           ],
-          Answer: [Number],
           type: { type: String, require: true },
           language: { type: String, require: true },
           weight: { type: Number, require: true },
@@ -55,9 +57,10 @@ module.exports = (connection) => {
     },
     {
       autoCreate: true,
+      timestamps: true,
     }
   );
 
   // return logsSchema;
-  return connection.model("response", responseSchema, "response");
+  return connection.model("examset", examsetSchema, "examset");
 };

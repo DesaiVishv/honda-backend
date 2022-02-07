@@ -25,8 +25,10 @@ module.exports = exports = {
         : {};
 
       // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
-      const count = await global.models.GLOBAL.COURSENAME.find(search).count();
-      const Questions = await global.models.GLOBAL.COURSENAME.find(search)
+      const count = await global.models.GLOBAL.COURSECATEGORY.find(
+        search
+      ).count();
+      const Questions = await global.models.GLOBAL.COURSECATEGORY.find(search)
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: -1 })

@@ -10,52 +10,29 @@ const utils = require("../../utils");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
+    vcid: Joi.string().required(),
+    ctid: Joi.string().required(),
     courseCategory: Joi.string().required(),
-    description: Joi.string().required(),
-    isActive: Joi.boolean().required(),
-    vcid: Joi.string(),
-    ctid: Joi.string(),
-    duration: Joi.string(),
-    timing: Joi.string(),
-    mode: Joi.string(),
-    documentRequired: Joi.string(),
-    validity: Joi.string(),
-    systemRequirement: Joi.string(),
-    certificate: Joi.string(),
-    price: Joi.number().required(),
-    // imagePath: Joi.string().allow("")
+    description: Joi.string(),
+    isActive: Joi.boolean(),
   }),
 
   handler: async (req, res) => {
-    const {
-      courseCategory,
-      description,
-      isActive,
-      duration,
-      timing,
-      mode,
-      documentRequired,
-      validity,
-      systemRequirement,
-      certificate,
-      price,
-      vcid,
-      ctid,
-    } = req.body;
+    const { vcid, ctid, courseCategory, description, isActive } = req.body;
     const { user } = req;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-      const data4createResponseObject = {
-        req: req,
-        result: -1,
-        message: messages.NOT_AUTHORIZED,
-        payload: {},
-        logPayload: false,
-      };
-      return res
-        .status(enums.HTTP_CODES.UNAUTHORIZED)
-        .json(utils.createResponseObject(data4createResponseObject));
-    }
-    if (!courseCategory || !description) {
+    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    //   const data4createResponseObject = {
+    //     req: req,
+    //     result: -1,
+    //     message: messages.NOT_AUTHORIZED,
+    //     payload: {},
+    //     logPayload: false,
+    //   };
+    //   return res
+    //     .status(enums.HTTP_CODES.UNAUTHORIZED)
+    //     .json(utils.createResponseObject(data4createResponseObject));
+    // }
+    if (!courseCategory) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -98,21 +75,13 @@ module.exports = exports = {
       //     return;
       // }
       let AmenintiesCreate = {
+        vcid: vcid,
+        ctid: ctid,
         courseCategory: courseCategory,
         description: description,
         isActive: isActive,
-        vcid: vcid,
-        ctid: ctid,
-        price: price,
-        duration: duration,
-        timing: timing,
-        mode: mode,
-        documentRequired: documentRequired,
-        validity: validity,
-        systemRequirement: systemRequirement,
-        certificate: certificate,
       };
-      const newAmeninties = await global.models.GLOBAL.COURSENAME(
+      const newAmeninties = await global.models.GLOBAL.COURSECATEGORY(
         AmenintiesCreate
       );
       newAmeninties.save();

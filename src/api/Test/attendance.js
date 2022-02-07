@@ -14,7 +14,7 @@ module.exports = exports = {
 
   // route handler
   handler: async (req, res) => {
-    const { uid, batch } = req.body;
+    const { uids, batch } = req.body;
     const { user } = req;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
@@ -28,7 +28,7 @@ module.exports = exports = {
     //     .status(enums.HTTP_CODES.UNAUTHORIZED)
     //     .json(utils.createResponseObject(data4createResponseObject));
     // }
-    if (!uid || !batch) {
+    if (!uids || !batch) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -42,13 +42,13 @@ module.exports = exports = {
     }
 
     try {
-      let Item = await global.models.GLOBAL.REGISTER.findByIdAndUpdate(
-        { _id: uid },
-        { isAttendence: true }
+      let Item = await global.models.GLOBAL.REGISTER.updateMany(
+        { _id: { $in: uids } },
+        { isAttendence: true, batchId: batch }
       );
       let update = await global.models.GLOBAL.BATCH.findByIdAndUpdate(
-        { _id: id },
-        { complete: true }
+        { _id: batch },
+        { isAttendanceTake: true }
       );
       if (!Item) {
         const data4createResponseObject = {
