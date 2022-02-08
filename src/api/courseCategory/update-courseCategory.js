@@ -78,10 +78,9 @@ module.exports = exports = {
           ctid: ctid,
           courseCategory: courseCategory,
           description: description,
-          isActive: isActive,
         };
         Item = await global.models.GLOBAL.COURSECATEGORY.update(
-          { isActive: isActive },
+          { _id: id },
           Itemupdate
         );
         const data4createResponseObject = {
