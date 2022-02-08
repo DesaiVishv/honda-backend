@@ -12,35 +12,37 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      // req.query.page = req.query.page ? req.query.page : 1;
-      // let page = parseInt(req.query.page);
-      // req.query.limit = req.query.limit ? req.query.limit : 10;
-      // let limit = parseInt(req.query.limit);
-      // let skip = (parseInt(req.query.page) - 1) * limit;
+      req.query.page = req.query.page ? req.query.page : 1;
+      let page = parseInt(req.query.page);
+      req.query.limit = req.query.limit ? req.query.limit : 10;
+      let limit = parseInt(req.query.limit);
+      let skip = (parseInt(req.query.page) - 1) * limit;
 
-      // let id = req.params.id;
+      let ids = req.body.courseType;
+      let id = req.body.vehicleCategory;
 
       let search = req.query.search
-        ? { courseName: { $regex: req.query.search, $options: "i" } }
-        : {};
-
-      // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
-      const count = await global.models.GLOBAL.COURSENAME.find(search).count();
-      const Questions = await global.models.GLOBAL.COURSENAME.find(search)
-        .sort({ createdAt: -1 })
-        .populate({
-          path: "ctid",
-          model: "courseType",
-        })
-        .populate({
-          path: "vcid",
-          model: "vehicleCategory",
-        })
-        .populate({
-          path: "ccid",
-          model: "courseCategory",
-        });
-      if (Questions.length == 0) {
+        ? {
+            name: { $regex: req.query.search, $options: "i" },
+            ctid: { $in: ids },
+          }
+        : { ctid: { $in: ids } };
+      const findvehicle = await global.models.GLOBAL.VEHICLECATEGORY.find({
+        _id: { $in: id },
+      });
+      const Menus = await global.models.GLOBAL.COURSETYPE.find({
+        _id: { $in: ids },
+      }).distinct("vcid");
+      const subMenus = await global.models.GLOBAL.COURSETYPE.find({
+        _id: { $in: ids },
+      });
+      const count = await global.models.GLOBAL.COURSECATEGORY.find(
+        search
+      ).count();
+      const Questions = await global.models.GLOBAL.COURSECATEGORY.find(search)
+        .skip(skip)
+        .limit(limit);
+      if (Questions.length == 0 || findvehicle.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -57,7 +59,13 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Question: Questions, count: count },
+        payload: {
+          courseCategory: Questions,
+          vehicleType: Menus,
+          vehicleCategory: findvehicle,
+          courseType: subMenus,
+          count: count,
+        },
         logPayload: false,
       };
       res

@@ -37,6 +37,10 @@ module.exports = exports = {
         .populate({
           path: "vcid",
           model: "vehicleCategory",
+        })
+        .populate({
+          path: "ccid",
+          model: "courseCategory",
         });
       if (Questions.length == 0) {
         const data4createResponseObject = {

@@ -15,10 +15,10 @@ router.get(
 //   "/getCoursenameById/:id",
 //   courseNameApi.getCourseNameById.handler
 // );
-// router.post(
-//   "/getCoursenameByCoursetype",
-//   courseNameApi.getCoursenameByCoursetype.handler
-// );
+router.post(
+  "/getCourseCategoryByCourseType",
+  courseCategoryApi.getcourseCategoryBycourseType.handler
+);
 
 // Post Methods
 router.post(

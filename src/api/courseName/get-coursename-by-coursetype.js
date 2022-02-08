@@ -20,6 +20,7 @@ module.exports = exports = {
 
       let ids = req.body.courseType;
       let id = req.body.vehicleCategory;
+      let ccid = req.body.courseCategory;
 
       let search = req.query.search
         ? {
@@ -35,6 +36,9 @@ module.exports = exports = {
       }).distinct("vcid");
       const subMenus = await global.models.GLOBAL.COURSETYPE.find({
         _id: { $in: ids },
+      });
+      const courseCategory = await global.models.GLOBAL.COURSECATEGORY.find({
+        _id: { $in: ccid },
       });
       const count = await global.models.GLOBAL.COURSENAME.find(search).count();
       const Questions = await global.models.GLOBAL.COURSENAME.find(search)
@@ -62,6 +66,7 @@ module.exports = exports = {
           vehicleType: Menus,
           vehicleCategory: findvehicle,
           courseType: subMenus,
+          courseCategory: courseCategory,
           count: count,
         },
         logPayload: false,

@@ -10,11 +10,12 @@ const utils = require("../../utils");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    courseName: Joi.string().required(),
+    courseName: Joi.string(),
     description: Joi.string().required(),
     isActive: Joi.boolean().required(),
     vcid: Joi.string(),
     ctid: Joi.string(),
+    ccid: Joi.string(),
     duration: Joi.string(),
     timing: Joi.string(),
     mode: Joi.string(),
@@ -28,7 +29,6 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     const {
-      courseName,
       description,
       isActive,
       duration,
@@ -41,6 +41,7 @@ module.exports = exports = {
       price,
       vcid,
       ctid,
+      ccid,
     } = req.body;
     const { user } = req;
     if (user.type !== enums.USER_TYPE.SUPERADMIN) {
@@ -55,7 +56,7 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.UNAUTHORIZED)
         .json(utils.createResponseObject(data4createResponseObject));
     }
-    if (!courseName || !description) {
+    if (!vcid || !ctid || !ccid) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -69,40 +70,41 @@ module.exports = exports = {
     }
 
     try {
-      // const findCoursetype = await global.models.GLOBAL.COURSETYPE.findById({ _id: ctid }).populate({
-      //     path: "_id",
-      //     model: "courseType",
-      //     select:"_id"
-      // })
-      // if(!findCoursetype){
-      //     const data4createResponseObject = {
-      //         req: req,
-      //         result: -400,
-      //         message: messages.NOT_FOUND,
-      //         payload: {},
-      //         logPayload: false
-      //     };
-      //     res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
-      //     return;
-      // }
-      // const checkMenu = await global.models.GLOBAL.COURSENAME.find({ courseName: courseName });
-      // if (checkMenu.length > 0) {
-      //     const data4createResponseObject = {
-      //         req: req,
-      //         result: -400,
-      //         message: messages.EXISTS_MENU,
-      //         payload: {},
-      //         logPayload: false
-      //     };
-      //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-      //     return;
-      // }
+      const findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.findById({
+        _id: vcid,
+      });
+      console.log("vehicle", findVehicle);
+      const findCourseType = await global.models.GLOBAL.COURSETYPE.findById({
+        _id: ctid,
+      });
+      console.log("Type", findCourseType.courseType);
+      const findCourseCategory =
+        await global.models.GLOBAL.COURSECATEGORY.findById({ _id: ccid });
+      console.log("Category", findCourseCategory);
+      let generateName =
+        findCourseType.courseType +
+        " " +
+        findCourseCategory.courseCategory +
+        " " +
+        "For " +
+        findVehicle.vehicleCategory +
+        " : " +
+        "Duration" +
+        " : " +
+        duration +
+        " : " +
+        "Fees" +
+        " : " +
+        "INR " +
+        price;
+      console.log("generate", generateName);
       let AmenintiesCreate = {
-        courseName: courseName,
+        courseName: generateName,
         description: description,
         isActive: isActive,
         vcid: vcid,
         ctid: ctid,
+        ccid: ccid,
         price: price,
         duration: duration,
         timing: timing,
