@@ -29,6 +29,7 @@ module.exports = exports = {
       certificate,
       vcid,
       ctid,
+      ccid,
       price,
     } = req.body;
     if (user.type !== enums.USER_TYPE.SUPERADMIN) {
@@ -91,6 +92,7 @@ module.exports = exports = {
           isActive: isActive,
           vcid: vcid,
           ctid: ctid,
+          ccid: ccid,
           price: price,
           duration: duration,
           timing: timing,
