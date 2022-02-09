@@ -18,6 +18,12 @@ router.get(
   // passport.authenticate(["jwt"], { session: false }),
   api4Role.allRole.handler
 );
+
+router.get(
+  "/getSpecificRole",
+  // passport.authenticate(["jwt"], { session: false }),
+  api4Role.getSpecificRole.handler
+);
 // Get Method
 router.get(
   "/roleName=:roleName",

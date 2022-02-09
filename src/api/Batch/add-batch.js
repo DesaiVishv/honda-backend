@@ -71,15 +71,17 @@ module.exports = exports = {
       //     total = tdid.seat;
       //   }
       //   console.log("total", total);
+      const User = await global.models.GLOBAL.REGISTER.find({
+        tdid: tdid,
+      });
+      console.log("User", User);
       const Date = await global.models.GLOBAL.TRAININGDATE.find({
         _id: { $in: tdid },
       });
-      console.log("date", Date);
       let total = 0;
       for (i = 0; i < Date.length; i++) {
         total = total + Date[i].seat;
       }
-      console.log("total", total);
       let AmenintiesCreate = {
         name: name,
         date: date,
@@ -87,12 +89,12 @@ module.exports = exports = {
         Examiner: Examiner,
         DataEntry: DataEntry,
         total: total,
+        User: User,
+        totalUser: User.length,
       };
-      console.log("amenities", AmenintiesCreate);
 
       const newAmeninties = await global.models.GLOBAL.BATCH(AmenintiesCreate);
       newAmeninties.save();
-      console.log("new Amenities", newAmeninties._id);
       const updateDate = await global.models.GLOBAL.TRAININGDATE.updateMany(
         {
           _id: { $in: tdid },

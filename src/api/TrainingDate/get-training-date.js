@@ -69,6 +69,7 @@ module.exports = exports = {
       const subMenus = await global.models.GLOBAL.TRAININGDATE.find(getData)
         .skip(skip)
         .limit(limit);
+      // console.log();
       if (subMenus.length == 0) {
         const data4createResponseObject = {
           req: req,

@@ -8,6 +8,7 @@ module.exports = (connection) => {
       uid: { type: mongoose.Schema.Types.ObjectId },
       vcid: { type: mongoose.Schema.Types.ObjectId, require: true },
       ctid: { type: mongoose.Schema.Types.ObjectId, require: true },
+      ccid: { type: mongoose.Schema.Types.ObjectId, require: true },
       cnid: { type: mongoose.Schema.Types.ObjectId, require: true },
       lcid: { type: String, require: true },
       tdid: { type: mongoose.Schema.Types.ObjectId },

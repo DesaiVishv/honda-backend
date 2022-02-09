@@ -13,6 +13,7 @@ module.exports = exports = {
     uid: Joi.string(),
     vcid: Joi.string(),
     ctid: Joi.string(),
+    ccid: Joi.string(),
     cnid: Joi.string(),
     lcid: Joi.string(),
     tdid: Joi.string(),
@@ -53,6 +54,7 @@ module.exports = exports = {
       uid,
       vcid,
       ctid,
+      ccid,
       cnid,
       lcid,
       tdid,
@@ -108,6 +110,7 @@ module.exports = exports = {
     if (
       !vcid ||
       !ctid ||
+      !ccid ||
       !cnid ||
       !lcid ||
       !tdid ||
@@ -148,6 +151,7 @@ module.exports = exports = {
         uid: uid,
         vcid: vcid,
         ctid: ctid,
+        ccid: ccid,
         cnid: cnid,
         lcid: lcid,
         tdid: tdid,
@@ -191,6 +195,7 @@ module.exports = exports = {
       let addHis = {
         uid: uid,
         tdid: tdid,
+        ccid: ccid,
         cnid: cnid,
         type: true,
         count: 1,

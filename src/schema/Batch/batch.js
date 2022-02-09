@@ -11,6 +11,8 @@ module.exports = (connection) => {
       Examiner: { type: mongoose.Schema.Types.ObjectId },
       DataEntry: { type: mongoose.Schema.Types.ObjectId },
       total: { type: Number },
+      totalUser: { type: Number },
+      User: { type: Array },
       complete: { type: Boolean, default: false },
       isAttendanceTake: { type: Boolean, default: false },
       isExamGenerate: { type: Boolean, default: false },
