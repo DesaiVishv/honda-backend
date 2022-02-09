@@ -32,11 +32,13 @@ module.exports = exports = {
     }
     // const phone = phone.removeSpaces();
     // Find the phone no and code object and then delete it.
-    const roleExist = await global.models.GLOBAL.ROLE.findOne({roleName:"superadmin"});
+    const roleExist = await global.models.GLOBAL.ROLE.findOne({
+      roleName: "superadmin",
+    });
     let verificationEntry;
     try {
       verificationEntry = await global.models.GLOBAL.CODE_VERIFICATION.findOne({
-        phone:phone,
+        phone: phone,
       });
     } catch (error) {
       logger.error(
@@ -61,7 +63,7 @@ module.exports = exports = {
       let data4createResponseObject = {
         req: req,
         result: -1,
-        message: messages.FAILED_VERIFICATION,
+        message: messages.FAILED_VERIFICATION_PHONE,
         payload: {},
         logPayload: false,
       };
@@ -128,13 +130,11 @@ module.exports = exports = {
         scope: "login",
         type: roleExist.roleName,
         rolename: roleExist.roleName,
-
-
       };
       user.token = null;
-    //   let findNavigation = await global.models.GLOBAL.NAVIGATION.find({
-    //     roleId: user.role._id
-    //   });
+      //   let findNavigation = await global.models.GLOBAL.NAVIGATION.find({
+      //     roleId: user.role._id
+      //   });
       const payload = {
         user: user,
         userExist: true,
@@ -178,7 +178,7 @@ module.exports = exports = {
         let data4createResponseObject = {
           req: req,
           result: -1,
-          message: messages.FAILED_VERIFICATION,
+          message: messages.FAILED_VERIFICATION_PHONE,
           payload: { error: error },
           logPayload: false,
         };
@@ -186,7 +186,7 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
           .json(utils.createResponseObject(data4createResponseObject));
       }
-      
+
       let data4createResponseObject = {
         req: req,
         result: 0,
@@ -195,10 +195,8 @@ module.exports = exports = {
           userExist: false,
           verified: true,
           token: token,
-          
         },
         logPayload: false,
-       
       };
       res
         .status(enums.HTTP_CODES.OK)
