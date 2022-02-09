@@ -13,7 +13,7 @@ module.exports = exports = {
     uid: Joi.string(),
     vcid: Joi.string(),
     ctid: Joi.string(),
-    ccid: Joi.string(),
+    ccid: Joi.string().allow(null),
     cnid: Joi.string(),
     lcid: Joi.string(),
     tdid: Joi.string(),
@@ -110,7 +110,6 @@ module.exports = exports = {
     if (
       !vcid ||
       !ctid ||
-      !ccid ||
       !cnid ||
       !lcid ||
       !tdid ||
