@@ -72,12 +72,9 @@ module.exports = exports = {
       !ccid ||
       !cnid ||
       !lcid ||
-      !drivingLicenseNumber ||
       !phone ||
       !passportPhoto ||
-      !drivingLicense ||
-      !issueDate ||
-      !validTill
+      !drivingLicense
     ) {
       const data4createResponseObject = {
         req: req,
