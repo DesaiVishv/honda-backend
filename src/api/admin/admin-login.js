@@ -59,13 +59,13 @@ module.exports = exports = {
         );
         const data4createResponseObject = {
           req: req,
-          result: 0,
+          result: -1,
           message: messages.USER_DOES_NOT_EXIST,
           payload: {},
           logPayload: false,
         };
         return res
-          .status(enums.HTTP_CODES.OK)
+          .status(enums.HTTP_CODES.NOT_FOUND)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
         if (admin.password !== password && findRole.password !== password) {
