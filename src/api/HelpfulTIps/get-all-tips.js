@@ -12,11 +12,11 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      // req.query.page = req.query.page ? req.query.page : 1;
-      // let page = parseInt(req.query.page);
-      // req.query.limit = req.query.limit ? req.query.limit : 10;
-      // let limit = parseInt(req.query.limit);
-      // let skip = (parseInt(req.query.page) - 1) * limit;
+      req.query.page = req.query.page ? req.query.page : 1;
+      let page = parseInt(req.query.page);
+      req.query.limit = req.query.limit ? req.query.limit : 10;
+      let limit = parseInt(req.query.limit);
+      let skip = (parseInt(req.query.page) - 1) * limit;
 
       // let id = req.params.id;
 
@@ -24,10 +24,12 @@ module.exports = exports = {
         ? { name: { $regex: req.query.search, $options: "i" } }
         : {};
 
-      const count = await global.models.GLOBAL.QUESTION.find(search).count();
-      const Questions = await global.models.GLOBAL.QUESTION.find(search)
-      .sort({ createdAt: -1 });
-      if (Questions.length == 0) {
+      const count = await global.models.GLOBAL.HELPFULTIPS.find(search).count();
+      const Tips = await global.models.GLOBAL.HELPFULTIPS.find(search)
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 });
+      if (Tips.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -44,7 +46,7 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Question: Questions, count: count },
+        payload: { Tips: Tips, count: count },
         logPayload: false,
       };
       res

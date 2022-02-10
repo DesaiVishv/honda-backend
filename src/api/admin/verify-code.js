@@ -62,13 +62,13 @@ module.exports = exports = {
       );
       let data4createResponseObject = {
         req: req,
-        result: -1,
-        message: messages.FAILED_VERIFICATION_PHONE,
+        result: 0,
+        message: messages.USER_DOES_NOT_EXIST,
         payload: {},
         logPayload: false,
       };
       return res
-        .status(enums.HTTP_CODES.NOT_ACCEPTABLE)
+        .status(enums.HTTP_CODES.OK)
         .json(utils.createResponseObject(data4createResponseObject));
     }
     // Check number of attempts and expiryTime
@@ -177,13 +177,13 @@ module.exports = exports = {
         );
         let data4createResponseObject = {
           req: req,
-          result: -1,
-          message: messages.FAILED_VERIFICATION_PHONE,
+          result: 0,
+          message: messages.USER_DOES_NOT_EXIST,
           payload: { error: error },
           logPayload: false,
         };
         return res
-          .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
+          .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       }
 

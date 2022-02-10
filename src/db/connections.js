@@ -88,6 +88,12 @@ module.exports = async () => {
           require("../schema/Question-Category/Question-Category")(
             connection_IN_HONDA
           ),
+        HELPFULTIPS: require("../schema/HelpfulTIps/helpfultips")(
+          connection_IN_HONDA
+        ),
+        TESTOMONIAL: require("../schema/Testomonial/testomonial")(
+          connection_IN_HONDA
+        ),
 
         FILEMANAGER: require("../schema/FileManager/filemanager")(
           connection_IN_HONDA

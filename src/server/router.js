@@ -36,6 +36,8 @@ module.exports = (app, logger) => {
   const assignMenuRoute = require("../routes/AssignMenu/index");
   const testRoute = require("../routes/Test/index");
   const categoryRoute = require("../routes/QuestionCategory/index");
+  const helpfultipsRoute = require("../routes/HelpfulTIps/index");
+  const testomonialRoute = require("../routes/Testomonial/index");
 
   const amenitiesRoute = require("../routes/amenities/index");
   const contactusRoute = require("../routes/contactus/index");
@@ -79,6 +81,8 @@ module.exports = (app, logger) => {
   app.use(["/api/v1/assginmenu"], assignMenuRoute);
   app.use(["/api/v1/test"], testRoute);
   app.use(["/api/v1/category"], categoryRoute);
+  app.use(["/api/v1/helpfultips"], helpfultipsRoute);
+  app.use(["/api/v1/testomonial"], testomonialRoute);
 
   app.use(["/api/v1/amenities"], amenitiesRoute);
   app.use(["/api/v1/contactus"], contactusRoute);
