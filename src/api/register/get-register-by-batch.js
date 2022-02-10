@@ -17,7 +17,6 @@ module.exports = exports = {
       let batch = await global.models.GLOBAL.BATCH.findById(id);
       let users = await global.models.GLOBAL.REGISTER.find({
         tdid: { $in: batch.tdid },
-        isAttendence: true,
       });
       if (users.length == 0) {
         const data4createResponseObject = {
