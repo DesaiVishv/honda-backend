@@ -21,6 +21,9 @@ module.exports = exports = {
       let Examset = await global.models.GLOBAL.EXAMSET.find({ batchId: id });
 
       let batch = await global.models.GLOBAL.BATCH.findById(id);
+      let count = await global.models.GLOBAL.REGISTER.find({
+        tdid: { $in: batch.tdid },
+      }).count();
       let users = await global.models.GLOBAL.REGISTER.find({
         tdid: { $in: batch.tdid },
       })
@@ -46,7 +49,7 @@ module.exports = exports = {
         payload: {
           users: users,
           Examset: Examset,
-          count: users.length,
+          count: count,
         },
         logPayload: false,
       };
