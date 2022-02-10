@@ -15,12 +15,16 @@ module.exports = exports = {
       let id = req.params.id;
 
       let batch = await global.models.GLOBAL.BATCH.findById(id);
+      let users = await global.models.GLOBAL.REGISTER.find({
+        tdid: { $in: batch.tdid },
+      });
       let Paper = await global.models.GLOBAL.RESPONSE.find({
         batch: id,
       }).populate({
         path: "uid",
         model: "register",
       });
+
       if (Paper.length == 0) {
         const data4createResponseObject = {
           req: req,
@@ -40,7 +44,9 @@ module.exports = exports = {
         message: messages.SUCCESS,
         payload: {
           Paper: Paper,
+          Users: users,
           count: Paper.length,
+          totalUser: users.length,
         },
         logPayload: false,
       };
