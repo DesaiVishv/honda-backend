@@ -7,8 +7,8 @@ module.exports = (connection) => {
     {
       titleName: { type: String, require: true },
       description: { type: String },
-      image: { type: Array, default: null },
-      video: { type: Array },
+      image: { type: String, default: null },
+      video: { type: String },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {

@@ -8,7 +8,7 @@ const passport = require("passport");
 router.get("/getAllResponse", responseApi.getAllResponse.handler); // params = categoryId / shopId / deviceId
 // router.get("/getoneresponse/:id", responseApi.getOneResponse.handler); // params = categoryId / shopId / deviceId
 router.get("/getResponseById/:id", responseApi.getResponseById.handler); // params = categoryId / shopId / deviceId
-router.get("/getResponseByBatch/:id", responseApi.getResponseByBatch.handler);
+router.get("/getResponseByUser/:id", responseApi.getResponseByBatch.handler);
 
 // Post Methods
 router.post(

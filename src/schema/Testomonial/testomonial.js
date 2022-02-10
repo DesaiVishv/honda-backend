@@ -6,7 +6,7 @@ module.exports = (connection) => {
   const testomonialSchema = new mongoose.Schema(
     {
       titleName: { type: String, require: true },
-      image: { type: Array, default: null },
+      image: { type: String, default: null },
       description: { type: String },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },

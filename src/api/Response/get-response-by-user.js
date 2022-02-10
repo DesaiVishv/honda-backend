@@ -12,20 +12,19 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
+      req.query.page = req.query.page ? req.query.page : 1;
+      let page = parseInt(req.query.page);
+      req.query.limit = req.query.limit ? req.query.limit : 10;
+      let limit = parseInt(req.query.limit);
+      let skip = (parseInt(req.query.page) - 1) * limit;
+
       let id = req.params.id;
 
-      let batch = await global.models.GLOBAL.BATCH.findById(id);
-      let users = await global.models.GLOBAL.REGISTER.find({
-        tdid: { $in: batch.tdid },
-      });
-      let Paper = await global.models.GLOBAL.RESPONSE.find({
-        batch: id,
-      }).populate({
-        path: "uid",
-        model: "register",
+      let Response = await global.models.GLOBAL.RESPONSE.find({
+        uid: id,
       });
 
-      if (Paper.length == 0) {
+      if (Response.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -43,10 +42,8 @@ module.exports = exports = {
         result: 0,
         message: messages.SUCCESS,
         payload: {
-          Paper: Paper,
-          Users: users,
-          count: Paper.length,
-          totalUser: users.length,
+          Response: Response,
+          totalResponse: Response.length,
         },
         logPayload: false,
       };

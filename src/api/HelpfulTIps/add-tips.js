@@ -11,8 +11,8 @@ module.exports = exports = {
   // route validation
   validation: Joi.object({
     titleName: Joi.string().required(),
-    image: Joi.array(),
-    video: Joi.array(),
+    image: Joi.string(),
+    video: Joi.string(),
     description: Joi.string(),
   }),
 
