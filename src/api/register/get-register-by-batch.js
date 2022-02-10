@@ -12,13 +12,20 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
+      req.query.page = req.query.page ? req.query.page : 1;
+      let page = parseInt(req.query.page);
+      req.query.limit = req.query.limit ? req.query.limit : 10;
+      let limit = parseInt(req.query.limit);
+      let skip = (parseInt(req.query.page) - 1) * limit;
       let id = req.params.id;
       let Examset = await global.models.GLOBAL.EXAMSET.find({ batchId: id });
 
       let batch = await global.models.GLOBAL.BATCH.findById(id);
       let users = await global.models.GLOBAL.REGISTER.find({
         tdid: { $in: batch.tdid },
-      });
+      })
+        .skip(skip)
+        .limit(limit);
       if (users.length == 0) {
         const data4createResponseObject = {
           req: req,
