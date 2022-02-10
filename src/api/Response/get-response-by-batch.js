@@ -13,13 +13,15 @@ module.exports = exports = {
   handler: async (req, res) => {
     try {
       let id = req.params.id;
-      let Examset = await global.models.GLOBAL.EXAMSET.find({ batchId: id });
 
       let batch = await global.models.GLOBAL.BATCH.findById(id);
-      let users = await global.models.GLOBAL.REGISTER.find({
-        tdid: { $in: batch.tdid },
+      let Paper = await global.models.GLOBAL.RESPONSE.find({
+        batch: id,
+      }).populate({
+        path: "uid",
+        model: "register",
       });
-      if (users.length == 0) {
+      if (Paper.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -37,9 +39,8 @@ module.exports = exports = {
         result: 0,
         message: messages.SUCCESS,
         payload: {
-          users: users,
-          Examset: Examset,
-          count: users.length,
+          Paper: Paper,
+          count: Paper.length,
         },
         logPayload: false,
       };

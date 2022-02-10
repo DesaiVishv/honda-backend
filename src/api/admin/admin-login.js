@@ -65,7 +65,7 @@ module.exports = exports = {
           logPayload: false,
         };
         return res
-          .status(enums.HTTP_CODES.NOT_FOUND)
+          .status(enums.HTTP_CODES.BAD_REQUEST)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
         if (admin.password !== password && findRole.password !== password) {
@@ -77,7 +77,7 @@ module.exports = exports = {
             logPayload: false,
           };
           return res
-            .status(enums.HTTP_CODES.NOT_FOUND)
+            .status(enums.HTTP_CODES.BAD_REQUEST)
             .json(utils.createResponseObject(data4createResponseObject));
         }
       }
