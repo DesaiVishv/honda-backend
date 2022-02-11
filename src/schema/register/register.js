@@ -44,6 +44,7 @@ module.exports = (connection) => {
       receiptDate: { type: Date },
       isPaymentDone: { type: Boolean, default: false },
       isAttendence: { type: Boolean, default: false },
+      isPaperDone: { type: Boolean, default: false },
       createdByAdmin: { type: Boolean, default: false },
       receiptNumber: { type: mongoose.Schema.Types.ObjectId },
       totalScore: { type: Number },

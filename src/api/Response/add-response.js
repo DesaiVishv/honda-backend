@@ -123,7 +123,7 @@ module.exports = exports = {
 
       const addScore = await global.models.GLOBAL.REGISTER.findByIdAndUpdate(
         { _id: uid },
-        { totalScore: v }
+        { totalScore: v, isPaperDone: true }
       );
       console.log("Score", addScore);
       const data4createResponseObject = {
