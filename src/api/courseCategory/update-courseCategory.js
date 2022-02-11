@@ -1,6 +1,5 @@
 const ObjectId = require("mongodb").ObjectId;
 const Joi = require("joi");
-
 const enums = require("../../../json/enums.json");
 const messages = require("../../../json/messages.json");
 
@@ -79,10 +78,22 @@ module.exports = exports = {
           courseCategory: courseCategory,
           description: description,
         };
-        Item = await global.models.GLOBAL.COURSECATEGORY.update(
+        Item = await global.models.GLOBAL.COURSECATEGORY.findByIdAndUpdate(
           { _id: id },
-          Itemupdate
+          Itemupdate,
+          {
+            new: true,
+          }
         );
+        console.log("Item", Item._id);
+        deleteName = await global.models.GLOBAL.COURSENAME.update(
+          { ccid: Item._id },
+          { isDelete: true },
+          {
+            new: true,
+          }
+        );
+        console.log("deleteName", deleteName);
         const data4createResponseObject = {
           req: req,
           result: 0,

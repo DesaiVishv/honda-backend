@@ -19,6 +19,7 @@ module.exports = (connection) => {
       systemRequirement: { type: String, default: null },
       certificate: { type: String, default: null },
       price: { type: Number },
+      isDelete: { type: Boolean, default: false },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {

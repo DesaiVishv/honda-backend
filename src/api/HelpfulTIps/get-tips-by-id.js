@@ -12,38 +12,22 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      req.query.page = req.query.page ? req.query.page : 1;
-      let page = parseInt(req.query.page);
-      req.query.limit = req.query.limit ? req.query.limit : 10;
-      let limit = parseInt(req.query.limit);
-      let skip = (parseInt(req.query.page) - 1) * limit;
-
-      let ids = req.body.courseType;
-      let id = req.body.vehicleCategory;
-
-      let search = req.query.search
-        ? {
-            name: { $regex: req.query.search, $options: "i" },
-            ctid: { $in: ids },
-            isDelete: false,
-          }
-        : { ctid: { $in: ids }, isDelete: false };
-      const findvehicle = await global.models.GLOBAL.VEHICLECATEGORY.find({
-        _id: { $in: id },
-      });
-      const Menus = await global.models.GLOBAL.COURSETYPE.find({
-        _id: { $in: ids },
-      }).distinct("vcid");
-      const subMenus = await global.models.GLOBAL.COURSETYPE.find({
-        _id: { $in: ids },
-      });
-      const count = await global.models.GLOBAL.COURSECATEGORY.find(
-        search
-      ).count();
-      const Questions = await global.models.GLOBAL.COURSECATEGORY.find(search)
-        .skip(skip)
-        .limit(limit);
-      if (Questions.length == 0 || findvehicle.length == 0) {
+      let id = req.params.id;
+      if (!id) {
+        const data4createResponseObject = {
+          req: req,
+          result: -1,
+          message: messages.INVALID_PARAMETERS,
+          payload: {},
+          logPayload: false,
+        };
+        res
+          .status(enums.HTTP_CODES.OK)
+          .json(utils.createResponseObject(data4createResponseObject));
+        return;
+      }
+      const Tips = await global.models.GLOBAL.HELPFULTIPS.findOne({ _id: id });
+      if (!Tips) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -56,17 +40,12 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
+      // const nearProperty=await global.models.GLOBAL.PERSONALINFORMATION.find({_id:{$ne:id} });
       const data4createResponseObject = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: {
-          courseCategory: Questions,
-          vehicleType: Menus,
-          vehicleCategory: findvehicle,
-          courseType: subMenus,
-          count: count,
-        },
+        payload: { Tips: Tips },
         logPayload: false,
       };
       res

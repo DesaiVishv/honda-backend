@@ -26,8 +26,9 @@ module.exports = exports = {
         ? {
             name: { $regex: req.query.search, $options: "i" },
             ctid: { $in: ids },
+            isDelete: false,
           }
-        : { ctid: { $in: ids } };
+        : { ctid: { $in: ids }, isDelete: false };
       const findvehicle = await global.models.GLOBAL.VEHICLECATEGORY.find({
         _id: { $in: id },
       });

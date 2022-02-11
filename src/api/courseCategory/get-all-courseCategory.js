@@ -21,8 +21,11 @@ module.exports = exports = {
       // let id = req.params.id;
 
       let search = req.query.search
-        ? { courseName: { $regex: req.query.search, $options: "i" } }
-        : {};
+        ? {
+            courseCategory: { $regex: req.query.search, $options: "i" },
+            isDelete: false,
+          }
+        : { isDelete: false };
 
       // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
       const count = await global.models.GLOBAL.COURSECATEGORY.find(
