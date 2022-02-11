@@ -85,15 +85,14 @@ module.exports = exports = {
             new: true,
           }
         );
+        newEntry = await global.models.GLOBAL.COURSECATEGORY(Itemupdate);
+        newEntry.save();
         console.log("Item", Item._id);
-        deleteName = await global.models.GLOBAL.COURSENAME.update(
+        deleteName = await global.models.GLOBAL.COURSENAME.updateMany(
           { ccid: Item._id },
-          { isDelete: true },
-          {
-            new: true,
-          }
+          { isDelete: true }
         );
-        console.log("deleteName", deleteName);
+
         const data4createResponseObject = {
           req: req,
           result: 0,
