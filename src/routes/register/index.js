@@ -10,6 +10,8 @@ router.get("/getAll", registerApi.getAllForDownload.handler);
 
 router.get("/getRegister/:id", registerApi.getRegister.handler);
 router.get("/getRegisterByBatch/:id", registerApi.getRegisterByBatch.handler);
+router.get("/getFilterRecords", registerApi.filterRecords.handler);
+
 // router.get("/getAllMenu", menuApi.getAllMenu.handler);
 
 // Post Methods
@@ -28,6 +30,7 @@ router.put(
 );
 
 router.put("/offlinePayment", registerApi.offlinePayment.handler);
+router.put("/cancleBooking", registerApi.cancleBooking.handler);
 
 // // Delete Methods
 router.delete(
