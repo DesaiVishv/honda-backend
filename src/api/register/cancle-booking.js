@@ -32,7 +32,31 @@ module.exports = exports = {
         { _id: uid },
         { isCancle: true },
         { new: true }
-      );
+      )
+        .populate({
+          path: "uid",
+          model: "admin",
+        })
+        .populate({
+          path: "ctid",
+          model: "courseType",
+        })
+        .populate({
+          path: "vcid",
+          model: "vehicleCategory",
+        })
+        .populate({
+          path: "cnid",
+          model: "courseName",
+        })
+        .populate({
+          path: "tdid",
+          model: "trainingDate",
+        })
+        .populate({
+          path: "batchId",
+          model: "Batch",
+        });
       let findRole = await global.models.GLOBAL.ROLE.findOne({
         roleName: "superadmin",
       });

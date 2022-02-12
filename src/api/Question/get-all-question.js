@@ -12,21 +12,23 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      // req.query.page = req.query.page ? req.query.page : 1;
-      // let page = parseInt(req.query.page);
-      // req.query.limit = req.query.limit ? req.query.limit : 10;
-      // let limit = parseInt(req.query.limit);
-      // let skip = (parseInt(req.query.page) - 1) * limit;
+      req.query.page = req.query.page ? req.query.page : 1;
+      let page = parseInt(req.query.page);
+      req.query.limit = req.query.limit ? req.query.limit : 10;
+      let limit = parseInt(req.query.limit);
+      let skip = (parseInt(req.query.page) - 1) * limit;
 
       // let id = req.params.id;
 
       let search = req.query.search
-        ? { name: { $regex: req.query.search, $options: "i" } }
+        ? { Qname: { $regex: req.query.search, $options: "i" } }
         : {};
 
       const count = await global.models.GLOBAL.QUESTION.find(search).count();
       const Questions = await global.models.GLOBAL.QUESTION.find(search)
-      .sort({ createdAt: -1 });
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
       if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,

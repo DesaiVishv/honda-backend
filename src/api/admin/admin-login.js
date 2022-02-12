@@ -18,6 +18,7 @@ module.exports = exports = {
   // route handler
   handler: async (req, res) => {
     let { phone, password } = req.body;
+    console.log("vishv---------", req.headers["user-agent"], req.ip);
     if (!phone || !password) {
       logger.error(messages.FIELD_REQUIRE);
       const data4createResponseObject = {
@@ -106,6 +107,14 @@ module.exports = exports = {
         model: "menu",
       });
       console.log("menu", menu);
+      // LOGIN LOG
+      let adminLoginLog = await global.models.GLOBAL.ADMINLOGINLOG({
+        device: req.headers["user-agent"],
+        ip: req.ip,
+        uid: admin._id,
+      });
+      await adminLoginLog.save();
+
       // User found - create JWT and return it
       const data4token = {
         id: admin._id,

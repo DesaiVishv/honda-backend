@@ -23,12 +23,21 @@ module.exports = exports = {
     email: Joi.string().required(),
     code: Joi.string().required(),
     role: Joi.string().required(),
+    Registrationtype: Joi.string(),
   }),
 
   // route handler
   handler: async (req, res) => {
-    let { firstName, fatherName, state, IDTRcenter, email, phone, role } =
-      req.body;
+    let {
+      firstName,
+      fatherName,
+      state,
+      IDTRcenter,
+      email,
+      phone,
+      role,
+      Registrationtype,
+    } = req.body;
     if (
       !firstName ||
       !fatherName ||
@@ -106,6 +115,7 @@ module.exports = exports = {
       state: state,
       phone: phone,
       IDTRcenter: IDTRcenter,
+      Registrationtype: Registrationtype,
       role: ObjectId(role).toString(),
 
       status: {
@@ -154,6 +164,7 @@ module.exports = exports = {
         state: adminObject.state,
         IDTRcenter: adminObject.IDTRcenter,
         role: role,
+        Registrationtype: adminObject.Registrationtype,
       },
       token: jwt.sign(data4token, jwtOptions.secretOrKey),
       token_type: "Bearer",

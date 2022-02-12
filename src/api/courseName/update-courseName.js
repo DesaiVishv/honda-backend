@@ -72,22 +72,37 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
-        const checkMenu = await global.models.GLOBAL.COURSENAME.findById(id);
-        if (checkMenu.length == 0) {
-          const data4createResponseObject = {
-            req: req,
-            result: -400,
-            message: messages.NOT_FOUND,
-            payload: {},
-            logPayload: false,
-          };
-          res
-            .status(enums.HTTP_CODES.OK)
-            .json(utils.createResponseObject(data4createResponseObject));
-          return;
-        }
+        const findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.findById(
+          {
+            _id: vcid,
+          }
+        );
+        console.log("vehicle", findVehicle);
+        const findCourseType = await global.models.GLOBAL.COURSETYPE.findById({
+          _id: ctid,
+        });
+        console.log("Type", findCourseType.courseType);
+        const findCourseCategory =
+          await global.models.GLOBAL.COURSECATEGORY.findById({ _id: ccid });
+        console.log("Category", findCourseCategory);
+        let generateName =
+          findCourseType.courseType +
+          " " +
+          findCourseCategory.courseCategory +
+          " " +
+          "For " +
+          findVehicle.vehicleCategory +
+          " : " +
+          "Duration" +
+          " : " +
+          duration +
+          " : " +
+          "Fees" +
+          " : " +
+          "INR " +
+          price;
         const Itemupdate = {
-          courseName: courseName,
+          courseName: generateName,
           description: description,
           isActive: isActive,
           vcid: vcid,

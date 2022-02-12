@@ -75,6 +75,10 @@ module.exports = exports = {
           path: "tdid",
           model: "trainingDate",
         });
+      let Cancle = await global.models.GLOBAL.REGISTER.find({
+        uid: id,
+        isCancle: true,
+      });
       // console.log("get Records", getRecord);
       // let getDate = await global.models.GLOBAL.TRAININGDATE.find({
       //   _id: getRecord.tdid,
@@ -96,8 +100,10 @@ module.exports = exports = {
         payload: {
           upcomming,
           past,
+          Cancle,
           count: upcomming.length,
           count1: past.length,
+          countCancleRecords: Cancle.length,
         },
         logPayload: false,
       };

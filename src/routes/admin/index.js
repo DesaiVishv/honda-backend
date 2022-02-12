@@ -37,6 +37,11 @@ router.get(
   adminApi.getAdmin.handler
 );
 router.get(
+  "/get-admin-login-log/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  adminApi.getAdminLoginLog.handler
+);
+router.get(
   "/count",
   passport.authenticate(["jwt"], { session: false }),
   adminApi.count.handler

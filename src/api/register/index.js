@@ -6,6 +6,7 @@ const getAllRegister = require("./get-register");
 const filterRecords = require("./filter-records");
 const updateRegister = require("./update-register");
 const cancleBooking = require("./cancle-booking");
+const getCancleRecord = require("./get-cancle-records");
 const deleteRegister = require("./delete-register");
 const offlinePayment = require("./payment-offline");
 // const getAllMenu = require("./get-all-menu")
@@ -21,4 +22,5 @@ module.exports = exports = {
   deleteRegister,
   offlinePayment,
   getRegisterByBatch,
+  getCancleRecord,
 };

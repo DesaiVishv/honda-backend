@@ -1,6 +1,7 @@
 const getUsers = require("./get-users");
 const getAdmin = require("./get-admin");
 const getAdmins = require("./get-admins");
+const getAdminLoginLog = require("./get-admin-login-log");
 const getSuperadmins = require("./get-superadmins");
 const getExaminer = require("./get-examiner");
 const getDataentry = require("./get-dataEntrys");
@@ -34,6 +35,7 @@ module.exports = exports = {
   signup2,
   blockUser,
   count,
+  getAdminLoginLog,
   resetPassword,
   deleteAdmin,
   afterforgotPassword,

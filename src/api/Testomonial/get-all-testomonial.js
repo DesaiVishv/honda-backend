@@ -21,7 +21,7 @@ module.exports = exports = {
       // let id = req.params.id;
 
       let search = req.query.search
-        ? { name: { $regex: req.query.search, $options: "i" } }
+        ? { titleName: { $regex: req.query.search, $options: "i" } }
         : {};
 
       const count = await global.models.GLOBAL.TESTOMONIAL.find(search).count();

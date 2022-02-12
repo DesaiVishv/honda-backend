@@ -84,6 +84,9 @@ module.exports = async () => {
           connection_IN_HONDA
         ),
         TEST: require("../schema/Test/Test")(connection_IN_HONDA),
+        ADMINLOGINLOG: require("../schema/adminLoginLog/adminLoginLog")(
+          connection_IN_HONDA
+        ),
         QUESTIONCATEGORY:
           require("../schema/Question-Category/Question-Category")(
             connection_IN_HONDA

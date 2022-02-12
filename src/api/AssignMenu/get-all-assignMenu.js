@@ -23,9 +23,16 @@ module.exports = exports = {
       let search = req.query.search
         ? { name: { $regex: req.query.search, $options: "i" } }
         : {};
+      const menus = await global.models.GLOBAL.MENU.find(search).distinct(
+        "_id"
+      );
 
-      const count = await global.models.GLOBAL.ASSIGNMENU.find(search).count();
-      const batch = await global.models.GLOBAL.ASSIGNMENU.find(search)
+      const count = await global.models.GLOBAL.ASSIGNMENU.find({
+        menu: { $in: menus },
+      }).count();
+      const batch = await global.models.GLOBAL.ASSIGNMENU.find({
+        menu: { $in: menus },
+      })
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: -1 })

@@ -12,42 +12,42 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      req.query.page = req.query.page ? req.query.page : 1;
-      let page = parseInt(req.query.page);
-      req.query.limit = req.query.limit ? req.query.limit : 10;
-      let limit = parseInt(req.query.limit);
-      let skip = (parseInt(req.query.page) - 1) * limit;
-      let id = req.params.id;
-      let isAttendence = req.query.isAttendence;
-      let Examset = await global.models.GLOBAL.EXAMSET.find({ batchId: id });
-      let search = {};
-      if (isAttendence == "true") {
-        search = { isAttendence: true };
-      }
+      // req.query.page = req.query.page ? req.query.page : 1;
+      // let page = parseInt(req.query.page);
+      // req.query.limit = req.query.limit ? req.query.limit : 10;
+      // let limit = parseInt(req.query.limit);
+      // let skip = (parseInt(req.query.page) - 1) * limit;
 
-      let batch = await global.models.GLOBAL.BATCH.findById(id);
-      let count = await global.models.GLOBAL.REGISTER.find({
-        tdid: { $in: batch.tdid },
-        ...search,
-      }).count();
-      let users;
-      if (req.query.page) {
-        console.log("1111111");
-        users = await global.models.GLOBAL.REGISTER.find({
-          tdid: { $in: batch.tdid },
-          ...search,
+      // let id = req.params.id;
+
+      let search = req.query.search
+        ? { fname: { $regex: req.query.search, $options: "i" }, isCancle: true }
+        : { isCancle: true };
+
+      const count = await global.models.GLOBAL.REGISTER.find(search).count();
+      const Questions = await global.models.GLOBAL.REGISTER.find(search)
+        .sort({ createdAt: -1 })
+        .populate({
+          path: "uid",
+          model: "admin",
         })
-          .skip(skip)
-          .limit(limit);
-      } else {
-        console.log("222222");
-
-        users = await global.models.GLOBAL.REGISTER.find({
-          tdid: { $in: batch.tdid },
-          ...search,
+        .populate({
+          path: "ctid",
+          model: "courseType",
+        })
+        .populate({
+          path: "vcid",
+          model: "vehicleCategory",
+        })
+        .populate({
+          path: "cnid",
+          model: "courseName",
+        })
+        .populate({
+          path: "tdid",
+          model: "trainingDate",
         });
-      }
-      if (users.length == 0) {
+      if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -64,11 +64,7 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: {
-          users: users,
-          Examset: Examset,
-          count: count,
-        },
+        payload: { Question: Questions, count: count },
         logPayload: false,
       };
       res

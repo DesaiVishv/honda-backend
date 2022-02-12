@@ -143,6 +143,15 @@ module.exports = exports = {
         token_type: "Bearer",
         // Navigation: findNavigation
       };
+
+      // LOGIN LOG
+      let adminLoginLog = await global.models.GLOBAL.ADMINLOGINLOG({
+        device: req.headers["user-agent"],
+        ip: req.ip,
+        uid: user._id,
+      });
+      await adminLoginLog.save();
+
       let data4createResponseObject = {
         req: req,
         result: 0,

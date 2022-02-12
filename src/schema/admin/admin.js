@@ -1,4 +1,4 @@
-const { number } = require("joi");
+const { number, string } = require("joi");
 const mongoose = require("mongoose");
 const enums = require("../../../json/enums.json");
 
@@ -14,6 +14,7 @@ module.exports = (connection) => {
       IDTRcenter: { type: String },
       password: { type: String },
       isAttendence: { type: Boolean, default: false },
+      Registrationtype: { type: String },
       registrationDate: { type: Date, default: Date.now() },
       modificationData: { type: Date, default: Date.now() },
       role: { type: mongoose.Schema.Types.ObjectId, ref: "role" },
