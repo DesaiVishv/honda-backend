@@ -12,27 +12,20 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      let uid = req.params.id;
-      if (!uid) {
-        const data4createResponseObject = {
-          req: req,
-          result: -1,
-          message: messages.INVALID_PARAMETERS,
-          payload: {},
-          logPayload: false,
-        };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
-        return;
-      }
-      // const findUser = await global.models.GLOBAL.REGISTER.find({uid:uid})
-      const Propertys = await global.models.GLOBAL.REGISTER.find({ uid: uid })
+      let search = req.query.search
+        ? {
+            courseCategory: { $regex: req.query.search, $options: "i" },
+            isDelete: false,
+          }
+        : { isDelete: false };
+
+      // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
+      const count = await global.models.GLOBAL.COURSECATEGORY.find(
+        search
+      ).count();
+      const Questions = await global.models.GLOBAL.COURSECATEGORY.find(search)
+
         .sort({ createdAt: -1 })
-        .populate({
-          path: "uid",
-          model: "admin",
-        })
         .populate({
           path: "ctid",
           model: "courseType",
@@ -40,16 +33,8 @@ module.exports = exports = {
         .populate({
           path: "vcid",
           model: "vehicleCategory",
-        })
-        .populate({
-          path: "cnid",
-          model: "courseName",
-        })
-        .populate({
-          path: "tdid",
-          model: "trainingDate",
         });
-      if (!Propertys) {
+      if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -62,12 +47,11 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
-      // const nearProperty=await global.models.GLOBAL.PERSONALINFORMATION.find({_id:{$ne:id} });
       const data4createResponseObject = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Property: Propertys },
+        payload: { Question: Questions, count: count },
         logPayload: false,
       };
       res

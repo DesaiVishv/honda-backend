@@ -9,7 +9,7 @@ router.get(
   "/getAllCourseCategory",
   courseCategoryApi.getAllCourseCategory.handler
 );
-// router.get("/getAll", courseNameApi.getAllForDownload.handler);
+router.get("/getAll", courseCategoryApi.getAll.handler);
 
 // router.get(
 //   "/getCoursenameById/:id",

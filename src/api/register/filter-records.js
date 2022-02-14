@@ -18,11 +18,12 @@ module.exports = exports = {
       }).distinct("tdid");
       console.log("t---", tdid);
       let uptd = await global.models.GLOBAL.TRAININGDATE.find({
-        date: { $gte: Date.now() },
+        endTime: { $gte: new Date(Date.now()) },
         _id: { $in: tdid },
       }).distinct("_id");
+      console.log("uptd", new Date(Date.now()));
       let pstd = await global.models.GLOBAL.TRAININGDATE.find({
-        date: { $lt: Date.now() },
+        endTime: { $lt: new Date(Date.now()) },
         _id: { $in: tdid },
       }).distinct("_id");
       let upcomming = await global.models.GLOBAL.REGISTER.find({

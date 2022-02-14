@@ -14,30 +14,82 @@ module.exports = exports = {
     try {
       let id = req.params.id;
 
-      let Response = await global.models.GLOBAL.BATCH.find({
-        _id: id,
-      }).populate({
-        path: "User",
-        model: "register",
-        populate: {
-          path: "cnid",
-          model: "courseName",
+      // let Response = await global.models.GLOBAL.BATCH.find({
+      //   _id: id,
+      // })
+      //   .populate({ path: "Examiner", model: "examiner" })
+      //   .populate({ path: "DataEntry", model: "examiner" })
+      //   .populate({
+      //     path: "User",
+      //     model: "register",
+      //     populate: {
+      //       path: "cnid",
+      //       model: "courseName",
+      //       populate: {
+      //         path: "ccid",
+      //         model: "courseCategory",
+      //         populate: {
+      //           path: "ctid",
+      //           model: "courseType",
+      //           populate: {
+      //             path: "vcid",
+      //             model: "vehicleCategory",
+      //           },
+      //         },
+      //       },
+      //     },
+      //   })
+      //   .populate({
+      //     path: "User",
+      //     model: "register",
+      //     populate: {
+      //       path: "tdid",
+      //       model: "trainingDate",
+      //     },
+      //   });
+
+      let findResponse = await global.models.GLOBAL.RESPONSE.find({
+        batch: id,
+      })
+        .populate({
+          path: "uid",
+          model: "register",
           populate: {
-            path: "ccid",
-            model: "courseCategory",
+            path: "cnid",
+            model: "courseName",
             populate: {
-              path: "ctid",
-              model: "courseType",
+              path: "ccid",
+              model: "courseCategory",
               populate: {
-                path: "vcid",
-                model: "vehicleCategory",
+                path: "ctid",
+                model: "courseType",
+                populate: {
+                  path: "vcid",
+                  model: "vehicleCategory",
+                },
               },
             },
           },
-        },
-      });
-      console.log("Response", Response[0].User.length);
-      if (Response.length == 0) {
+        })
+        .populate({
+          path: "uid",
+          model: "register",
+          populate: { path: "tdid", model: "trainingDate" },
+        })
+        .populate({ path: "Esid", model: "examset" })
+        .populate({
+          path: "batch",
+          model: "batch",
+          populate: { path: "Examiner", model: "examiner" },
+        })
+        .populate({
+          path: "batch",
+          model: "batch",
+          populate: { path: "DataEntry", model: "examiner" },
+        });
+
+      // let findBatch = await global.models.GLOBAL.BATCH.find({_id:id}).populate({path:"Examiner",model:"examiner"}).populate({path:"DataEntry",model:"examiner"})
+      if (findResponse.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -55,8 +107,8 @@ module.exports = exports = {
         result: 0,
         message: messages.SUCCESS,
         payload: {
-          Response: Response,
-          totalResponse: Response.length,
+          findResponse: findResponse,
+          // totalResponse: Response.length,
         },
         logPayload: false,
       };

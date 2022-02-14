@@ -38,14 +38,15 @@ module.exports = exports = {
           ...search,
         })
           .skip(skip)
-          .limit(limit);
+          .limit(limit)
+          .sort({ createdAt: -1 });
       } else {
         console.log("222222");
 
         users = await global.models.GLOBAL.REGISTER.find({
           tdid: { $in: batch.tdid },
           ...search,
-        });
+        }).sort({ createdAt: -1 });
       }
       if (users.length == 0) {
         const data4createResponseObject = {

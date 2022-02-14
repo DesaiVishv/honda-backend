@@ -32,13 +32,29 @@ const Razorpay = require("razorpay");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
+    ctid: Joi.string(),
+    vcid: Joi.string(),
+    cnid: Joi.string(),
+    tdid: Joi.string(),
+    price: Joi.number(),
     receiptDate: Joi.string().required(),
     receiptNumber: Joi.string(),
     isPaymentDone: Joi.boolean().required(),
+    type: Joi.string(),
   }),
 
   handler: async (req, res) => {
-    const { receiptDate, receiptNumber, isPaymentDone } = req.body;
+    const {
+      price,
+      vcid,
+      ctid,
+      cnid,
+      tdid,
+      receiptDate,
+      receiptNumber,
+      isPaymentDone,
+      type,
+    } = req.body;
     const { user } = req;
     const findDate = await global.models.GLOBAL.REGISTER.find({
       _id: receiptNumber,
@@ -61,8 +77,22 @@ module.exports = exports = {
         receiptDate: receiptDate,
         //   receiptNumber:receiptNumber,
         isPaymentDone: isPaymentDone,
+        type: type,
       }
     );
+    const paymentOffline = await global.models.GLOBAL.PAYMENT({
+      cnid: cnid,
+      ctid: ctid,
+      vcid: vcid,
+      tdid: tdid,
+      price: price,
+      receiptNumber: receiptNumber,
+      receiptDate: receiptDate,
+      //   receiptNumber:receiptNumber,
+      isPaymentDone: isPaymentDone,
+      type: type,
+    });
+    await paymentOffline.save();
     // const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({ cnid: cnid }, { paymentId: paymentId })
     // if (!updateRegister) {
     //   const data4createResponseObject = {
