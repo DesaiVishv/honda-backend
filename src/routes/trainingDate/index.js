@@ -7,6 +7,11 @@ const passport = require("passport");
 // Get Methods
 router.get("/getDate", trainingDateApi.getDateByCourseName.handler);
 router.get("/getAllDate", trainingDateApi.getAllDate.handler);
+router.get(
+  "/getAllDateWithoutPagination",
+  trainingDateApi.getDateWithoutPagination.handler
+);
+
 router.get("/getData", trainingDateApi.getDataByDate.handler);
 
 // Post Methods

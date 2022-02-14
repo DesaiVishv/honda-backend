@@ -9,6 +9,10 @@ router.get("/getAllResponse", responseApi.getAllResponse.handler); // params = c
 // router.get("/getoneresponse/:id", responseApi.getOneResponse.handler); // params = categoryId / shopId / deviceId
 router.get("/getResponseById/:id", responseApi.getResponseById.handler); // params = categoryId / shopId / deviceId
 router.get("/getResponseByUser/:id", responseApi.getResponseByBatch.handler);
+router.get(
+  "/getResponseByUserWithoutPagination/:id",
+  responseApi.getResponseByUserWithoutPagination.handler
+);
 
 // Post Methods
 router.post(

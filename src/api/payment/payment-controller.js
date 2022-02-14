@@ -32,17 +32,18 @@ const Razorpay = require("razorpay");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    uid: Joi.string().required(),
+    uid: Joi.string(),
     vcid: Joi.string().required(),
     ctid: Joi.string().required(),
     cnid: Joi.string().required(),
     tdid: Joi.string().required(),
     paymentId: Joi.string().required(),
+    type: Joi.string(),
     // imagePath: Joi.string().allow("")
   }),
 
   pay: async (req, res) => {
-    const { uid, vcid, ctid, cnid, tdid, paymentId } = req.body;
+    const { uid, vcid, ctid, cnid, tdid, paymentId, type } = req.body;
     const { user } = req;
     if (!cnid) {
       const data4createResponseObject = {
@@ -56,18 +57,20 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.BAD_REQUEST)
         .json(utils.createResponseObject(data4createResponseObject));
     }
-    const findUser = await global.models.GLOBAL.ADMIN.findOne({ _id: uid });
-    if (!findUser) {
-      const data4createResponseObject = {
-        req: req,
-        result: -1,
-        message: messages.NOT_FOUND,
-        payload: {},
-        logPayload: false,
-      };
-      return res
-        .status(enums.HTTP_CODES.BAD_REQUEST)
-        .json(utils.createResponseObject(data4createResponseObject));
+    if (uid) {
+      const findUser = await global.models.GLOBAL.ADMIN.findOne({ _id: uid });
+      if (!findUser) {
+        const data4createResponseObject = {
+          req: req,
+          result: -1,
+          message: messages.NOT_FOUND,
+          payload: {},
+          logPayload: false,
+        };
+        return res
+          .status(enums.HTTP_CODES.BAD_REQUEST)
+          .json(utils.createResponseObject(data4createResponseObject));
+      }
     }
     const findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.findOne({
       _id: vcid,
@@ -139,6 +142,7 @@ module.exports = exports = {
       tdid: tdid,
       paymentId: paymentId,
       price: findCoursename.price,
+      type: type,
     });
     // const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({ cnid: cnid }, { paymentId: paymentId })
     // if (!updateRegister) {

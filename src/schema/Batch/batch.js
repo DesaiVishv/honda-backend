@@ -14,6 +14,7 @@ module.exports = (connection) => {
       totalUser: { type: Number },
       User: { type: Array },
       complete: { type: Boolean, default: false },
+      completeResponse: { type: Boolean, default: false },
       isAttendanceTake: { type: Boolean, default: false },
       isExamGenerate: { type: Boolean, default: false },
       createdAt: { type: Date, default: Date.now },

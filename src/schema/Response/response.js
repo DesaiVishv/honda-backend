@@ -35,6 +35,7 @@ module.exports = (connection) => {
             },
           ],
           Answer: [Number],
+          isRight: { type: Boolean },
           type: { type: String, require: true },
           language: { type: String, require: true },
           weight: { type: Number, require: true },

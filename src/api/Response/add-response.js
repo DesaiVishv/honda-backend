@@ -117,7 +117,7 @@ module.exports = exports = {
       const updateResponse =
         await global.models.GLOBAL.RESPONSE.findByIdAndUpdate(
           { _id: newAmeninties._id },
-          { total: t, Score: v }
+          { total: t, Score: v, ListofQA: loq }
         );
       console.log("Response", updateResponse);
 
@@ -126,11 +126,16 @@ module.exports = exports = {
         { totalScore: v, isPaperDone: true }
       );
       console.log("Score", addScore);
+      const updateBatch = await global.models.GLOBAL.BATCH.findByIdAndUpdate(
+        { _id: batch },
+        { completeResponse: true }
+      );
+
       const data4createResponseObject = {
         req: req,
         result: 0,
         message: messages.ITEM_INSERTED,
-        payload: { newAmeninties, t, v },
+        payload: { newAmeninties, t, v, all },
         logPayload: false,
       };
       res

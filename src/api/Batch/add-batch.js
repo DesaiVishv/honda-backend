@@ -73,7 +73,7 @@ module.exports = exports = {
       //   console.log("total", total);
       const User = await global.models.GLOBAL.REGISTER.find({
         tdid: tdid,
-      });
+      }).distinct("_id");
       console.log("User", User);
       const Date = await global.models.GLOBAL.TRAININGDATE.find({
         _id: { $in: tdid },
