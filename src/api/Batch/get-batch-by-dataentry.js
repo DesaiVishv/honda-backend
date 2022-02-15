@@ -33,6 +33,7 @@ module.exports = exports = {
       // });
       const count = await global.models.GLOBAL.BATCH.find(search).count();
       const Batch = await global.models.GLOBAL.BATCH.find(search)
+        .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit);
       // .populate({

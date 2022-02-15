@@ -45,6 +45,7 @@ module.exports = exports = {
         ? {
             $and: [{ date: { $gte: date1 } }, { date: { $lte: date2 } }],
             seat: { $ne: 0 },
+            isBooked: false,
           }
         : {};
       //   let filter1 =
