@@ -24,6 +24,8 @@ router.post(
 //PUT Methods
 router.put("/updateResponse/:id", responseApi.updateResponse.handler); // params = categoryId / shopId / deviceId
 
+// params = categoryId / shopId / deviceId
+
 //DELETE Methods
 router.delete("/deleteResponse/:id", responseApi.deleteResponse.handler); // params = categoryId / shopId / deviceId
 
