@@ -58,21 +58,40 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
+      let data1 = new Set();
       let data = [];
+      // let arr = Array.from(data);
+      // let arr = [...data];
+      // let arr = [];
+      // data.forEach((x) => arr.push(x));
       let c = 0;
       let k = 0;
-      for (i = 0; i < 100; i++) {
+      let h = 0;
+      for (i = 0; i < 1000; i++) {
         if (c == no) {
           break;
         }
+        // if (k == 100) {
+        //   k = 0;
+        // }
         if (Questions[i % category.length][k]) {
-          data.push(Questions[i % category.length][k]);
+          console.log("iiiiiinnnnnn", i % category.length, k);
+          data1.add(Questions[i % category.length][k]);
           c++;
+          h++;
         }
-        if (c == category.length) {
+        if (h == category.length) {
           k++;
+          h = 0;
         }
       }
+      // for (const x of data1.values()) {
+      //   text += x + "<br>";
+      // }
+      data1.forEach((x) => data.push(x));
+
+      // console.log("------------", data.values());
+      console.log("kfbkdsbfweif", data);
       if (data.length < no) {
         const data4createResponseObject = {
           req: req,
