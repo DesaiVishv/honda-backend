@@ -17,19 +17,19 @@ module.exports = exports = {
       let examsetData = await global.models.GLOBAL.EXAMSET.find({
         batchId: batch,
       });
-      if (examsetData.length != 0) {
-        const data4createResponseObject = {
-          req: req,
-          result: -400,
-          message: messages.ITEM_EXISTS,
-          payload: {},
-          logPayload: false,
-        };
-        res
-          .status(enums.HTTP_CODES.NOT_FOUND)
-          .json(utils.createResponseObject(data4createResponseObject));
-        return;
-      }
+      // if (examsetData.length != 0) {
+      //   const data4createResponseObject = {
+      //     req: req,
+      //     result: -400,
+      //     message: messages.ITEM_EXISTS,
+      //     payload: {},
+      //     logPayload: false,
+      //   };
+      //   res
+      //     .status(enums.HTTP_CODES.NOT_FOUND)
+      //     .json(utils.createResponseObject(data4createResponseObject));
+      //   return;
+      // }
       let category = await global.models.GLOBAL.QUESTIONCATEGORY.find({});
       let Questions = [];
       for (j = 0; j < category?.length; j++) {
@@ -39,6 +39,7 @@ module.exports = exports = {
             language: type,
           })
         );
+        console.log("---------vishv---------", Questions[j].length);
       }
       Questions = utils.shuffle(Questions);
       console.log(
@@ -67,13 +68,13 @@ module.exports = exports = {
       let c = 0;
       let k = 0;
       let h = 0;
-      for (i = 0; i < 1000; i++) {
+      for (i = 0; i < 10000; i++) {
         if (c == no) {
           break;
         }
-        // if (k == 100) {
-        //   k = 0;
-        // }
+        if (k == 500) {
+          k = 0;
+        }
         if (Questions[i % category.length][k]) {
           console.log("iiiiiinnnnnn", i % category.length, k);
           data1.add(Questions[i % category.length][k]);
@@ -81,9 +82,9 @@ module.exports = exports = {
           h++;
         }
         if (h == category.length) {
-          k++;
           h = 0;
         }
+        k++;
       }
       // for (const x of data1.values()) {
       //   text += x + "<br>";
@@ -91,7 +92,7 @@ module.exports = exports = {
       data1.forEach((x) => data.push(x));
 
       // console.log("------------", data.values());
-      console.log("kfbkdsbfweif", data);
+      console.log("kfbkdsbfweif", data, data.length);
       if (data.length < no) {
         const data4createResponseObject = {
           req: req,
