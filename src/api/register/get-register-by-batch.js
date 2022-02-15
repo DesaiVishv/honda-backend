@@ -20,9 +20,9 @@ module.exports = exports = {
       let id = req.params.id;
       let isAttendence = req.query.isAttendence;
       let Examset = await global.models.GLOBAL.EXAMSET.find({ batchId: id });
-      let search = {};
+      let search = { isPaymentDone: true };
       if (isAttendence == "true") {
-        search = { isAttendence: true };
+        search = { isAttendence: true, isPaymentDone: true };
       }
 
       let batch = await global.models.GLOBAL.BATCH.findById(id);
