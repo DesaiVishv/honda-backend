@@ -31,6 +31,7 @@ module.exports = exports = {
     //     };
     //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
     // }
+
     if (!batch || !uid || !Esid || !ListofQA) {
       const data4createResponseObject = {
         req: req,

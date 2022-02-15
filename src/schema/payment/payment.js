@@ -27,6 +27,7 @@ module.exports = (connection) => {
       price: {
         type: Number,
       },
+      phone: { type: Number },
       type: { type: String },
       created: {
         type: Date,
