@@ -16,7 +16,7 @@ module.exports = exports = {
   handler: async (req, res) => {
     const { id } = req.params;
     const { user } = req;
-    const { batch, uid, Esid, ListofQA } = req.body;
+    const {   ListofQA } = req.body;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
     //     req: req,
@@ -29,7 +29,7 @@ module.exports = exports = {
     //     .status(enums.HTTP_CODES.UNAUTHORIZED)
     //     .json(utils.createResponseObject(data4createResponseObject));
     // }
-    if (!id || !batch || !uid || !Esid || !ListofQA) {
+    if (!id || !ListofQA) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -43,9 +43,9 @@ module.exports = exports = {
     }
 
     try {
-      let Item = await global.models.GLOBAL.RESPONSE.findById(id);
+      let Propertys = await global.models.GLOBAL.RESPONSE.findById(id);
       console.log("ttttttt");
-      if (!Item) {
+      if (!Propertys) {
         const data4createResponseObject = {
           req: req,
           result: 0,
@@ -57,32 +57,56 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
-        // const checkQuestion = await global.models.GLOBAL.RESPONSE.find({
-        //   email: email,
-        // });
-        // if (checkQuestion.length > 0) {
-        //   const data4createResponseObject = {
-        //     req: req,
-        //     result: -400,
-        //     message: messages.EXISTS_RESPONSE,
-        //     payload: {},
-        //     logPayload: false,
-        //   };
-        //   res
-        //     .status(enums.HTTP_CODES.OK)
-        //     .json(utils.createResponseObject(data4createResponseObject));
-        //   return;
-        // }
-        let updateres = {
-          batch: batch,
-          uid: uid,
-          Esid: Esid,
-          ListofQA: ListofQA,
-        };
-        Item = await global.models.GLOBAL.RESPONSE.update(
+        let loq = [];
+      let t = 0,
+        v = 0;
+      console.log("length of ListofQA", ListofQA.length);
+      for (i = 0; i < ListofQA.length; i++) {
+        let testans = [];
+        for (j = 0; j < ListofQA[i].Option.length; j++) {
+          console.log("tttttt", ListofQA[i].Option[j].istrue);
+          if (ListofQA[i].Option[j].istrue == true) {
+            testans.push(ListofQA[i].Option[j].no);
+          }
+        }
+        // console.log("true ans",testans);
+        if (
+          testans.sort().join(",") ===
+          ListofQA[i].Answer.sort().join(",")
+        ) {
+          console.log("true vishvans", {
+            ...ListofQA[i]._doc,
+            isRight: true,
+          });
+          v++;
+          loq.push({ ...ListofQA[i]._doc, isRight: true });
+        } else {
+          console.log("true vishvans", {
+            ...ListofQA[i]._doc,
+            isRight: false,
+          });
+          loq.push({ ...ListofQA[i]._doc, isRight: false });
+        }
+        t++;
+      }
+      let all = { ...Propertys._doc, loq };
+      let percentage=(v/t)*100;
+      let isPass=false;
+      if(percentage>=60){
+        isPass=true;
+      }
+      const updateResponse =
+        await global.models.GLOBAL.RESPONSE.findByIdAndUpdate(
           { _id: id },
-          { $set: updateres }
+          { total: t, Score: v, ListofQA: loq }
         );
+      console.log("Response", updateResponse);
+
+      const addScore = await global.models.GLOBAL.REGISTER.findByIdAndUpdate(
+        { _id: Propertys.uid },
+        { totalScore: v, isPaperDone: true, status: "noRequest",isPass,percentage }
+      );
+       
         const data4createResponseObject = {
           req: req,
           result: 0,
@@ -93,7 +117,8 @@ module.exports = exports = {
         res
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
-      }
+      
+    }
     } catch (error) {
       logger.error(
         `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
