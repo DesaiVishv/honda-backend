@@ -66,6 +66,7 @@ module.exports = exports = {
         getData
       ).count();
       const subMenus = await global.models.GLOBAL.TRAININGDATE.find(getData)
+        .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit);
       if (subMenus.length == 0) {

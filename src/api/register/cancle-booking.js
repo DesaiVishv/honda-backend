@@ -55,7 +55,7 @@ module.exports = exports = {
         })
         .populate({
           path: "batchId",
-          model: "Batch",
+          model: "batch",
         });
       let findRole = await global.models.GLOBAL.ROLE.findOne({
         roleName: "superadmin",

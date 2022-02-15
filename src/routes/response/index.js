@@ -13,7 +13,7 @@ router.get(
   "/getResponseByUserWithoutPagination/:id",
   responseApi.getResponseByUserWithoutPagination.handler
 );
-
+router.get("/getResponseByBatch/:id", responseApi.getResponseBatch.handler);
 // Post Methods
 router.post(
   "/addResponse",

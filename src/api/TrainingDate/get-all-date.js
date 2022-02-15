@@ -79,9 +79,10 @@ module.exports = exports = {
           },
         },
       ])
+        .sort({ createdAt: -1 })
         .skip(skip)
-        .limit(limit)
-        .sort({ createdAt: -1 });
+        .limit(limit);
+
       if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
