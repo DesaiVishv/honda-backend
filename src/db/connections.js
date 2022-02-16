@@ -28,6 +28,7 @@ module.exports = async () => {
       GLOBAL: {
         ADMIN: require("../schema/admin/admin")(connection_IN_HONDA),
         USER: require("../schema/user/user")(connection_IN_HONDA),
+        PARTIAL: require("../schema/partial/partial")(connection_IN_HONDA),
         VEHICLECATEGORY: require("../schema/VehicleCategory/vehicleCategory")(
           connection_IN_HONDA
         ),

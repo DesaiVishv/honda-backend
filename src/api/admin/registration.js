@@ -24,6 +24,7 @@ module.exports = exports = {
     password: Joi.string(),
     isRegister: Joi.boolean(),
     role: Joi.string().required(),
+    Registrationtype: Joi.string(),
   }),
 
   // route handler
@@ -39,6 +40,7 @@ module.exports = exports = {
       state,
       isRegister,
       role,
+      Registrationtype,
     } = req.body;
 
     if (phone.length === 0 || code.length === 0) {
@@ -215,6 +217,7 @@ module.exports = exports = {
         state: state,
         phone: phone,
         password: password,
+        Registrationtype: Registrationtype,
         IDTRcenter: IDTRcenter,
         role: ObjectId(role).toString(),
 
@@ -231,6 +234,9 @@ module.exports = exports = {
       logger.info("/verify-code - Saving registration-code in database");
       try {
         await newAdmin.save();
+        let deletePartial = await global.models.GLOBAL.PARTIAL.findAndRemove({
+          phone: phone,
+        });
         //   const data4createResponseObject = {
         //     req: req,
         //     result: 0,

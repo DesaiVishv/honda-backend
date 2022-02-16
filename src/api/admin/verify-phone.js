@@ -9,18 +9,26 @@ const config = require("../../../config.json");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    firstName: Joi.string().required(),
+    firstName: Joi.string(),
     fatherName: Joi.string(),
-    state: Joi.string().required(),
-    IDTRcenter: Joi.string().required(),
+    state: Joi.string(),
+    IDTRcenter: Joi.string(),
     phone: Joi.number().required(),
     isRegister: Joi.boolean(),
+    Registrationtype: Joi.string(),
   }),
 
   // route handler
   handler: async (req, res) => {
-    const { firstName, fatherName, state, IDTRcenter, phone, isRegister } =
-      req.body;
+    const {
+      firstName,
+      fatherName,
+      state,
+      IDTRcenter,
+      phone,
+      Registrationtype,
+      isRegister,
+    } = req.body;
     let code = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
     // const locale = utils.getLocale(req);
     let entry;
@@ -138,7 +146,14 @@ module.exports = exports = {
             .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
             .json(utils.createResponseObject(data4createResponseObject));
         }
-
+        partialEntry = await global.models.GLOBAL.PARTIAL({
+          firstName: firstName,
+          fatherName: fatherName,
+          state: state,
+          IDTRcenter: IDTRcenter,
+          phone: phone,
+          Registrationtype: Registrationtype,
+        });
         /* save the code in database */
         entry = global.models.GLOBAL.CODE_VERIFICATION({
           phone: phone,
@@ -151,6 +166,9 @@ module.exports = exports = {
         logger.info("/verify-phone - Saving verification-code in database");
         try {
           await entry.save();
+          if (isRegister == true) {
+            await partialEntry.save();
+          }
         } catch (error) {
           logger.error(
             `/verify-phone - Error while saving code in database: ${error.message}\n${error.stack}`
