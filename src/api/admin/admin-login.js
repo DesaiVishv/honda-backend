@@ -41,12 +41,12 @@ module.exports = exports = {
       //     "status.name": { $ne: enums.USER_STATUS.DISABLED.name }
       // };
 
-      const findRole = await global.models.GLOBAL.EXAMINER.findOne({
+      let findRole = await global.models.GLOBAL.EXAMINER.findOne({
         phone: phone,
       });
       console.log("findRole", findRole);
-      const aadmin = await global.models.GLOBAL.ADMIN.find({});
-      const admin = await global.models.GLOBAL.ADMIN.findOne({
+      // const aadmin = await global.models.GLOBAL.ADMIN.find({});
+      let admin = await global.models.GLOBAL.ADMIN.findOne({
         phone: phone,
       }).populate({
         path: "role",
@@ -69,7 +69,7 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.BAD_REQUEST)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
-        if (admin.password !== password && findRole.password !== password) {
+        if (admin?.password !== password && findRole?.password !== password) {
           const data4createResponseObject = {
             req: req,
             result: -1,
@@ -81,6 +81,9 @@ module.exports = exports = {
             .status(enums.HTTP_CODES.BAD_REQUEST)
             .json(utils.createResponseObject(data4createResponseObject));
         }
+      }
+      if (findRole) {
+        admin = findRole;
       }
       const rolename = await global.models.GLOBAL.ROLE.findOne({
         _id: admin.role,
