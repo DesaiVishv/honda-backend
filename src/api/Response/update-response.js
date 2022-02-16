@@ -79,16 +79,16 @@ module.exports = exports = {
               ...ListofQA[i]._doc,
               isRight: true,
             });
-            console.log("ListofQA[i]._doc", ListofQA[i]._doc);
+            // console.log("ListofQA[i]._doc", ListofQA[i]);
 
             v++;
-            loq.push({ ...ListofQA[i]._doc, isRight: true });
+            loq.push({ ...ListofQA[i], isRight: true });
           } else {
             console.log("true vishvans", {
               ...ListofQA[i]._doc,
               isRight: false,
             });
-            loq.push({ ...ListofQA[i]._doc, isRight: false });
+            loq.push({ ...ListofQA[i], isRight: false });
           }
           t++;
         }
@@ -105,7 +105,7 @@ module.exports = exports = {
         const updateResponse =
           await global.models.GLOBAL.RESPONSE.findByIdAndUpdate(
             { _id: id },
-            { total: t, Score: v, ListofQA: all }
+            { total: t, Score: v, ListofQA: loq }
           );
         console.log("Response", updateResponse);
 
