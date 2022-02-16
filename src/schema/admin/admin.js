@@ -15,6 +15,7 @@ module.exports = (connection) => {
       password: { type: String },
       isAttendence: { type: Boolean, default: false },
       Registrationtype: { type: String },
+      isRegister: { type: Boolean },
       registrationDate: { type: Date, default: Date.now() },
       modificationData: { type: Date, default: Date.now() },
       role: { type: mongoose.Schema.Types.ObjectId, ref: "role" },

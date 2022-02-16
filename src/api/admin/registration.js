@@ -11,7 +11,6 @@ const logger = require("../../logger");
 const utils = require("../../utils");
 const role = require("../../routes/role");
 
-
 module.exports = exports = {
   // route validation
   validation: Joi.object({
@@ -23,12 +22,24 @@ module.exports = exports = {
     email: Joi.string(),
     code: Joi.string().required(),
     password: Joi.string(),
-    role: Joi.string().required()
+    isRegister: Joi.boolean(),
+    role: Joi.string().required(),
   }),
 
   // route handler
   handler: async (req, res) => {
-    let { firstName, fatherName, code, phone, email, password, IDTRcenter, state, role } = req.body;
+    let {
+      firstName,
+      fatherName,
+      code,
+      phone,
+      email,
+      password,
+      IDTRcenter,
+      state,
+      isRegister,
+      role,
+    } = req.body;
 
     if (phone.length === 0 || code.length === 0) {
       logger.error("/verify-code - Phone number and code cannot be empty!");
@@ -46,18 +57,22 @@ module.exports = exports = {
     // phone = phone.removeSpaces();
     const roleExist = await global.models.GLOBAL.ROLE.findOne({ _id: role });
     // Find the phone no and code object and then delete it.
-    const emailExist = await global.models.GLOBAL.ADMIN.findOne( { phone: phone });
+    const emailExist = await global.models.GLOBAL.ADMIN.findOne({
+      phone: phone,
+    });
     if (emailExist) {
       const data4createResponseObject = {
-          req: req,
-          result: -400,
-          message: messages.EXISTS_PHONE,
-          payload: {},
-          logPayload: false
+        req: req,
+        result: -400,
+        message: messages.EXISTS_PHONE,
+        payload: {},
+        logPayload: false,
       };
-      res.status(enums.HTTP_CODES.DUPLICATE_VALUE).json(utils.createResponseObject(data4createResponseObject));
+      res
+        .status(enums.HTTP_CODES.DUPLICATE_VALUE)
+        .json(utils.createResponseObject(data4createResponseObject));
       return;
-  }
+    }
 
     let verificationEntry;
     try {
@@ -153,7 +168,6 @@ module.exports = exports = {
         // roleId: user.role,
         // rolename: user.role.roleName,
 
-
         id: user._id,
         date: new Date(),
         environment: process.env.APP_ENVIRONMENT,
@@ -184,7 +198,6 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.OK)
         .json(utils.createResponseObject(data4createResponseObject));
     } else {
-
       // Generate token and enter into the registration collection
       const uid = new ObjectId();
       // const tokendata = {
@@ -207,7 +220,7 @@ module.exports = exports = {
 
         status: {
           name: enums.USER_STATUS.ACTIVE,
-          modificationDate: Date.now().toString()
+          modificationDate: Date.now().toString(),
         },
         modificationDate: Date.now(),
         registractionDate: Date.now(),
@@ -251,7 +264,6 @@ module.exports = exports = {
         // scope: "login",
         // roleId: user.role,
         // rolename: user.role.roleName,
-
 
         id: newAdmin._id,
         date: new Date(),
@@ -304,7 +316,6 @@ module.exports = exports = {
       //   code: token,
       //   date: Date.now(),
       // });
-
 
       // let data4createResponseObject = {
       //   req: req,
