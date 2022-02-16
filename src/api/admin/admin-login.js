@@ -43,6 +43,10 @@ module.exports = exports = {
 
       let findRole = await global.models.GLOBAL.EXAMINER.findOne({
         phone: phone,
+      }).populate({
+        path: "role",
+        model: "role",
+        select: "_id roleName",
       });
       console.log("findRole", findRole);
       // const aadmin = await global.models.GLOBAL.ADMIN.find({});
@@ -82,9 +86,7 @@ module.exports = exports = {
             .json(utils.createResponseObject(data4createResponseObject));
         }
       }
-      if (findRole) {
-        admin = findRole;
-      }
+
       const rolename = await global.models.GLOBAL.ROLE.findOne({
         _id: admin.role,
       });

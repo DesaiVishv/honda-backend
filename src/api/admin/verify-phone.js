@@ -9,13 +9,18 @@ const config = require("../../../config.json");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
+    firstName: Joi.string().required(),
+    fatherName: Joi.string(),
+    state: Joi.string().required(),
+    IDTRcenter: Joi.string().required(),
     phone: Joi.number().required(),
     isRegister: Joi.boolean(),
   }),
 
   // route handler
   handler: async (req, res) => {
-    const { phone, isRegister } = req.body;
+    const { firstName, fatherName, state, IDTRcenter, phone, isRegister } =
+      req.body;
     let code = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
     // const locale = utils.getLocale(req);
     let entry;
