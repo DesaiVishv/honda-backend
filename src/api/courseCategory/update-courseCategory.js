@@ -16,18 +16,18 @@ module.exports = exports = {
     const { id } = req.params;
     const { user } = req;
     const { vcid, ctid, courseCategory, description, isActive } = req.body;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-      const data4createResponseObject = {
-        req: req,
-        result: -1,
-        message: messages.NOT_AUTHORIZED,
-        payload: {},
-        logPayload: false,
-      };
-      return res
-        .status(enums.HTTP_CODES.UNAUTHORIZED)
-        .json(utils.createResponseObject(data4createResponseObject));
-    }
+    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    //   const data4createResponseObject = {
+    //     req: req,
+    //     result: -1,
+    //     message: messages.NOT_AUTHORIZED,
+    //     payload: {},
+    //     logPayload: false,
+    //   };
+    //   return res
+    //     .status(enums.HTTP_CODES.UNAUTHORIZED)
+    //     .json(utils.createResponseObject(data4createResponseObject));
+    // }
     if (!id || !courseCategory) {
       const data4createResponseObject = {
         req: req,
@@ -78,7 +78,7 @@ module.exports = exports = {
           courseCategory: courseCategory,
           description: description,
         };
-        Item = await global.models.GLOBAL.COURSECATEGORY.findByIdAndUpdate(
+        Item1 = await global.models.GLOBAL.COURSECATEGORY.findByIdAndUpdate(
           { _id: id },
           Itemupdate,
           {
@@ -88,8 +88,8 @@ module.exports = exports = {
         newEntry = await global.models.GLOBAL.COURSECATEGORY(Itemupdate);
         newEntry.save();
         console.log("Item", Item._id);
-        deleteName = await global.models.GLOBAL.COURSENAME.updateMany(
-          { ccid: Item._id },
+        deleteName = await global.models.GLOBAL.COURSECATEGORY.updateMany(
+          { _id: Item._id },
           { isDelete: true }
         );
 

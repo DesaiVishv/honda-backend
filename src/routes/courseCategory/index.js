@@ -30,7 +30,7 @@ router.post(
 // // Put Methods
 router.put(
   "/updateCourseCategory/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   courseCategoryApi.updateCourseCategory.handler
 );
 
