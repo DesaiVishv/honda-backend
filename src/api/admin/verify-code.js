@@ -62,13 +62,13 @@ module.exports = exports = {
       );
       let data4createResponseObject = {
         req: req,
-        result: 0,
+        result: -1,
         message: messages.USER_DOES_NOT_EXIST,
         payload: {},
         logPayload: false,
       };
       return res
-        .status(enums.HTTP_CODES.OK)
+        .status(enums.HTTP_CODES.BAD_REQUEST)
         .json(utils.createResponseObject(data4createResponseObject));
     }
     // Check number of attempts and expiryTime
