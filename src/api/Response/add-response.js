@@ -120,14 +120,14 @@ module.exports = exports = {
           { total: t, Score: v, ListofQA: loq }
         );
       console.log("Response", updateResponse);
-      let percentage=(v/t)*100;
-      let isPass=false;
-      if(percentage>=60){
-        isPass=true;
+      let percentage = (v / t) * 100;
+      let isPass = false;
+      if (percentage >= 60) {
+        isPass = true;
       }
       const addScore = await global.models.GLOBAL.REGISTER.findByIdAndUpdate(
         { _id: uid },
-        { totalScore: v, isPaperDone: true, isPass, percentage  },
+        { totalScore: v, isPaperDone: true, isPass, percentage, total: t }
       );
       console.log("Score", addScore);
       const updateBatch = await global.models.GLOBAL.BATCH.findByIdAndUpdate(

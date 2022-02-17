@@ -39,14 +39,57 @@ module.exports = exports = {
         })
           .skip(skip)
           .limit(limit)
-          .sort({ createdAt: -1 });
+          .sort({ createdAt: -1 })
+          .populate({
+            path: "cnid",
+            model: "courseName",
+            populate: {
+              path: "ccid",
+              model: "courseCategory",
+              populate: {
+                path: "ctid",
+                model: "courseType",
+                populate: { path: "vcid", model: "vehicleCategory" },
+              },
+            },
+          })
+          .populate({
+            path: "tdid",
+            model: "trainingDate",
+          })
+          .populate({
+            path: "batchId",
+            model: "batch",
+          });
       } else {
         console.log("222222");
 
         users = await global.models.GLOBAL.REGISTER.find({
           tdid: { $in: batch.tdid },
           ...search,
-        }).sort({ createdAt: -1 });
+        })
+          .sort({ createdAt: -1 })
+          .populate({
+            path: "cnid",
+            model: "courseName",
+            populate: {
+              path: "ccid",
+              model: "courseCategory",
+              populate: {
+                path: "ctid",
+                model: "courseType",
+                populate: { path: "vcid", model: "vehicleCategory" },
+              },
+            },
+          })
+          .populate({
+            path: "tdid",
+            model: "trainingDate",
+          })
+          .populate({
+            path: "batchId",
+            model: "batch",
+          });
       }
       if (users.length == 0) {
         const data4createResponseObject = {
