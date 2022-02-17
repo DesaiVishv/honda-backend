@@ -32,19 +32,19 @@ module.exports = exports = {
       ccid,
       price,
     } = req.body;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-      const data4createResponseObject = {
-        req: req,
-        result: -1,
-        message: messages.NOT_AUTHORIZED,
-        payload: {},
-        logPayload: false,
-      };
-      return res
-        .status(enums.HTTP_CODES.UNAUTHORIZED)
-        .json(utils.createResponseObject(data4createResponseObject));
-    }
-    if (!id || !courseName || !isActive == null || !price) {
+    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    //   const data4createResponseObject = {
+    //     req: req,
+    //     result: -1,
+    //     message: messages.NOT_AUTHORIZED,
+    //     payload: {},
+    //     logPayload: false,
+    //   };
+    //   return res
+    //     .status(enums.HTTP_CODES.UNAUTHORIZED)
+    //     .json(utils.createResponseObject(data4createResponseObject));
+    // }
+    if (!id || !isActive == null || !price) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -117,7 +117,7 @@ module.exports = exports = {
           systemRequirement: systemRequirement,
           certificate: certificate,
         };
-        Item = await global.models.GLOBAL.COURSENAME.update(
+        Item = await global.models.GLOBAL.COURSENAME.findByIdAndUpdate(
           { _id: id },
           Itemupdate
         );

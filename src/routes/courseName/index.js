@@ -23,11 +23,7 @@ router.post(
 );
 
 // // Put Methods
-router.put(
-  "/updateCourseName/:id",
-  passport.authenticate(["jwt"], { session: false }),
-  courseNameApi.updateCourseName.handler
-);
+router.put("/updateCourseName/:id", courseNameApi.updateCourseName.handler);
 
 router.put(
   "/updateStatus/:id",

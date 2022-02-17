@@ -69,14 +69,16 @@ module.exports = exports = {
         //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
         //     return;
         // }
-        ItemUpdate = await global.models.GLOBAL.EXAMINER.findByIdAndUpdate(
+        let ItemUpdate = await global.models.GLOBAL.EXAMINER.findByIdAndUpdate(
           { _id: id },
-          { $set: { name: name, email: email, phone: phone, role: role } }
+          { $set: { name: name, email: email, phone: phone } }
         );
-        adminUpdate = await global.models.GLOBAL.ADMIN.findAndUpdate(
+        console.log("Itemupdate", ItemUpdate);
+        let adminUpdate = await global.models.GLOBAL.ADMIN.findOneAndUpdate(
           { phone: Item.phone },
-          { $set: { name: name, email: email, phone: phone, role: role } }
+          { $set: { name: name, email: email, phone: phone } }
         );
+        console.log("adminUpfate", adminUpdate);
         const data4createResponseObject = {
           req: req,
           result: 0,
