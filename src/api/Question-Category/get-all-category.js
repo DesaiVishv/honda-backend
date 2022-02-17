@@ -13,6 +13,11 @@ module.exports = exports = {
   handler: async (req, res) => {
     try {
       // let id = req.params.id;
+      req.query.page = req.query.page ? req.query.page : 1;
+      let page = parseInt(req.query.page);
+      req.query.limit = req.query.limit ? req.query.limit : 10;
+      let limit = parseInt(req.query.limit);
+      let skip = (parseInt(req.query.page) - 1) * limit;
 
       let search = req.query.search
         ? { name: { $regex: req.query.search, $options: "i" } }
@@ -21,9 +26,10 @@ module.exports = exports = {
       const count = await global.models.GLOBAL.QUESTIONCATEGORY.find(
         search
       ).count();
-      const Menus = await global.models.GLOBAL.QUESTIONCATEGORY.find(
-        search
-      ).sort({ createdAt: -1 });
+      const Menus = await global.models.GLOBAL.QUESTIONCATEGORY.find(search)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
       if (Menus.length == 0) {
         const data4createResponseObject = {
           req: req,
