@@ -117,6 +117,8 @@ module.exports = exports = {
     // Check number of attempts and expiryTime
     const now = moment();
     const expirationDate = moment(verificationEntry.expirationDate); // another date
+    console.log("momnt", now);
+    console.log("Expired", expirationDate);
     if (now.isAfter(expirationDate)) {
       let data4createResponseObject = {
         req: req,
@@ -129,7 +131,6 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.BAD_REQUEST)
         .json(utils.createResponseObject(data4createResponseObject));
     }
-
     if (verificationEntry.code !== code) {
       verificationEntry.failedAttempts++;
       await verificationEntry.save();
@@ -234,9 +235,11 @@ module.exports = exports = {
       logger.info("/verify-code - Saving registration-code in database");
       try {
         await newAdmin.save();
-        let deletePartial = await global.models.GLOBAL.PARTIAL.findAndRemove({
-          phone: phone,
-        });
+        let deletePartial = await global.models.GLOBAL.PARTIAL.findOneAndRemove(
+          {
+            phone: phone,
+          }
+        );
         //   const data4createResponseObject = {
         //     req: req,
         //     result: 0,
