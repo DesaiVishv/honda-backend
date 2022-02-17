@@ -43,7 +43,7 @@ module.exports = exports = {
     //     .status(enums.HTTP_CODES.UNAUTHORIZED)
     //     .json(utils.createResponseObject(data4createResponseObject));
     // }
-    if (!id || !isActive == null || !price) {
+    if (!id || !price) {
       const data4createResponseObject = {
         req: req,
         result: -1,
