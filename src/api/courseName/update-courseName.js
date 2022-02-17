@@ -123,7 +123,7 @@ module.exports = exports = {
           req: req,
           result: 0,
           message: messages.ITEM_UPDATED,
-          payload: { Item1 },
+          payload: {},
           logPayload: false,
         };
         res
