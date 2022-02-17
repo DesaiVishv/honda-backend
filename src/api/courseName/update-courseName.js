@@ -117,7 +117,7 @@ module.exports = exports = {
         };
         let Item1 = await global.models.GLOBAL.COURSENAME.findByIdAndUpdate(
           { _id: id },
-          { Itemupdate }
+          Itemupdate
         );
         const data4createResponseObject = {
           req: req,
