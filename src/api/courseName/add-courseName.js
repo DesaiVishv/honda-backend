@@ -44,18 +44,18 @@ module.exports = exports = {
       ccid,
     } = req.body;
     const { user } = req;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-      const data4createResponseObject = {
-        req: req,
-        result: -1,
-        message: messages.NOT_AUTHORIZED,
-        payload: {},
-        logPayload: false,
-      };
-      return res
-        .status(enums.HTTP_CODES.UNAUTHORIZED)
-        .json(utils.createResponseObject(data4createResponseObject));
-    }
+    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    //   const data4createResponseObject = {
+    //     req: req,
+    //     result: -1,
+    //     message: messages.NOT_AUTHORIZED,
+    //     payload: {},
+    //     logPayload: false,
+    //   };
+    //   return res
+    //     .status(enums.HTTP_CODES.UNAUTHORIZED)
+    //     .json(utils.createResponseObject(data4createResponseObject));
+    // }
     if (!vcid || !ctid || !ccid) {
       const data4createResponseObject = {
         req: req,

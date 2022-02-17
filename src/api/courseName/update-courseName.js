@@ -19,7 +19,6 @@ module.exports = exports = {
     const {
       courseName,
       description,
-      isActive,
       duration,
       timing,
       mode,
@@ -104,7 +103,6 @@ module.exports = exports = {
         const Itemupdate = {
           courseName: generateName,
           description: description,
-          isActive: isActive,
           vcid: vcid,
           ctid: ctid,
           ccid: ccid,
@@ -117,15 +115,15 @@ module.exports = exports = {
           systemRequirement: systemRequirement,
           certificate: certificate,
         };
-        Item = await global.models.GLOBAL.COURSENAME.findByIdAndUpdate(
+        let Item1 = await global.models.GLOBAL.COURSENAME.findByIdAndUpdate(
           { _id: id },
-          Itemupdate
+          { Itemupdate }
         );
         const data4createResponseObject = {
           req: req,
           result: 0,
           message: messages.ITEM_UPDATED,
-          payload: {},
+          payload: { Item1 },
           logPayload: false,
         };
         res
