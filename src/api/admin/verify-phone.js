@@ -120,7 +120,7 @@ module.exports = exports = {
           result: 0,
           message:
             "[USE_TEST_PIN = true] No SMS was sent out to the mobile number.",
-          payload: { entry },
+          payload: {},
           logPayload: false,
         };
         return res
@@ -189,7 +189,7 @@ module.exports = exports = {
           req: req,
           result: 0,
           message: "SMS sent!",
-          payload: { entry },
+          payload: {},
           logPayload: false,
         };
         return res
