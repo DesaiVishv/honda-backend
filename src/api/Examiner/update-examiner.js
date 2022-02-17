@@ -16,7 +16,7 @@ module.exports = exports = {
   handler: async (req, res) => {
     const { id } = req.params;
     const { user } = req;
-    const { name, email, phone, password } = req.body;
+    const { name, email, phone, password, role } = req.body;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
     //     req: req,
@@ -71,12 +71,12 @@ module.exports = exports = {
         // }
         let ItemUpdate = await global.models.GLOBAL.EXAMINER.findByIdAndUpdate(
           { _id: id },
-          { $set: { name: name, email: email, phone: phone } }
+          { $set: { name: name, email: email, phone: phone, role: role } }
         );
         console.log("Itemupdate", ItemUpdate);
         let adminUpdate = await global.models.GLOBAL.ADMIN.findOneAndUpdate(
           { phone: Item.phone },
-          { $set: { name: name, email: email, phone: phone } }
+          { $set: { name: name, email: email, phone: phone, role: role } }
         );
         console.log("adminUpfate", adminUpdate);
         const data4createResponseObject = {
