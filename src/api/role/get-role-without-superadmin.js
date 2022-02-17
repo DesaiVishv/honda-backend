@@ -32,21 +32,25 @@ module.exports = exports = {
       //  let limit = parseInt(req.query.limit);
       //  let skip = (parseInt(page) - 1) * limit;
 
-      let Examiner = await global.models.GLOBAL.ROLE.findOne({
-        roleName: "Examiner",
+      let Role = await global.models.GLOBAL.ROLE.find({
+        $or: [
+          { roleName: "Examiner" },
+          { roleName: "Data Entry" },
+          { roleName: "user" },
+        ],
       });
-      let dateEntry = await global.models.GLOBAL.ROLE.findOne({
-        roleName: "Data Entry",
-      });
-      let user = await global.models.GLOBAL.ROLE.findOne({
-        roleName: "user",
-      });
+      // let dateEntry = await global.models.GLOBAL.ROLE.findOne({
+      //   roleName: "Data Entry",
+      // });
+      // let user = await global.models.GLOBAL.ROLE.findOne({
+      //   roleName: "user",
+      // });
 
       const data4createResponseObject = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Examiner: Examiner, DataEntry: dateEntry, User: user },
+        payload: { Role: Role },
         logPayload: false,
       };
       res
