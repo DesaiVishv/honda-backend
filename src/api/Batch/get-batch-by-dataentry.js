@@ -35,15 +35,11 @@ module.exports = exports = {
       const Batch = await global.models.GLOBAL.BATCH.find(search)
         .sort({ createdAt: -1 })
         .skip(skip)
-        .limit(limit);
-      // .populate({
-      //   path: "question",
-      //   model: "question",
-      // })
-      // .populate({
-      //   path: "batch",
-      //   model: "batch",
-      // });
+        .limit(limit)
+        .populate({
+          path: "User",
+          model: "register",
+        });
 
       if (Batch.length == 0) {
         const data4createResponseObject = {
