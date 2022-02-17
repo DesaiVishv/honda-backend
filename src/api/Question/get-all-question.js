@@ -28,7 +28,8 @@ module.exports = exports = {
       const Questions = await global.models.GLOBAL.QUESTION.find(search)
         .sort({ createdAt: -1 })
         .skip(skip)
-        .limit(limit);
+        .limit(limit)
+        .populate({ path: "Category", model: "questioncategory" });
       if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
