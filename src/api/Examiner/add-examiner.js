@@ -36,7 +36,7 @@ module.exports = exports = {
 
     try {
       const checkMenu = await global.models.GLOBAL.EXAMINER.find({
-        phone: phone,
+        $or: [{ phone: phone }, { email: email }],
       });
       if (checkMenu.length > 0) {
         const data4createResponseObject = {
