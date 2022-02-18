@@ -6,6 +6,8 @@ const passport = require("passport");
 
 // Get Methods
 router.get("/getAllCategory", questionCategoryApi.getAllCategory.handler);
+router.get("/getAll", questionCategoryApi.getAll.handler);
+
 // router.post(
 //   "/getQuestionByQuestionSet",
 //   questionApi.getQuestionByQuestionSet.handler
