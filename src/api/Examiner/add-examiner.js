@@ -42,7 +42,7 @@ module.exports = exports = {
         const data4createResponseObject = {
           req: req,
           result: -400,
-          message: messages.EXISTS_MENU,
+          message: messages.EXISTS_USER,
           payload: {},
           logPayload: false,
         };

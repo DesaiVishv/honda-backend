@@ -14,6 +14,7 @@
   "EXISTS_PHONE": "Sorry, the specified phone number is already registered in the system.\nIf you feel this is not correct, kindly call support.",
   "EXISTS_EMAIL": "Sorry, the specified email is already registered in the system.\nIf you feel this is not correct, kindly call support.",
   "EXISTS_MENU": "Sorry, Menu already exists.",
+  "EXISTS_USER": "User Already Exist",
   "EXISTS_SUBMENU": "Sorry, SubMenu already exists.",
   "EXISTS_QUESTION": "Sorry, Question already exists.",
   "MATCH_LANGUAGE": "Sorry, your language is not match ",
