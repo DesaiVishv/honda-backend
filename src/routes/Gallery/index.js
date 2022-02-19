@@ -10,12 +10,16 @@ router.get("/getGallery/:id", galleryApi.getGalleryById.handler);
 // router.get("/getAllMenu", menuApi.getAllMenu.handler);
 
 // Post Methods
-router.post("/addGallery", validate("body", galleryApi.addGallery.validation), galleryApi.addGallery.handler);
+router.post(
+  "/addGallery",
+  validate("body", galleryApi.addGallery.validation),
+  galleryApi.addGallery.handler
+);
 
 // // Put Methods
-router.put("/updateGallery/:id", passport.authenticate(["jwt"], { session: false }), galleryApi.updateGallery.handler);
+router.put("/updateGallery/:id", galleryApi.updateGallery.handler);
 
 // // Delete Methods
-router.delete("/deleteGallery/:id", passport.authenticate(["jwt"], { session: false }), galleryApi.deleteGallery.handler);
+router.delete("/deleteGallery/:id", galleryApi.deleteGallery.handler);
 
 module.exports = exports = router;
