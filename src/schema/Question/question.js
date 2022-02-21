@@ -7,6 +7,7 @@ module.exports = (connection) => {
     {
       Qname: { type: String, require: true },
       image: { type: String },
+      csv: { type: Array },
       Option: [
         {
           no: Number,
