@@ -23,9 +23,10 @@ module.exports = exports = {
       let search = req.query.search
         ? {
             courseType: { $regex: req.query.search, $options: "i" },
+            isDelete: false,
             isActive: true,
           }
-        : { isActive: true };
+        : { isDelete: false, isActive: true };
 
       const count = await global.models.GLOBAL.COURSETYPE.find(search).count();
       const Questions = await global.models.GLOBAL.COURSETYPE.find(search)
