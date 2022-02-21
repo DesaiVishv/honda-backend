@@ -47,6 +47,7 @@ module.exports = exports = {
     type: Joi.string(),
     dateofMakePayment: Joi.string(),
     isPaymentDone: Joi.boolean(),
+    Registrationtype: Joi.string(),
   }),
 
   handler: async (req, res) => {
@@ -87,6 +88,7 @@ module.exports = exports = {
       type,
       dateofMakePayment,
       isPaymentDone,
+      Registrationtype,
     } = req.body;
     const { user } = req;
 
@@ -181,6 +183,7 @@ module.exports = exports = {
         paymentId: paymentId,
         type: type,
         dateofMakePayment: dateofMakePayment,
+        Registrationtype: Registrationtype,
         isPaymentDone: isPaymentDone,
         createdByAdmin: createdByAdmin,
       };

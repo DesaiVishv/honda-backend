@@ -46,6 +46,7 @@ module.exports = (connection) => {
       isAttendence: { type: Boolean, default: false },
       isPaperDone: { type: Boolean, default: false },
       isCancle: { type: Boolean, default: false },
+      Registrationtype: { type: String },
       status: {
         type: String,
         enum: ["noRequest", "pending", "approved", "rejected"],
