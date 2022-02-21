@@ -25,9 +25,9 @@ var modifyDataOfExcel = async (arrayItem) => {
       for (let k in arr) {
         if (Number(k) === 0) {
           obj = {
-            questiontype: arr[k].questiontype,
+            type: arr[k].questiontype,
             language: arr[k].language.toLowerCase(),
-            question: arr[k].question,
+            Qname: arr[k].question,
             Category: ObjectId(arr[k].Category),
             Explaination: arr[k].Explaination,
             image: arr[k].image ? arr[k].image : null,
