@@ -25,6 +25,7 @@ module.exports = exports = {
         : {};
 
       const count = await global.models.GLOBAL.REGISTER.find(search).count();
+      console.log("count", count);
       const Questions = await global.models.GLOBAL.REGISTER.aggregate([
         {
           $match: search,
@@ -71,14 +72,14 @@ module.exports = exports = {
           },
         },
         {
-          $unwind: { path: "$uid" },
+          $unwind: { path: "$uid", preserveNullAndEmptyArrays: true },
         },
       ])
         // .populate({ path: "uid", model: "admin" })
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit);
-
+      console.log("Question", Questions.length);
       if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
