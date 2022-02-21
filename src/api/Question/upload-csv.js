@@ -135,7 +135,16 @@ module.exports = exports = {
 
     let ExcelValidation = await checkExcelValidation(arrayItem);
     if (ExcelValidation && !ExcelValidation.success) {
-      return res.send(ExcelValidation.msg);
+      const data4createResponseObjectError = {
+        req: {},
+        result: -1,
+        message: ExcelValidation.msg,
+        payload: null,
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.OK)
+        .json(utils.createResponseObject(data4createResponseObject));
     }
 
     let modifyData = [];
