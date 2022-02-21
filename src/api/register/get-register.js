@@ -62,6 +62,14 @@ module.exports = exports = {
             as: "trainingDate",
           },
         },
+        {
+          $lookup: {
+            from: "admin",
+            localField: "uid",
+            foreignField: "_id",
+            as: "admin",
+          },
+        },
       ])
         .sort({ createdAt: -1 })
         .skip(skip)
