@@ -32,7 +32,9 @@ module.exports = exports = {
       // }
       let category = await global.models.GLOBAL.QUESTIONCATEGORY.find({});
       let Questions = [];
+      let inc = {};
       for (j = 0; j < category?.length; j++) {
+        inc = { ...inc, [j]: 0 };
         Questions[j] = await utils.shuffle(
           await global.models.GLOBAL.QUESTION.find({
             Category: category[j]?._id,
@@ -41,6 +43,7 @@ module.exports = exports = {
         );
         console.log("---------vishv---------", Questions[j].length);
       }
+      console.log("inc", inc);
       Questions = utils.shuffle(Questions);
       console.log(
         utils.shuffle([1, 2, 3, 4, 5, 6, 7]),
@@ -68,23 +71,36 @@ module.exports = exports = {
       let c = 0;
       let k = 0;
       let h = 0;
-      for (i = 0; i < 10000; i++) {
-        if (c == no) {
+      for (i = 0; i < no; i++) {
+        if (c == 20) {
           break;
         }
-        if (k == 500) {
-          k = 0;
+        for (j = 0; j < category.length; j++) {
+          if (Questions[j][i]) {
+            console.log("iiiiiinnnnnn", j, i);
+            data1.add(Questions[j][i]);
+            c++;
+            if (c == 20) {
+              break;
+            }
+          }
         }
-        if (Questions[i % category.length][k]) {
-          console.log("iiiiiinnnnnn", i % category.length, k);
-          data1.add(Questions[i % category.length][k]);
-          c++;
-          h++;
-        }
-        if (h == category.length) {
-          h = 0;
-        }
-        k++;
+        // if (c == no) {
+        //   break;
+        // }
+        // if (k == 500) {
+        //   k = 0;
+        // }
+        // if (Questions[i % category.length][k]) {
+        //   console.log("iiiiiinnnnnn", i % category.length, k);
+        //   data1.add(Questions[i % category.length][k]);
+        //   c++;
+        //   h++;
+        // }
+        // if (h == category.length) {
+        //   h = 0;
+        // }
+        // k++;
       }
       // for (const x of data1.values()) {
       //   text += x + "<br>";
