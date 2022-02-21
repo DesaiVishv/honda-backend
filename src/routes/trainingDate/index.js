@@ -3,7 +3,7 @@ const router = express.Router();
 const trainingDateApi = require("../../api/TrainingDate");
 const { validate } = require("../../middlewares");
 const passport = require("passport");
-
+const upload = require("../Question/bulkUpload");
 // Get Methods
 router.get("/getDate", trainingDateApi.getDateByCourseName.handler);
 router.get("/getAllDate", trainingDateApi.getAllDate.handler);
@@ -13,6 +13,9 @@ router.get(
 );
 
 router.get("/getData", trainingDateApi.getDataByDate.handler);
+
+router.post("/uploadcsv", upload.single("csv"), trainingDateApi.uploadcsv.handler);
+
 
 // Post Methods
 router.post(

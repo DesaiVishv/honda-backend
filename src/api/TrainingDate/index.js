@@ -5,6 +5,7 @@ const getDateWithoutPagination = require("./get-all-date-without-pagination");
 
 const getDataByDate = require("./get-data-by-date");
 const updateDate = require("./update-training-date");
+const uploadcsv = require("./upload-csv")
 const deleteDate = require("./delete-training-date");
 
 module.exports = exports = {
@@ -14,5 +15,6 @@ module.exports = exports = {
   getDateByCourseName,
   getDataByDate,
   updateDate,
+  uploadcsv,
   deleteDate,
 };
