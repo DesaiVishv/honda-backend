@@ -67,10 +67,14 @@ module.exports = exports = {
             from: "admin",
             localField: "uid",
             foreignField: "_id",
-            as: "admin",
+            as: "uid",
           },
         },
+        {
+          $unwind: { path: "$uid" },
+        },
       ])
+        // .populate({ path: "uid", model: "admin" })
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit);
