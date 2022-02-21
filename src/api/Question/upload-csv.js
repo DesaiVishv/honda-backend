@@ -144,7 +144,7 @@ module.exports = exports = {
       };
       return res
         .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
+        .json(utils.createResponseObject(data4createResponseObjectError));
     }
 
     let modifyData = [];
