@@ -52,6 +52,7 @@ module.exports = exports = {
       type,
       dateofMakePayment,
       isPaymentDone,
+      Registrationtype,
     } = req.body;
     if (user.type !== enums.USER_TYPE.SUPERADMIN) {
       const data4createResponseObject = {
@@ -153,6 +154,7 @@ module.exports = exports = {
           paymentId: paymentId,
           type: type,
           dateofMakePayment: dateofMakePayment,
+          Registrationtype: Registrationtype,
         };
         if (isPaymentDone != null) {
           Itemupdate = { isPaymentDone: isPaymentDone, ...Itemupdate };
