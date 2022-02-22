@@ -95,6 +95,13 @@ module.exports = exports = {
       isPaymentDone: isPaymentDone,
       type: type,
     });
+    if (paymentOffline) {
+      const updateSeat =
+        await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate(
+          { vcid: vcid, ctid: ctid, cnid: cnid, _id: tdid },
+          { $inc: { seat: -1 } }
+        );
+    }
     await paymentOffline.save();
     // const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({ cnid: cnid }, { paymentId: paymentId })
     // if (!updateRegister) {

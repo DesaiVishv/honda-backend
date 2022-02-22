@@ -10,6 +10,7 @@ router.get("/getAll", registerApi.getAllForDownload.handler);
 
 router.get("/getRegister/:id", registerApi.getRegister.handler);
 router.get("/getRegisterByBatch/:id", registerApi.getRegisterByBatch.handler);
+router.get("/getRecordsByRange", registerApi.getRecordsByRange.handler);
 router.get("/getFilterRecords", registerApi.filterRecords.handler);
 router.get("/getCancleRecord", registerApi.getCancleRecord.handler);
 
