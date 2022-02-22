@@ -14,6 +14,18 @@ module.exports = exports = {
     try {
       let { startDate } = req.query;
       let { endDate } = req.query;
+      req.query.page = req.query.page ? req.query.page : 1;
+      let page = parseInt(req.query.page);
+      req.query.limit = req.query.limit ? req.query.limit : 10;
+      let limit = parseInt(req.query.limit);
+      let skip = (parseInt(req.query.page) - 1) * limit;
+
+      // let id = req.params.id;
+
+      let search = req.query.search
+        ? { fname: { $regex: req.query.search, $options: "i" } }
+        : {};
+
       if (!startDate || !endDate) {
         const data4createResponseObject = {
           req: req,
@@ -27,11 +39,66 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       } else {
-        let findUser = await global.models.GLOBAL.REGISTER.find(
+        const count = await global.models.GLOBAL.REGISTER.find(
           { createdAt: { $gte: new Date(startDate) } } && {
             createdAt: { $lt: new Date(endDate) },
           }
-        );
+        ).count();
+        console.log("count", count);
+        let findUser = await global.models.GLOBAL.REGISTER.aggregate([
+          {
+            $match: { createdAt: { $gte: new Date(startDate) } } && {
+              createdAt: { $lt: new Date(endDate) },
+            },
+          },
+          {
+            $lookup: {
+              from: "vehicleCategory",
+              localField: "vcid",
+              foreignField: "_id",
+              as: "vehicleCategory",
+            },
+          },
+
+          {
+            $lookup: {
+              from: "courseType",
+              localField: "ctid",
+              foreignField: "_id",
+              as: "courseType",
+            },
+          },
+          {
+            $lookup: {
+              from: "courseName",
+              localField: "cnid",
+              foreignField: "_id",
+              as: "courseName",
+            },
+          },
+          {
+            $lookup: {
+              from: "trainingDate",
+              localField: "tdid",
+              foreignField: "_id",
+              as: "trainingDate",
+            },
+          },
+          {
+            $lookup: {
+              from: "admin",
+              localField: "uid",
+              foreignField: "_id",
+              as: "uid",
+            },
+          },
+          {
+            $unwind: { path: "$uid", preserveNullAndEmptyArrays: true },
+          },
+        ])
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit);
         if (!findUser) {
           const data4createResponseObject = {
             req: req,
@@ -48,7 +115,7 @@ module.exports = exports = {
             req: req,
             result: 0,
             message: messages.SUCCESS,
-            payload: { User: findUser, count: findUser.length },
+            payload: { Question: findUser, count: count },
             logPayload: false,
           };
           res
