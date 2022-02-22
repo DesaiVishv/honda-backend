@@ -12,13 +12,20 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
+      let sd=req.query.sd;
+      let ed=req.query.ed;
+      let dateFilter={};
+      if(sd){
+        dateFilter={$and:[{createdAt:{$gte:new Date(sd)}},{createdAt:{$lte:new Date(ed)}}]};
+      }
       let search = req.query.search
         ? {
             courseCategory: { $regex: req.query.search, $options: "i" },
             isDelete: false,
             isActive: true,
+            ...dateFilter
           }
-        : { isDelete: false, isActive: true };
+        : { isDelete: false, isActive: true.valueOf,...dateFilter };
 
       // const findCoursetype = await global.models.GLOBAL.COURSETYPE.find(search)
       const count = await global.models.GLOBAL.COURSECATEGORY.find(

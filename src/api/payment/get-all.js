@@ -23,8 +23,13 @@ module.exports = exports = {
             // let id = req.params.id;
 
 
-            
-            let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
+            let sd=req.query.sd;
+      let ed=req.query.ed;
+      let dateFilter={};
+      if(sd){
+        dateFilter={$and:[{createdAt:{$gte:new Date(sd)}},{createdAt:{$lte:new Date(ed)}}]};
+      }
+            let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'},...dateFilter} : {...dateFilter};
             
             const count = await global.models.GLOBAL.PAYMENT.find(search).count();
             const Questions = await global.models.GLOBAL.PAYMENT.find(search).sort({created:-1}).populate({

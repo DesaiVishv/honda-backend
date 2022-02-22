@@ -14,7 +14,12 @@ module.exports = exports = {
   handler: async (req, res) => {
     try {
       let id = req.params.id;
-
+      let sd=req.query.sd;
+      let ed=req.query.ed;
+      let dateFilter={};
+      if(sd){
+        dateFilter={$and:[{createdAt:{$gte:new Date(sd)}},{createdAt:{$lte:new Date(ed)}}]};
+      }
       let Response = await global.models.GLOBAL.BATCH.find({
         _id: id,
       })
@@ -50,7 +55,7 @@ module.exports = exports = {
         });
 
       let findResponse = await global.models.GLOBAL.RESPONSE.find({
-        batch: id,
+        batch: id,...dateFilter
       })
         .populate({
           path: "uid",

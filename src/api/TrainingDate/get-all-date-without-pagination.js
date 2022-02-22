@@ -13,7 +13,13 @@ module.exports = exports = {
   handler: async (req, res) => {
     try {
       // let id = req.params.id;
-
+      let sd=req.query.sd;
+      let ed=req.query.ed;
+      let dateFilter={};
+      if(sd){
+        dateFilter={$and:[{createdAt:{$gte:new Date(sd)}},{createdAt:{$lte:new Date(ed)}}]};
+      }
+      console.log(dateFilter);
       let search = req.query.search
         ? {
             "vehicleCategory.vehicleCategory": {
@@ -39,7 +45,7 @@ module.exports = exports = {
           }
         : {};
       const count = await global.models.GLOBAL.TRAININGDATE.find(
-        search
+        {...search,...dateFilter}
       ).count();
       const Questions = await global.models.GLOBAL.TRAININGDATE.aggregate([
         {
@@ -70,6 +76,7 @@ module.exports = exports = {
         {
           $match: {
             $or: [search, findCourseType, findCourseName],
+            ...dateFilter
           },
         },
       ])
