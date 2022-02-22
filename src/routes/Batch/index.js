@@ -3,6 +3,7 @@ const router = express.Router();
 const batchApi = require("../../api/Batch");
 const { validate } = require("../../middlewares");
 const passport = require("passport");
+const upload = require("../../bulkUpload");
 
 // Get Methods
 router.get("/getAllBatch", batchApi.getAllBatch.handler);
@@ -12,6 +13,7 @@ router.get("/getBatchByDataEntry/:id", batchApi.getBatchByDataEntry.handler);
 router.get("/getExamsetByBatch/:id", batchApi.getExamsetByBatch.handler);
 
 // router.post("/getSubmenuByMenu",   vehicleCategoryApi.getSubmenuByMenu.handler);
+router.post("/uploadcsv", upload.single("csv"), batchApi.uploadcsv.handler);
 
 // Post Methods
 router.post(

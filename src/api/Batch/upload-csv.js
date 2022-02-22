@@ -19,29 +19,37 @@ const moment = require("moment");
 var modifyDataOfExcel = async (arrayItem) => {
   let modifyData = [];
   for (let i in arrayItem) {
-    console.log("arrayItem", arrayItem);
-    let index = arrayItem[i].data;
-    console.log("indexxx", index);
-    for (let j in index) {
-      // let obj = {};
-      let arr = arrayItem[i].data[j];
-      // let convertTime = index[j].startTime;
-      // console.log("convertTime", Date.parse(convertTime));
-      // let Time = new Date(convertTime);
-      // console.log("arr", Time);
-      index[j].startTime = new Date(index[j].date + " " + index[j].startTime);
-      index[j].endTime = new Date(index[j].date + " " + index[j].endTime);
-      modifyData.push(index[j]);
+    let excelData = arrayItem[i].data;
+    for (let j in excelData) {
+      let modifyDate = moment(excelData[j].date.format("dd-mm-yyyy"));
+      console.log("nodeiftDate", modifyDate);
+      modifyData.push(excelData[j]);
     }
   }
   console.log("modifyData", modifyData);
+  //   var arr1 = modifyData[0].date.split(" ");
+  //   console.log("arrr1", arr1);
+  //   var arr2 = arr1[1].split(",");
+  //   console.log("arrrrrrrrrr2", arr2);
+  //   console.log("day", arr1[0]);
+  //   console.log("month", arr2[0]);
+  //   console.log("year", arr2[1]);
+
+  //   var validDate = modifyData[0].date.replace(/(st)/, "");
+  //   console.log("ValidDate", validDate);
+  //   var dateObj = new Date(validDate);
+  //   console.log("dateObj", dateObj);
+  //   console.log("date", dateObj.getDate());
+  //   console.log("month", dateObj.getMonth());
+  //   console.log("year", dateObj.getFullYear());
+
   return modifyData;
 };
 
 function validatedate(dateString) {
   let dateformat = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[1-2][0-9]|3[01])[\/]\d{4}$/;
-  // console.log("dateformat", dateformat);
-  // console.log("matching", dateString.match(dateformat));
+  console.log("dateformat", dateformat);
+  console.log("matching", dateString.match(dateformat));
   // Match the date format through regular expression
   if (dateString.match(dateformat)) {
     let operator = dateString.split("/");
@@ -75,73 +83,31 @@ function validatedate(dateString) {
       }
     }
     console.log("validatedate", validatedate);
+  } else {
+    console.log("Invalid date format!");
+    return false;
   }
-  // else {
-  //   console.log("Invalid date format!");
-  //   return false;
-  // }
   return true;
 }
 
-// convertFromStringToDate("21-03-2020T11:20:30");
-// Format in Time
-// function formatDate(date) {
-//   var hours = date.getHours();
-//   var minutes = date.getMinutes();
-//   var ampm = hours >= 12 ? "pm" : "am";
-//   hours = hours % 12;
-//   hours = hours ? hours : 12; // the hour '0' should be '12'
-//   minutes = minutes < 10 ? "0" + minutes : minutes;
-//   var strTime = hours + ":" + minutes + " " + ampm;
-//   return (
-//     date.getMonth() +
-//     1 +
-//     "/" +
-//     date.getDate() +
-//     "/" +
-//     date.getFullYear() +
-//     "  " +
-//     strTime
-//   );
-// }
-
 var checkExcelValidation = async (arrayItem) => {
   for (let i in arrayItem) {
-    let index = arrayItem[i].data;
-    for (let j in index) {
-      if (!index[j].seat) {
-        return { success: false, msg: "Seat is required" };
-      } else if (!index[j].vcid) {
-        return { success: false, msg: "Vehicle Category is required" };
-      } else if (!index[j].ccid) {
-        return { success: false, msg: "Course Category is required" };
-      } else if (!index[j].cnid) {
-        return { success: false, msg: "Course Name is required" };
-      } else if (!index[j].ctid) {
-        return { success: false, msg: "Course Type is required" };
-      } else if (index[j].startTime) {
-        arr = index[j]?.startTime.split(":");
-        console.log("jbwcqqwc", arr);
-        if (parseInt(arr[0]) > 24) {
-          return { status: false, msg: "Please Enter Right Time" };
-        }
-        if (parseInt(arr[1]) > 60) {
-          return { status: false, msg: "Please Enter Right Time" };
-        }
-      } else if (index[j].endTime) {
-        arr = index[j]?.startTime.split(":");
-        console.log("jbwcqqwc", arr);
-        if (parseInt(arr[0]) > 24) {
-          return { status: false, msg: "Please Enter Right Time" };
-        }
-        if (parseInt(arr[1]) > 60) {
-          return { status: false, msg: "Please Enter Right Time" };
-        }
+    // let group = groupBy(arrayItem[i].data, "id");
+    // arrayItem[i].data = group;
+    let excelData = arrayItem[i].data;
+    for (let j in excelData) {
+      if (!excelData[j].name) {
+        return { success: false, msg: "Name is required" };
+      } else if (!excelData[j].tdid) {
+        return { success: false, msg: "Time Slot  is required" };
+      } else if (!excelData[j].Examiner) {
+        return { success: false, msg: "Examiner is required" };
+      } else if (!excelData[j].DataEntry) {
+        return { success: false, msg: "Data Entry is required" };
       } else {
-        if (index[j].date) {
-          console.log("excelData[j].date", index[j].date);
-          let date = validatedate(index[j].date);
-
+        if (excelData[j].date) {
+          console.log("excelData[j].date", excelData[j].date);
+          let date = validatedate(excelData[j].date);
           if (!date) {
             return {
               success: false,
@@ -182,10 +148,8 @@ module.exports = exports = {
         var col = z.substring(0, 1);
         var row = parseInt(z.substring(1));
         var value = worksheet[z].v;
-        console.log("valueeeee", value);
         var formula = worksheet[z].f;
         var w = worksheet[z].w;
-
         //store header names
         if (row == 1) {
           headers[col] = value?.trim();
@@ -213,24 +177,21 @@ module.exports = exports = {
 
     let ExcelValidation = await checkExcelValidation(arrayItem);
     if (ExcelValidation && !ExcelValidation.success) {
-      const data4createResponseObjectError = {
+      const data4createResponseObjectValidation = {
         req: {},
         result: -1,
-        message: ExcelValidation.msg,
+        message: messages.SHEET_VALIDATION,
         payload: null,
         logPayload: false,
       };
       return res
         .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObjectError));
+        .json(utils.createResponseObject(data4createResponseObjectValidation));
     }
 
     let modifyData = [];
     modifyData = await modifyDataOfExcel(arrayItem);
-
-    const addCSV = await global.models.GLOBAL.TRAININGDATE.insertMany(
-      modifyData
-    );
+    // const addBatch = await global.models.GLOBAL.BATCH.insertMany(modifyData);
     const data4createResponseObject = {
       req: {},
       result: 0,

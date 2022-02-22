@@ -4,7 +4,7 @@ const questionApi = require("../../api/Question");
 const { validate } = require("../../middlewares");
 const passport = require("passport");
 const { profileUploadS3 } = require("../../s3FileUpload");
-const upload = require("./bulkUpload");
+const upload = require("../../bulkUpload");
 
 // Get Methods
 router.get("/getAllQuestion", questionApi.getAllQuestion.handler);

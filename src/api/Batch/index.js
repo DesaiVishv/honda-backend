@@ -6,6 +6,7 @@ const getBatchByExaminer = require("./get-batch-by-examiner");
 const getBatchByDataEntry = require("./get-batch-by-dataentry");
 const getExamsetByBatch = require("./get-examset-by-batch");
 const updateBatch = require("./update-batch");
+const uploadcsv = require("./upload-csv");
 const deleteBatch = require("./delete-batch");
 
 module.exports = exports = {
@@ -16,6 +17,7 @@ module.exports = exports = {
   getBatchByExaminer,
   getBatchByDataEntry,
   updateBatch,
+  uploadcsv,
   deleteBatch,
   CompleteBatchById,
 };
