@@ -70,8 +70,21 @@ var checkExcelValidation = async (arrayItem) => {
               return { success: false, msg: "Language is required" };
             } else if (!arr[k].question) {
               return { success: false, msg: "Question is required" };
-            } else if (!arr[k].Category) {
-              return { success: false, msg: "Category is required" };
+            } else if (arr[k].Category) {
+              if (arr[k].Category) {
+                let findCategory =
+                  await global.models.GLOBAL.QUESTIONCATEGORY.find({
+                    _id: arr[k].Category,
+                  });
+                if (!findCategory) {
+                  return {
+                    success: false,
+                    msg: "Question Category is not in database",
+                  };
+                }
+              } else {
+                return { success: false, msg: "Question Category is required" };
+              }
             } else if (!arr[k].Explaination) {
               return { success: false, msg: "Explanation is required" };
             }

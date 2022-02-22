@@ -111,14 +111,63 @@ var checkExcelValidation = async (arrayItem) => {
     for (let j in index) {
       if (!index[j].seat) {
         return { success: false, msg: "Seat is required" };
-      } else if (!index[j].vcid) {
-        return { success: false, msg: "Vehicle Category is required" };
-      } else if (!index[j].ccid) {
-        return { success: false, msg: "Course Category is required" };
-      } else if (!index[j].cnid) {
-        return { success: false, msg: "Course Name is required" };
-      } else if (!index[j].ctid) {
-        return { success: false, msg: "Course Type is required" };
+      } else if (index[j].vcid) {
+        if (index[j].vcid) {
+          let findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.find({
+            _id: index[j].vcid,
+          });
+          if (!findVehicle) {
+            return {
+              success: false,
+              msg: "Vehicle Category is not in Database",
+            };
+          }
+        } else {
+          return { success: false, msg: "Vehicle Category is required" };
+        }
+      } else if (index[j].ccid) {
+        if (index[j].ccid) {
+          let findCourseCategory =
+            await global.models.GLOBAL.COURSECATEGORY.find({
+              _id: index[j].ccid,
+            });
+          if (!findCourseCategory) {
+            return {
+              success: false,
+              msg: "Course Category is not in Database",
+            };
+          }
+        } else {
+          return { success: false, msg: "Course Category is required" };
+        }
+      } else if (index[j].cnid) {
+        if (index[j].cnid) {
+          let findCourseName = await global.models.GLOBAL.COURSENAME.find({
+            _id: index[j].cnid,
+          });
+          if (!findCourseName) {
+            return {
+              success: false,
+              msg: "Course Name is not in Database",
+            };
+          }
+        } else {
+          return { success: false, msg: "Course Name is required" };
+        }
+      } else if (index[j].ctid) {
+        if (index[j].ctid) {
+          let findCourseType = await global.models.GLOBAL.COURSETYPE.find({
+            _id: index[j].ctid,
+          });
+          if (!findCourseType) {
+            return {
+              success: false,
+              msg: "Course Type is not in Database",
+            };
+          }
+        } else {
+          return { success: false, msg: "Course Type is required" };
+        }
       } else if (index[j].startTime) {
         arr = index[j]?.startTime.split(":");
         console.log("jbwcqqwc", arr);

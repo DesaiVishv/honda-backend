@@ -98,12 +98,39 @@ var checkExcelValidation = async (arrayItem) => {
     for (let j in excelData) {
       if (!excelData[j].name) {
         return { success: false, msg: "Name is required" };
-      } else if (!excelData[j].tdid) {
-        return { success: false, msg: "Time Slot  is required" };
-      } else if (!excelData[j].Examiner) {
-        return { success: false, msg: "Examiner is required" };
-      } else if (!excelData[j].DataEntry) {
-        return { success: false, msg: "Data Entry is required" };
+      } else if (excelData[j].tdid) {
+        if (excelData[j].tdid) {
+          let findTimeslot = await global.models.GLOBAL.TRAININGDATE.find({
+            _id: excelData[j].tdid,
+          });
+          if (!findTimeslot) {
+            return { success: false, msg: "Time Slot is not available" };
+          }
+        } else {
+          return { success: false, msg: "Time Slot is required" };
+        }
+      } else if (excelData[j].Examiner) {
+        if (excelData[j].Examiner) {
+          let findExaminer = await global.models.GLOBAL.EXAMINER.find({
+            _id: excelData[j].Examiner,
+          });
+          if (!findExaminer) {
+            return { success: false, msg: "Examiner is not available" };
+          }
+        } else {
+          return { success: false, msg: "Examiner is required" };
+        }
+      } else if (excelData[j].DataEntry) {
+        if (excelData[j].DataEntry) {
+          let findDataEntry = await global.models.GLOBAL.EXAMINER.find({
+            _id: excelData[j].DataEntry,
+          });
+          if (!findDataEntry) {
+            return { success: false, msg: "Data Entry is not available" };
+          }
+        } else {
+          return { success: false, msg: "Data Entry is required" };
+        }
       } else {
         if (excelData[j].date) {
           console.log("excelData[j].date", excelData[j].date);
