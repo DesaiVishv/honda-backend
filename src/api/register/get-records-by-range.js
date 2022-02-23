@@ -14,17 +14,21 @@ module.exports = exports = {
     try {
       let { startDate } = req.query;
       let { endDate } = req.query;
-      req.query.page = req.query.page ? req.query.page : 1;
-      let page = parseInt(req.query.page);
-      req.query.limit = req.query.limit ? req.query.limit : 10;
-      let limit = parseInt(req.query.limit);
-      let skip = (parseInt(req.query.page) - 1) * limit;
+      let dateFilter = {};
+      if (startDate) {
+        dateFilter = {
+          $and: [
+            { createdAt: { $gte: new Date(startDate) } },
+            { createdAt: { $lte: new Date(endDate) } },
+          ],
+        };
+      }
 
       // let id = req.params.id;
 
       let search = req.query.search
-        ? { fname: { $regex: req.query.search, $options: "i" } }
-        : {};
+        ? { fname: { $regex: req.query.search, $options: "i" }, ...dateFilter }
+        : { ...dateFilter };
 
       if (!startDate || !endDate) {
         const data4createResponseObject = {
@@ -39,17 +43,11 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       } else {
-        const count = await global.models.GLOBAL.REGISTER.find(
-          { createdAt: { $gte: new Date(startDate) } } && {
-            createdAt: { $lt: new Date(endDate) },
-          }
-        ).count();
+        const count = await global.models.GLOBAL.REGISTER.find(search).count();
         console.log("count", count);
         let findUser = await global.models.GLOBAL.REGISTER.aggregate([
           {
-            $match: { createdAt: { $gte: new Date(startDate) } } && {
-              createdAt: { $lt: new Date(endDate) },
-            },
+            $match: search,
           },
           {
             $lookup: {
@@ -95,10 +93,7 @@ module.exports = exports = {
           {
             $unwind: { path: "$uid", preserveNullAndEmptyArrays: true },
           },
-        ])
-          .sort({ createdAt: -1 })
-          .skip(skip)
-          .limit(limit);
+        ]).sort({ createdAt: -1 });
         if (!findUser) {
           const data4createResponseObject = {
             req: req,
