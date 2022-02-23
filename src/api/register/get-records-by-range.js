@@ -12,6 +12,11 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
+      req.query.page = req.query.page ? req.query.page : 1;
+      let page = parseInt(req.query.page);
+      req.query.limit = req.query.limit ? req.query.limit : 10;
+      let limit = parseInt(req.query.limit);
+      let skip = (parseInt(req.query.page) - 1) * limit;
       let sd = req.query.sd;
       let ed = req.query.ed;
       let end = new Date(ed);
@@ -85,7 +90,10 @@ module.exports = exports = {
         {
           $unwind: { path: "$uid", preserveNullAndEmptyArrays: true },
         },
-      ]).sort({ createdAt: -1 });
+      ])
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
       if (!findUser) {
         const data4createResponseObject = {
           req: req,
