@@ -36,7 +36,7 @@ module.exports = exports = {
         $or: [
           { roleName: "Examiner" },
           { roleName: "Data Entry" },
-          { roleName: "user" },
+          // { roleName: "user" },
         ],
       });
       // let dateEntry = await global.models.GLOBAL.ROLE.findOne({
