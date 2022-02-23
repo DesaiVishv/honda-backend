@@ -77,7 +77,7 @@ module.exports = exports = {
       );
       newAmeninties.save();
       let addHis = {
-        uid: user._id,
+        // uid: user._id,
         tdid: newAmeninties._id,
         vcid: vcid,
         ctid: ctid,

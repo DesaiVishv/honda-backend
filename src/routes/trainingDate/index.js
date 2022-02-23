@@ -13,6 +13,7 @@ router.get(
 );
 
 router.get("/getData", trainingDateApi.getDataByDate.handler);
+router.get("/getDatePrevious", trainingDateApi.getDatePrevious.handler);
 
 router.post(
   "/uploadcsv",

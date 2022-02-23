@@ -12,16 +12,21 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      let { sd } = req.query;
-      let { ed } = req.query;
+      let sd = req.query.sd;
+      let ed = req.query.ed;
+      let end = new Date(ed);
+      var tomorrow = new Date();
+      tomorrow.setDate(end.getDate() + 1);
       let dateFilter = {};
       if (sd) {
         dateFilter = {
           $and: [
             { createdAt: { $gte: new Date(sd) } },
-            { createdAt: { $lte: new Date(ed) } },
+            { createdAt: { $lte: new Date(tomorrow) } },
           ],
         };
+        console.log("dateFilter", new Date(sd));
+        console.log("date", new Date(ed));
       }
 
       // let id = req.params.id;
