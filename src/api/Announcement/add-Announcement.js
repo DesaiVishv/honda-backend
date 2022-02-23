@@ -14,13 +14,12 @@ module.exports = exports = {
     type: Joi.string().required(),
     image: Joi.string().required(),
     description: Joi.string().required(),
-    status: Joi.boolean(),
     date: Joi.date().required(),
     isActive: Joi.boolean(),
   }),
 
   handler: async (req, res) => {
-    const { name, type, image, description, date, status, isActive } = req.body;
+    const { name, type, image, description, date, isActive } = req.body;
     const { user } = req;
     if (user.type !== enums.USER_TYPE.SUPERADMIN) {
       const data4createResponseObject = {
@@ -69,7 +68,6 @@ module.exports = exports = {
         type: type,
         image: image,
         description: description,
-        status: status,
         date: date,
         isActive: isActive,
       };

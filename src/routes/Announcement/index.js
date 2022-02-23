@@ -11,16 +11,28 @@ router.get("/getAnnouncement/:id", announcementApi.getAnnouncementById.handler);
 // router.post("/getSubmenuByMenu",   vehicleCategoryApi.getSubmenuByMenu.handler);
 // router.get("/getCMS/:id",   cmsApi.getCMSById.handler);
 
-
 // Post Methods
-router.post("/addAnnouncement", passport.authenticate(["jwt"], { session: false }), validate("body", announcementApi.addAnnouncement.validation), announcementApi.addAnnouncement.handler);
+router.post(
+  "/addAnnouncement",
+  passport.authenticate(["jwt"], { session: false }),
+  validate("body", announcementApi.addAnnouncement.validation),
+  announcementApi.addAnnouncement.handler
+);
 
 // // Put Methods
-router.put("/updateAnnouncement/:id", passport.authenticate(["jwt"], { session: false }), announcementApi.updateAnnouncement.handler);
+router.put(
+  "/updateAnnouncement/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  announcementApi.updateAnnouncement.handler
+);
 
-
+router.put("/updateStatus/:id", announcementApi.updateStatus.handler);
 
 // // Delete Methods
-router.delete("/deleteAnnouncement/:id", passport.authenticate(["jwt"], { session: false }), announcementApi.deleteAnnouncement.handler);
+router.delete(
+  "/deleteAnnouncement/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  announcementApi.deleteAnnouncement.handler
+);
 
 module.exports = exports = router;
