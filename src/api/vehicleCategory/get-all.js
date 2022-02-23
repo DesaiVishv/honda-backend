@@ -19,24 +19,30 @@ module.exports = exports = {
       // let skip = (parseInt(req.query.page) - 1) * limit;
 
       // let id = req.params.id;
-      let sd=req.query.sd;
-      let ed=req.query.ed;
-      let dateFilter={};
-      if(sd){
-        dateFilter={$and:[{createdAt:{$gte:new Date(sd)}},{createdAt:{$lte:new Date(ed)}}]};
+      let sd = req.query.sd;
+      let ed = req.query.ed;
+      let dateFilter = {};
+      if (sd) {
+        dateFilter = {
+          $and: [
+            { createdAt: { $gte: new Date(sd) } },
+            { createdAt: { $lte: new Date(ed) } },
+          ],
+        };
       }
       let search = req.query.search
         ? {
             vehicleCategory: { $regex: req.query.search, $options: "i" },
             isActive: true,
+            ...dateFilter,
           }
-        : { isActive: true };
+        : { isActive: true, ...dateFilter };
 
       const count = await global.models.GLOBAL.VEHICLECATEGORY.find(
-        search,...dateFilter
+        search
       ).count();
       const Questions = await global.models.GLOBAL.VEHICLECATEGORY.find(
-        search,...dateFilter
+        search
       ).sort({ createdAt: -1 });
       if (Questions.length == 0) {
         const data4createResponseObject = {
