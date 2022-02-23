@@ -19,7 +19,7 @@ module.exports = exports = {
         dateFilter = {
           $and: [
             { createdAt: { $gte: new Date(sd) } },
-            { createdAt: { $lt: new Date(ed) } },
+            { createdAt: { $lte: new Date(ed) } },
           ],
         };
       }
