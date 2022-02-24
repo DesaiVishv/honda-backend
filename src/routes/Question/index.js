@@ -41,6 +41,12 @@ router.post(
 //PUT Methods
 router.put("/updateQuestion/:id", questionApi.updateQuestion.handler); // params = categoryId / shopId / deviceId
 
+router.put(
+  "/updateStatus/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  questionApi.updateStatus.handler
+);
+
 //DELETE Methods
 router.delete("/deleteQuestion/:id", questionApi.deleteQuestion.handler); // params = categoryId / shopId / deviceId
 

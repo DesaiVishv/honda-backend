@@ -6,6 +6,7 @@ const getQuestionByQuestionSet = require("./get-question-by-questionSet");
 const generateQuestion = require("./get-generate-question");
 const updateQuestion = require("./update-question");
 const uploadCSV = require("./upload-csv");
+const updateStatus = require("./update-status");
 const deleteQuestion = require("./delete-question");
 // const getAllMenu = require("./get-all-menu")
 
@@ -17,5 +18,6 @@ module.exports = exports = {
   generateQuestion,
   updateQuestion,
   uploadCSV,
+  updateStatus,
   deleteQuestion,
 };
