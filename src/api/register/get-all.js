@@ -19,10 +19,21 @@ module.exports = exports = {
       // let skip = (parseInt(req.query.page) - 1) * limit;
 
       // let id = req.params.id;
+      let sd = req.query.sd;
+      let ed = req.query.ed;
+      let dateFilter = {};
+      if (sd) {
+        dateFilter = {
+          $and: [
+            { createdAt: { $gte: new Date(sd) } },
+            { createdAt: { $lte: new Date(ed) } },
+          ],
+        };
+      }
 
       let search = req.query.search
-        ? { fname: { $regex: req.query.search, $options: "i" } }
-        : {};
+        ? { fname: { $regex: req.query.search, $options: "i" }, ...dateFilter }
+        : { ...dateFilter };
 
       const count = await global.models.GLOBAL.REGISTER.find(search).count();
       const Questions = await global.models.GLOBAL.REGISTER.find(search)
