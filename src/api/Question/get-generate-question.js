@@ -39,6 +39,7 @@ module.exports = exports = {
           await global.models.GLOBAL.QUESTION.find({
             Category: category[j]?._id,
             language: type,
+            isActive: true,
           })
         );
         console.log("---------vishv---------", Questions[j].length);

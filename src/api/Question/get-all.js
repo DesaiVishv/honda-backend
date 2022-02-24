@@ -12,15 +12,24 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      let sd=req.query.sd;
-      let ed=req.query.ed;
-      let dateFilter={};
-      if(sd){
-        dateFilter={$and:[{createdAt:{$gte:new Date(sd)}},{createdAt:{$lte:new Date(ed)}}]};
+      let sd = req.query.sd;
+      let ed = req.query.ed;
+      let dateFilter = {};
+      if (sd) {
+        dateFilter = {
+          $and: [
+            { createdAt: { $gte: new Date(sd) } },
+            { createdAt: { $lte: new Date(ed) } },
+          ],
+        };
       }
       let search = req.query.search
-        ? { Qname: { $regex: req.query.search, $options: "i" },...dateFilter }
-        : {...dateFilter};
+        ? {
+            Qname: { $regex: req.query.search, $options: "i" },
+            ...dateFilter,
+            isActive: true,
+          }
+        : { ...dateFilter, isActive: true };
 
       const count = await global.models.GLOBAL.QUESTION.find(search).count();
       const Questions = await global.models.GLOBAL.QUESTION.find(search).sort({
