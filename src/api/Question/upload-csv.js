@@ -151,7 +151,7 @@ module.exports = exports = {
       const data4createResponseObjectError = {
         req: {},
         result: -1,
-        message: ExcelValidation.msg,
+        message: messages.SHEET_VALIDATION,
         payload: null,
         logPayload: false,
       };
