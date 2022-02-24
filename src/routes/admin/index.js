@@ -16,6 +16,7 @@ router.get(
   passport.authenticate(["jwt"], { session: false }),
   adminApi.getAdmins.handler
 );
+router.get("/get-partial-records", adminApi.getPartialRecords.handler);
 router.get(
   "/get-superadmins",
   passport.authenticate(["jwt"], { session: false }),

@@ -68,6 +68,7 @@
   "ITEM_NOT_RETRIEVED": "Some error occurred while retrieving the item",
   "ITEM_NOT_UPDATED": "Some error occurred while updating the item",
   "ITEM_UPDATED": "updated successfully",
+  "BOOKING_CANCEL": "Your Booking is Cancle Successfully",
   "MERCHANT_APPROVED": "Merchant approved.",
   "MAIL_SENT": "Mail sent out to the mail ",
   "METHOD_NOT_ALLOWED": "Method doesn't exist or is not allowed.",

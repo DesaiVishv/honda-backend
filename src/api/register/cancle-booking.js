@@ -46,6 +46,10 @@ module.exports = exports = {
           model: "vehicleCategory",
         })
         .populate({
+          path: "ccid",
+          model: "courseCategory",
+        })
+        .populate({
           path: "cnid",
           model: "courseName",
         })
@@ -124,10 +128,10 @@ module.exports = exports = {
                                 <tr>
                                     <td>
                                         <div class="user-information" 
-                                        style="padding: 25px; background-color: #021f4c; width: 91.6%;"
+                                        style="padding: 25px; background-color: #af2029; width: 91.6%;"
                                         >
-                                        <p align="center" style="color: #fff; font-size: 30px; font-weight: 500; margin: 0 0 1rem 0;">Welcome to Honda®</p>
-                                        <span align="center" style="display: block; font-size: 16px; color: #fff;">User's Details®</span>
+                                        <p align="center" style="color: #fff; font-size: 40px; font-weight: 500; margin: 0 0 1rem 0;">Welcome to Honda</p>
+                                        <span align="center" style="display: block; font-size: 27px; color: #fff;">User's Information</span>
                                        
 
 
@@ -140,9 +144,153 @@ module.exports = exports = {
                                 <tr>
                                     <td style="padding: 3rem 2rem 2rem 2rem;">
                                       <p align="center" style="color: #585d6a; font-size: 14px; margin: 0;">
-                                       <br>
-                                      <pre>User : ${findUser}</pre>
-                                      
+                                      User ID : ${
+                                        findUser._id ? findUser._id : "-"
+                                      }<br>
+                                      First Name : ${findUser.fname} <br>
+                                      Middle Name : ${
+                                        findUser.mname ? findUser.mname : "-"
+                                      }<br>
+                                      Last Name : ${
+                                        findUser.lname ? findUser.lname : "-"
+                                      }<br>
+                                      Email : ${
+                                        findUser.email ? findUser.email : "-"
+                                      }<br>
+                                      Phone Number : ${
+                                        findUser.phone ? findUser.phone : "-"
+                                      }<br>
+                                      Vehicle Category : ${
+                                        findUser.vcid.vehicleCategory
+                                          ? findUser.vcid.vehicleCategory
+                                          : "-"
+                                      }<br>
+                                      Course Type : ${
+                                        findUser.ctid.courseType
+                                          ? findUser.ctid.courseType
+                                          : "-"
+                                      }<br>
+                                      Course Category : ${
+                                        findUser.ccid.courseCategory
+                                          ? findUser.ccid.courseCategory
+                                          : "-"
+                                      }<br>
+                                      Course Name : ${
+                                        findUser.cnid.courseName
+                                          ? findUser.cnid.courseName
+                                          : "-"
+                                      }<br>
+                                      License Category : ${
+                                        findUser.lcid.licenseCategory
+                                          ? findUser.lcid.licenseCategory
+                                          : "-"
+                                      }<br>
+                                      Training Date : ${
+                                        findUser.tdid.date
+                                          ? findUser.tdid.date
+                                          : "-"
+                                      }<br>
+                                      Training Start Time : ${
+                                        findUser.tdid.startTime
+                                          ? findUser.tdid.startTime
+                                          : "-"
+                                      }<br>
+                                      Training End Time : ${
+                                        findUser.tdid.endTime
+                                          ? findUser.tdid.endTime
+                                          : "-"
+                                      }<br>
+                                      Date of Birth : ${
+                                        findUser.DoB ? findUser.DoB : "-"
+                                      }<br>
+                                      Qualification : ${
+                                        findUser.qualification
+                                          ? findUser.qualification
+                                          : "-"
+                                      }<br>
+                                      Gender : ${
+                                        findUser.gender ? findUser.gender : "-"
+                                      }<br>
+                                      Address : ${
+                                        findUser.address
+                                          ? findUser.address
+                                          : "-"
+                                      }<br>
+                                      State : ${
+                                        findUser.state ? findUser.state : "-"
+                                      }<br>
+                                      City : ${
+                                        findUser.city ? findUser.city : "-"
+                                      }<br>
+                                      District : ${
+                                        findUser.district
+                                          ? findUser.district
+                                          : "-"
+                                      }<br>
+                                      Pin Code : ${
+                                        findUser.pincode
+                                          ? findUser.pincode
+                                          : "-"
+                                      }<br>
+                                      Driving License Number : ${
+                                        findUser.drivingLicenseNumber
+                                          ? findUser.drivingLicenseNumber
+                                          : "-"
+                                      }<br>
+
+                                      Authority : ${
+                                        findUser.Authority
+                                          ? findUser.Authority
+                                          : "-"
+                                      }<br>
+                                      Authority City : ${
+                                        findUser.authoritycity
+                                          ? findUser.authoritycity
+                                          : "-"
+                                      }<br>
+                                      Authority District : ${
+                                        findUser.authoritydistrict
+                                          ? findUser.authoritydistrict
+                                          : "-"
+                                      }<br>
+                                      Issue Date : ${
+                                        findUser.issueDate
+                                          ? findUser.issueDate
+                                          : "-"
+                                      }<br>
+                                      Valid Till : ${
+                                        findUser.validTill
+                                          ? findUser.validTill
+                                          : "-"
+                                      }<br>
+                                      Passport Photo : ${
+                                        findUser.passportPhoto
+                                          ? findUser.passportPhoto
+                                          : "-"
+                                      }<br>
+                                      Driving License Photo : ${
+                                        findUser.drivingLicense
+                                          ? findUser.drivingLicense
+                                          : "-"
+                                      }<br>
+                                      ID Proof : ${
+                                        findUser.IDproof
+                                          ? findUser.IDproof
+                                          : "-"
+                                      }<br>
+                                      Medical Certificate : ${
+                                        findUser.medicalCertificate
+                                          ? findUser.medicalCertificate
+                                          : "-"
+                                      }<br>
+                                      Blood Group : ${
+                                        findUser.bloodGroup
+                                          ? findUser.bloodGroup
+                                          : "-"
+                                      }<br>
+                                      Payment Mode : ${
+                                        findUser.type ? findUser.type : "-"
+                                      }<br>                                      
                                       </p>
                                     </td>
                                 </tr>
@@ -159,7 +307,7 @@ module.exports = exports = {
       const data4createResponseObject = {
         req: req,
         result: 0,
-        message: messages.ITEM_UPDATED,
+        message: messages.BOOKING_CANCEL,
         payload: { findUser },
         logPayload: false,
       };
