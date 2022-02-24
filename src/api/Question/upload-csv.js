@@ -31,7 +31,6 @@ var modifyDataOfExcel = async (arrayItem) => {
             Category: ObjectId(arr[k].Category),
             Explaination: arr[k].Explaination,
             image: arr[k].image ? arr[k].image : null,
-            weight: arr[k].weight,
             Option: [
               {
                 istrue: arr[k].correctanswer,
