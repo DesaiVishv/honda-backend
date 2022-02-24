@@ -71,16 +71,15 @@ module.exports = exports = {
             .json(utils.createResponseObject(data4createResponseObject));
           return;
         }
-        Item = await global.models.GLOBAL.ANNOUNCEMENT.update(
+        let Item = await global.models.GLOBAL.ANNOUNCEMENT.findByIdAndUpdate(
           { _id: id },
           {
-            $set: {
-              name: name,
-              type: type,
-              image: image,
-              description: description,
-              date: date,
-            },
+            name: name,
+            type: type,
+            image: image,
+            description: description,
+            date: date,
+            updatedAt: new Date(),
           }
         );
         const data4createResponseObject = {
