@@ -54,49 +54,56 @@ var modifyDataOfExcel = async (arrayItem) => {
 };
 
 var checkExcelValidation = async (arrayItem) => {
-  for (let i in arrayItem) {
-    let group = groupBy(arrayItem[i].data, "id");
-    arrayItem[i].data = group;
-    let index = Object.keys(arrayItem[i].data);
-    for (let j in index) {
-      if (arrayItem[i].data[index[j]]) {
-        let arr = arrayItem[i].data[index[j]];
-        for (let k in arr) {
-          if (Number(k) === 0) {
-            if (!arr[k].questiontype) {
-              return { success: false, msg: "QuestionType is required" };
-            } else if (!arr[k].language) {
-              return { success: false, msg: "Language is required" };
-            } else if (!arr[k].question) {
-              return { success: false, msg: "Question is required" };
-            } else if (arr[k].Category) {
-              if (arr[k].Category) {
-                let findCategory =
-                  await global.models.GLOBAL.QUESTIONCATEGORY.find({
-                    _id: arr[k].Category,
-                  });
-                if (!findCategory) {
+  if (arrayItem.length) {
+    for (let i in arrayItem) {
+      let group = groupBy(arrayItem[i].data, "id");
+      arrayItem[i].data = group;
+      let index = Object.keys(arrayItem[i].data);
+      for (let j in index) {
+        if (arrayItem[i].data[index[j]]) {
+          let arr = arrayItem[i].data[index[j]];
+          for (let k in arr) {
+            if (Number(k) === 0) {
+              if (!arr[k].questiontype) {
+                return { success: false, msg: "QuestionType is required" };
+              } else if (!arr[k].language) {
+                return { success: false, msg: "Language is required" };
+              } else if (!arr[k].question) {
+                return { success: false, msg: "Question is required" };
+              } else if (arr[k].Category) {
+                if (arr[k].Category) {
+                  let findCategory =
+                    await global.models.GLOBAL.QUESTIONCATEGORY.find({
+                      _id: arr[k].Category,
+                    });
+                  if (!findCategory) {
+                    return {
+                      success: false,
+                      msg: "Question Category is not in database",
+                    };
+                  }
+                } else {
                   return {
                     success: false,
-                    msg: "Question Category is not in database",
+                    msg: "Question Category is required",
                   };
                 }
-              } else {
-                return { success: false, msg: "Question Category is required" };
+              } else if (!arr[k].Explaination) {
+                return { success: false, msg: "Explanation is required" };
               }
-            } else if (!arr[k].Explaination) {
-              return { success: false, msg: "Explanation is required" };
+              //     if (!arr[k].name) {
+              //       return { success: false, msg: "Name is Required!" };
+              //     }
+              //   } else {
             }
-            //     if (!arr[k].name) {
-            //       return { success: false, msg: "Name is Required!" };
-            //     }
-            //   } else {
           }
         }
       }
     }
+    return { success: true };
+  } else {
+    return { success: false };
   }
-  return { success: true };
 };
 
 // Add category by admin
