@@ -106,104 +106,108 @@ function validatedate(dateString) {
 // }
 
 var checkExcelValidation = async (arrayItem) => {
-  for (let i in arrayItem) {
-    let index = arrayItem[i].data;
-    for (let j in index) {
-      if (!index[j].seat) {
-        return { success: false, msg: "Seat is required" };
-      } else if (index[j].vcid) {
-        if (index[j].vcid) {
-          let findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.find({
-            _id: index[j].vcid,
-          });
-          if (!findVehicle) {
-            return {
-              success: false,
-              msg: "Vehicle Category is not in Database",
-            };
-          }
-        } else {
-          return { success: false, msg: "Vehicle Category is required" };
-        }
-      } else if (index[j].ccid) {
-        if (index[j].ccid) {
-          let findCourseCategory =
-            await global.models.GLOBAL.COURSECATEGORY.find({
-              _id: index[j].ccid,
+  if (arrayItem.length) {
+    for (let i in arrayItem) {
+      let index = arrayItem[i].data;
+      for (let j in index) {
+        if (!index[j].seat) {
+          return { success: false, msg: "Seat is required" };
+        } else if (index[j].vcid) {
+          if (index[j].vcid) {
+            let findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.find({
+              _id: index[j].vcid,
             });
-          if (!findCourseCategory) {
-            return {
-              success: false,
-              msg: "Course Category is not in Database",
-            };
+            if (!findVehicle) {
+              return {
+                success: false,
+                msg: "Vehicle Category is not in Database",
+              };
+            }
+          } else {
+            return { success: false, msg: "Vehicle Category is required" };
+          }
+        } else if (index[j].ccid) {
+          if (index[j].ccid) {
+            let findCourseCategory =
+              await global.models.GLOBAL.COURSECATEGORY.find({
+                _id: index[j].ccid,
+              });
+            if (!findCourseCategory) {
+              return {
+                success: false,
+                msg: "Course Category is not in Database",
+              };
+            }
+          } else {
+            return { success: false, msg: "Course Category is required" };
+          }
+        } else if (index[j].cnid) {
+          if (index[j].cnid) {
+            let findCourseName = await global.models.GLOBAL.COURSENAME.find({
+              _id: index[j].cnid,
+            });
+            if (!findCourseName) {
+              return {
+                success: false,
+                msg: "Course Name is not in Database",
+              };
+            }
+          } else {
+            return { success: false, msg: "Course Name is required" };
+          }
+        } else if (index[j].ctid) {
+          if (index[j].ctid) {
+            let findCourseType = await global.models.GLOBAL.COURSETYPE.find({
+              _id: index[j].ctid,
+            });
+            if (!findCourseType) {
+              return {
+                success: false,
+                msg: "Course Type is not in Database",
+              };
+            }
+          } else {
+            return { success: false, msg: "Course Type is required" };
+          }
+        } else if (index[j].startTime) {
+          arr = index[j]?.startTime.split(":");
+          console.log("jbwcqqwc", arr);
+          if (parseInt(arr[0]) > 24) {
+            return { status: false, msg: "Please Enter Right Time" };
+          }
+          if (parseInt(arr[1]) > 60) {
+            return { status: false, msg: "Please Enter Right Time" };
+          }
+        } else if (index[j].endTime) {
+          arr = index[j]?.startTime.split(":");
+          console.log("jbwcqqwc", arr);
+          if (parseInt(arr[0]) > 24) {
+            return { status: false, msg: "Please Enter Right Time" };
+          }
+          if (parseInt(arr[1]) > 60) {
+            return { status: false, msg: "Please Enter Right Time" };
           }
         } else {
-          return { success: false, msg: "Course Category is required" };
-        }
-      } else if (index[j].cnid) {
-        if (index[j].cnid) {
-          let findCourseName = await global.models.GLOBAL.COURSENAME.find({
-            _id: index[j].cnid,
-          });
-          if (!findCourseName) {
-            return {
-              success: false,
-              msg: "Course Name is not in Database",
-            };
-          }
-        } else {
-          return { success: false, msg: "Course Name is required" };
-        }
-      } else if (index[j].ctid) {
-        if (index[j].ctid) {
-          let findCourseType = await global.models.GLOBAL.COURSETYPE.find({
-            _id: index[j].ctid,
-          });
-          if (!findCourseType) {
-            return {
-              success: false,
-              msg: "Course Type is not in Database",
-            };
-          }
-        } else {
-          return { success: false, msg: "Course Type is required" };
-        }
-      } else if (index[j].startTime) {
-        arr = index[j]?.startTime.split(":");
-        console.log("jbwcqqwc", arr);
-        if (parseInt(arr[0]) > 24) {
-          return { status: false, msg: "Please Enter Right Time" };
-        }
-        if (parseInt(arr[1]) > 60) {
-          return { status: false, msg: "Please Enter Right Time" };
-        }
-      } else if (index[j].endTime) {
-        arr = index[j]?.startTime.split(":");
-        console.log("jbwcqqwc", arr);
-        if (parseInt(arr[0]) > 24) {
-          return { status: false, msg: "Please Enter Right Time" };
-        }
-        if (parseInt(arr[1]) > 60) {
-          return { status: false, msg: "Please Enter Right Time" };
-        }
-      } else {
-        if (index[j].date) {
-          console.log("excelData[j].date", index[j].date);
-          let date = validatedate(index[j].date);
+          if (index[j].date) {
+            console.log("excelData[j].date", index[j].date);
+            let date = validatedate(index[j].date);
 
-          if (!date) {
-            return {
-              success: false,
-              msg: "Date is not in right format. Please Enter date in YYYY-MM-DD format",
-            };
+            if (!date) {
+              return {
+                success: false,
+                msg: "Date is not in right format. Please Enter date in YYYY-MM-DD format",
+              };
+            }
+          } else {
+            return { success: false, msg: "Date is required" };
           }
-        } else {
-          return { success: false, msg: "Date is required" };
         }
       }
     }
+    return { success: true };
+  } else {
+    return { success: false };
   }
-  return { success: true };
 };
 
 // Add category by admin
@@ -273,13 +277,12 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.OK)
         .json(utils.createResponseObject(data4createResponseObjectError));
     }
-
     let modifyData = [];
     modifyData = await modifyDataOfExcel(arrayItem);
 
-    const addCSV = await global.models.GLOBAL.TRAININGDATE.insertMany(
-      modifyData
-    );
+    // const addCSV = await global.models.GLOBAL.TRAININGDATE.insertMany(
+    //   modifyData
+    // );
     const data4createResponseObject = {
       req: {},
       result: 0,
