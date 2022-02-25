@@ -283,7 +283,7 @@ module.exports = exports = {
     const data4createResponseObject = {
       req: {},
       result: 0,
-      message: messages.ITEM_ADDED,
+      message: messages.SUCCESS,
       payload: { modifyData, count: modifyData.length },
       logPayload: false,
     };
