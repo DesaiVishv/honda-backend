@@ -40,18 +40,18 @@ module.exports = exports = {
 
       const count = await global.models.GLOBAL.PARTIAL.find(search).count();
       if (page) {
-        let admin = await global.models.GLOBAL.PARTIAL.find(search)
+        admin = await global.models.GLOBAL.PARTIAL.find(search)
           .skip(skip)
           .limit(limit);
       } else {
-        let admin = await global.models.GLOBAL.PARTIAL.find(search);
+        admin = await global.models.GLOBAL.PARTIAL.find(search);
       }
 
       const data4createResponseObject = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { admin: admin, count: count },
+        payload: { admin, count: count },
         logPayload: false,
       };
       res
