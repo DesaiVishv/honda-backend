@@ -15,7 +15,7 @@ module.exports = exports = {
     Option: Joi.array().required(),
     type: Joi.string().required(),
     language: Joi.string().required(),
-    weight: Joi.number().required(),
+    weight: Joi.number(),
     Category: Joi.string().required(),
     isActive: Joi.boolean(),
   }),
@@ -24,17 +24,19 @@ module.exports = exports = {
     const { Qname, image, Option, type, language, weight, Category, isActive } =
       req.body;
     const { user } = req;
-    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-    //     const data4createResponseObject = {
-    //         req: req,
-    //         result: -1,
-    //         message: messages.NOT_AUTHORIZED,
-    //         payload: {},
-    //         logPayload: false
-    //     };
-    //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
-    // }
-    if (!Qname || !type || !language || !weight || !Category) {
+    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_AUTHORIZED,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.UNAUTHORIZED)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
+    if (!Qname || !type || !language || !Category) {
       const data4createResponseObject = {
         req: req,
         result: -1,

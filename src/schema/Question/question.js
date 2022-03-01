@@ -32,7 +32,7 @@ module.exports = (connection) => {
       ],
       type: { type: String, require: true },
       language: { type: String, require: true },
-      weight: { type: Number, require: true },
+      weight: { type: Number },
       Category: { type: mongoose.Schema.Types.ObjectId, require: true },
       isActive: { type: Boolean, default: true },
       createdAt: { type: Date, default: Date.now },
