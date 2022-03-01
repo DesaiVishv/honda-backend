@@ -39,12 +39,15 @@ module.exports = exports = {
         : {};
 
       const count = await global.models.GLOBAL.PARTIAL.find(search).count();
-      if (page) {
+      console.log(req.query.isPage);
+      if (req.query.isPage === "true") {
         admin = await global.models.GLOBAL.PARTIAL.find(search)
           .skip(skip)
           .limit(limit);
+        console.log("in");
       } else {
         admin = await global.models.GLOBAL.PARTIAL.find(search);
+        console.log("out");
       }
 
       const data4createResponseObject = {
