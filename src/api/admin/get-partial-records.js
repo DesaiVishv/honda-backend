@@ -26,11 +26,11 @@ module.exports = exports = {
     //     .json(utils.createResponseObject(data4createResponseObject));
     // }
     try {
-      //  req.query.page = req.query.page ? req.query.page : 1;
-      //  let page = parseInt(req.query.page);
-      //  req.query.limit = req.query.limit ? req.query.limit : 10;
-      //  let limit = parseInt(req.query.limit);
-      //  let skip = (parseInt(page) - 1) * limit;
+      req.query.page = req.query.page ? req.query.page : 1;
+      let page = parseInt(req.query.page);
+      req.query.limit = req.query.limit ? req.query.limit : 10;
+      let limit = parseInt(req.query.limit);
+      let skip = (parseInt(page) - 1) * limit;
 
       let search = req.query.search
         ? {
@@ -39,7 +39,13 @@ module.exports = exports = {
         : {};
 
       const count = await global.models.GLOBAL.PARTIAL.find(search).count();
-      let admin = await global.models.GLOBAL.PARTIAL.find(search);
+      if (page) {
+        let admin = await global.models.GLOBAL.PARTIAL.find(search)
+          .skip(skip)
+          .limit(limit);
+      } else {
+        let admin = await global.models.GLOBAL.PARTIAL.find(search);
+      }
 
       const data4createResponseObject = {
         req: req,
