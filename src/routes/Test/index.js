@@ -22,7 +22,7 @@ router.post(
 
 router.put(
   "/attendence",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   testApi.attendence.handler
 );
 // // Put Methods

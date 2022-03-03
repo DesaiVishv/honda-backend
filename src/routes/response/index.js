@@ -21,7 +21,7 @@ router.get("/getResponseByBatch/:id", responseApi.getResponseBatch.handler);
 // Post Methods
 router.post(
   "/addResponse",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   validate("body", responseApi.addResponse.validation),
   responseApi.addResponse.handler
 );
