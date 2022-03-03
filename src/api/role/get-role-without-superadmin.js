@@ -36,6 +36,8 @@ module.exports = exports = {
         $or: [
           { roleName: "Examiner" },
           { roleName: "Data Entry" },
+          { roleName: "admin" },
+          { roleName: "ContentManager" },
           // { roleName: "user" },
         ],
       });

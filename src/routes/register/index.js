@@ -19,8 +19,8 @@ router.get("/getCancleRecord", registerApi.getCancleRecord.handler);
 // Post Methods
 router.post(
   "/addRegister",
-  validate("body", registerApi.addRegister.validation),
   passport.authenticate(["jwt"], { session: false }),
+  validate("body", registerApi.addRegister.validation),
   registerApi.addRegister.handler
 );
 
@@ -32,7 +32,11 @@ router.put(
 );
 
 router.put("/offlinePayment", registerApi.offlinePayment.handler);
-router.put("/cancleBooking", registerApi.cancleBooking.handler);
+router.put(
+  "/cancleBooking",
+  passport.authenticate(["jwt"], { session: false }),
+  registerApi.cancleBooking.handler
+);
 
 // // Delete Methods
 router.delete(

@@ -16,18 +16,18 @@ module.exports = exports = {
   handler: async (req, res) => {
     const { uids, batch } = req.body;
     const { user } = req;
-    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-    //   const data4createResponseObject = {
-    //     req: req,
-    //     result: -1,
-    //     message: messages.NOT_AUTHORIZED,
-    //     payload: {},
-    //     logPayload: false,
-    //   };
-    //   return res
-    //     .status(enums.HTTP_CODES.UNAUTHORIZED)
-    //     .json(utils.createResponseObject(data4createResponseObject));
-    // }
+    if (user.type !== enums.USER_TYPE.EXAMINER) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_AUTHORIZED,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.UNAUTHORIZED)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
     if (!uids || !batch) {
       const data4createResponseObject = {
         req: req,

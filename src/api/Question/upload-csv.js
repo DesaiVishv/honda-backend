@@ -28,6 +28,7 @@ var modifyDataOfExcel = async (arrayItem) => {
             type: arr[k].questiontype,
             language: arr[k].language.toLowerCase(),
             Qname: arr[k].question,
+            cnid: arr[k].cnid,
             Category: ObjectId(arr[k].Category),
             Explaination: arr[k].Explaination,
             image: arr[k].image ? arr[k].image : null,
@@ -88,6 +89,11 @@ var checkExcelValidation = async (arrayItem) => {
                     msg: "Question Category is required",
                   };
                 }
+              } else if (arr[k].cnid) {
+                return {
+                  success: false,
+                  msg: "Course Name is required",
+                };
               }
               //     if (!arr[k].name) {
               //       return { success: false, msg: "Name is Required!" };

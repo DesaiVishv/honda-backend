@@ -11,19 +11,27 @@ const passport = require("passport");
 router.get("/getContactus", contactusApi.getContactus.handler);
 router.get("/getAll", contactusApi.getAllForDownload.handler);
 
-
-
 // Post Methods
 // router.post("/addContactus", validate("body", contactusApi.addContactus.validation), contactusApi.addContactus.handler);
-router.post("/addContactus", validate("body", contactusApi.addContactus.validation), contactusApi.addContactus.handler);
+router.post(
+  "/addContactus",
+  passport.authenticate(["jwt"], { session: false }),
+  validate("body", contactusApi.addContactus.validation),
+  contactusApi.addContactus.handler
+);
 // router.post("/verify-phone", validate("body", commonApi.verifyPhone.validation), commonApi.verifyPhone.handler);
 
-
-router.put("/updateContactus/:id", passport.authenticate(["jwt"], { session: false }), contactusApi.updateContactus.handler);
-
+router.put(
+  "/updateContactus/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  contactusApi.updateContactus.handler
+);
 
 // Delete Method
-router.delete("/deleteContactus/:id",passport.authenticate(["jwt"], { session: false }), contactusApi.deleteContactus.handler);
-
+router.delete(
+  "/deleteContactus/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  contactusApi.deleteContactus.handler
+);
 
 module.exports = exports = router;

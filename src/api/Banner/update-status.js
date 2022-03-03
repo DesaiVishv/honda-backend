@@ -27,12 +27,11 @@ module.exports = exports = {
         .json(utils.createResponseObject(data4createResponseObject));
     }
     try {
-      const property =
-        await global.models.GLOBAL.ANNOUNCEMENT.findByIdAndUpdate(
-          { _id: id },
-          { $set: { isActive: isActive } },
-          { new: true }
-        );
+      const property = await global.models.GLOBAL.BANNER.findByIdAndUpdate(
+        { _id: id },
+        { $set: { isActive: isActive } },
+        { new: true }
+      );
       const data4createResponseObject = {
         req: req,
         result: 0,

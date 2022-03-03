@@ -15,18 +15,18 @@ module.exports = exports = {
     const { uid } = req.query;
     const { user } = req;
     // const pid = req.params.pid;
-    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-    //   const data4createResponseObject = {
-    //     req: req,
-    //     result: -1,
-    //     message: messages.NOT_AUTHORIZED,
-    //     payload: {},
-    //     logPayload: false,
-    //   };
-    //   return res
-    //     .status(enums.HTTP_CODES.UNAUTHORIZED)
-    //     .json(utils.createResponseObject(data4createResponseObject));
-    // }
+    if (user.type !== enums.USER_TYPE.USER) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_AUTHORIZED,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.UNAUTHORIZED)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
     try {
       const findUser = await global.models.GLOBAL.REGISTER.findByIdAndUpdate(
         { _id: uid },

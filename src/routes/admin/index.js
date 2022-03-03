@@ -79,6 +79,12 @@ router.post(
   adminApi.resetPassword.handler
 );
 
+router.post(
+  "/logout",
+  validate("body", adminApi.logout.validation),
+  adminApi.logout.handler
+);
+
 // Post Methods
 // Users
 

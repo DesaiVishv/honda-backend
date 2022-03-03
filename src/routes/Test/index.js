@@ -20,7 +20,11 @@ router.post(
   testApi.addTest.handler
 );
 
-router.put("/attendence", testApi.attendence.handler);
+router.put(
+  "/attendence",
+  passport.authenticate(["jwt"], { session: false }),
+  testApi.attendence.handler
+);
 // // Put Methods
 router.put(
   "/updateTest/:id",

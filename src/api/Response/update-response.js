@@ -17,21 +17,21 @@ module.exports = exports = {
     const { id } = req.params;
     const { user } = req;
     const { ListofQA } = req.body;
-    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-    //   const data4createResponseObject = {
-    //     req: req,
-    //     result: -1,
-    //     message: messages.NOT_AUTHORIZED,
-    //     payload: {},
-    //     logPayload: false,
-    //   };
-    //   return res
-    //     .status(enums.HTTP_CODES.UNAUTHORIZED)
-    //     .json(utils.createResponseObject(data4createResponseObject));
-    // }
+    if (user.type !== enums.USER_TYPE.DATAENTRY) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_AUTHORIZED,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.UNAUTHORIZED)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
     console.log("id", id);
     console.log("ListofQa", ListofQA);
-    if (!id || !ListofQA) {
+    if (!id) {
       const data4createResponseObject = {
         req: req,
         result: -1,

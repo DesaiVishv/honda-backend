@@ -11,6 +11,7 @@ module.exports = exports = {
   // route validation
   validation: Joi.object({
     date: Joi.string().required(),
+    endDate: Joi.string(),
     seat: Joi.number(),
     vcid: Joi.string().required(),
     ctid: Joi.string().required(),
@@ -22,7 +23,8 @@ module.exports = exports = {
   }),
 
   handler: async (req, res) => {
-    const { date, seat, vcid, ctid, ccid, cnid, startTime, endTime } = req.body;
+    const { date, endDate, seat, vcid, ctid, ccid, cnid, startTime, endTime } =
+      req.body;
     const { user } = req;
     if (user.type !== enums.USER_TYPE.SUPERADMIN) {
       const data4createResponseObject = {
@@ -64,6 +66,7 @@ module.exports = exports = {
       // }
       let AmenintiesCreate = {
         date: date,
+        endDate: endDate,
         seat: seat,
         vcid: vcid,
         ctid: ctid,

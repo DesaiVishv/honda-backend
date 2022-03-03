@@ -10,7 +10,7 @@ const utils = require("../../utils");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    uid: Joi.string(),
+    uid: Joi.string().allow(null),
     vcid: Joi.string(),
     ctid: Joi.string(),
     ccid: Joi.string().allow(null),
@@ -38,8 +38,8 @@ module.exports = exports = {
     Authority: Joi.string(),
     authoritycity: Joi.string(),
     authoritydistrict: Joi.string(),
-    passportPhoto: Joi.string(),
-    drivingLicense: Joi.string(),
+    passportPhoto: Joi.string().allow(null),
+    drivingLicense: Joi.string().allow(null),
     IDproof: Joi.string().allow(null),
     medicalCertificate: Joi.string().allow(null),
     bloodGroup: Joi.string().allow(""),
@@ -91,7 +91,21 @@ module.exports = exports = {
       Registrationtype,
     } = req.body;
     const { user } = req;
-
+    if (
+      user.type !== enums.USER_TYPE.SUPERADMIN &&
+      user.type !== enums.USER_TYPE.USER
+    ) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_AUTHORIZED,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.UNAUTHORIZED)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
     let createdByAdmin = false;
     if (user.type == enums.USER_TYPE.SUPERADMIN) {
       createdByAdmin = true;
@@ -109,17 +123,7 @@ module.exports = exports = {
     //     };
     //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
     // }
-    if (
-      !vcid ||
-      !ctid ||
-      !cnid ||
-      !lcid ||
-      !tdid ||
-      !phone ||
-      !passportPhoto ||
-      !drivingLicense ||
-      !type
-    ) {
+    if (!vcid || !ctid || !cnid || !lcid || !tdid || !phone || !type) {
       const data4createResponseObject = {
         req: req,
         result: -1,

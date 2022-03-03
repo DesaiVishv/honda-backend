@@ -35,7 +35,7 @@ module.exports = (connection) => {
       authoritycity: { type: String, required: true },
       authoritydistrict: { type: String, required: true },
       passportPhoto: { type: String, required: true },
-      drivingLicense: { type: String, required: true },
+      drivingLicense: { type: String },
       IDproof: { type: String },
       medicalCertificate: { type: String },
       bloodGroup: { type: String },

@@ -10,6 +10,7 @@ const updateAdmin = require("./update-admin");
 const adminLogin = require("./admin-login");
 const adminSignup = require("./admin-signup");
 const signup2 = require("./signup2");
+const logout = require("./logout");
 const blockUser = require("./block-user");
 const count = require("./count");
 const resetPassword = require("./reset-Password");
@@ -35,6 +36,7 @@ module.exports = exports = {
   adminLogin,
   adminSignup,
   signup2,
+  logout,
   blockUser,
   count,
   getAdminLoginLog,

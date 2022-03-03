@@ -48,11 +48,11 @@ module.exports = exports = {
 
       let filter0 = date
         ? {
-            $and: [{ date: { $gte: date1 } }, { date: { $lte: date2 } }],
+            $or: [{ date: { $gte: date1 } }, { date: { $lte: date2 } }],
             seat: { $ne: 0 },
             isBooked: false,
           }
-        : {};
+        : { isBooked: false };
       //   let filter1 =
       //     startTime != null
       //       ? {

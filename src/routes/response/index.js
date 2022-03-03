@@ -9,7 +9,10 @@ router.get("/getAllResponse", responseApi.getAllResponse.handler); // params = c
 // router.get("/getoneresponse/:id", responseApi.getOneResponse.handler); // params = categoryId / shopId / deviceId
 router.get("/getResponseById/:id", responseApi.getResponseById.handler); // params = categoryId / shopId / deviceId
 router.get("/getResponseByUser/:id", responseApi.getResponseByBatch.handler);
-router.get("/getRequestResponseByStatus", responseApi.getRequestResponseByStatus.handler);
+router.get(
+  "/getRequestResponseByStatus",
+  responseApi.getRequestResponseByStatus.handler
+);
 router.get(
   "/getResponseByUserWithoutPagination/:id",
   responseApi.getResponseByUserWithoutPagination.handler
@@ -18,17 +21,30 @@ router.get("/getResponseByBatch/:id", responseApi.getResponseBatch.handler);
 // Post Methods
 router.post(
   "/addResponse",
+  passport.authenticate(["jwt"], { session: false }),
   validate("body", responseApi.addResponse.validation),
   responseApi.addResponse.handler
 );
 
 //PUT Methods
-router.put("/updateResponse/:id", responseApi.updateResponse.handler); // params = categoryId / shopId / deviceId
-router.put("/editRequestResponseById/:id", responseApi.editRequestResponseById.handler); 
+router.put(
+  "/updateResponse/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  responseApi.updateResponse.handler
+); // params = categoryId / shopId / deviceId
+router.put(
+  "/editRequestResponseById/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  responseApi.editRequestResponseById.handler
+);
 
 // params = categoryId / shopId / deviceId
 
 //DELETE Methods
-router.delete("/deleteResponse/:id", responseApi.deleteResponse.handler); // params = categoryId / shopId / deviceId
+router.delete(
+  "/deleteResponse/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  responseApi.deleteResponse.handler
+); // params = categoryId / shopId / deviceId
 
 module.exports = exports = router;

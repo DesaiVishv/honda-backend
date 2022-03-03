@@ -17,6 +17,7 @@ router.post(
 // Post Methods
 router.post(
   "/addCourseType",
+  passport.authenticate(["jwt"], { session: false }),
   validate("body", courseTypeApi.addCourseType.validation),
   courseTypeApi.addCourseType.handler
 );

@@ -158,11 +158,34 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     const { user } = req;
-
+    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_AUTHORIZED,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.UNAUTHORIZED)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
     var data = [];
     var arrayItem = [];
     console.log("data", data);
     const csv = req.file;
+    if (!csv) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.FILL_DETAILS,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.UNAUTHORIZED)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
     console.log("csv", csv);
     var workbook = XLSX.readFile(csv.path);
     var sheet_name_list = workbook.SheetNames;

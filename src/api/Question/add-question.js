@@ -11,6 +11,7 @@ module.exports = exports = {
   // route validation
   validation: Joi.object({
     Qname: Joi.string().required(),
+    cnid: Joi.string(),
     image: Joi.string(),
     Option: Joi.array().required(),
     type: Joi.string().required(),
@@ -21,8 +22,17 @@ module.exports = exports = {
   }),
 
   handler: async (req, res) => {
-    const { Qname, image, Option, type, language, weight, Category, isActive } =
-      req.body;
+    const {
+      Qname,
+      cnid,
+      image,
+      Option,
+      type,
+      language,
+      weight,
+      Category,
+      isActive,
+    } = req.body;
     const { user } = req;
     if (user.type !== enums.USER_TYPE.SUPERADMIN) {
       const data4createResponseObject = {
@@ -92,6 +102,7 @@ module.exports = exports = {
 
       let AmenintiesCreate = {
         Qname: Qname,
+        cnid: cnid,
         image: image,
         Option: Option,
         type: type,

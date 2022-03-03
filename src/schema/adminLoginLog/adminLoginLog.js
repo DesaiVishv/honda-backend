@@ -8,6 +8,8 @@ module.exports = (connection) => {
       uid: { type: mongoose.Schema.Types.ObjectId, ref: "admin" },
       device: { type: String },
       ip: { type: String },
+      type: { type: String },
+      lastPage: { type: String },
       createdAt: { type: Date, default: Date.now() },
     },
     {

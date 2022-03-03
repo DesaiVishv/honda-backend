@@ -13,7 +13,12 @@ router.get("/getBatchByDataEntry/:id", batchApi.getBatchByDataEntry.handler);
 router.get("/getExamsetByBatch/:id", batchApi.getExamsetByBatch.handler);
 
 // router.post("/getSubmenuByMenu",   vehicleCategoryApi.getSubmenuByMenu.handler);
-router.post("/uploadcsv", upload.single("csv"), batchApi.uploadcsv.handler);
+router.post(
+  "/uploadcsv",
+  passport.authenticate(["jwt"], { session: false }),
+  upload.single("csv"),
+  batchApi.uploadcsv.handler
+);
 
 // Post Methods
 router.post(

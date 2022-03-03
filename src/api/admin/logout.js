@@ -1,43 +1,66 @@
 const Joi = require("joi");
+
 const enums = require("../../../json/enums.json");
 const messages = require("../../../json/messages.json");
+
 const logger = require("../../logger");
 const utils = require("../../utils");
+
 // Add category by admin
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    isActive: Joi.boolean().required(),
+    uid: Joi.string().required(),
+    lastPage: Joi.string(),
+    type: Joi.string(),
   }),
+
   handler: async (req, res) => {
-    const { isActive } = req.body;
+    const { uid, lastPage, type } = req.body;
     const { user } = req;
-    const { id } = req.params;
-    // const pid = req.params.pid;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+
+    if (!uid) {
       const data4createResponseObject = {
         req: req,
         result: -1,
-        message: messages.NOT_AUTHORIZED,
+        message: messages.FILL_DETAILS,
         payload: {},
         logPayload: false,
       };
       return res
-        .status(enums.HTTP_CODES.UNAUTHORIZED)
+        .status(enums.HTTP_CODES.BAD_REQUEST)
         .json(utils.createResponseObject(data4createResponseObject));
     }
+
     try {
-      const property =
-        await global.models.GLOBAL.ANNOUNCEMENT.findByIdAndUpdate(
-          { _id: id },
-          { $set: { isActive: isActive } },
-          { new: true }
-        );
+      let findUser = await global.models.GLOBAL.ADMIN.find({ _id: uid });
+      if (findUser.length == 0) {
+        const data4createResponseObject = {
+          req: req,
+          result: -1,
+          message: messages.NOT_FOUND,
+          payload: {},
+          logPayload: false,
+        };
+        res
+          .status(enums.HTTP_CODES.BAD_REQUEST)
+          .json(utils.createResponseObject(data4createResponseObject));
+      }
+
+      let AmenintiesCreate = {
+        uid: uid,
+        lastPage: lastPage,
+        type: type,
+      };
+      const newAmeninties = await global.models.GLOBAL.ADMINLOGINLOG(
+        AmenintiesCreate
+      );
+      newAmeninties.save();
       const data4createResponseObject = {
         req: req,
         result: 0,
-        message: messages.ITEM_UPDATED,
-        payload: { property },
+        message: messages.ITEM_INSERTED,
+        payload: { newAmeninties },
         logPayload: false,
       };
       res

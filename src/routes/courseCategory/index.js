@@ -23,6 +23,7 @@ router.post(
 // Post Methods
 router.post(
   "/addCourseCategory",
+  passport.authenticate(["jwt"], { session: false }),
   validate("body", courseCategoryApi.addCourseCategory.validation),
   courseCategoryApi.addCourseCategory.handler
 );
@@ -30,7 +31,7 @@ router.post(
 // // Put Methods
 router.put(
   "/updateCourseCategory/:id",
-  // passport.authenticate(["jwt"], { session: false }),
+  passport.authenticate(["jwt"], { session: false }),
   courseCategoryApi.updateCourseCategory.handler
 );
 

@@ -16,7 +16,8 @@ module.exports = exports = {
   handler: async (req, res) => {
     const { id } = req.params;
     const { user } = req;
-    const { date, seat, vcid, ctid, ccid, cnid, startTime, endTime } = req.body;
+    const { date, endDate, seat, vcid, ctid, ccid, cnid, startTime, endTime } =
+      req.body;
     if (user.type !== enums.USER_TYPE.SUPERADMIN) {
       const data4createResponseObject = {
         req: req,
@@ -32,6 +33,7 @@ module.exports = exports = {
     if (
       !id ||
       !date ||
+      !endDate ||
       !vcid ||
       !ctid ||
       !ccid ||
@@ -84,6 +86,7 @@ module.exports = exports = {
           {
             $set: {
               date: date,
+              endDate: endDate,
               seat: seat,
               vcid: vcid,
               ctid: ctid,

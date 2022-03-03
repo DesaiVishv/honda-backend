@@ -13,6 +13,9 @@ module.exports = exports = {
   handler: async (req, res) => {
     try {
       let status = req.query.status;
+      let sd = req.query.sd;
+      let ed = req.query.ed;
+      let dateFilter = {};
       if (!status) {
         const data4createResponseObject = {
           req: req,
@@ -26,27 +29,52 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
-      const Response = await global.models.GLOBAL.REGISTER.find({ status: status })
-      .populate({
-        path: "uid",
-        model: "admin",
-      })
-      .populate({
-        path: "ctid",
-        model: "courseType",
-      })
-      .populate({
-        path: "vcid",
-        model: "vehicleCategory",
-      })
-      .populate({
-        path: "cnid",
-        model: "courseName",
-      })
-      .populate({
-        path: "tdid",
-        model: "trainingDate",
-      });
+      if (sd) {
+        dateFilter = {
+          $and: [
+            { updatedAt: { $gte: new Date(sd) } },
+            { updatedAt: { $lte: new Date(ed) } },
+          ],
+        };
+      }
+      let search = req.query.search
+        ? {
+            name: { $regex: req.query.search, $options: "i" },
+            ...dateFilter,
+            status,
+          }
+        : { status, ...dateFilter };
+      const Response = await global.models.GLOBAL.REGISTER.find(search)
+        .populate({
+          path: "uid",
+          model: "admin",
+        })
+        .populate({
+          path: "ctid",
+          model: "courseType",
+        })
+        .populate({
+          path: "vcid",
+          model: "vehicleCategory",
+        })
+        .populate({
+          path: "cnid",
+          model: "courseName",
+        })
+        .populate({
+          path: "tdid",
+          model: "trainingDate",
+        })
+        .populate({
+          path: "batchId",
+          model: "batch",
+          populate: { path: "Examiner", model: "examiner" },
+        })
+        .populate({
+          path: "batchId",
+          model: "batch",
+          populate: { path: "DataEntry", model: "examiner" },
+        });
 
       if (!Response) {
         const data4createResponseObject = {

@@ -12,35 +12,24 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      let id = req.params.id;
-      let { user } = req;
-      if (user.type !== enums.USER_TYPE.DATAENTRY) {
-        const data4createResponseObject = {
-          req: req,
-          result: -1,
-          message: messages.NOT_AUTHORIZED,
-          payload: {},
-          logPayload: false,
-        };
-        return res
-          .status(enums.HTTP_CODES.UNAUTHORIZED)
-          .json(utils.createResponseObject(data4createResponseObject));
-      }
-      if (!id) {
-        const data4createResponseObject = {
-          req: req,
-          result: -1,
-          message: messages.INVALID_PARAMETERS,
-          payload: {},
-          logPayload: false,
-        };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
-        return;
-      }
-      const Register = await global.models.GLOBAL.REGISTER.findOne({ _id: id });
-      if (!Register) {
+      req.query.page = req.query.page ? req.query.page : 1;
+      let page = parseInt(req.query.page);
+      req.query.limit = req.query.limit ? req.query.limit : 10;
+      let limit = parseInt(req.query.limit);
+      let skip = (parseInt(req.query.page) - 1) * limit;
+
+      // let id = req.params.id;
+
+      let search = req.query.search
+        ? { title: { $regex: req.query.search, $options: "i" }, isActive: true }
+        : { isActive: true };
+
+      const count = await global.models.GLOBAL.BANNER.find(search).count();
+      const Questions = await global.models.GLOBAL.BANNER.find(search)
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 });
+      if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
@@ -53,18 +42,11 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
-      console.log(req.body, "-----------------", id);
-      let response = await global.models.GLOBAL.REGISTER.findByIdAndUpdate(
-        { _id: id },
-        { status: req.body.status, updatedAt: new Date() }
-      );
-
-      // const nearProperty=await global.models.GLOBAL.PERSONALINFORMATION.find({_id:{$ne:id} });
       const data4createResponseObject = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Response: response },
+        payload: { Question: Questions, count: count },
         logPayload: false,
       };
       res

@@ -5,8 +5,8 @@ const mongoose = require("mongoose");
 module.exports = (connection) => {
   const courseNameSchema = new mongoose.Schema(
     {
-      courseName: { type: String, require: true },
-      description: { type: String, require: true },
+      courseName: { type: String },
+      description: { type: String },
       isActive: { type: Boolean, default: true },
       ctid: { type: mongoose.Schema.Types.ObjectId },
       vcid: { type: mongoose.Schema.Types.ObjectId },

@@ -6,6 +6,7 @@ module.exports = (connection) => {
   const questionSchema = new mongoose.Schema(
     {
       Qname: { type: String, require: true },
+      cnid: { type: mongoose.Schema.Types.ObjectId },
       image: { type: String },
       csv: { type: Array },
       Option: [

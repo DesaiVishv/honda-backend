@@ -28,7 +28,11 @@ router.put(
   announcementApi.updateAnnouncement.handler
 );
 
-router.put("/updateStatus/:id", announcementApi.updateStatus.handler);
+router.put(
+  "/updateStatus/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  announcementApi.updateStatus.handler
+);
 
 // // Delete Methods
 router.delete(

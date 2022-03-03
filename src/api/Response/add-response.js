@@ -14,25 +14,27 @@ module.exports = exports = {
     batch: Joi.string().required(),
     uid: Joi.string().required(),
     Esid: Joi.string().required(),
-    ListofQA: Joi.array().required(),
+    ListofQA: Joi.array(),
     // imagePath: Joi.string().allow("")
   }),
 
   handler: async (req, res) => {
     const { batch, uid, Esid, ListofQA } = req.body;
     const { user } = req;
-    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-    //     const data4createResponseObject = {
-    //         req: req,
-    //         result: -1,
-    //         message: messages.NOT_AUTHORIZED,
-    //         payload: {},
-    //         logPayload: false
-    //     };
-    //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
-    // }
+    if (user.type !== enums.USER_TYPE.DATAENTRY) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_AUTHORIZED,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.UNAUTHORIZED)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
 
-    if (!batch || !uid || !Esid || !ListofQA) {
+    if (!batch || !uid || !Esid) {
       const data4createResponseObject = {
         req: req,
         result: -1,

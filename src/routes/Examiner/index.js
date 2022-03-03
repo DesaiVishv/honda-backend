@@ -11,16 +11,25 @@ router.get("/getAll", examinerApi.getAll.handler);
 // Post Methods
 router.post(
   "/addExaminer",
+  passport.authenticate(["jwt"], { session: false }),
   validate("body", examinerApi.addExaminer.validation),
   examinerApi.addExaminer.handler
 );
 
 // // Put Methods
-router.put("/updateExaminer/:id", examinerApi.updateExaminer.handler);
+router.put(
+  "/updateExaminer/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  examinerApi.updateExaminer.handler
+);
 
 router.put("/sendQuestionSet", examinerApi.sendQuestionSet.handler);
 
 // // Delete Methods
-router.delete("/deleteExaminer/:id", examinerApi.deleteExaminer.handler);
+router.delete(
+  "/deleteExaminer/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  examinerApi.deleteExaminer.handler
+);
 
 module.exports = exports = router;

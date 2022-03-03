@@ -13,11 +13,13 @@ module.exports = exports = {
   validation: Joi.object({
     phone: Joi.number().required(),
     password: Joi.string().required(),
+    lastPage: Joi.string(),
+    type: Joi.string(),
   }),
 
   // route handler
   handler: async (req, res) => {
-    let { phone, password } = req.body;
+    let { phone, password, lastPage, type } = req.body;
     console.log("vishv---------", req.headers["user-agent"], req.ip);
     if (!phone || !password) {
       logger.error(messages.FIELD_REQUIRE);
@@ -103,6 +105,8 @@ module.exports = exports = {
         role = enums.USER_TYPE.EXAMINER;
       } else if (rolename.roleName === "Data Entry") {
         role = enums.USER_TYPE.DATAENTRY;
+      } else if (rolename.roleName === "ContentManager") {
+        role = enums.USER_TYPE.CONTENTMANAGER;
       }
 
       const menu = await global.models.GLOBAL.ASSIGNMENU.find({
@@ -117,6 +121,8 @@ module.exports = exports = {
         device: req.headers["user-agent"],
         ip: req.ip,
         uid: admin._id,
+        lastPage: lastPage,
+        type: type,
       });
       await adminLoginLog.save();
 

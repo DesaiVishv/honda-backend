@@ -293,6 +293,7 @@
     "USER": "user",
     "ADMIN": "admin",
     "EXAMINER": "Examiner",
-    "DATAENTRY": "Data Entry"
+    "DATAENTRY": "Data Entry",
+    "CONTENTMANAGER": "ContentManager"
   }
 }
