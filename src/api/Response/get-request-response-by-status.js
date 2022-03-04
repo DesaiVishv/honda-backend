@@ -74,7 +74,8 @@ module.exports = exports = {
           path: "batchId",
           model: "batch",
           populate: { path: "DataEntry", model: "examiner" },
-        });
+        })
+        .sort({ updatedAt: -1 });
 
       if (!Response) {
         const data4createResponseObject = {
