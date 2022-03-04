@@ -29,11 +29,9 @@ module.exports = exports = {
       //   date: date,
       // });
       // console.log("findDare", findDate);
-      let startDate = moment(date).add(1, "days").format("YYYY-MM-DD");
-      let endDate = moment(date).add(5, "days").format("YYYY-MM-DD");
 
       // startDate = new Date(startDate.toString());
-      // endDate = new Date(endDate.toString())
+      // endDate = new Date(endDate.toString());
       // { $gte: startDate.toString(), $lte: endDate.toString() }
       let date1 = new Date(date);
       let date2 = new Date(date);
@@ -45,10 +43,11 @@ module.exports = exports = {
       date2.setMinutes(59);
       date2.setSeconds(59);
       date2.setMilliseconds(59);
-
+      console.log("date1", date1);
+      console.log("date2", date2);
       let filter0 = date
         ? {
-            $or: [{ date: { $gte: date1 } }, { date: { $lte: date2 } }],
+            $and: [{ date: { $gte: date1 } }, { date: { $lte: date2 } }],
             seat: { $ne: 0 },
             isBooked: false,
           }
