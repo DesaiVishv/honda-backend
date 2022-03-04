@@ -42,9 +42,13 @@ module.exports = exports = {
     }
 
     try {
+      let findUser = await global.models.GLOBAL.EXAMINER.findById({ _id: id });
       const deletedItem = await global.models.GLOBAL.EXAMINER.findByIdAndRemove(
         id
       );
+      let deleteUser = await global.models.GLOBAL.ADMIN.findOneAndRemove({
+        email: findUser.email,
+      });
       if (!deletedItem) {
         const data4createResponseObject = {
           req: req,
