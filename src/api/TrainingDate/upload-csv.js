@@ -187,12 +187,25 @@ var checkExcelValidation = async (arrayItem) => {
           if (parseInt(arr[1]) > 60) {
             return { status: false, msg: "Please Enter Right Time" };
           }
-        } else {
+        } else if (index[j].date) {
           if (index[j].date) {
             console.log("excelData[j].date", index[j].date);
             let date = validatedate(index[j].date);
 
             if (!date) {
+              return {
+                success: false,
+                msg: "Date is not in right format. Please Enter date in YYYY-MM-DD format",
+              };
+            }
+          } else {
+            return { success: false, msg: "Date is required" };
+          }
+        } else if (index[j].endDate) {
+          if (index[j].endDate) {
+            let endDate = validatedate(index[j].endDate);
+
+            if (!endDate) {
               return {
                 success: false,
                 msg: "Date is not in right format. Please Enter date in YYYY-MM-DD format",
