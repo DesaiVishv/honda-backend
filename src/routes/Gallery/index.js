@@ -12,7 +12,7 @@ router.get("/getGallery/:id", galleryApi.getGalleryById.handler);
 // Post Methods
 router.post(
   "/addGallery",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   validate("body", galleryApi.addGallery.validation),
   galleryApi.addGallery.handler
 );
@@ -20,14 +20,14 @@ router.post(
 // // Put Methods
 router.put(
   "/updateGallery/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   galleryApi.updateGallery.handler
 );
 
 // // Delete Methods
 router.delete(
   "/deleteGallery/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   galleryApi.deleteGallery.handler
 );
 
