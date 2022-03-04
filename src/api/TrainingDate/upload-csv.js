@@ -21,6 +21,7 @@ var modifyDataOfExcel = async (arrayItem) => {
   for (let i in arrayItem) {
     console.log("arrayItem", arrayItem);
     let index = arrayItem[i].data;
+    console.log("index", index);
     console.log("indexxx", index);
     for (let j in index) {
       // let obj = {};
@@ -201,7 +202,7 @@ var checkExcelValidation = async (arrayItem) => {
           } else {
             return { success: false, msg: "Date is required" };
           }
-        } else if (index[j].endDate) {
+        } else {
           if (index[j].endDate) {
             let endDate = validatedate(index[j].endDate);
 
@@ -282,6 +283,11 @@ module.exports = exports = {
         if (!data[row]) data[row] = {};
         console.log("headers[col]", headers[col]);
         if (headers[col]?.trim() == "date") {
+          //   console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", w);
+          data[row][headers[col].replace(/\s+/g, "").trim()] = String(
+            moment(new Date(w)).format("YYYY-MM-DD")
+          )?.trim();
+        } else if (headers[col]?.trim() == "endDate") {
           //   console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", w);
           data[row][headers[col].replace(/\s+/g, "").trim()] = String(
             moment(new Date(w)).format("YYYY-MM-DD")
