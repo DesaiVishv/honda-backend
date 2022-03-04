@@ -17,7 +17,7 @@ router.get("/getDatePrevious", trainingDateApi.getDatePrevious.handler);
 
 router.post(
   "/uploadcsv",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   upload.single("csv"),
   trainingDateApi.uploadcsv.handler
 );
