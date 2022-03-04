@@ -14,7 +14,7 @@ router.post("/getgenerateQuestion", questionApi.generateQuestion.handler);
 
 router.post(
   "/uploadcsv",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   upload.single("csv"),
   questionApi.uploadCSV.handler
 );
