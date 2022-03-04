@@ -14,18 +14,18 @@ module.exports = exports = {
     try {
       let id = req.params.id;
       let { user } = req;
-      if (user.type !== enums.USER_TYPE.DATAENTRY) {
-        const data4createResponseObject = {
-          req: req,
-          result: -1,
-          message: messages.NOT_AUTHORIZED,
-          payload: {},
-          logPayload: false,
-        };
-        return res
-          .status(enums.HTTP_CODES.UNAUTHORIZED)
-          .json(utils.createResponseObject(data4createResponseObject));
-      }
+      // if (user.type !== enums.USER_TYPE.DATAENTRY) {
+      //   const data4createResponseObject = {
+      //     req: req,
+      //     result: -1,
+      //     message: messages.NOT_AUTHORIZED,
+      //     payload: {},
+      //     logPayload: false,
+      //   };
+      //   return res
+      //     .status(enums.HTTP_CODES.UNAUTHORIZED)
+      //     .json(utils.createResponseObject(data4createResponseObject));
+      // }
       if (!id) {
         const data4createResponseObject = {
           req: req,

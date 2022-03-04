@@ -201,6 +201,78 @@ module.exports.setup = () => {
             "status.name": { $ne: enums.USER_STATUS.DISABLED },
           };
         }
+      } else if (type === enums.USER_TYPE.EXAMINER) {
+        console.log("test3");
+
+        // Check if the token was generated from the same environment - since we are just extracting the phone from the token
+        if (
+          !isEmpty(environment) &&
+          environment !== NODE_ENV &&
+          NODE_ENV !== "local"
+        ) {
+          logger.error("#JwtStrategy - Invalid token!");
+          next(null, false);
+        }
+        model = global.models.GLOBAL.ADMIN;
+        if (isEmpty(phone)) {
+          criteria = {
+            _id: id,
+            "status.name": { $ne: enums.USER_STATUS.DISABLED },
+          };
+        } else {
+          criteria = {
+            email: email,
+            "status.name": { $ne: enums.USER_STATUS.DISABLED },
+          };
+        }
+      } else if (type === enums.USER_TYPE.DATAENTRY) {
+        console.log("test3");
+
+        // Check if the token was generated from the same environment - since we are just extracting the phone from the token
+        if (
+          !isEmpty(environment) &&
+          environment !== NODE_ENV &&
+          NODE_ENV !== "local"
+        ) {
+          logger.error("#JwtStrategy - Invalid token!");
+          next(null, false);
+        }
+        model = global.models.GLOBAL.ADMIN;
+        if (isEmpty(phone)) {
+          criteria = {
+            _id: id,
+            "status.name": { $ne: enums.USER_STATUS.DISABLED },
+          };
+        } else {
+          criteria = {
+            email: email,
+            "status.name": { $ne: enums.USER_STATUS.DISABLED },
+          };
+        }
+      } else if (type === enums.USER_TYPE.CONTENTMANAGER) {
+        console.log("test3");
+
+        // Check if the token was generated from the same environment - since we are just extracting the phone from the token
+        if (
+          !isEmpty(environment) &&
+          environment !== NODE_ENV &&
+          NODE_ENV !== "local"
+        ) {
+          logger.error("#JwtStrategy - Invalid token!");
+          next(null, false);
+        }
+        model = global.models.GLOBAL.ADMIN;
+        if (isEmpty(phone)) {
+          criteria = {
+            _id: id,
+            "status.name": { $ne: enums.USER_STATUS.DISABLED },
+          };
+        } else {
+          criteria = {
+            email: email,
+            "status.name": { $ne: enums.USER_STATUS.DISABLED },
+          };
+        }
       }
       console.log("test4", type);
 

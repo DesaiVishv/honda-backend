@@ -27,7 +27,7 @@ router.post(
 // // Put Methods
 router.put(
   "/updateRegister/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   registerApi.updateRegister.handler
 );
 

@@ -29,12 +29,12 @@ router.post(
 //PUT Methods
 router.put(
   "/updateResponse/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   responseApi.updateResponse.handler
 ); // params = categoryId / shopId / deviceId
 router.put(
   "/editRequestResponseById/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   responseApi.editRequestResponseById.handler
 );
 
@@ -43,7 +43,7 @@ router.put(
 //DELETE Methods
 router.delete(
   "/deleteResponse/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   responseApi.deleteResponse.handler
 ); // params = categoryId / shopId / deviceId
 

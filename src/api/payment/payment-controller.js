@@ -59,6 +59,7 @@ module.exports = exports = {
     }
     if (uid) {
       const findUser = await global.models.GLOBAL.ADMIN.findOne({ _id: uid });
+      // console.log("findUsre", findUser);
       if (!findUser) {
         const data4createResponseObject = {
           req: req,
@@ -75,6 +76,7 @@ module.exports = exports = {
     const findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.findOne({
       _id: vcid,
     });
+    // console.log("vehicle", findVehicle);
     if (!findVehicle) {
       const data4createResponseObject = {
         req: req,
@@ -90,7 +92,7 @@ module.exports = exports = {
     const findcourseType = await global.models.GLOBAL.COURSETYPE.findOne({
       _id: ctid,
     });
-
+    // console.log("courseType", findcourseType);
     if (!findcourseType) {
       const data4createResponseObject = {
         req: req,
@@ -106,7 +108,7 @@ module.exports = exports = {
     const findCoursename = await global.models.GLOBAL.COURSENAME.findOne({
       _id: cnid,
     });
-
+    // console.log("CourseName", findCoursename);
     if (!findCoursename) {
       const data4createResponseObject = {
         req: req,
@@ -122,6 +124,7 @@ module.exports = exports = {
     const findDate = await global.models.GLOBAL.TRAININGDATE.findOne({
       _id: tdid,
     });
+    // console.log("Date", findDate);
     if (!findDate) {
       const data4createResponseObject = {
         req: req,

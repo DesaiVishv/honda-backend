@@ -20,7 +20,7 @@ router.get("/getAll", questionCategoryApi.getAll.handler);
 // Post Methods
 router.post(
   "/addCategory",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   validate("body", questionCategoryApi.addCategory.validation),
   questionCategoryApi.addCategory.handler
 );
@@ -28,14 +28,14 @@ router.post(
 //PUT Methods
 router.put(
   "/updateCategory/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   questionCategoryApi.updateCategory.handler
 ); // params = categoryId / shopId / deviceId
 
 //DELETE Methods
 router.delete(
   "/deleteCategory/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   questionCategoryApi.deleteCategory.handler
 ); // params = categoryId / shopId / deviceId
 

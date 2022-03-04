@@ -15,7 +15,7 @@ router.get(
 // Post Methods
 router.post(
   "/addInformation",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   validate("body", informationApi.addInformation.validation),
   informationApi.addInformation.handler
 );
@@ -23,14 +23,14 @@ router.post(
 // // Put Methods
 router.put(
   "/updateInformation/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   informationApi.updateInformation.handler
 );
 
 // // Delete Methods
 router.delete(
   "/deleteInformation/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   informationApi.deleteInformation.handler
 );
 

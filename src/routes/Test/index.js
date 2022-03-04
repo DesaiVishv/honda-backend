@@ -15,7 +15,7 @@ router.post("/getTestByDataEntry", testApi.getTestByDataentry.handler);
 // Post Methods
 router.post(
   "/addTest",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   validate("body", testApi.addTest.validation),
   testApi.addTest.handler
 );
@@ -28,14 +28,14 @@ router.put(
 // // Put Methods
 router.put(
   "/updateTest/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   testApi.updateTest.handler
 );
 
 // // Delete Methods
 router.delete(
   "/deleteTest/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   testApi.deleteTest.handler
 );
 

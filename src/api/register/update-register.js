@@ -54,18 +54,18 @@ module.exports = exports = {
       isPaymentDone,
       Registrationtype,
     } = req.body;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-      const data4createResponseObject = {
-        req: req,
-        result: -1,
-        message: messages.NOT_AUTHORIZED,
-        payload: {},
-        logPayload: false,
-      };
-      return res
-        .status(enums.HTTP_CODES.UNAUTHORIZED)
-        .json(utils.createResponseObject(data4createResponseObject));
-    }
+    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    //   const data4createResponseObject = {
+    //     req: req,
+    //     result: -1,
+    //     message: messages.NOT_AUTHORIZED,
+    //     payload: {},
+    //     logPayload: false,
+    //   };
+    //   return res
+    //     .status(enums.HTTP_CODES.UNAUTHORIZED)
+    //     .json(utils.createResponseObject(data4createResponseObject));
+    // }
     if (
       !id ||
       !vcid ||

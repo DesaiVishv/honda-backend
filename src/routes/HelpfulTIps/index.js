@@ -14,7 +14,7 @@ router.get("/getTipsById/:id", helpfultipsApi.getTipsById.handler);
 // Post Methods
 router.post(
   "/addTips",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   validate("body", helpfultipsApi.addHelpfulTips.validation),
   helpfultipsApi.addHelpfulTips.handler
 );
@@ -22,14 +22,14 @@ router.post(
 // // Put Methods
 router.put(
   "/updateTips/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   helpfultipsApi.updateHelpfulTips.handler
 );
 
 // // Delete Methods
 router.delete(
   "/deleteTips/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   helpfultipsApi.deleteHelpfulTips.handler
 );
 

@@ -16,7 +16,7 @@ router.get("/getAnnouncement/:id", announcementApi.getAnnouncementById.handler);
 // Post Methods
 router.post(
   "/addAnnouncement",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   validate("body", announcementApi.addAnnouncement.validation),
   announcementApi.addAnnouncement.handler
 );
@@ -24,20 +24,20 @@ router.post(
 // // Put Methods
 router.put(
   "/updateAnnouncement/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   announcementApi.updateAnnouncement.handler
 );
 
 router.put(
   "/updateStatus/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   announcementApi.updateStatus.handler
 );
 
 // // Delete Methods
 router.delete(
   "/deleteAnnouncement/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   announcementApi.deleteAnnouncement.handler
 );
 

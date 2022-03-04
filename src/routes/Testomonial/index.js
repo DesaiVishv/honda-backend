@@ -12,7 +12,7 @@ router.get("/getAllTestominial", testomonialApi.getAllTestomonial.handler);
 // Post Methods
 router.post(
   "/addTestominial",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   validate("body", testomonialApi.addTestomonial.validation),
   testomonialApi.addTestomonial.handler
 );
@@ -20,14 +20,14 @@ router.post(
 // // Put Methods
 router.put(
   "/updateTestominial/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   testomonialApi.updateTestomonial.handler
 );
 
 // // Delete Methods
 router.delete(
   "/deleteTestominial/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   testomonialApi.deleteTestomonial.handler
 );
 

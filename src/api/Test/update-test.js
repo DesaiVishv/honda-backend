@@ -17,18 +17,18 @@ module.exports = exports = {
     const { id } = req.params;
     const { user } = req;
     const { batch, question } = req.body;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-      const data4createResponseObject = {
-        req: req,
-        result: -1,
-        message: messages.NOT_AUTHORIZED,
-        payload: {},
-        logPayload: false,
-      };
-      return res
-        .status(enums.HTTP_CODES.UNAUTHORIZED)
-        .json(utils.createResponseObject(data4createResponseObject));
-    }
+    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    //   const data4createResponseObject = {
+    //     req: req,
+    //     result: -1,
+    //     message: messages.NOT_AUTHORIZED,
+    //     payload: {},
+    //     logPayload: false,
+    //   };
+    //   return res
+    //     .status(enums.HTTP_CODES.UNAUTHORIZED)
+    //     .json(utils.createResponseObject(data4createResponseObject));
+    // }
     if (!id || !batch || !question) {
       const data4createResponseObject = {
         req: req,

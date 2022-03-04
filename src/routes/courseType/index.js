@@ -17,7 +17,7 @@ router.post(
 // Post Methods
 router.post(
   "/addCourseType",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   validate("body", courseTypeApi.addCourseType.validation),
   courseTypeApi.addCourseType.handler
 );
@@ -25,20 +25,20 @@ router.post(
 // // Put Methods
 router.put(
   "/updateCourseType/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   courseTypeApi.updateCourseType.handler
 );
 
 router.put(
   "/updateStatus/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   courseTypeApi.updateStatus.handler
 );
 
 // // Delete Methods
 router.delete(
   "/deleteCourseType/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   courseTypeApi.deleteCourseType.handler
 );
 

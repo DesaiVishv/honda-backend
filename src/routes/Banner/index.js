@@ -12,7 +12,7 @@ router.get("/getActiveBanner", bannerApi.getActiveBanner.handler);
 // Post Methods
 router.post(
   "/addBanner",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   validate("body", bannerApi.addBanner.validation),
   bannerApi.addBanner.handler
 );
@@ -20,20 +20,20 @@ router.post(
 // // Put Methods
 router.put(
   "/updateBanner/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   bannerApi.updateBanner.handler
 );
 
 router.put(
   "/updateStatus/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   bannerApi.updateStatus.handler
 );
 
 // // Delete Methods
 router.delete(
   "/deleteBanner/:id",
-  passport.authenticate(["jwt"], { session: false }),
+  // passport.authenticate(["jwt"], { session: false }),
   bannerApi.deleteBanner.handler
 );
 
