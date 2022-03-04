@@ -315,9 +315,9 @@ module.exports = exports = {
     let modifyData = [];
     modifyData = await modifyDataOfExcel(arrayItem);
 
-    // const addCSV = await global.models.GLOBAL.TRAININGDATE.insertMany(
-    //   modifyData
-    // );
+    const addCSV = await global.models.GLOBAL.TRAININGDATE.insertMany(
+      modifyData
+    );
     const data4createResponseObject = {
       req: {},
       result: 0,
