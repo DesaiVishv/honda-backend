@@ -46,13 +46,14 @@ module.exports = exports = {
         admin = await global.models.GLOBAL.ADMINLOGINLOG.find(search)
           .sort({ registrationDate: -1 })
           .skip(skip)
-          .limit(limit);
-        console.log("page");
+          .limit(limit)
+          .populate({ path: "uid", model: "admin" });
       } else {
-        admin = await global.models.GLOBAL.ADMINLOGINLOG.find(search).sort({
-          registrationDate: -1,
-        });
-        console.log("withoutpage");
+        admin = await global.models.GLOBAL.ADMINLOGINLOG.find(search)
+          .sort({
+            registrationDate: -1,
+          })
+          .populate({ path: "uid", model: "admin" });
       }
 
       const data4createResponseObject = {
