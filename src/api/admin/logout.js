@@ -12,10 +12,11 @@ module.exports = exports = {
   validation: Joi.object({
     uid: Joi.string().required(),
     lastPage: Joi.string(),
+    type: Joi.string(),
   }),
 
   handler: async (req, res) => {
-    const { uid, lastPage } = req.body;
+    const { uid, lastPage, type } = req.body;
     const { user } = req;
 
     if (!uid) {
@@ -49,6 +50,9 @@ module.exports = exports = {
       let AmenintiesCreate = {
         uid: uid,
         lastPage: lastPage,
+        type: type,
+        device: req.headers["user-agent"],
+        ip: req.ip,
       };
       const newAmeninties = await global.models.GLOBAL.ADMINLOGINLOG(
         AmenintiesCreate

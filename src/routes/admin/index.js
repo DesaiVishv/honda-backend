@@ -11,6 +11,7 @@ router.get(
   passport.authenticate(["jwt"], { session: false }),
   adminApi.getUsers.handler
 );
+router.get("/get-logout-users", adminApi.getLogoutUser.handler);
 router.get(
   "/get-admins",
   passport.authenticate(["jwt"], { session: false }),
