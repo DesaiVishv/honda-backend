@@ -25,6 +25,7 @@ module.exports = exports = {
       // let starttime = req.query.startTime;
       // let endtime = req.query.endTime;
       let date = req.query.date;
+      let { vcid, ctid, ccid, cnid } = req.query;
       // let findDate = await global.models.GLOBAL.TRAININGDATE.find({
       //   date: date,
       // });
@@ -69,10 +70,18 @@ module.exports = exports = {
       // let search = req.query.search ? {name:{$regex:req.query.search,$options:'i'}, filter0:filter0} :{filter0:filter0}
       const count = await global.models.GLOBAL.TRAININGDATE.find({
         ...filter0,
+        vcid: vcid,
+        cnid: cnid,
+        ccid: ccid,
+        ctid: ctid,
         endTime: { $gte: new Date(Date.now()) },
       }).count();
       const subMenus = await global.models.GLOBAL.TRAININGDATE.find({
         ...filter0,
+        vcid: vcid,
+        cnid: cnid,
+        ccid: ccid,
+        ctid: ctid,
         endTime: { $gte: new Date(Date.now()) },
       })
         .sort({ createdAt: -1 })
