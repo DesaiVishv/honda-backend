@@ -32,11 +32,7 @@ router.put(
 );
 
 router.put("/offlinePayment", registerApi.offlinePayment.handler);
-router.put(
-  "/cancleBooking",
-  passport.authenticate(["jwt"], { session: false }),
-  registerApi.cancleBooking.handler
-);
+router.put("/cancleBooking", registerApi.cancleBooking.handler);
 
 // // Delete Methods
 router.delete(
