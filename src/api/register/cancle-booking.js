@@ -70,7 +70,7 @@ module.exports = exports = {
       let info = await transporter.sendMail({
         from: process.env.EMAIL,
         to: User,
-        subject: "Honda| Cancle Booking",
+        subject: "Honda| Cancel Booking",
         html: `<!DOCTYPE html>
             <html lang="en">
             
@@ -119,7 +119,13 @@ module.exports = exports = {
                                         style="padding: 25px; background-color: #af2029; width: 91.6%;"
                                         >
                                         <p align="center" style="color: #fff; font-size: 40px; font-weight: 500; margin: 0 0 1rem 0;">Welcome to Honda</p>
-                                        <span align="center" style="display: block; font-size: 27px; color: #fff;">User's Information</span>
+                                        <center>
+                    <span
+                      align="center"
+                      style="display: block; font-size: 27px; color: #fff"
+                      >User's Information</span
+                    >
+                  </center>
                                        
 
 
@@ -132,6 +138,8 @@ module.exports = exports = {
                                 <tr>
                                     <td style="padding: 3rem 2rem 2rem 2rem;">
                                       <p align="center" style="color: #585d6a; font-size: 14px; margin: 0;">
+                                      <h3 align="center">Your Booking Cancel Successfully</h3><br>
+
                                       User ID : ${
                                         findUser._id ? findUser._id : "-"
                                       }<br>
