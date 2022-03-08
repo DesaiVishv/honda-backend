@@ -12,6 +12,7 @@ module.exports = exports = {
   // router validation
   validation: Joi.object({
     phone: Joi.number().required(),
+    email: Joi.string(),
     password: Joi.string().required(),
     lastPage: Joi.string(),
     type: Joi.string(),
@@ -19,7 +20,7 @@ module.exports = exports = {
 
   // route handler
   handler: async (req, res) => {
-    let { phone, password, lastPage, type } = req.body;
+    let { phone, email, password, lastPage, type } = req.body;
     console.log("vishv---------", req.headers["user-agent"], req.ip);
     if (!phone || !password) {
       logger.error(messages.FIELD_REQUIRE);
@@ -42,9 +43,8 @@ module.exports = exports = {
       //     "password": password,
       //     "status.name": { $ne: enums.USER_STATUS.DISABLED.name }
       // };
-
       let findRole = await global.models.GLOBAL.EXAMINER.findOne({
-        phone: phone,
+        $or: [{ phone: phone }, { email: email }],
       }).populate({
         path: "role",
         model: "role",
@@ -53,7 +53,7 @@ module.exports = exports = {
       console.log("findRole", findRole);
       // const aadmin = await global.models.GLOBAL.ADMIN.find({});
       let admin = await global.models.GLOBAL.ADMIN.findOne({
-        phone: phone,
+        $or: [{ phone: phone }, { email: email }],
       }).populate({
         path: "role",
         model: "role",
@@ -132,6 +132,7 @@ module.exports = exports = {
         date: new Date(),
         environment: process.env.APP_ENVIRONMENT,
         phone: phone,
+        email: email,
         scope: "login",
         type: rolename.roleName,
         rolename: rolename.roleName,

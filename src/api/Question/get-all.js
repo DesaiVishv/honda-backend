@@ -12,6 +12,18 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
+      var date = new Date();
+      var monthed = new Date(date.setDate(date.getDate() - 1));
+      var monthsd = new Date(date.setMonth(date.getMonth() - 1));
+      date = new Date();
+      weeked = new Date(date.setDate(date.getDate() - 1));
+      weeksd = new Date(date.setMonth(date.getMonth() - 3));
+      var yearsd = new Date(date.getFullYear(), 0, 1);
+      var yeared = new Date(date.getFullYear(), 11, 31);
+      date = new Date();
+      yeared = new Date(date.setDate(date.getDate() - 1));
+      yearsd = new Date(date.setFullYear(date.getFullYear() - 1));
+
       let sd = req.query.sd;
       let ed = req.query.ed;
       let dateFilter = {};
@@ -23,6 +35,57 @@ module.exports = exports = {
           ],
         };
       }
+      let aggregate = [
+        {
+          $facet: {
+            quarterly: [
+              {
+                $match: {
+                  $and: [
+                    {
+                      createdAt: { $gte: weeksd },
+                    },
+                    {
+                      createdAt: { $lte: weeked },
+                    },
+                  ],
+                },
+              },
+            ],
+            monthly: [
+              {
+                $match: {
+                  $and: [
+                    {
+                      createdAt: { $gte: monthsd },
+                    },
+                    {
+                      createdAt: { $lte: monthed },
+                    },
+                  ],
+                },
+              },
+            ],
+            yearly: [
+              {
+                $match: {
+                  $and: [
+                    {
+                      createdAt: { $gte: yearsd },
+                    },
+                    {
+                      createdAt: { $lte: yeared },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ];
+      const results = await global.models.GLOBAL.REGISTER.aggregate(
+        aggregate
+      ).sort({ createdAt: -1 });
       let search = req.query.search
         ? {
             Qname: { $regex: req.query.search, $options: "i" },
@@ -53,7 +116,7 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Question: Questions, count: count },
+        payload: { Question: Questions, results: results, count: count },
         logPayload: false,
       };
       res

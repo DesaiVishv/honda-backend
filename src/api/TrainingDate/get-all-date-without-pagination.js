@@ -13,13 +13,36 @@ module.exports = exports = {
   handler: async (req, res) => {
     try {
       // let id = req.params.id;
-      let sd=req.query.sd;
-      let ed=req.query.ed;
-      let dateFilter={};
-      if(sd){
-        dateFilter={$and:[{createdAt:{$gte:new Date(sd)}},{createdAt:{$lte:new Date(ed)}}]};
+
+      var date = new Date();
+      var monthed = new Date(date.setDate(date.getDate() - 1));
+      var monthsd = new Date(date.setMonth(date.getMonth() - 1));
+      date = new Date();
+      weeked = new Date(date.setDate(date.getDate() - 1));
+      weeksd = new Date(date.setMonth(date.getMonth() - 3));
+      var yearsd = new Date(date.getFullYear(), 0, 1);
+      var yeared = new Date(date.getFullYear(), 11, 31);
+      date = new Date();
+      yeared = new Date(date.setDate(date.getDate() - 1));
+      yearsd = new Date(date.setFullYear(date.getFullYear() - 1));
+      let sd = req.query.sd;
+      let ed = req.query.ed;
+
+      let dateFilter = {};
+      if (sd) {
+        dateFilter = {
+          $and: [
+            { createdAt: { $gte: new Date(sd) } },
+            { createdAt: { $lte: new Date(ed) } },
+          ],
+        };
       }
-      console.log(dateFilter);
+      // const aggregate = [
+      //   aggregate.push({
+
+      //   }),
+      // ];
+      console.log("fgawf", dateFilter);
       let search = req.query.search
         ? {
             "vehicleCategory.vehicleCategory": {
@@ -44,9 +67,10 @@ module.exports = exports = {
             },
           }
         : {};
-      const count = await global.models.GLOBAL.TRAININGDATE.find(
-        {...search,...dateFilter}
-      ).count();
+      const count = await global.models.GLOBAL.TRAININGDATE.find({
+        ...search,
+        ...dateFilter,
+      }).count();
       const Questions = await global.models.GLOBAL.TRAININGDATE.aggregate([
         {
           $lookup: {
@@ -74,13 +98,49 @@ module.exports = exports = {
           },
         },
         {
-          $match: {
-            $or: [search, findCourseType, findCourseName],
-            ...dateFilter
+          $facet: {
+            quarterly: [
+              {
+                $match: {
+                  $and: [
+                    { createdAt: { $gte: new Date(weeksd) } },
+                    { createdAt: { $lte: new Date(weeked) } },
+                  ],
+                },
+              },
+            ],
+            monthly: [
+              {
+                $match: {
+                  $and: [
+                    { createdAt: { $gte: new Date(monthsd) } },
+                    { createdAt: { $lte: new Date(monthed) } },
+                  ],
+                },
+              },
+            ],
+            yearly: [
+              {
+                $match: {
+                  $and: [
+                    { createdAt: { $gte: new Date(yearsd) } },
+                    { createdAt: { $lte: new Date(yeared) } },
+                  ],
+                },
+              },
+            ],
+            Filter: [
+              {
+                $match: {
+                  $or: [search, findCourseType, findCourseName],
+                  ...dateFilter,
+                },
+              },
+            ],
           },
         },
-      ])
-      .sort({ createdAt: -1 });
+      ]).sort({ createdAt: -1 });
+
       if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
@@ -98,7 +158,7 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Question: Questions, count: count },
+        payload: { Question: Questions, count: Questions.length },
         logPayload: false,
       };
       res

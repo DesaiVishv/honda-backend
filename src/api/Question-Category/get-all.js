@@ -12,15 +12,85 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      let sd=req.query.sd;
-      let ed=req.query.ed;
-      let dateFilter={};
-      if(sd){
-        dateFilter={$and:[{createdAt:{$gte:new Date(sd)}},{createdAt:{$lte:new Date(ed)}}]};
+      var date = new Date();
+      var monthed = new Date(date.setDate(date.getDate() - 1));
+      var monthsd = new Date(date.setMonth(date.getMonth() - 1));
+      date = new Date();
+      weeked = new Date(date.setDate(date.getDate() - 1));
+      weeksd = new Date(date.setMonth(date.getMonth() - 3));
+      var yearsd = new Date(date.getFullYear(), 0, 1);
+      var yeared = new Date(date.getFullYear(), 11, 31);
+      date = new Date();
+      yeared = new Date(date.setDate(date.getDate() - 1));
+      yearsd = new Date(date.setFullYear(date.getFullYear() - 1));
+
+      let sd = req.query.sd;
+      let ed = req.query.ed;
+      let dateFilter = {};
+      if (sd) {
+        dateFilter = {
+          $and: [
+            { createdAt: { $gte: new Date(sd) } },
+            { createdAt: { $lte: new Date(ed) } },
+          ],
+        };
       }
+
+      let aggregate = [
+        {
+          $facet: {
+            quarterly: [
+              {
+                $match: {
+                  $and: [
+                    {
+                      createdAt: { $gte: weeksd },
+                    },
+                    {
+                      createdAt: { $lte: weeked },
+                    },
+                  ],
+                },
+              },
+            ],
+            monthly: [
+              {
+                $match: {
+                  $and: [
+                    {
+                      createdAt: { $gte: monthsd },
+                    },
+                    {
+                      createdAt: { $lte: monthed },
+                    },
+                  ],
+                },
+              },
+            ],
+            yearly: [
+              {
+                $match: {
+                  $and: [
+                    {
+                      createdAt: { $gte: yearsd },
+                    },
+                    {
+                      createdAt: { $lte: yeared },
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ];
+      const results = await global.models.GLOBAL.REGISTER.aggregate(
+        aggregate
+      ).sort({ createdAt: -1 });
+
       let search = req.query.search
-        ? { name: { $regex: req.query.search, $options: "i" } ,...dateFilter}
-        : {...dateFilter};
+        ? { name: { $regex: req.query.search, $options: "i" }, ...dateFilter }
+        : { ...dateFilter };
 
       const count = await global.models.GLOBAL.QUESTIONCATEGORY.find(
         search
@@ -45,7 +115,7 @@ module.exports = exports = {
         req: req,
         result: 0,
         message: messages.SUCCESS,
-        payload: { Menu: Menus, count: count },
+        payload: { Menu: Menus, results: results, count: count },
         logPayload: false,
       };
       res
