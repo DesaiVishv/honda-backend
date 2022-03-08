@@ -4,6 +4,7 @@ const getRegister = require("./get-register-by-id");
 const getRegisterByBatch = require("./get-register-by-batch");
 const getAllRegister = require("./get-register");
 const getRecordsByRange = require("./get-records-by-range");
+const getMonthlyData = require("./get-monthly-data");
 const filterRecords = require("./filter-records");
 const updateRegister = require("./update-register");
 const cancleBooking = require("./cancle-booking");
@@ -18,6 +19,7 @@ module.exports = exports = {
   getRegister,
   getAllRegister,
   getRecordsByRange,
+  getMonthlyData,
   filterRecords,
   updateRegister,
   cancleBooking,

@@ -13,6 +13,7 @@ router.get("/getRegisterByBatch/:id", registerApi.getRegisterByBatch.handler);
 router.get("/getRecordsByRange", registerApi.getRecordsByRange.handler);
 router.get("/getFilterRecords", registerApi.filterRecords.handler);
 router.get("/getCancleRecord", registerApi.getCancleRecord.handler);
+router.get("/getAll/getMonthlyData", registerApi.getMonthlyData.handler);
 
 // router.get("/getAllMenu", menuApi.getAllMenu.handler);
 

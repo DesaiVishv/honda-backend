@@ -10,7 +10,14 @@ const upload = require("../../bulkUpload");
 router.get("/getAllQuestion", questionApi.getAllQuestion.handler);
 router.get("/getAll", questionApi.getAll.handler);
 
+router.get("/getAll/getMonthlyData", questionApi.getMonthlyData.handler);
+
 router.post("/getgenerateQuestion", questionApi.generateQuestion.handler);
+
+router.post(
+  "/getgenerateQuestionByVcid",
+  questionApi.generateQuestionByVcid.handler
+);
 
 router.post(
   "/uploadcsv",

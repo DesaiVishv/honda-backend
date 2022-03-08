@@ -11,6 +11,10 @@ router.get(
   "/getAllDateWithoutPagination",
   trainingDateApi.getDateWithoutPagination.handler
 );
+router.get(
+  "/getAllDateWithoutPagination/getMonthlyData",
+  trainingDateApi.getMonthlyData.handler
+);
 
 router.get("/getData", trainingDateApi.getDataByDate.handler);
 router.get("/getDatePrevious", trainingDateApi.getDatePrevious.handler);

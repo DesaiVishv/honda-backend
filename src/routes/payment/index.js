@@ -7,9 +7,9 @@ const router = express.Router(); // eslint-disable-line new-cap
 const { validate } = require("../../middlewares");
 const passport = require("passport");
 
-router.get("/getAllPayment",paymentCtrl.getAllPayment.handler)
-router.get("/getAll",paymentCtrl.getAllForDownload.handler)
-
+router.get("/getAllPayment", paymentCtrl.getAllPayment.handler);
+router.get("/getAll", paymentCtrl.getAllForDownload.handler);
+router.get("/getAll/getMonthlyData", paymentCtrl.getMonthlyData.handler);
 
 router.put("/pay", paymentCtrl.createPayment.pay);
 // router.post("/pay-product", auth, paymentCtrl.payProduct);
