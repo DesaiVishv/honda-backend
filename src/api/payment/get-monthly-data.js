@@ -26,6 +26,47 @@ module.exports = exports = {
 
       let aggregate = [
         {
+          $lookup: {
+            from: "admin",
+            localField: "uid",
+            foreignField: "_id",
+            as: "uid",
+          },
+        },
+
+        {
+          $lookup: {
+            from: "courseType",
+            localField: "ctid",
+            foreignField: "_id",
+            as: "ctid",
+          },
+        },
+        {
+          $lookup: {
+            from: "courseName",
+            localField: "cnid",
+            foreignField: "_id",
+            as: "cnid",
+          },
+        },
+        {
+          $lookup: {
+            from: "vehicleCategory",
+            localField: "vcid",
+            foreignField: "_id",
+            as: "vcid",
+          },
+        },
+        {
+          $lookup: {
+            from: "trainingDate",
+            localField: "tdid",
+            foreignField: "_id",
+            as: "tdid",
+          },
+        },
+        {
           $facet: {
             quarterly: [
               {

@@ -26,6 +26,30 @@ module.exports = exports = {
 
       let aggregate = [
         {
+          $lookup: {
+            from: "courseName",
+            localField: "cnid",
+            foreignField: "_id",
+            as: "cnid",
+          },
+        },
+        {
+          $lookup: {
+            from: "questioncategory",
+            localField: "Category",
+            foreignField: "_id",
+            as: "Category",
+          },
+        },
+        {
+          $lookup: {
+            from: "vehicleCategory",
+            localField: "vcid",
+            foreignField: "_id",
+            as: "vcid",
+          },
+        },
+        {
           $facet: {
             quarterly: [
               {
