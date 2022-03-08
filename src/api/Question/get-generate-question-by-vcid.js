@@ -31,25 +31,20 @@ module.exports = exports = {
       //   return;
       // }
       let category = await global.models.GLOBAL.VEHICLECATEGORY.find({});
+      console.log("vehicle-category", category, category.length);
       let Questions = [];
-      let inc = {};
       for (j = 0; j < category?.length; j++) {
-        inc = { ...inc, [j]: 0 };
-        Questions[j] = await utils.shuffle(
-          await global.models.GLOBAL.QUESTION.find({
-            Category: category[j]?._id,
-            language: type,
-            isActive: true,
-          })
-        );
-        console.log("---------vishv---------", Questions[j].length);
+        Questions[j] = await global.models.GLOBAL.QUESTION.find({
+          vcid: category[j]?._id,
+        });
       }
-      console.log("inc", inc);
-      Questions = utils.shuffle(Questions);
-      console.log(
-        utils.shuffle([1, 2, 3, 4, 5, 6, 7]),
-        utils.shuffle(Questions)
-      );
+      Questions = Questions;
+      console.log("find", Questions);
+
+      // console.log(
+      //   utils.shuffle([1, 2, 3, 4, 5, 6, 7]),
+      //   utils.shuffle(Questions)
+      // );
       if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
@@ -72,14 +67,14 @@ module.exports = exports = {
       let c = 0;
       let k = 0;
       let h = 0;
-      for (i = 0; i < no; i++) {
+      for (i = 0; i < category.length; i++) {
         if (c == 20) {
           break;
         }
-        for (j = 0; j < category.length; j++) {
-          if (Questions[j][i]) {
-            console.log("iiiiiinnnnnn", j, i);
-            data1.add(Questions[j][i]);
+        for (j = 0; j < no; j++) {
+          if (Questions[i][j]) {
+            console.log("iiiiiinnnnnn", i, j);
+            data1.add(Questions[i][j]);
             c++;
             if (c == 20) {
               break;
@@ -103,6 +98,18 @@ module.exports = exports = {
         // }
         // k++;
       }
+      for (let i in no) {
+        for (let j in category.length) {
+          if (Questions[j][i]) {
+            console.log("iiiiiinnnnnn", j, i);
+            data1.add(Questions[j][i]);
+            c++;
+            if (c == 20) {
+              break;
+            }
+          }
+        }
+      }
       // for (const x of data1.values()) {
       //   text += x + "<br>";
       // }
@@ -123,18 +130,18 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
         let examsetBody = {
-          batchId: batch,
-          tdid: tdid,
-          language: type,
-          no: no,
+          // batchId: batch,
+          // tdid: tdid,
+          // language: type,
+          // no: no,
           questionsList: data,
         };
-        let examset = await global.models.GLOBAL.EXAMSET(examsetBody);
-        await examset.save();
-        let update = await global.models.GLOBAL.BATCH.findByIdAndUpdate(
-          { _id: batch },
-          { isExamGenerate: true }
-        );
+        // let examset = await global.models.GLOBAL.EXAMSET(examsetBody);
+        // await examset.save();
+        // let update = await global.models.GLOBAL.BATCH.findByIdAndUpdate(
+        //   { _id: batch },
+        //   { isExamGenerate: true }
+        // );
         const data4createResponseObject = {
           req: req,
           result: 0,

@@ -12,6 +12,7 @@ module.exports = exports = {
   validation: Joi.object({
     Qname: Joi.string().required(),
     cnid: Joi.string(),
+    vcid: Joi.string(),
     image: Joi.string(),
     Option: Joi.array().required(),
     type: Joi.string().required(),
@@ -25,6 +26,7 @@ module.exports = exports = {
     const {
       Qname,
       cnid,
+      vcid,
       image,
       Option,
       type,
@@ -103,6 +105,7 @@ module.exports = exports = {
       let AmenintiesCreate = {
         Qname: Qname,
         cnid: cnid,
+        vcid: vcid,
         image: image,
         Option: Option,
         type: type,
