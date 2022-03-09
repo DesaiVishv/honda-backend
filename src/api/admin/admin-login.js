@@ -11,7 +11,7 @@ const utils = require("../../utils");
 module.exports = exports = {
   // router validation
   validation: Joi.object({
-    phone: Joi.number().required(),
+    phone: Joi.number(),
     email: Joi.string(),
     password: Joi.string().required(),
     lastPage: Joi.string(),
@@ -22,7 +22,7 @@ module.exports = exports = {
   handler: async (req, res) => {
     let { phone, email, password, lastPage, type } = req.body;
     console.log("vishv---------", req.headers["user-agent"], req.ip);
-    if (!phone || !password) {
+    if (!password) {
       logger.error(messages.FIELD_REQUIRE);
       const data4createResponseObject = {
         req: req,
