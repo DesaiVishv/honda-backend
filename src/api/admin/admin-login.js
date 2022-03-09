@@ -49,21 +49,16 @@ module.exports = exports = {
         model: "role",
         select: "_id roleName",
       });
-      console.log("findRole", findRole);
       // const aadmin = await global.models.GLOBAL.ADMIN.find({});
       let admin = await global.models.GLOBAL.ADMIN.find({
         $or: [{ phone: phone }, { email: phone }],
+      }).populate({
+        path: "role",
+        model: "role",
+        select: "_id roleName",
       });
-      // let adminEmail = await global.models.GLOBAL.ADMIN.find({
-      //   email: phone,
-      // }).populate({
-      //   path: "role",
-      //   model: "role",
-      //   select: "_id roleName",
-      // });
-      // console.log("adminEmail", adminEmail);
 
-      if (!admin) {
+      if (admin.length == 0) {
         logger.error(
           `/login - No ADMIN (phone: ${phone}) found with the provided password!`
         );
@@ -79,7 +74,7 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
         if (
-          admin[0].password !== password ||
+          admin[0].password !== password &&
           findRole[0].password !== password
         ) {
           const data4createResponseObject = {
@@ -120,7 +115,6 @@ module.exports = exports = {
         path: "menu",
         model: "menu",
       });
-      console.log("menu", menu);
       // LOGIN LOG
       let adminLoginLog = await global.models.GLOBAL.ADMINLOGINLOG({
         device: req.headers["user-agent"],
