@@ -12,7 +12,7 @@ module.exports = exports = {
   validation: Joi.object({
     name: Joi.string(),
     email: Joi.string(),
-    phone: Joi.number(),
+    phone: Joi.string(),
     password: Joi.string(),
     role: Joi.string(),
   }),

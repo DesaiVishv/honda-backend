@@ -11,8 +11,7 @@ const utils = require("../../utils");
 module.exports = exports = {
   // router validation
   validation: Joi.object({
-    phone: Joi.number(),
-    email: Joi.string(),
+    phone: Joi.string(),
     password: Joi.string().required(),
     lastPage: Joi.string(),
     type: Joi.string(),
@@ -20,8 +19,8 @@ module.exports = exports = {
 
   // route handler
   handler: async (req, res) => {
-    let { phone, email, password, lastPage, type } = req.body;
-    console.log("vishv---------", req.headers["user-agent"], req.ip);
+    let { phone, password, lastPage, type } = req.body;
+    // console.log("vishv---------", req.headers["user-agent"], req.ip);
     if (!password) {
       logger.error(messages.FIELD_REQUIRE);
       const data4createResponseObject = {
@@ -43,24 +42,45 @@ module.exports = exports = {
       //     "password": password,
       //     "status.name": { $ne: enums.USER_STATUS.DISABLED.name }
       // };
-      let findRole = await global.models.GLOBAL.EXAMINER.findOne({
-        $or: [{ phone: phone }, { email: email }],
-      }).populate({
-        path: "role",
-        model: "role",
-        select: "_id roleName",
-      });
-      console.log("findRole", findRole);
+      // let findRole = await global.models.GLOBAL.EXAMINER.find({
+      //   $or: [{ phone: phone }],
+      // }).populate({
+      //   path: "role",
+      //   model: "role",
+      //   select: "_id roleName",
+      // });
+
+      // if (findRole.length == 0) {
+      //   const data4createResponseObject = {
+      //     req: req,
+      //     result: -1,
+      //     message: messages.USER_DOES_NOT_EXIST,
+      //     payload: {},
+      //     logPayload: false,
+      //   };
+      //   return res
+      //     .status(enums.HTTP_CODES.BAD_REQUEST)
+      //     .json(utils.createResponseObject(data4createResponseObject));
+      // }
       // const aadmin = await global.models.GLOBAL.ADMIN.find({});
-      let admin = await global.models.GLOBAL.ADMIN.findOne({
-        $or: [{ phone: phone }, { email: email }],
+      let admin = await global.models.GLOBAL.ADMIN.find({
+        $or: [{ phone: phone }, { email: phone }],
       }).populate({
         path: "role",
         model: "role",
         select: "_id roleName",
       });
+      // let adminEmail = await global.models.GLOBAL.ADMIN.find({
+      //   email: phone,
+      // }).populate({
+      //   path: "role",
+      //   model: "role",
+      //   select: "_id roleName",
+      // });
+      // console.log("adminEmail", adminEmail);
+
       console.log("admin", admin);
-      if (!admin && !findRole) {
+      if (!admin) {
         logger.error(
           `/login - No ADMIN (phone: ${phone}) found with the provided password!`
         );
@@ -75,7 +95,7 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.BAD_REQUEST)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
-        if (admin?.password !== password && findRole?.password !== password) {
+        if (admin?.password !== password) {
           const data4createResponseObject = {
             req: req,
             result: -1,
@@ -132,7 +152,6 @@ module.exports = exports = {
         date: new Date(),
         environment: process.env.APP_ENVIRONMENT,
         phone: phone,
-        email: email,
         scope: "login",
         type: rolename.roleName,
         rolename: rolename.roleName,

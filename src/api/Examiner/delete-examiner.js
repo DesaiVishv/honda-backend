@@ -43,24 +43,13 @@ module.exports = exports = {
 
     try {
       let findUser = await global.models.GLOBAL.EXAMINER.findById({ _id: id });
-      const deletedItem = await global.models.GLOBAL.EXAMINER.findByIdAndRemove(
-        id
-      );
+      console.log("findUSer", findUser.phone);
       let deleteUser = await global.models.GLOBAL.ADMIN.findOneAndRemove({
-        email: findUser.email,
+        phone: findUser.phone,
       });
-      if (!deletedItem) {
-        const data4createResponseObject = {
-          req: req,
-          result: 0,
-          message: messages.ITEM_NOT_FOUND,
-          payload: {},
-          logPayload: false,
-        };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
-      } else {
+      console.log("deleteUser", deleteUser);
+      if (deleteUser) {
+        deletedItem = await global.models.GLOBAL.EXAMINER.findByIdAndRemove(id);
         const data4createResponseObject = {
           req: req,
           result: 0,
@@ -68,7 +57,7 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        res
+        return res
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       }

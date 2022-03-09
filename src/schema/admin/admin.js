@@ -9,7 +9,7 @@ module.exports = (connection) => {
       fatherName: { type: String },
       email: { type: String },
       // lname:{ type: String },
-      phone: { type: Number },
+      phone: { type: String },
       state: { type: String },
       IDTRcenter: { type: String },
       password: { type: String },

@@ -19,7 +19,7 @@ module.exports = exports = {
     fatherName: Joi.string(),
     state: Joi.string().required(),
     IDTRcenter: Joi.string().required(),
-    phone: Joi.number().required(),
+    phone: Joi.string().required(),
     email: Joi.string().required(),
     code: Joi.string().required(),
     role: Joi.string().required(),
