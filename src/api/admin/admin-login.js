@@ -42,7 +42,7 @@ module.exports = exports = {
       //     "password": password,
       //     "status.name": { $ne: enums.USER_STATUS.DISABLED.name }
       // };
-      let findRole = await global.models.GLOBAL.EXAMINER.find({
+      let findRole = await global.models.GLOBAL.EXAMINER.findOne({
         $or: [{ phone: phone }, { email: phone }],
       }).populate({
         path: "role",
@@ -50,14 +50,14 @@ module.exports = exports = {
         select: "_id roleName",
       });
       // const aadmin = await global.models.GLOBAL.ADMIN.find({});
-      let admin = await global.models.GLOBAL.ADMIN.find({
+      let admin = await global.models.GLOBAL.ADMIN.findOne({
         $or: [{ phone: phone }, { email: phone }],
       }).populate({
         path: "role",
         model: "role",
         select: "_id roleName",
       });
-
+      console.log("admin", admin);
       if (admin.length == 0) {
         logger.error(
           `/login - No ADMIN (phone: ${phone}) found with the provided password!`
@@ -73,10 +73,7 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.BAD_REQUEST)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
-        if (
-          admin[0].password !== password &&
-          findRole[0].password !== password
-        ) {
+        if (admin.password !== password && findRole.password !== password) {
           const data4createResponseObject = {
             req: req,
             result: -1,
@@ -90,7 +87,7 @@ module.exports = exports = {
         }
       }
       const rolename = await global.models.GLOBAL.ROLE.findOne({
-        _id: admin[0].role._id,
+        _id: admin.role._id,
       });
       // if (rolename.roleName === "admin") {
       //   role = enums.USER_TYPE.ADMIN;
@@ -110,7 +107,7 @@ module.exports = exports = {
       }
 
       const menu = await global.models.GLOBAL.ASSIGNMENU.find({
-        assignTo: admin[0].role,
+        assignTo: admin.role,
       }).populate({
         path: "menu",
         model: "menu",
@@ -119,7 +116,7 @@ module.exports = exports = {
       let adminLoginLog = await global.models.GLOBAL.ADMINLOGINLOG({
         device: req.headers["user-agent"],
         ip: req.ip,
-        uid: admin[0]._id,
+        uid: admin._id,
         lastPage: lastPage,
         type: type,
       });
@@ -127,7 +124,7 @@ module.exports = exports = {
 
       // User found - create JWT and return it
       const data4token = {
-        id: admin[0]._id,
+        id: admin._id,
         date: new Date(),
         environment: process.env.APP_ENVIRONMENT,
         phone: phone,
@@ -136,7 +133,7 @@ module.exports = exports = {
         rolename: rolename.roleName,
       };
 
-      delete admin[0]._doc.password;
+      delete admin._doc.password;
       // delete findRole._doc.password;
       // console.log("amdin", admin);
       // if (admin) {

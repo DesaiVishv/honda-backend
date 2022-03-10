@@ -172,10 +172,10 @@ module.exports.setup = () => {
             "status.name": { $ne: enums.USER_STATUS.DISABLED },
           };
         } else {
-          criteria = {
-            phone: phone,
-            "status.name": { $ne: enums.USER_STATUS.DISABLED },
-          };
+          // criteria = {
+          //   phone: phone,
+          //   "status.name": { $ne: enums.USER_STATUS.DISABLED },
+          // };
         }
       } else if (type === enums.USER_TYPE.ADMIN) {
         console.log("test3");
@@ -196,10 +196,10 @@ module.exports.setup = () => {
             "status.name": { $ne: enums.USER_STATUS.DISABLED },
           };
         } else {
-          criteria = {
-            email: email,
-            "status.name": { $ne: enums.USER_STATUS.DISABLED },
-          };
+          // criteria = {
+          //   email: email,
+          //   "status.name": { $ne: enums.USER_STATUS.DISABLED },
+          // };
         }
       } else if (type === enums.USER_TYPE.EXAMINER) {
         console.log("test3");
@@ -220,10 +220,10 @@ module.exports.setup = () => {
             "status.name": { $ne: enums.USER_STATUS.DISABLED },
           };
         } else {
-          criteria = {
-            email: email,
-            "status.name": { $ne: enums.USER_STATUS.DISABLED },
-          };
+          // criteria = {
+          //   email: email,
+          //   "status.name": { $ne: enums.USER_STATUS.DISABLED },
+          // };
         }
       } else if (type === enums.USER_TYPE.DATAENTRY) {
         console.log("test3");
@@ -244,10 +244,10 @@ module.exports.setup = () => {
             "status.name": { $ne: enums.USER_STATUS.DISABLED },
           };
         } else {
-          criteria = {
-            email: email,
-            "status.name": { $ne: enums.USER_STATUS.DISABLED },
-          };
+          // criteria = {
+          //   email: email,
+          //   "status.name": { $ne: enums.USER_STATUS.DISABLED },
+          // };
         }
       } else if (type === enums.USER_TYPE.CONTENTMANAGER) {
         console.log("test3");
@@ -268,10 +268,10 @@ module.exports.setup = () => {
             "status.name": { $ne: enums.USER_STATUS.DISABLED },
           };
         } else {
-          criteria = {
-            email: email,
-            "status.name": { $ne: enums.USER_STATUS.DISABLED },
-          };
+          // criteria = {
+          //   email: email,
+          //   "status.name": { $ne: enums.USER_STATUS.DISABLED },
+          // };
         }
       }
       console.log("test4", type);
