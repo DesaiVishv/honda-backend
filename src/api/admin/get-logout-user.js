@@ -12,7 +12,7 @@ module.exports = exports = {
   // route handler
   handler: async (req, res) => {
     const { user } = req;
-
+    const id = req.params.id;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
     //     req: req,
@@ -34,22 +34,31 @@ module.exports = exports = {
 
       let search = req.query.search
         ? {
-            firstName: { $regex: req.query.search, $options: "i" },
-            type: "logout",
+            lastPage: { $regex: req.query.search, $options: "i" },
           }
-        : { type: "logout" };
+        : {};
 
-      const count = await global.models.GLOBAL.ADMINLOGINLOG.find(
-        search
-      ).count();
+      const count = await global.models.GLOBAL.ADMINLOGINLOG.find({
+        uid: id,
+        type: "logout",
+        ...search,
+      }).count();
       if (req.query.page) {
-        admin = await global.models.GLOBAL.ADMINLOGINLOG.find(search)
+        admin = await global.models.GLOBAL.ADMINLOGINLOG.find({
+          uid: id,
+          type: "logout",
+          ...search,
+        })
           .sort({ registrationDate: -1 })
           .skip(skip)
           .limit(limit)
           .populate({ path: "uid", model: "admin" });
       } else {
-        admin = await global.models.GLOBAL.ADMINLOGINLOG.find(search)
+        admin = await global.models.GLOBAL.ADMINLOGINLOG.find({
+          uid: id,
+          type: "logout",
+          ...search,
+        })
           .sort({
             registrationDate: -1,
           })
