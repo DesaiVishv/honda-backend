@@ -19,7 +19,7 @@ module.exports = exports = {
     type: Joi.string().required(),
     language: Joi.string().required(),
     weight: Joi.number(),
-    Category: Joi.array().required(),
+    Category: Joi.string().required(),
     isActive: Joi.boolean(),
   }),
 
