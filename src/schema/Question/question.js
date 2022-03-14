@@ -8,7 +8,7 @@ module.exports = (connection) => {
       Qname: { type: String, require: true },
       cnid: { type: mongoose.Schema.Types.ObjectId },
       vcid: { type: mongoose.Schema.Types.ObjectId },
-      vscid: [mongoose.Schema.Types.ObjectId],
+      vscid: { type: mongoose.Schema.Types.ObjectId },
       image: { type: String },
       csv: { type: Array },
       Option: [

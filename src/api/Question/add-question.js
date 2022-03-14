@@ -13,7 +13,7 @@ module.exports = exports = {
     Qname: Joi.string().required(),
     cnid: Joi.string(),
     vcid: Joi.string(),
-    vscid: Joi.array(),
+    vscid: Joi.string(),
     image: Joi.string(),
     Option: Joi.array().required(),
     type: Joi.string().required(),
