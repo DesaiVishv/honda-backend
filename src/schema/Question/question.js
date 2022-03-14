@@ -8,6 +8,7 @@ module.exports = (connection) => {
       Qname: { type: String, require: true },
       cnid: { type: mongoose.Schema.Types.ObjectId },
       vcid: { type: mongoose.Schema.Types.ObjectId },
+      vscid: [mongoose.Schema.Types.ObjectId],
       image: { type: String },
       csv: { type: Array },
       Option: [
@@ -35,7 +36,7 @@ module.exports = (connection) => {
       type: { type: String, require: true },
       language: { type: String, require: true },
       weight: { type: Number },
-      Category: { type: mongoose.Schema.Types.ObjectId, require: true },
+      Category: [mongoose.Schema.Types.ObjectId],
       isActive: { type: Boolean, default: true },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },

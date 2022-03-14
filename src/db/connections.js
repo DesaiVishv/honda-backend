@@ -32,6 +32,10 @@ module.exports = async () => {
         VEHICLECATEGORY: require("../schema/VehicleCategory/vehicleCategory")(
           connection_IN_HONDA
         ),
+        VEHICLESUBCATEGORY:
+          require("../schema/vehicleSubCategory/vehicleSubCategory")(
+            connection_IN_HONDA
+          ),
         LICENSECATEGORY: require("../schema/licenseCategory/licenseCategory")(
           connection_IN_HONDA
         ),

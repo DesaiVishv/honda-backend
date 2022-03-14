@@ -12,6 +12,11 @@ router.get(
   questionCategoryApi.getMonthlyData.handler
 );
 
+router.post(
+  "/getCategoryByVscid",
+  questionCategoryApi.getCategoryByVscid.handler
+);
+
 // router.post(
 //   "/getQuestionByQuestionSet",
 //   questionApi.getQuestionByQuestionSet.handler

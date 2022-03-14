@@ -11,11 +11,13 @@ module.exports = exports = {
   // route validation
   validation: Joi.object({
     name: Joi.string().required(),
+    vcid: Joi.string(),
+    vscid: Joi.array(),
     isActive: Joi.boolean(),
   }),
 
   handler: async (req, res) => {
-    const { name, isActive } = req.body;
+    const { name, vcid, vscid, isActive } = req.body;
     const { user } = req;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
@@ -41,7 +43,21 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.BAD_REQUEST)
         .json(utils.createResponseObject(data4createResponseObject));
     }
-
+    let findVcid = await global.models.GLOBAL.VEHICLECATEGORY.find({
+      _id: vcid,
+    });
+    if (findVcid.length == 0) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.ENTER_VCID,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
     try {
       //   const checkMenu = await global.models.GLOBAL.MENU.find({ name: name });
       //   if (checkMenu.length > 0) {
@@ -59,6 +75,8 @@ module.exports = exports = {
       //   }
       let AmenintiesCreate = {
         name: name,
+        vcid: vcid,
+        vscid: vscid,
         isActive: isActive,
       };
       const newAmeninties = await global.models.GLOBAL.QUESTIONCATEGORY(

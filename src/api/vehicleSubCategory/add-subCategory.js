@@ -10,47 +10,26 @@ const utils = require("../../utils");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    Qname: Joi.string().required(),
-    cnid: Joi.string(),
+    vehicleSubCategory: Joi.string().required(),
+    description: Joi.string().required(),
     vcid: Joi.string(),
-    vscid: Joi.array(),
-    image: Joi.string(),
-    Option: Joi.array().required(),
-    type: Joi.string().required(),
-    language: Joi.string().required(),
-    weight: Joi.number(),
-    Category: Joi.array().required(),
-    isActive: Joi.boolean(),
+    // imagePath: Joi.string().allow("")
   }),
 
   handler: async (req, res) => {
-    const {
-      Qname,
-      cnid,
-      vcid,
-      vscid,
-      image,
-      Option,
-      type,
-      language,
-      weight,
-      Category,
-      isActive,
-    } = req.body;
+    const { vehicleSubCategory, description, vcid } = req.body;
     const { user } = req;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
-      const data4createResponseObject = {
-        req: req,
-        result: -1,
-        message: messages.NOT_AUTHORIZED,
-        payload: {},
-        logPayload: false,
-      };
-      return res
-        .status(enums.HTTP_CODES.UNAUTHORIZED)
-        .json(utils.createResponseObject(data4createResponseObject));
-    }
-    if (!Qname || !type || !language || !Category) {
+    // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    //     const data4createResponseObject = {
+    //         req: req,
+    //         result: -1,
+    //         message: messages.NOT_AUTHORIZED,
+    //         payload: {},
+    //         logPayload: false
+    //     };
+    //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
+    // }
+    if (!vehicleSubCategory) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -62,17 +41,30 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.BAD_REQUEST)
         .json(utils.createResponseObject(data4createResponseObject));
     }
-
+    let findVcid = await global.models.GLOBAL.VEHICLECATEGORY.find({
+      _id: vcid,
+    });
+    if (findVcid.length == 0) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.ENTER_VCID,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
     try {
-      const checkMenu = await global.models.GLOBAL.QUESTION.find({
-        Qname: Qname,
+      const checkMenu = await global.models.GLOBAL.VEHICLESUBCATEGORY.find({
+        vehicleSubCategory: vehicleSubCategory,
       });
-      console.log("checkMenu", checkMenu);
       if (checkMenu.length > 0) {
         const data4createResponseObject = {
           req: req,
           result: -400,
-          message: messages.EXISTS_QUESTION,
+          message: messages.EXISTS_MENU,
           payload: {},
           logPayload: false,
         };
@@ -81,44 +73,12 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
-      //   const findQset = await global.models.GLOBAL.QUESTIONSET.findById({
-      //     _id: Qsetid,
-      //   });
-      //   console.log("findQset", findQset.language);
-      // const findLanguage = await global.models.GLOBAL.QUESTIONSET.find({
-      //   _id: Qsetid,
-      //   language: language,
-      // });
-      // console.log("findLan", findLanguage);
-      // if (findLanguage.length == 0) {
-      //   const data4createResponseObject = {
-      //     req: req,
-      //     result: -400,
-      //     message: messages.MATCH_LANGUAGE,
-      //     payload: {},
-      //     logPayload: false,
-      //   };
-      //   return res
-      //     .status(enums.HTTP_CODES.BAD_REQUEST)
-      //     .json(utils.createResponseObject(data4createResponseObject));
-      // }
-      //   console.log("findLanguage", findLanguage);
-
       let AmenintiesCreate = {
-        Qname: Qname,
-        cnid: cnid,
+        vehicleSubCategory: vehicleSubCategory,
+        description: description,
         vcid: vcid,
-        vscid: vscid,
-        image: image,
-        Option: Option,
-        type: type,
-        language: language,
-        weight: weight,
-        Category: Category,
-        isActive: isActive,
       };
-
-      const newAmeninties = await global.models.GLOBAL.QUESTION(
+      const newAmeninties = await global.models.GLOBAL.VEHICLESUBCATEGORY(
         AmenintiesCreate
       );
       newAmeninties.save();
