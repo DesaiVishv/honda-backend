@@ -29,7 +29,8 @@ module.exports = exports = {
       const Menus = await global.models.GLOBAL.QUESTIONCATEGORY.find(search)
         .sort({ createdAt: -1 })
         .skip(skip)
-        .limit(limit);
+        .limit(limit)
+        .populate({ path: "vscid", model: "vehicleSubCategory" });
       if (Menus.length == 0) {
         const data4createResponseObject = {
           req: req,
