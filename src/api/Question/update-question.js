@@ -16,8 +16,18 @@ module.exports = exports = {
   handler: async (req, res) => {
     const { id } = req.params;
     const { user } = req;
-    const { Qname, image, Option, type, language, weight, Category, isActive } =
-      req.body;
+    const {
+      Qname,
+      image,
+      Option,
+      vcid,
+      vscid,
+      type,
+      language,
+      weight,
+      Category,
+      isActive,
+    } = req.body;
     if (user.type !== enums.USER_TYPE.SUPERADMIN) {
       const data4createResponseObject = {
         req: req,
@@ -75,6 +85,8 @@ module.exports = exports = {
           image: image,
           Option: Option,
           type: type,
+          vcid: vcid,
+          vscid: vscid,
           language: language,
           weight: weight,
           Category: Category,
