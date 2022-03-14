@@ -16,7 +16,7 @@ module.exports = exports = {
   handler: async (req, res) => {
     const { id } = req.params;
     const { user } = req;
-    const { name, isActive } = req.body;
+    const { name, vscid, vcid, isActive } = req.body;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
     //     req: req,
@@ -71,6 +71,8 @@ module.exports = exports = {
         // }
         let updateItem = {
           name: name,
+          vscid: vscid,
+          vcid: vcid,
         };
         if (isActive != null) {
           updateItem = { isActive: isActive, ...updateItem };
