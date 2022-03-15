@@ -12,7 +12,7 @@ module.exports = exports = {
   validation: Joi.object({
     name: Joi.string().required(),
     vcid: Joi.string(),
-    vscid: Joi.array(),
+    vscid: Joi.string(),
     isActive: Joi.boolean(),
   }),
 
