@@ -13,146 +13,55 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      let { no, type, batch, tdid } = req.body;
-      let examsetData = await global.models.GLOBAL.EXAMSET.find({
-        batchId: batch,
+      let { no, type, vcid, vscid, ctid } = req.body;
+
+      let findVcid = await global.models.GLOBAL.VEHICLECATEGORY.find({
+        _id: vcid,
       });
-      // if (examsetData.length != 0) {
-      //   const data4createResponseObject = {
-      //     req: req,
-      //     result: -400,
-      //     message: messages.ITEM_EXISTS,
-      //     payload: {},
-      //     logPayload: false,
-      //   };
-      //   res
-      //     .status(enums.HTTP_CODES.NOT_FOUND)
-      //     .json(utils.createResponseObject(data4createResponseObject));
-      //   return;
-      // }
-      let category = await global.models.GLOBAL.VEHICLECATEGORY.find({});
-      console.log("vehicle-category", category, category.length);
-      let Questions = [];
-      for (j = 0; j < category?.length; j++) {
-        Questions[j] = await global.models.GLOBAL.QUESTION.find({
-          vcid: category[j]?._id,
-        });
-      }
-      Questions = Questions;
-      console.log("find", Questions);
-
-      // console.log(
-      //   utils.shuffle([1, 2, 3, 4, 5, 6, 7]),
-      //   utils.shuffle(Questions)
-      // );
-      if (Questions.length == 0) {
-        const data4createResponseObject = {
-          req: req,
-          result: -400,
-          message: messages.NOT_FOUND,
-          payload: {},
-          logPayload: false,
-        };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
-        return;
-      }
-      let data1 = new Set();
-      let data = [];
-      // let arr = Array.from(data);
-      // let arr = [...data];
-      // let arr = [];
-      // data.forEach((x) => arr.push(x));
-      let c = 0;
-      let k = 0;
-      let h = 0;
-      for (i = 0; i < category.length; i++) {
-        if (c == 20) {
-          break;
-        }
-        for (j = 0; j < no; j++) {
-          if (Questions[i][j]) {
-            console.log("iiiiiinnnnnn", i, j);
-            data1.add(Questions[i][j]);
-            c++;
-            if (c == 20) {
-              break;
-            }
-          }
-        }
-        // if (c == no) {
-        //   break;
-        // }
-        // if (k == 500) {
-        //   k = 0;
-        // }
-        // if (Questions[i % category.length][k]) {
-        //   console.log("iiiiiinnnnnn", i % category.length, k);
-        //   data1.add(Questions[i % category.length][k]);
-        //   c++;
-        //   h++;
-        // }
-        // if (h == category.length) {
-        //   h = 0;
-        // }
-        // k++;
-      }
-      for (let i in no) {
-        for (let j in category.length) {
-          if (Questions[j][i]) {
-            console.log("iiiiiinnnnnn", j, i);
-            data1.add(Questions[j][i]);
-            c++;
-            if (c == 20) {
-              break;
-            }
-          }
-        }
-      }
-      // for (const x of data1.values()) {
-      //   text += x + "<br>";
-      // }
-      data1.forEach((x) => data.push(x));
-
-      // console.log("------------", data.values());
-      console.log("kfbkdsbfweif", data, data.length);
-      if (data.length < no) {
+      if (findVcid.length == 0) {
         const data4createResponseObject = {
           req: req,
           result: -1,
-          message: messages.ADD_MORE,
+          message: messages.ENTER_VCID,
           payload: {},
           logPayload: false,
         };
-        res
-          .status(enums.HTTP_CODES.NOT_FOUND)
-          .json(utils.createResponseObject(data4createResponseObject));
-      } else {
-        let examsetBody = {
-          // batchId: batch,
-          // tdid: tdid,
-          // language: type,
-          // no: no,
-          questionsList: data,
-        };
-        // let examset = await global.models.GLOBAL.EXAMSET(examsetBody);
-        // await examset.save();
-        // let update = await global.models.GLOBAL.BATCH.findByIdAndUpdate(
-        //   { _id: batch },
-        //   { isExamGenerate: true }
-        // );
-        const data4createResponseObject = {
-          req: req,
-          result: 0,
-          message: messages.SUCCESS,
-          payload: { Question: data, count: data.length },
-          logPayload: false,
-        };
-        res
-          .status(enums.HTTP_CODES.OK)
+        return res
+          .status(enums.HTTP_CODES.BAD_REQUEST)
           .json(utils.createResponseObject(data4createResponseObject));
       }
+      let findVscid = await global.models.GLOBAL.VEHICLESUBCATEGORY.find({
+        _id: { $in: vscid },
+      });
+      if (findVscid.length == 0) {
+        const data4createResponseObject = {
+          req: req,
+          result: -1,
+          message: messages.ENTER_VSCID,
+          payload: {},
+          logPayload: false,
+        };
+        return res
+          .status(enums.HTTP_CODES.BAD_REQUEST)
+          .json(utils.createResponseObject(data4createResponseObject));
+      }
+      let findctid = await global.models.GLOBAL.QUESTIONCATEGORY.find({
+        _id: ctid,
+      });
+      if (findctid.length == 0) {
+        const data4createResponseObject = {
+          req: req,
+          result: -1,
+          message: messages.ENTER_CTID,
+          payload: {},
+          logPayload: false,
+        };
+        return res
+          .status(enums.HTTP_CODES.BAD_REQUEST)
+          .json(utils.createResponseObject(data4createResponseObject));
+      }
+
+      for (i = 0; i <= findVscid.length; i++) {}
     } catch (error) {
       logger.error(
         `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`

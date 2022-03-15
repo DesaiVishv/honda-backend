@@ -61,6 +61,8 @@
   "REGISTER_SUCCESS": "Register Successfully",
   "FILL_DETAILS": "Please enter the entire details",
   "ENTER_VCID": "Please enter the correct the vehicle category details",
+  "ENTER_VSCID": "Please enter the correct the vehicle sub category details",
+  "ENTER_CTID": "Please enter the correct the question category details",
   "FILL_CODE": "Please enter the email or verification code",
   "RIGHT_OTP": "OTP is correct",
   "SHOP_NOT_FOUND": "Sorry! The requested shop could not be found!",
