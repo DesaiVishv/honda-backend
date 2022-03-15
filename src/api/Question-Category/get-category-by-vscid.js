@@ -16,7 +16,7 @@ module.exports = exports = {
 
       const category = await global.models.GLOBAL.QUESTIONCATEGORY.find({
         vcid: vcid,
-        vscid: { $in: vscid },
+        vscid: vscid,
       }).sort({ createdAt: -1 });
       if (category.length == 0) {
         const data4createResponseObject = {
