@@ -57,22 +57,22 @@ module.exports = exports = {
         .json(utils.createResponseObject(data4createResponseObject));
     }
     try {
-      const checkMenu = await global.models.GLOBAL.VEHICLESUBCATEGORY.find({
-        vehicleSubCategory: vehicleSubCategory,
-      });
-      if (checkMenu.length > 0) {
-        const data4createResponseObject = {
-          req: req,
-          result: -400,
-          message: messages.EXISTS_MENU,
-          payload: {},
-          logPayload: false,
-        };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
-        return;
-      }
+      // const checkMenu = await global.models.GLOBAL.VEHICLESUBCATEGORY.find({
+      //   vehicleSubCategory: vehicleSubCategory,
+      // });
+      // if (checkMenu.length > 0) {
+      //   const data4createResponseObject = {
+      //     req: req,
+      //     result: -400,
+      //     message: messages.EXISTS_MENU,
+      //     payload: {},
+      //     logPayload: false,
+      //   };
+      //   res
+      //     .status(enums.HTTP_CODES.OK)
+      //     .json(utils.createResponseObject(data4createResponseObject));
+      //   return;
+      // }
       let AmenintiesCreate = {
         vehicleSubCategory: vehicleSubCategory,
         description: description,
