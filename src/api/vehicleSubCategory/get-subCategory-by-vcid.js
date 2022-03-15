@@ -15,7 +15,10 @@ module.exports = exports = {
       let id = req.params.id;
 
       const vehicleSubCategory =
-        await global.models.GLOBAL.VEHICLESUBCATEGORY.find({ vcid: id }).sort({
+        await global.models.GLOBAL.VEHICLESUBCATEGORY.find({
+          vcid: id,
+          isDelete: false,
+        }).sort({
           createdAt: -1,
         });
 
