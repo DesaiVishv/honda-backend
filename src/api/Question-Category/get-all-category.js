@@ -30,6 +30,7 @@ module.exports = exports = {
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
+        .populate({ path: "vcid", model: "vehicleCategory" })
         .populate({ path: "vscid", model: "vehicleSubCategory" });
       if (Menus.length == 0) {
         const data4createResponseObject = {
