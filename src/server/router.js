@@ -19,6 +19,7 @@ module.exports = (app, logger) => {
   const visionRoute = require("../routes/vision/index");
   const facilityRoute = require("../routes/facility/index");
   const galleryRoute = require("../routes/Gallery/index");
+  const startCourseRoute = require("../routes/startCourse/index");
   const registerRoute = require("../routes/register/index");
   const cmsRoute = require("../routes/cms/index");
   const feedbackRoute = require("../routes/feedBack/index");
@@ -65,6 +66,7 @@ module.exports = (app, logger) => {
   app.use(["/api/v1/vision"], visionRoute);
   app.use(["/api/v1/facility"], facilityRoute);
   app.use(["/api/v1/gallery"], galleryRoute);
+  app.use(["/api/v1/startCourse"], startCourseRoute);
   app.use(["/api/v1/register"], registerRoute);
   app.use(["/api/v1/cms"], cmsRoute);
   app.use(["/api/v1/feedback"], feedbackRoute);

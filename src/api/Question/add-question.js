@@ -11,7 +11,6 @@ module.exports = exports = {
   // route validation
   validation: Joi.object({
     Qname: Joi.string().required(),
-    cnid: Joi.string(),
     vcid: Joi.string(),
     vscid: Joi.string(),
     image: Joi.string(),
@@ -26,7 +25,6 @@ module.exports = exports = {
   handler: async (req, res) => {
     const {
       Qname,
-      cnid,
       vcid,
       vscid,
       image,
@@ -106,7 +104,6 @@ module.exports = exports = {
 
       let AmenintiesCreate = {
         Qname: Qname,
-        cnid: cnid,
         vcid: vcid,
         vscid: vscid,
         image: image,

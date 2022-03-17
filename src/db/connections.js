@@ -63,6 +63,9 @@ module.exports = async () => {
         VISION: require("../schema/vision/vision")(connection_IN_HONDA),
         FACILITIES: require("../schema/facility/facility")(connection_IN_HONDA),
         GALLERY: require("../schema/Gallery/gallery")(connection_IN_HONDA),
+        STARTCOURSE: require("../schema/startCourse/startCourse")(
+          connection_IN_HONDA
+        ),
         REGISTER: require("../schema/register/register")(connection_IN_HONDA),
         CMS: require("../schema/CMS/cms")(connection_IN_HONDA),
         FEEDBACK: require("../schema/feedBack/feedback")(connection_IN_HONDA),

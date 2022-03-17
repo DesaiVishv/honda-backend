@@ -27,9 +27,10 @@ var modifyDataOfExcel = async (arrayItem) => {
           obj = {
             type: arr[k].questiontype,
             language: arr[k].language.toLowerCase(),
-            Qname: arr[k].question,
-            cnid: arr[k].cnid,
-            Category: ObjectId(arr[k].Category),
+            Qname: arr[k].questionName,
+            vcid: ObjectId(arr[k].vehicleCategory),
+            vscid: ObjectId(arr[k].vehicleSubCategory),
+            Category: ObjectId(arr[k].QuestionCategory),
             Explaination: arr[k].Explaination,
             image: arr[k].image ? arr[k].image : null,
             Option: [
@@ -69,13 +70,13 @@ var checkExcelValidation = async (arrayItem) => {
                 return { success: false, msg: "QuestionType is required" };
               } else if (!arr[k].language) {
                 return { success: false, msg: "Language is required" };
-              } else if (!arr[k].question) {
+              } else if (!arr[k].questionName) {
                 return { success: false, msg: "Question is required" };
-              } else if (arr[k].Category) {
-                if (arr[k].Category) {
+              } else if (arr[k].QuestionCategory) {
+                if (arr[k].QuestionCategory) {
                   let findCategory =
                     await global.models.GLOBAL.QUESTIONCATEGORY.find({
-                      _id: arr[k].Category,
+                      _id: arr[k].QuestionCategory,
                     });
                   if (!findCategory) {
                     return {
@@ -89,11 +90,37 @@ var checkExcelValidation = async (arrayItem) => {
                     msg: "Question Category is required",
                   };
                 }
-              } else if (arr[k].cnid) {
-                return {
-                  success: false,
-                  msg: "Course Name is required",
-                };
+              } else if (arr[k].vehicleCategory) {
+                let findVcid = await global.models.GLOBAL.VEHICLECATEGORY.find({
+                  _id: arr[k].vehicleCategory,
+                });
+                if (findVcid.length == 0) {
+                  return {
+                    success: false,
+                    msg: "Vehicle Category is not in database",
+                  };
+                } else {
+                  return {
+                    success: false,
+                    msg: "Vehicle Category is required",
+                  };
+                }
+              } else if (arr[k].vehicleSubCategory) {
+                let findVscid =
+                  await global.models.GLOBAL.VEHICLESUBCATEGORY.find({
+                    _id: arr[k].vehicleSubCategory,
+                  });
+                if (findVscid.length == 0) {
+                  return {
+                    success: false,
+                    msg: "Vehicle Sub Category is not in database",
+                  };
+                } else {
+                  return {
+                    success: false,
+                    msg: "Vehicle Sub Category is required",
+                  };
+                }
               }
               //     if (!arr[k].name) {
               //       return { success: false, msg: "Name is Required!" };
