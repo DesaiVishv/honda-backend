@@ -43,7 +43,7 @@ module.exports = exports = {
 
     try {
       const deletedItem =
-        await global.models.GLOBAL.STARTCOURSE.findByIdAndRemove(id);
+        await global.models.GLOBAL.STARTCOURSE.findByIdAndUpdate({_id:id},{isDelete:true});
       if (!deletedItem) {
         const data4createResponseObject = {
           req: req,
