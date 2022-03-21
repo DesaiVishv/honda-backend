@@ -21,8 +21,8 @@ module.exports = exports = {
       // let id = req.params.id;
 
       let search = req.query.search
-        ? { titleName: { $regex: req.query.search, $options: "i" },isDelete:false }
-        : {isDelete:false};
+        ? { titleName: { $regex: req.query.search, $options: "i" } }
+        : {};
 
       const count = await global.models.GLOBAL.STARTCOURSE.find(search).count();
       const startCourse = await global.models.GLOBAL.STARTCOURSE.find(search)
