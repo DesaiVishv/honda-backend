@@ -8,7 +8,7 @@ module.exports = (connection) => {
       titleName: { type: String },
       image: { type: String },
       description: { type: String },
-      isDelete:{tpye:Boolean,default:false},
+      isDelete: { type: Boolean, default: false },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {
