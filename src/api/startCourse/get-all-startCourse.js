@@ -18,13 +18,21 @@ module.exports = exports = {
       let limit = parseInt(req.query.limit);
       let skip = (parseInt(req.query.page) - 1) * limit;
 
-      // let id = req.params.id;
-
-      let search = req.query.search
-        ? {
-            titleName: { $regex: req.query.search, $options: "i" },
-          }
-        : {};
+      let isActive = req.query.isActive;
+      if (isActive) {
+        search = req.query.search
+          ? {
+              titleName: { $regex: req.query.search, $options: "i" },
+              isActive: true,
+            }
+          : { isActive: true };
+      } else {
+        search = req.query.search
+          ? {
+              titleName: { $regex: req.query.search, $options: "i" },
+            }
+          : {};
+      }
 
       const count = await global.models.GLOBAL.STARTCOURSE.find(search).count();
       const startCourse = await global.models.GLOBAL.STARTCOURSE.find(search)
