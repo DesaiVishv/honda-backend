@@ -23,9 +23,6 @@ router.post(
 router.put("/updatestartCourse/:id", startCourseApi.updatestartCourse.handler);
 
 // // Delete Methods
-router.delete(
-  "/deletestartCourse/:id",
-  startCourseApi.deletestartCourse.handler
-);
+router.put("/updateStatus/:id", startCourseApi.updateStatus.handler);
 
 module.exports = exports = router;

@@ -8,7 +8,7 @@ module.exports = (connection) => {
       titleName: { type: String },
       image: { type: String },
       description: { type: String },
-      isDelete: { type: Boolean, default: false },
+      isActive: { type: Boolean, default: true },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {

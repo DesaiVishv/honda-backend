@@ -28,6 +28,7 @@ module.exports = exports = {
       }
       const startCourse = await global.models.GLOBAL.STARTCOURSE.findOne({
         _id: id,
+        isActive: true,
       });
       if (!startCourse) {
         const data4createResponseObject = {
