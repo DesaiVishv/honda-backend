@@ -8,6 +8,7 @@ module.exports = exports = {
   // route validation
 
   handler: async (req, res) => {
+    const { isActive } = req.body;
     const { user } = req;
     const { id } = req.params;
     // const pid = req.params.pid;
@@ -23,9 +24,9 @@ module.exports = exports = {
     // }
     try {
       const startCourse =
-        await global.models.GLOBAL.VEHICLECATEGORY.findByIdAndUpdate(
+        await global.models.GLOBAL.STARTCOURSE.findByIdAndUpdate(
           { _id: id },
-          { $set: { isActive: false } },
+          { $set: { isActive: isActive } },
           { new: true }
         );
       const data4createResponseObject = {
