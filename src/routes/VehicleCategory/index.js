@@ -11,6 +11,11 @@ router.get(
 );
 router.get("/getAll", vehicleCategoryApi.getAllForDownload.handler);
 
+router.get(
+  "/getSpecificVehicleCategory",
+  vehicleCategoryApi.getSpecificVehicleCategory.handler
+);
+
 // router.post("/getSubmenuByMenu",   vehicleCategoryApi.getSubmenuByMenu.handler);
 
 // Post Methods
