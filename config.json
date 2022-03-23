@@ -17,7 +17,7 @@
         }
       },
       "URI": "mongodb+srv://vishv123:vishv123@cluster0.p1b0s.mongodb.net/sip",
-      "USE_TEST_PIN": "true"
+      "USE_TEST_PIN": "false"
     }
   }
 }
