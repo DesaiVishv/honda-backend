@@ -123,9 +123,9 @@ module.exports = exports = {
         );
       console.log("Response", updateResponse);
       let percentage = (v / t) * 100;
-      let isPass = false;
+      let isPass = "Fail";
       if (percentage >= 60) {
-        isPass = true;
+        isPass = "Pass";
       }
       const addScore = await global.models.GLOBAL.REGISTER.findByIdAndUpdate(
         { _id: uid },

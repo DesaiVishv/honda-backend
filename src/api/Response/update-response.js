@@ -98,9 +98,9 @@ module.exports = exports = {
         // console.log("all", all);
 
         let percentage = (v / t) * 100;
-        let isPass = false;
+        let isPass = "Fail";
         if (percentage >= 60) {
-          isPass = true;
+          isPass = "Pass";
         }
         const updateResponse =
           await global.models.GLOBAL.RESPONSE.findByIdAndUpdate(

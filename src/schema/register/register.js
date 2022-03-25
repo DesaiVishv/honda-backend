@@ -52,7 +52,7 @@ module.exports = (connection) => {
         enum: ["noRequest", "pending", "approved", "rejected"],
         default: "noRequest",
       },
-      isPass: { type: Boolean, default: false },
+      isPass: { type: String, default: "Pending" },
       percentage: { type: Number, default: 0 },
       createdByAdmin: { type: Boolean, default: false },
       receiptNumber: { type: mongoose.Schema.Types.ObjectId },
