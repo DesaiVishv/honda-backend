@@ -42,6 +42,7 @@
   "INVALID_PARAMETERS": "Sorry, the request could not be processed as because of invalid parameters.",
   "INVALID_PHONE": "Sorry! The specified phone number is invalid.",
   "INVALID_TOKEN_VERIFICATION": "Sorry! The verification token is invalid.",
+  "INVALID_FILE": "Only Excel File are allowed",
   "ITEM_AVAILABLE": "Item is avaiable",
   "ITEM_DELETED": "Item deleted successfully",
   "MENU_DELETED": "Menu deleted successfully",

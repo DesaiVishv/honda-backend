@@ -174,6 +174,22 @@ module.exports = exports = {
     var arrayItem = [];
     console.log("data", data);
     const csv = req.file;
+    const slashIndex = csv.mimetype.indexOf("/");
+    const ext = path.extname(csv.originalname);
+    const ext2 = csv.mimetype.slice(slashIndex).replace("/", ".");
+    const extArray = [".xlsx", ".xls", ".ods", ".csv"];
+    if (!extArray.includes(ext) && !extArray.includes(ext2)) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.INVALID_FILE,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
     if (!csv) {
       const data4createResponseObject = {
         req: req,

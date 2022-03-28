@@ -1,6 +1,9 @@
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const enums = require("../../../json/enums.json");
+const messages = require("../../../json/messages.json");
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const newDestination = "uploads/".replace("//", "/");
@@ -32,13 +35,13 @@ const upload = multer({
   // },
   fileFilter: function (req, file, callback) {
     // console.log("FILE FILE 2", file)
-    const slashIndex = file.mimetype.indexOf("/");
-    const ext = path.extname(file.originalname);
-    const ext2 = file.mimetype.slice(slashIndex).replace("/", ".");
-    const extArray = [".xlsx", ".xls", ".ods", ".csv"];
-    if (!extArray.includes(ext) && !extArray.includes(ext2)) {
-      return callback(new Error("Only Excel File are allowed" + ext));
-    }
+    // const slashIndex = file.mimetype.indexOf("/");
+    // const ext = path.extname(file.originalname);
+    // const ext2 = file.mimetype.slice(slashIndex).replace("/", ".");
+    // const extArray = [".xlsx", ".xls", ".ods", ".csv"];
+    // if (!extArray.includes(ext) && !extArray.includes(ext2)) {
+    //   return callback(new Error("Only Excel File are allowed" + ext));
+    // }
     callback(null, true);
   },
 });
