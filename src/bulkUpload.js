@@ -1,8 +1,6 @@
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-const enums = require("../../../json/enums.json");
-const messages = require("../../../json/messages.json");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
