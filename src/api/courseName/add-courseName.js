@@ -11,6 +11,7 @@ module.exports = exports = {
   // route validation
   validation: Joi.object({
     courseName: Joi.string(),
+    displayName: Joi.string(),
     description: Joi.string(),
     isActive: Joi.boolean().required(),
     vcid: Joi.string(),
@@ -30,6 +31,7 @@ module.exports = exports = {
   handler: async (req, res) => {
     const {
       description,
+      displayName,
       isActive,
       duration,
       timing,
@@ -100,6 +102,7 @@ module.exports = exports = {
       console.log("generate", generateName);
       let AmenintiesCreate = {
         courseName: generateName,
+        displayName: displayName,
         description: description,
         isActive: isActive,
         vcid: vcid,

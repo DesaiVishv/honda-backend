@@ -6,6 +6,7 @@ module.exports = (connection) => {
   const courseNameSchema = new mongoose.Schema(
     {
       courseName: { type: String },
+      displayName: { type: String },
       description: { type: String },
       isActive: { type: Boolean, default: true },
       ctid: { type: mongoose.Schema.Types.ObjectId },

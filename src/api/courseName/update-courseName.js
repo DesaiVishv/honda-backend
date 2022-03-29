@@ -18,6 +18,7 @@ module.exports = exports = {
     const { user } = req;
     const {
       courseName,
+      displayName,
       description,
       duration,
       timing,
@@ -102,6 +103,7 @@ module.exports = exports = {
           price;
         const Itemupdate = {
           courseName: generateName,
+          displayName: displayName,
           description: description,
           vcid: vcid,
           ctid: ctid,
