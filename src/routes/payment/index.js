@@ -10,7 +10,7 @@ const passport = require("passport");
 router.get("/getAllPayment", paymentCtrl.getAllPayment.handler);
 router.get("/getAll", paymentCtrl.getAllForDownload.handler);
 router.get("/getAll/getMonthlyData", paymentCtrl.getMonthlyData.handler);
-
+router.post("/checkPayment", paymentCtrl.checkPayment.handler);
 router.put("/pay", paymentCtrl.createPayment.pay);
 // router.post("/pay-product", auth, paymentCtrl.payProduct);
 // router.post("/donate", auth, paymentCtrl.Donate);
