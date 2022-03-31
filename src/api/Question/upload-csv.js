@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const ObjectId = require("mongodb").ObjectId;
+const path = require("path");
 
 const enums = require("../../../json/enums.json");
 const messages = require("../../../json/messages.json");

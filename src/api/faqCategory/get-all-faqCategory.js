@@ -23,7 +23,10 @@ module.exports = exports = {
       let search = req.query.search
         ? { name: { $regex: req.query.search, $options: "i" } }
         : {};
-
+      let { isActive } = req.query;
+      if (isActive) {
+        search = { ...search, isActive: isActive };
+      }
       const count = await global.models.GLOBAL.FAQCATEGORY.find(search).count();
       const faqCategory = await global.models.GLOBAL.FAQCATEGORY.find(search)
         .skip(skip)
