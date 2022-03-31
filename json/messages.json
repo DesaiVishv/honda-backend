@@ -61,6 +61,7 @@
   "LOGIN_SUCCESS": "Login Successfully",
   "REGISTER_SUCCESS": "Register Successfully",
   "FILL_DETAILS": "Please enter the entire details",
+  "FAQ_CATEGORY_EXISTS": "FAQ Category already exists",
   "ALREADY_PAYMENT": "Your Payment Successfully done so please click on submit button",
   "ELIGIBLE_PAYMENT": "You are Eligible for Payment",
   "ENTER_VCID": "Please enter the correct the vehicle category details",

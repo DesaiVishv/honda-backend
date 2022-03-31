@@ -3,15 +3,11 @@ const mongoose = require("mongoose");
 // const enums = require("../../../json/enums.json");
 
 module.exports = (connection) => {
-  const faqSchema = new mongoose.Schema(
+  const faqCategorySchema = new mongoose.Schema(
     {
-      fcid: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "faqCategory",
-        require: true,
-      },
-      question: { type: String, require: true },
-      answer: { type: String, require: true },
+      name: { type: String, require: true },
+      description: { type: String },
+      isActive: { type: Boolean, default: true },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {
@@ -29,5 +25,5 @@ module.exports = (connection) => {
   );
 
   // return logsSchema;
-  return connection.model("faq", faqSchema, "faq");
+  return connection.model("faqCategory", faqCategorySchema, "faqCategory");
 };

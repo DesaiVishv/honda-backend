@@ -76,6 +76,9 @@ module.exports = async () => {
           connection_IN_HONDA
         ),
         FAQ: require("../schema/FAQ/faq")(connection_IN_HONDA),
+        FAQCATEGORY: require("../schema/FAQCategory/faqCategory")(
+          connection_IN_HONDA
+        ),
         BANNER: require("../schema/Banner/Banner")(connection_IN_HONDA),
         CONTENT: require("../schema/HomeContent/Content")(connection_IN_HONDA),
         CLIENT: require("../schema/Client/client")(connection_IN_HONDA),
