@@ -7,6 +7,8 @@ const passport = require("passport");
 // Get Methods
 router.get("/getAllfaqCategory", faqCategoryApi.getAllfaqCategory.handler);
 
+router.get("/getFaqByFaqCategory", faqCategoryApi.getFaqByFaqCategory.handler);
+
 // Post Methods
 router.post(
   "/addfaqCategory",
