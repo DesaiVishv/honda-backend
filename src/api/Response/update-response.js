@@ -16,7 +16,7 @@ module.exports = exports = {
   handler: async (req, res) => {
     const { id } = req.params;
     const { user } = req;
-    const { ListofQA } = req.body;
+    const { ListofQA, practicalScore } = req.body;
     // if (user.type !== enums.USER_TYPE.DATAENTRY) {
     //   const data4createResponseObject = {
     //     req: req,
@@ -97,15 +97,28 @@ module.exports = exports = {
         // console.log("loq", loq);
         // console.log("all", all);
 
-        let percentage = (v / t) * 100;
-        let isPass = "Fail";
-        if (percentage >= 60) {
-          isPass = "Pass";
+        if (practicalScore) {
+          percentage = ((practicalScore + v) / t) * 100;
+          isPass = "Fail";
+          if (percentage >= 60) {
+            isPass = "Pass";
+          }
+        } else {
+          percentage = (v / t) * 100;
+          isPass = "Fail";
+          if (percentage >= 60) {
+            isPass = "Pass";
+          }
         }
         const updateResponse =
           await global.models.GLOBAL.RESPONSE.findByIdAndUpdate(
             { _id: id },
-            { total: t, Score: v, ListofQA: loq }
+            {
+              total: t,
+              Score: v,
+              ListofQA: loq,
+              practicalScore: practicalScore,
+            }
           );
         console.log("Response", updateResponse);
 
@@ -117,6 +130,7 @@ module.exports = exports = {
             status: "noRequest",
             isPass,
             percentage,
+            practicalScore,
           }
         );
 
