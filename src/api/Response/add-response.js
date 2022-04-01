@@ -124,7 +124,7 @@ module.exports = exports = {
         );
       console.log("Response", updateResponse);
       if (practicalScore) {
-        percentage = ((practicalScore + v) / 2) * 100;
+        percentage = (practicalScore + v) / 2;
         isPass = "Fail";
         if (percentage >= 60) {
           isPass = "Pass";

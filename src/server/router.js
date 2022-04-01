@@ -49,6 +49,7 @@ module.exports = (app, logger) => {
   const purchasehistoryRoute = require("../routes/PurchaseHistory/index");
   const paymentRoute = require("../routes/payment/index");
   const paymentrefundRoute = require("../routes/payment-refund/index");
+  const generatepdfRoute = require("../routes/generate-pdf/index");
 
   // define all routes here
   app.use(["/api/v1/user"], userRoutes);
@@ -89,6 +90,7 @@ module.exports = (app, logger) => {
   app.use(["/api/v1/category"], categoryRoute);
   app.use(["/api/v1/helpfultips"], helpfultipsRoute);
   app.use(["/api/v1/testomonial"], testomonialRoute);
+  app.use(["/api/v1/generatepdf"], generatepdfRoute);
 
   app.use(["/api/v1/amenities"], amenitiesRoute);
   app.use(["/api/v1/contactus"], contactusRoute);

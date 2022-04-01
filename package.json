@@ -25,6 +25,7 @@
     "firebase-admin": "^9.11.0",
     "flat": "^5.0.2",
     "helmet": "^4.6.0",
+    "html-pdf": "^3.0.1",
     "http-status": "^1.5.0",
     "jest": "^27.0.6",
     "joi": "^17.4.0",
@@ -39,6 +40,7 @@
     "nodemailer": "^6.7.2",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "pdfkit": "^0.13.0",
     "qs": "^6.10.3",
     "razorpay": "^2.8.0",
     "shortid": "^2.2.16",
@@ -47,7 +49,8 @@
     "stripe": "^8.195.0",
     "winston": "^3.3.3",
     "winston-splunk-httplogger": "^2.4.1",
-    "xlsx": "^0.16.9"
+    "xlsx": "^0.16.9",
+    "zip-local": "^0.3.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.9"
