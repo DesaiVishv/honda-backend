@@ -15,11 +15,12 @@ module.exports = exports = {
     uid: Joi.string().required(),
     Esid: Joi.string().required(),
     ListofQA: Joi.array(),
+    practicalScore: Joi.number(),
     // imagePath: Joi.string().allow("")
   }),
 
   handler: async (req, res) => {
-    const { batch, uid, Esid, ListofQA } = req.body;
+    const { batch, uid, Esid, ListofQA, practicalScore } = req.body;
     const { user } = req;
     // if (user.type !== enums.USER_TYPE.DATAENTRY) {
     //   const data4createResponseObject = {
@@ -119,17 +120,33 @@ module.exports = exports = {
       const updateResponse =
         await global.models.GLOBAL.RESPONSE.findByIdAndUpdate(
           { _id: newAmeninties._id },
-          { total: t, Score: v, ListofQA: loq }
+          { total: t, Score: v, ListofQA: loq, practicalScore: practicalScore }
         );
       console.log("Response", updateResponse);
-      let percentage = (v / t) * 100;
-      let isPass = "Fail";
-      if (percentage >= 60) {
-        isPass = "Pass";
+      if (practicalScore) {
+        percentage = ((practicalScore + v) / t) * 100;
+        isPass = "Fail";
+        if (percentage >= 60) {
+          isPass = "Pass";
+        }
+      } else {
+        percentage = (v / t) * 100;
+        isPass = "Fail";
+        if (percentage >= 60) {
+          isPass = "Pass";
+        }
       }
+
       const addScore = await global.models.GLOBAL.REGISTER.findByIdAndUpdate(
         { _id: uid },
-        { totalScore: v, isPaperDone: true, isPass, percentage, total: t }
+        {
+          totalScore: v,
+          isPaperDone: true,
+          isPass,
+          percentage,
+          total: t,
+          practicalScore: practicalScore,
+        }
       );
       console.log("Score", addScore);
       const updateBatch = await global.models.GLOBAL.BATCH.findByIdAndUpdate(

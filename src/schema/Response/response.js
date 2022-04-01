@@ -54,6 +54,7 @@ module.exports = (connection) => {
       ],
       total: { type: Number },
       Score: { type: Number },
+      practicalScore: { type: Number },
     },
     {
       autoCreate: true,

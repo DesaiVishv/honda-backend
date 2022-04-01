@@ -53,6 +53,7 @@ module.exports = (connection) => {
         default: "noRequest",
       },
       isPass: { type: String, default: "Pending" },
+      practicalScore: { type: Number },
       percentage: { type: Number, default: 0 },
       createdByAdmin: { type: Boolean, default: false },
       receiptNumber: { type: mongoose.Schema.Types.ObjectId },
