@@ -28,6 +28,8 @@ module.exports = (connection) => {
         type: Number,
       },
       phone: { type: Number },
+      email: { type: String },
+      name: { type: String },
       type: { type: String },
       created: {
         type: Date,

@@ -38,12 +38,16 @@ module.exports = exports = {
     cnid: Joi.string().required(),
     tdid: Joi.string().required(),
     paymentId: Joi.string().required(),
+    phone: Joi.number(),
+    email: Joi.string(),
+    name: Joi.string(),
     type: Joi.string(),
     // imagePath: Joi.string().allow("")
   }),
 
   pay: async (req, res) => {
-    const { uid, vcid, ctid, cnid, tdid, paymentId, type } = req.body;
+    const { uid, vcid, ctid, cnid, tdid, paymentId, phone, email, name, type } =
+      req.body;
     const { user } = req;
     if (!cnid) {
       const data4createResponseObject = {
@@ -164,6 +168,9 @@ module.exports = exports = {
       tdid: tdid,
       paymentId: paymentId,
       price: findCoursename.price,
+      phone: phone,
+      email: email,
+      name: name,
       type: type,
     });
     // const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({ cnid: cnid }, { paymentId: paymentId })
