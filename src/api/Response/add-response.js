@@ -129,7 +129,8 @@ module.exports = exports = {
         if (percentage >= 60) {
           isPass = "Pass";
         }
-      } else {
+      }
+      if (practicalScore == "0") {
         percentage = (v / t) * 100;
         isPass = "Fail";
         if (percentage >= 60) {
