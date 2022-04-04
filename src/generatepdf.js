@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
-const enums = require("../../../json/enums.json");
-const messages = require("../../../json/messages.json");
+const enums = require("../json/enums.json");
+const messages = require("../json/messages.json");
 
 const logger = require("./logger");
 const utils = require("./utils");
