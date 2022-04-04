@@ -342,6 +342,7 @@ module.exports = exports = {
                     message: messages.SUCCESS,
                     payload: {
                       ZipLink: data.Location,
+                      batch: batch,
                     },
                     logPayload: false,
                   };
