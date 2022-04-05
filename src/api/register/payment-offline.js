@@ -73,6 +73,27 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.BAD_REQUEST)
         .json(utils.createResponseObject(data4createResponseObject));
     }
+    let checkPayment = await global.models.GLOBAL.PAYMENT.find({
+      phone: phone,
+      vcid: vcid,
+      ctid: ctid,
+      cnid: cnid,
+      tdid: tdid,
+      receiptNumber: receiptNumber,
+    });
+    if (checkPayment.length > 0) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.ALREADY_PAY,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
+
     const paymentData = await global.models.GLOBAL.REGISTER.findOneAndUpdate(
       { _id: receiptNumber },
       {

@@ -11,7 +11,7 @@ module.exports = exports = {
   // route validation
 
   handler: async (req, res) => {
-    const { uid, vcid, ctid, cnid, tdid } = req.body;
+    const { uid, phone, vcid, ctid, cnid, tdid } = req.body;
     if (!vcid || !ctid || !cnid || !tdid) {
       const data4createResponseObject = {
         req: req,
@@ -37,6 +37,7 @@ module.exports = exports = {
       } else {
         checkPayment = await global.models.GLOBAL.PAYMENT.find({
           tdid: tdid,
+          phone: phone,
           vcid: vcid,
           ctid: ctid,
           cnid: cnid,
