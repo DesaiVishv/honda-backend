@@ -71,17 +71,30 @@ module.exports = exports = {
             .json(utils.createResponseObject(data4createResponseObject));
           return;
         }
-        Item = await global.models.GLOBAL.HELPFULTIPS.update(
-          { _id: id },
-          {
-            $set: {
-              titleName: titleName,
-              image: image,
-              description: description,
-              video: video,
-            },
-          }
+        // Item = await global.models.GLOBAL.HELPFULTIPS.update(
+        //   { _id: id },
+        //   {
+        //     $set: {
+        //       titleName: titleName,
+        //       image: image,
+        //       description: description,
+        //       video: video,
+        //     },
+        //   }
+        // );
+        let AmenintiesCreate = {
+          ht: id,
+          titleName: titleName,
+          image: image,
+          video: video,
+          description: description,
+          part: "HelpfulTips",
+          purpose: "Update",
+        };
+        const newAmeninties = await global.models.GLOBAL.REQUEST(
+          AmenintiesCreate
         );
+        newAmeninties.save();
         const data4createResponseObject = {
           req: req,
           result: 0,

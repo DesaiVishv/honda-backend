@@ -61,13 +61,25 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
+      // let AmenintiesCreate = {
+      //   titleName: titleName,
+      //   image: image,
+      //   video: video,
+      //   description: description,
+      // };
+      // const newAmeninties = await global.models.GLOBAL.HELPFULTIPS(
+      //   AmenintiesCreate
+      // );
+      // newAmeninties.save();
       let AmenintiesCreate = {
         titleName: titleName,
         image: image,
         video: video,
         description: description,
+        part: "HelpfulTips",
+        purpose: "Add",
       };
-      const newAmeninties = await global.models.GLOBAL.HELPFULTIPS(
+      const newAmeninties = await global.models.GLOBAL.REQUEST(
         AmenintiesCreate
       );
       newAmeninties.save();

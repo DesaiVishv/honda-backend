@@ -63,6 +63,19 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
+      // let AmenintiesCreate = {
+      //   name: name,
+      //   type: type,
+      //   image: image,
+      //   description: description,
+      //   date: date,
+      //   isActive: isActive,
+      // };
+      // const newAmeninties = await global.models.GLOBAL.ANNOUNCEMENT(
+      //   AmenintiesCreate
+      // );
+      // newAmeninties.save();
+
       let AmenintiesCreate = {
         name: name,
         type: type,
@@ -70,8 +83,10 @@ module.exports = exports = {
         description: description,
         date: date,
         isActive: isActive,
+        part: "Announcement",
+        purpose: "Add",
       };
-      const newAmeninties = await global.models.GLOBAL.ANNOUNCEMENT(
+      const newAmeninties = await global.models.GLOBAL.REQUEST(
         AmenintiesCreate
       );
       newAmeninties.save();

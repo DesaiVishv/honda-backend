@@ -69,10 +69,20 @@ module.exports = exports = {
             .json(utils.createResponseObject(data4createResponseObject));
           return;
         }
-        Item = await global.models.GLOBAL.CLIENT.update(
-          { _id: id },
-          { $set: { image: image } }
+        // Item = await global.models.GLOBAL.CLIENT.update(
+        //   { _id: id },
+        //   { $set: { image: image } }
+        // );
+        let AmenintiesCreate = {
+          clientId: id,
+          image: image,
+          part: "client",
+          purpose: "Update",
+        };
+        const newAmeninties = await global.models.GLOBAL.REQUEST(
+          AmenintiesCreate
         );
+        newAmeninties.save();
         const data4createResponseObject = {
           req: req,
           result: 0,

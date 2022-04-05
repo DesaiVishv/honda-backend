@@ -71,16 +71,30 @@ module.exports = exports = {
             .json(utils.createResponseObject(data4createResponseObject));
           return;
         }
-        let Item = await global.models.GLOBAL.ANNOUNCEMENT.findByIdAndUpdate(
-          { _id: id },
-          {
-            name: name,
-            type: type,
-            image: image,
-            description: description,
-            date: date,
-            updatedAt: new Date(),
-          }
+        // let Item = await global.models.GLOBAL.ANNOUNCEMENT.findByIdAndUpdate(
+        //   { _id: id },
+        //   {
+        //     name: name,
+        //     type: type,
+        //     image: image,
+        //     description: description,
+        //     date: date,
+        //     updatedAt: new Date(),
+        //   }
+        // );
+        let AmenintiesCreate = {
+          acid: id,
+          name: name,
+          type: type,
+          image: image,
+          description: description,
+          date: date,
+          updatedAt: new Date(),
+          part: "Announcement",
+          purpose: "Update",
+        };
+        const newAmeninties = await global.models.GLOBAL.REQUEST(
+          AmenintiesCreate
         );
         const data4createResponseObject = {
           req: req,

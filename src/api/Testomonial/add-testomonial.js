@@ -60,12 +60,23 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
+      // let AmenintiesCreate = {
+      //   titleName: titleName,
+      //   image: image,
+      //   description: description,
+      // };
+      // const newAmeninties = await global.models.GLOBAL.TESTOMONIAL(
+      //   AmenintiesCreate
+      // );
+      // newAmeninties.save();
       let AmenintiesCreate = {
         titleName: titleName,
         image: image,
         description: description,
+        part: "Testomonial",
+        purpose: "Add",
       };
-      const newAmeninties = await global.models.GLOBAL.TESTOMONIAL(
+      const newAmeninties = await global.models.GLOBAL.REQUEST(
         AmenintiesCreate
       );
       newAmeninties.save();

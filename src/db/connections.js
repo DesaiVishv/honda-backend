@@ -108,7 +108,7 @@ module.exports = async () => {
         TESTOMONIAL: require("../schema/Testomonial/testomonial")(
           connection_IN_HONDA
         ),
-
+        REQUEST: require("../schema/Request/Request")(connection_IN_HONDA),
         FILEMANAGER: require("../schema/FileManager/filemanager")(
           connection_IN_HONDA
         ),

@@ -57,16 +57,28 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
-        const Itemupdate = {
+        // const Itemupdate = {
+        //   titleName: titleName,
+        //   image: image,
+        //   description: description,
+        // };
+        // Item = await global.models.GLOBAL.STARTCOURSE.findByIdAndUpdate(
+        //   { _id: id },
+        //   Itemupdate,
+        //   { new: true }
+        // );
+        let AmenintiesCreate = {
+          scid: id,
           titleName: titleName,
           image: image,
           description: description,
+          part: "startCourse",
+          purpose: "Update",
         };
-        Item = await global.models.GLOBAL.STARTCOURSE.findByIdAndUpdate(
-          { _id: id },
-          Itemupdate,
-          { new: true }
+        const newAmeninties = await global.models.GLOBAL.REQUEST(
+          AmenintiesCreate
         );
+        newAmeninties.save();
         const data4createResponseObject = {
           req: req,
           result: 0,

@@ -3,64 +3,52 @@ const mongoose = require("mongoose");
 // const enums = require("../../../json/enums.json");
 
 module.exports = (connection) => {
-  const responseSchema = new mongoose.Schema(
+  const requestSchema = new mongoose.Schema(
     {
-      batch: { type: mongoose.Schema.Types.ObjectId },
-      uid: { type: mongoose.Schema.Types.ObjectId },
-      Esid: { type: mongoose.Schema.Types.ObjectId },
-      ListofQA: [
-        {
-          Qname: { type: String, require: true },
-          image: { type: String },
-          Option: [
-            {
-              no: Number,
-              name: String,
-              istrue: Boolean,
-            },
-            {
-              no: Number,
-              name: String,
-              istrue: Boolean,
-            },
-            {
-              no: Number,
-              name: String,
-              istrue: Boolean,
-            },
-            {
-              no: Number,
-              name: String,
-              istrue: Boolean,
-            },
-          ],
-          Answer: [Number],
-          isRight: { type: Boolean },
-          type: { type: String, require: true },
-          language: { type: String, require: true },
-          weight: { type: Number, require: true },
-          isActive: { type: Boolean, default: true },
-          createdAt: { type: Date, default: Date.now },
-          updatedAt: { type: Date, default: Date.now },
-          createdBy: {
-            type: String,
-            default: "Admin",
-          },
-          updatedBy: {
-            type: String,
-            default: "Admin",
-          },
-        },
-      ],
-      total: { type: Number },
-      Score: { type: Number },
-      practicalScore: { type: Number, default: 0 },
+      name: { type: String },
+      title: { type: String },
+      titleName: { type: String },
+      fcid: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "faqCategory",
+      },
+      acid: { type: mongoose.Schema.Types.ObjectId },
+      bid: { type: mongoose.Schema.Types.ObjectId },
+      clientId: { type: mongoose.Schema.Types.ObjectId },
+      cmsId: { type: mongoose.Schema.Types.ObjectId },
+      faqId: { type: mongoose.Schema.Types.ObjectId },
+      ht: { type: mongoose.Schema.Types.ObjectId },
+      contentId: { type: mongoose.Schema.Types.ObjectId },
+      informationId: { type: mongoose.Schema.Types.ObjectId },
+      scid: { type: mongoose.Schema.Types.ObjectId },
+      tid: { type: mongoose.Schema.Types.ObjectId },
+      question: { type: String },
+      answer: { type: String },
+      video: { type: String },
+      type: { type: String },
+      part: { type: String },
+      purpose: { type: String },
+      isAccept: { type: Boolean, default: false },
+      image: { type: String, default: null },
+      description: { type: String },
+      date: { type: Date },
+      createdAt: { type: Date, default: Date.now },
+      updatedAt: { type: Date, default: Date.now },
+      createdBy: {
+        type: String,
+        default: "Admin",
+      },
+      updatedBy: {
+        type: String,
+        default: "Admin",
+      },
     },
+
     {
       autoCreate: true,
     }
   );
 
   // return logsSchema;
-  return connection.model("response", responseSchema, "response");
+  return connection.model("request", requestSchema, "request");
 };

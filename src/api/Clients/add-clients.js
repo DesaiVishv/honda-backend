@@ -59,10 +59,19 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
+      // let AmenintiesCreate = {
+      //   image: image,
+      // };
+      // const newAmeninties = await global.models.GLOBAL.CLIENT(AmenintiesCreate);
+      // newAmeninties.save();
       let AmenintiesCreate = {
         image: image,
+        part: "client",
+        purpose: "Add",
       };
-      const newAmeninties = await global.models.GLOBAL.CLIENT(AmenintiesCreate);
+      const newAmeninties = await global.models.GLOBAL.REQUEST(
+        AmenintiesCreate
+      );
       newAmeninties.save();
       const data4createResponseObject = {
         req: req,

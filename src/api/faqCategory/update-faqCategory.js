@@ -71,15 +71,26 @@ module.exports = exports = {
             .json(utils.createResponseObject(data4createResponseObject));
           return;
         }
-        Item = await global.models.GLOBAL.FAQCATEGORY.findByIdAndUpdate(
-          { _id: id },
-          {
-            $set: {
-              name: name,
-              description: description,
-            },
-          }
+        // Item = await global.models.GLOBAL.FAQCATEGORY.findByIdAndUpdate(
+        //   { _id: id },
+        //   {
+        //     $set: {
+        //       name: name,
+        //       description: description,
+        //     },
+        //   }
+        // );
+        let AmenintiesCreate = {
+          fcid: id,
+          name: name,
+          description: description,
+          part: "faqCategory",
+          purpose: "Update",
+        };
+        const newAmeninties = await global.models.GLOBAL.REQUEST(
+          AmenintiesCreate
         );
+        newAmeninties.save();
         const data4createResponseObject = {
           req: req,
           result: 0,

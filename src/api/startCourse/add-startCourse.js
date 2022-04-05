@@ -44,12 +44,23 @@ module.exports = exports = {
     }
 
     try {
+      // let AmenintiesCreate = {
+      //   titleName: titleName,
+      //   image: image,
+      //   description: description,
+      // };
+      // const newAmeninties = await global.models.GLOBAL.STARTCOURSE(
+      //   AmenintiesCreate
+      // );
+      // newAmeninties.save();
       let AmenintiesCreate = {
         titleName: titleName,
         image: image,
         description: description,
+        part: "startCourse",
+        purpose: "Add",
       };
-      const newAmeninties = await global.models.GLOBAL.STARTCOURSE(
+      const newAmeninties = await global.models.GLOBAL.REQUEST(
         AmenintiesCreate
       );
       newAmeninties.save();

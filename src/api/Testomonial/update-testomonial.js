@@ -71,16 +71,28 @@ module.exports = exports = {
             .json(utils.createResponseObject(data4createResponseObject));
           return;
         }
-        Item = await global.models.GLOBAL.TESTOMONIAL.update(
-          { _id: id },
-          {
-            $set: {
-              titleName: titleName,
-              image: image,
-              description: description,
-            },
-          }
+        // Item = await global.models.GLOBAL.TESTOMONIAL.update(
+        //   { _id: id },
+        //   {
+        //     $set: {
+        //       titleName: titleName,
+        //       image: image,
+        //       description: description,
+        //     },
+        //   }
+        // );
+        let AmenintiesCreate = {
+          tid: id,
+          titleName: titleName,
+          image: image,
+          description: description,
+          part: "Testomonial",
+          purpose: "Update",
+        };
+        const newAmeninties = await global.models.GLOBAL.REQUEST(
+          AmenintiesCreate
         );
+        newAmeninties.save();
         const data4createResponseObject = {
           req: req,
           result: 0,

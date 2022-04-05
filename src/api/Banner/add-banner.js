@@ -60,12 +60,24 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
+      // let AmenintiesCreate = {
+      //   title: title,
+      //   image: image,
+      //   isActive: isActive,
+      // };
+      // const newAmeninties = await global.models.GLOBAL.BANNER(AmenintiesCreate);
+      // newAmeninties.save();
+
       let AmenintiesCreate = {
         title: title,
         image: image,
         isActive: isActive,
+        part: "Banner",
+        purpose: "Add",
       };
-      const newAmeninties = await global.models.GLOBAL.BANNER(AmenintiesCreate);
+      const newAmeninties = await global.models.GLOBAL.REQUEST(
+        AmenintiesCreate
+      );
       newAmeninties.save();
       const data4createResponseObject = {
         req: req,

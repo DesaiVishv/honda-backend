@@ -58,12 +58,23 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
+      // let AmenintiesCreate = {
+      //   fcid: fcid,
+      //   question: question,
+      //   answer: answer,
+      // };
+      // const newAmeninties = await global.models.GLOBAL.FAQ(AmenintiesCreate);
+      // newAmeninties.save();
       let AmenintiesCreate = {
         fcid: fcid,
         question: question,
         answer: answer,
+        part: "FAQ",
+        purpose: "Add",
       };
-      const newAmeninties = await global.models.GLOBAL.FAQ(AmenintiesCreate);
+      const newAmeninties = await global.models.GLOBAL.REQUEST(
+        AmenintiesCreate
+      );
       newAmeninties.save();
       const data4createResponseObject = {
         req: req,
