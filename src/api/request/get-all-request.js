@@ -22,8 +22,9 @@ module.exports = exports = {
         ? {
             name: { $regex: req.query.search, $options: "i" },
             isAccept: false,
+            isReject: false,
           }
-        : { isAccept: false };
+        : { isAccept: false, isReject: false };
 
       const count = await global.models.GLOBAL.REQUEST.find(search).count();
       const Request = await global.models.GLOBAL.REQUEST.find(search)

@@ -8,10 +8,11 @@ module.exports = exports = {
   // route validation
   validation: Joi.object({
     isAccept: Joi.boolean().required(),
+    isReject: Joi.boolean().required(),
     id: Joi.string(),
   }),
   handler: async (req, res) => {
-    const { isAccept, id } = req.body;
+    const { isAccept, isReject, id } = req.body;
     const { user } = req;
     if (!id) {
       const data4createResponseObject = {
@@ -28,7 +29,7 @@ module.exports = exports = {
     try {
       const property = await global.models.GLOBAL.REQUEST.findByIdAndUpdate(
         { _id: id },
-        { $set: { isAccept: isAccept } },
+        { $set: { isAccept: isAccept, isReject: isReject } },
         { new: true }
       );
       if (!property) {
