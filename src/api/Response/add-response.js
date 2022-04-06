@@ -130,13 +130,13 @@ module.exports = exports = {
           isPass = "Pass";
         }
       }
-      if (practicalScore == "0") {
-        percentage = (v / t) * 100;
-        isPass = "Fail";
-        if (percentage >= 60) {
-          isPass = "Pass";
-        }
-      }
+      // if (practicalScore == "0") {
+      //   percentage = (practicalScore + v) / 2;
+      //   isPass = "Fail";
+      //   if (percentage >= 60) {
+      //     isPass = "Pass";
+      //   }
+      // }
 
       const addScore = await global.models.GLOBAL.REGISTER.findByIdAndUpdate(
         { _id: uid },

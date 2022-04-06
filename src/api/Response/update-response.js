@@ -104,13 +104,13 @@ module.exports = exports = {
             isPass = "Pass";
           }
         }
-        if (practicalScore == "0") {
-          percentage = (v / t) * 100;
-          isPass = "Fail";
-          if (percentage >= 60) {
-            isPass = "Pass";
-          }
-        }
+        // if (practicalScore == "0") {
+        //   percentage = (v / t) * 100;
+        //   isPass = "Fail";
+        //   if (percentage >= 60) {
+        //     isPass = "Pass";
+        //   }
+        // }
         const updateResponse =
           await global.models.GLOBAL.RESPONSE.findByIdAndUpdate(
             { _id: id },
