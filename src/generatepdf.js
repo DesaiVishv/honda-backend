@@ -49,244 +49,153 @@ module.exports = exports = {
     let data = users.length;
     let loop = 0;
     for (i = 0; i < users.length; i++) {
-      let html = `<html>
-      <head> <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet"></head>
-      <style>
-      invoice-box {
-        // display: none;
-        max-width: 800px;
-        margin: auto;
-        padding: 30px;
-        border: 1px solid #eee;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-        font-size: 16px;
-        line-height: 24px;
-        font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-        color: #555;
-    }
-    
-    invoice-box table {
-        width: 100%;
-        line-height: inherit;
-        text-align: left;
-        border-collapse: collapse;
-    }
-    
-    invoice-box table td {
-        padding: 5px;
-        vertical-align: top;
-    }
-    
-    invoice-box table tr td:nth-child(2) {
-        text-align: right;
-    }
-    
-    invoice-box table tr.top table td {
-        padding-bottom: 20px;
-    }
-    
-    invoice-box table tr.top table td.title {
-        font-size: 45px;
-        line-height: 45px;
-        color: #333;
-    }
-    
-    invoice-box table tr.information table td {
-        padding-bottom: 40px;
-    }
-    
-    invoice-box table tr.heading td {
-        background: #eee;
-        border-bottom: 1px solid #ddd;
-        font-weight: bold;
-    }
-    
-    invoice-box table tr.details td {
-        padding-bottom: 20px;
-    }
-    
-    invoice-box table tr.item td {
-        border-bottom: 1px solid #eee;
-    }
-    
-    invoice-box table tr.item.last td {
-        border-bottom: none;
-    }
-    center-button {
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    invoice-box table tr.total td:nth-child(2) {
-        border-top: 2px solid #eee;
-        font-weight: bold;
-    }
-    
-    @media only screen and (max-width: 600px) {
-        .invoice-box table tr.top table td {
+      let html = `<!DOCTYPE html>
+      <html lang="nl">
+      ​
+      <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+          @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
+      ​
+          * {
+            box-sizing: border-box;
+          }
+      ​
+          html,
+          body {
+            padding: 0;
+            margin: 0;
+            background: #f5f5f5;
+            font-family: Inter, sans-serif;
+            font-weight: 400;
+            color: #0b273f;
+          }
+      ​
+          img {
             width: 100%;
-            display: block;
-            text-align: center;
-        }
-    
-        .invoice-box table tr.information table td {
-            width: 100%;
-            display: block;
-            text-align: center;
-        }
-    }
-    invoice-button {
-        padding: 20px 0;
-    }
-      </style>
+            object-fit: cover;
+          }
+      ​
+          h1,
+          h2,
+          h3,
+          h4,
+          h5,
+          h6,
+          p {
+            margin: 0;
+          }
+      ​
+          .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+          }
+        </style>
+      ​
+      ​
+      </head>
+      ​
       <body>
-      <div class="invoice-box">
-          <table>
-            <tr class="top">
-              <td colspan="2">
-                <table>
-                  <tr>
-                    <td>
-                      <b>Institute of Driving and Traffic Research (IDTR)</b>
-                      <p>
-                        A joint venture of Transport Department, <br />{" "}
-                        Government of Haryana & Honda IDTR
-                      </p>
-                    </td>
-                    <td class="title">
-                      <img src={Logo} />
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-
-            <tr class="information">
-              <td colspan="2">
-                <table>
-                  <tr>
-                    <td>
-                      Created:{" "}
-                      {moment${users[i]?.createdAt}.format(
-                        "DD-MM-YYYY "
-                      )}
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>First Name: {${users[i].fname} } </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Middle Name: {${users[i].mname} } </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Last Name: {${users[i].lname} } </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Email: ${users[i].email}  </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>
-                  Phone:{" "}
-                  {${users[i].phone ? users[i].phone : "No Data"} }{" "}
-                </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Gender: {${users[i].gender} } </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Address: {${users[i].address} } </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>City: {${users[i].city} } </td>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Created: {moment${users[i].DoB}.format("DD-MM-YYYY ")}
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Address: {${users[i].address} } </td>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Date of course:{" "}
-                {moment${users[i].dateofCourse}.format("DD-MM-YYYY ")}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Pass?:{" "}
-                ${users[i].isPass ? users[i].isPass : "-"}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                LCID: {moment${users[i].lcid}.format("DD-MM-YYYY ")}
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Percentage: {${users[i].percentage}% } </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>TotalScore: {${users[i].totalScore} } </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Status: {${users[i].status} } </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>Type: {${users[i].type} } </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>
-                  Authoritydistrict:{" "}
-                  {${users[i].authoritydistrict} }{" "}
-                </td>
-              </td>
-            </tr>
-            <tr className="">
-              <td>
-                <td>
-                  Authoritycity: {${users[i].authoritycity} }{" "}
-                </td>
-              </td>
-            </tr> 
-          </table>
-        </div>
-      
+        <section class="page" style="  width: 595px;
+          height: 841px;
+          background: #f2f2f2;
+          margin: 0 auto;
+          position: relative;">
+          <div class="strip"></div>
+          <div class="header header1 clearfix" style="padding: 8px 20px 15px;">
+            <div class="text-float-left" style=" float: left;">
+              <h1 style=" font-size: 16px;
+                line-height: 25px;
+                font-weight: 400;
+                color: #323232;">Institute of Driving Training & c (Karnal)</h1>
+              <p style=" font-size: 12px;
+                line-height: 20px;
+                color: #777;
+                max-width: 300px;">A joint venture of Transport Department, Government of Haryana & Honda IDTR</p>
+            </div>
+            <div class="honda-logo" style="  float: right;">
+              <img style="  max-width: 80px;" src="https://i.ibb.co/JkG6hn6/honda.png" alt="honda">
+            </div>
+          </div>
+          <div class="content" style=" padding: 40px 80px 20px 20px;">
+            <div>
+              <table class="table1" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">First Name :<span
+                style="font-weight: 400;">${users[i].fname}</span></p>
+                <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Middle Name :<span
+                style="font-weight: 400;">${users[i].mname}</span></p>
+                  <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Last Name :<span
+                      style="font-weight: 400;">${users[i].lname}</span></p>
+                     
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Email :<span
+                      style="font-weight: 400;">${users[i].email}</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Phone Number :<span
+                      style="font-weight: 400;">${
+                        users[i].phone ? users[i].phone : "No Data"
+                      }</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Gender :<span
+                      style="font-weight: 400;">${users[i].gender}</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Address :<span
+                      style="font-weight: 400;">${users[i].address}</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">City :<span
+                      style="font-weight: 400;">${users[i].city}</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Date of Birth :<span
+                      style="font-weight: 400;">${users[i].DoB}</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Date of Course:<span
+                      style="font-weight: 400;">${
+                        users[i].dateofCourse
+                      }</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Pass :<span
+                      style="font-weight: 400;">${
+                        users[i].isPass ? users[i].isPass : "-"
+                      }</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">License ID :<span
+                      style="font-weight: 400;">${users[i].lcid}</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Percentage :<span
+                      style="font-weight: 400;">${
+                        users[i].percentage
+                      }</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Theory Exam Score :<span
+                      style="font-weight: 400;">${
+                        users[i].totalScore
+                      }</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Practical Exam Score :<span
+                      style="font-weight: 400;">${
+                        users[i].practicalScore
+                      }</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Final Score :<span
+                      style="font-weight: 400;">${users[i].total}</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Status :<span
+                      style="font-weight: 400;">${users[i].status}</span></p>
+                      <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Type :<span
+                      style="font-weight: 400;">${users[i].type}</span>
+                  </p>
+                  <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Authoritydistrict: :<span
+                      style="font-weight: 400;">${
+                        users[i].authoritydistrict
+                      }</span>
+                  </p>
+                  <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Authoritycity :<span
+                      style="font-weight: 400;">${users[i].authoritycity}</span>
+                  </p>
+                  
+                </tr>
+              </table>
+              <table class="table2" width="100%" cellspacing="0" cellpadding="0">
+      ​
+              </table>
+      ​
+            </div>
+          </div>
+      ​
+        </section>
       </body>
-    
-    </hmtl>`;
+      ​
+      </html>`;
       const options = {
         format: "Letter",
       };
