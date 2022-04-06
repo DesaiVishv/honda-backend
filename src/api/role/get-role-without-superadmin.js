@@ -38,7 +38,7 @@ module.exports = exports = {
           { roleName: "Data Entry" },
           { roleName: "admin" },
           { roleName: "ContentManager" },
-          // { roleName: "user" },
+          { roleName: "SuperAdminApproverEditor" },
         ],
       });
       // let dateEntry = await global.models.GLOBAL.ROLE.findOne({
