@@ -8,6 +8,6 @@ const passport = require("passport");
 router.get("/getAllRequest", requestApi.getAllRequest.handler);
 
 // Put Method
-router.get("/update-Request", requestApi.updateRequest.handler);
+router.put("/update-Request", requestApi.updateRequest.handler);
 
 module.exports = exports = router;
