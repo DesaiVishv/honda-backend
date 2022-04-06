@@ -28,7 +28,7 @@ module.exports = (connection) => {
       type: { type: String },
       part: { type: String },
       purpose: { type: String },
-      isAccept: { type: Boolean, default: false },
+      isAccept: { type: Boolean },
       image: { type: String, default: null },
       description: { type: String },
       date: { type: Date },
