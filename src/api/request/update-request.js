@@ -31,7 +31,6 @@ module.exports = exports = {
         { $set: { isAccept: isAccept } },
         { new: true }
       );
-
       if (!property) {
         const data4createResponseObject = {
           req: req,
@@ -44,7 +43,7 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.BAD_REQUEST)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
-        if (property.isAccept == "true") {
+        if (property.isAccept == true) {
           let findRequest = await global.models.GLOBAL.REQUEST.findById({
             _id: id,
           });
