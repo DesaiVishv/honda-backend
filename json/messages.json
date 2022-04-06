@@ -120,6 +120,7 @@
   "USER_PROFILE_NOT_UPDATED": "User profile updated successfully",
   "USER_PROFILE_UPDATED": "User profile updated successfully",
   "USER_NOT_EXIST": "User does not exist in the system",
+  "DECLINED_REQUEST": "Your request is declined successfully",
   "TERMS_AND_CONDITION": "Terms and condition accepted",
   "MESSAGE_SENT": "Message has been sent successfully",
   "MESSAGES_FETCH_SUCCESS": "Messages fetched successfully.",
