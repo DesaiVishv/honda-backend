@@ -149,37 +149,37 @@ module.exports = exports = {
       //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
       //     return;
       // }
-      if (uid) {
-        checkPayment = await global.models.GLOBAL.PAYMENT.find({
-          uid: uid,
-          vcid: vcid,
-          ctid: ctid,
-          cnid: cnid,
-          tdid: tdid,
-        });
-        console.log("checkPayment", checkPayment);
-      } else {
-        checkPayment = await global.models.GLOBAL.PAYMENT.find({
-          phone: phone,
-          vcid: vcid,
-          ctid: ctid,
-          cnid: cnid,
-          tdid: tdid,
-        });
-        console.log("else", checkPayment);
-      }
-      if (checkPayment.length > 0) {
-        const data4createResponseObject = {
-          req: req,
-          result: -1,
-          message: messages.ALREADY_PAY,
-          payload: {},
-          logPayload: false,
-        };
-        return res
-          .status(enums.HTTP_CODES.BAD_REQUEST)
-          .json(utils.createResponseObject(data4createResponseObject));
-      }
+      // if (uid) {
+      //   checkPayment = await global.models.GLOBAL.PAYMENT.find({
+      //     uid: uid,
+      //     vcid: vcid,
+      //     ctid: ctid,
+      //     cnid: cnid,
+      //     tdid: tdid,
+      //   });
+      //   console.log("checkPayment", checkPayment);
+      // } else {
+      //   checkPayment = await global.models.GLOBAL.PAYMENT.find({
+      //     phone: phone,
+      //     vcid: vcid,
+      //     ctid: ctid,
+      //     cnid: cnid,
+      //     tdid: tdid,
+      //   });
+      //   console.log("else", checkPayment);
+      // }
+      // if (checkPayment.length > 0) {
+      //   const data4createResponseObject = {
+      //     req: req,
+      //     result: -1,
+      //     message: messages.ALREADY_PAY,
+      //     payload: {},
+      //     logPayload: false,
+      //   };
+      //   return res
+      //     .status(enums.HTTP_CODES.BAD_REQUEST)
+      //     .json(utils.createResponseObject(data4createResponseObject));
+      // }
       let AmenintiesCreate = {
         uid: uid,
         vcid: vcid,
