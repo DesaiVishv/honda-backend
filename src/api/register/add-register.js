@@ -157,6 +157,7 @@ module.exports = exports = {
           cnid: cnid,
           tdid: tdid,
         });
+        console.log("checkPayment", checkPayment);
       } else {
         checkPayment = await global.models.GLOBAL.PAYMENT.find({
           phone: phone,
@@ -165,6 +166,7 @@ module.exports = exports = {
           cnid: cnid,
           tdid: tdid,
         });
+        console.log("else", checkPayment);
       }
       if (checkPayment.length > 0) {
         const data4createResponseObject = {
@@ -234,16 +236,18 @@ module.exports = exports = {
       };
       const addHistory = await global.models.GLOBAL.HISTORY(addHis);
       addHistory.save();
-      const data4createResponseObject = {
-        req: req,
-        result: 0,
-        message: messages.ITEM_INSERTED,
-        payload: { newAmeninties },
-        logPayload: false,
-      };
-      res
-        .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
+      if (addHistory) {
+        const data4createResponseObject = {
+          req: req,
+          result: 0,
+          message: messages.ITEM_INSERTED,
+          payload: { newAmeninties },
+          logPayload: false,
+        };
+        return res
+          .status(enums.HTTP_CODES.OK)
+          .json(utils.createResponseObject(data4createResponseObject));
+      }
     } catch (error) {
       logger.error(
         `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
