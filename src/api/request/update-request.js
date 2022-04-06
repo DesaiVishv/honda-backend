@@ -592,6 +592,60 @@ module.exports = exports = {
                 .status(enums.HTTP_CODES.OK)
                 .json(utils.createResponseObject(data4createResponseObject));
             }
+
+            // Role
+            if (
+              findRequest.part == "Examiner" &&
+              findRequest.purpose == "Add"
+            ) {
+              let addRole = {
+                name: findRequest.name,
+                email: findRequest.email,
+                phone: findRequest.phone,
+                password: findRequest.password,
+                role: findRequest.role,
+              };
+              let newRole = await global.models.GLOBAL.EXAMINER(addRole);
+              await newRole.save();
+              const data4createResponseObject = {
+                req: req,
+                result: -1,
+                message: messages.ITEM_INSERTED,
+                payload: {},
+                logPayload: false,
+              };
+              return res
+                .status(enums.HTTP_CODES.OK)
+                .json(utils.createResponseObject(data4createResponseObject));
+            }
+            if (
+              findRequest.part == "Examiner" &&
+              findRequest.purpose == "Update"
+            ) {
+              let addrole = {
+                name: findRequest.name,
+                email: findRequest.email,
+                phone: findRequest.phone,
+                role: findRequest.role,
+                updatedAt: new Date(),
+              };
+              let findRole =
+                await global.models.GLOBAL.EXAMINER.findOneAndUpdate(
+                  { _id: findRequest.eid },
+                  addrole,
+                  { new: true }
+                );
+              const data4createResponseObject = {
+                req: req,
+                result: -1,
+                message: messages.ITEM_UPDATED,
+                payload: { findRole },
+                logPayload: false,
+              };
+              return res
+                .status(enums.HTTP_CODES.OK)
+                .json(utils.createResponseObject(data4createResponseObject));
+            }
           }
         } else {
           const data4createResponseObject = {

@@ -69,13 +69,19 @@ module.exports = exports = {
         phone: phone,
         password: password,
         role: role,
+        part: "Examiner",
+        purpose: "Add",
       };
-      const newAmeninties = await global.models.GLOBAL.EXAMINER(
+      // const newAmeninties = await global.models.GLOBAL.EXAMINER(
+      //   AmenintiesCreate
+      // );
+      // newAmeninties.save();
+      // const adminEntry = await global.models.GLOBAL.ADMIN(AmenintiesCreate);
+      // adminEntry.save();
+      const newAmeninties = await global.models.GLOBAL.REQUEST(
         AmenintiesCreate
       );
       newAmeninties.save();
-      const adminEntry = await global.models.GLOBAL.ADMIN(AmenintiesCreate);
-      adminEntry.save();
       const data4createResponseObject = {
         req: req,
         result: 0,

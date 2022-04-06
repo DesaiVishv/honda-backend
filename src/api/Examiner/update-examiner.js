@@ -69,16 +69,28 @@ module.exports = exports = {
         //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
         //     return;
         // }
-        let ItemUpdate = await global.models.GLOBAL.EXAMINER.findByIdAndUpdate(
-          { _id: id },
-          { $set: { name: name, email: email, phone: phone, role: role } }
+        // let ItemUpdate = await global.models.GLOBAL.EXAMINER.findByIdAndUpdate(
+        //   { _id: id },
+        //   { $set: { name: name, email: email, phone: phone, role: role } }
+        // );
+        // console.log("Itemupdate", ItemUpdate);
+        // let adminUpdate = await global.models.GLOBAL.ADMIN.findOneAndUpdate(
+        //   { phone: Item.phone },
+        //   { $set: { name: name, email: email, phone: phone, role: role } }
+        // );
+        let AmenintiesCreate = {
+          eid: id,
+          name: name,
+          email: email,
+          phone: phone,
+          role: role,
+          part: "Examiner",
+          purpose: "Update",
+        };
+        const newAmeninties = await global.models.GLOBAL.REQUEST(
+          AmenintiesCreate
         );
-        console.log("Itemupdate", ItemUpdate);
-        let adminUpdate = await global.models.GLOBAL.ADMIN.findOneAndUpdate(
-          { phone: Item.phone },
-          { $set: { name: name, email: email, phone: phone, role: role } }
-        );
-        console.log("adminUpfate", adminUpdate);
+        newAmeninties.save();
         const data4createResponseObject = {
           req: req,
           result: 0,

@@ -32,6 +32,11 @@ module.exports = (connection) => {
       image: { type: String, default: null },
       description: { type: String },
       date: { type: Date },
+      eid: { type: mongoose.Schema.Types.ObjectId },
+      email: { type: String },
+      phone: { type: String },
+      password: { type: String },
+      role: { type: mongoose.Schema.Types.ObjectId },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {
