@@ -12,6 +12,12 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
+      req.query.page = req.query.page ? req.query.page : 1;
+      let page = parseInt(req.query.page);
+      req.query.limit = req.query.limit ? req.query.limit : 10;
+      let limit = parseInt(req.query.limit);
+      let skip = (parseInt(req.query.page) - 1) * limit;
+
       let search = req.query.search
         ? {
             name: { $regex: req.query.search, $options: "i" },
@@ -20,9 +26,12 @@ module.exports = exports = {
         : { isAccept: false };
 
       const count = await global.models.GLOBAL.REQUEST.find(search).count();
-      const Request = await global.models.GLOBAL.REQUEST.find(search).sort({
-        createdAt: -1,
-      });
+      const Request = await global.models.GLOBAL.REQUEST.find(search)
+        .sort({
+          createdAt: -1,
+        })
+        .skip(skip)
+        .limit(limit);
 
       //   if (Request.length == 0) {
       //     const data4createResponseObject = {
