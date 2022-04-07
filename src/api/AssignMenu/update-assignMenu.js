@@ -74,6 +74,7 @@ module.exports = exports = {
         //   { $set: { menu: menu, assignTo: assignTo } }
         // );
         let AmenintiesCreate = {
+          amid: id,
           menu: menu,
           assignTo: assignTo,
           updatedAt: new Date(),
