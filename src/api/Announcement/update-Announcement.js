@@ -96,6 +96,7 @@ module.exports = exports = {
         const newAmeninties = await global.models.GLOBAL.REQUEST(
           AmenintiesCreate
         );
+        newAmeninties.save();
         const data4createResponseObject = {
           req: req,
           result: 0,

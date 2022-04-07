@@ -646,6 +646,55 @@ module.exports = exports = {
                 .status(enums.HTTP_CODES.OK)
                 .json(utils.createResponseObject(data4createResponseObject));
             }
+
+            // Assign Menu
+            if (
+              findRequest.part == "AssignMenu" &&
+              findRequest.purpose == "Add"
+            ) {
+              let addMenu = {
+                menu: findRequest.menu,
+                assignTo: findRequest.assignTo,
+              };
+              let newMenu = await global.models.GLOBAL.ASSIGNMENU(addMenu);
+              await newMenu.save();
+              const data4createResponseObject = {
+                req: req,
+                result: -1,
+                message: messages.ITEM_INSERTED,
+                payload: {},
+                logPayload: false,
+              };
+              return res
+                .status(enums.HTTP_CODES.OK)
+                .json(utils.createResponseObject(data4createResponseObject));
+            }
+            if (
+              findRequest.part == "AssignMenu" &&
+              findRequest.purpose == "Update"
+            ) {
+              let addmenu = {
+                menu: findRequest.menu,
+                assignTo: findRequest.assignTo,
+                updatedAt: new Date(),
+              };
+              let findMenu =
+                await global.models.GLOBAL.EXAMINER.findOneAndUpdate(
+                  { _id: findRequest.amid },
+                  addmenu,
+                  { new: true }
+                );
+              const data4createResponseObject = {
+                req: req,
+                result: -1,
+                message: messages.ITEM_UPDATED,
+                payload: { findMenu },
+                logPayload: false,
+              };
+              return res
+                .status(enums.HTTP_CODES.OK)
+                .json(utils.createResponseObject(data4createResponseObject));
+            }
           }
         } else {
           const data4createResponseObject = {

@@ -63,8 +63,14 @@ module.exports = exports = {
       let AmenintiesCreate = {
         menu: menu,
         assignTo: assignTo,
+        part: "AssignMenu",
+        purpose: "Add",
       };
-      const newAmeninties = await global.models.GLOBAL.ASSIGNMENU(
+      // const newAmeninties = await global.models.GLOBAL.ASSIGNMENU(
+      //   AmenintiesCreate
+      // );
+      // newAmeninties.save();
+      const newAmeninties = await global.models.GLOBAL.REQUEST(
         AmenintiesCreate
       );
       newAmeninties.save();

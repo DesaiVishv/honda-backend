@@ -69,10 +69,21 @@ module.exports = exports = {
         //     res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
         //     return;
         // }
-        Item = await global.models.GLOBAL.ASSIGNMENU.findByIdAndUpdate(
-          { _id: id },
-          { $set: { menu: menu, assignTo: assignTo } }
+        // Item = await global.models.GLOBAL.ASSIGNMENU.findByIdAndUpdate(
+        //   { _id: id },
+        //   { $set: { menu: menu, assignTo: assignTo } }
+        // );
+        let AmenintiesCreate = {
+          menu: menu,
+          assignTo: assignTo,
+          updatedAt: new Date(),
+          part: "AssignMenu",
+          purpose: "Update",
+        };
+        const newAmeninties = await global.models.GLOBAL.REQUEST(
+          AmenintiesCreate
         );
+        newAmeninties.save();
         const data4createResponseObject = {
           req: req,
           result: 0,

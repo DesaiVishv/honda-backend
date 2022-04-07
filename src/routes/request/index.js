@@ -7,6 +7,10 @@ const passport = require("passport");
 // Get Methods
 router.get("/getAllRequest", requestApi.getAllRequest.handler);
 
+router.get("/getRequestRole", requestApi.getRequestRole.handler);
+
+router.get("/getRequestMenu", requestApi.getRequestMenu.handler);
+
 // Put Method
 router.put("/update-Request", requestApi.updateRequest.handler);
 

@@ -23,13 +23,9 @@ module.exports = exports = {
             name: { $regex: req.query.search, $options: "i" },
             isAccept: false,
             isReject: false,
-            part: { $nin: ["Examiner", "AssignMenu"] },
+            part: "AssignMenu",
           }
-        : {
-            isAccept: false,
-            isReject: false,
-            part: { $nin: ["Examiner", "AssignMenu"] },
-          };
+        : { isAccept: false, isReject: false, part: "AssignMenu" };
 
       const count = await global.models.GLOBAL.REQUEST.find(search).count();
       const Request = await global.models.GLOBAL.REQUEST.find(search)
@@ -39,19 +35,6 @@ module.exports = exports = {
         .skip(skip)
         .limit(limit);
 
-      //   if (Request.length == 0) {
-      //     const data4createResponseObject = {
-      //       req: req,
-      //       result: -400,
-      //       message: messages.NOT_FOUND,
-      //       payload: {},
-      //       logPayload: false,
-      //     };
-      //     res
-      //       .status(enums.HTTP_CODES.OK)
-      //       .json(utils.createResponseObject(data4createResponseObject));
-      //     return;
-      //   }
       const data4createResponseObject = {
         req: req,
         result: 0,
