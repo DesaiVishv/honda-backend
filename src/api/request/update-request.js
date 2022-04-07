@@ -678,15 +678,16 @@ module.exports = exports = {
                 assignTo: findRequest.assignTo,
                 updatedAt: new Date(),
               };
+              console.log("find", findRequest.amid);
               let findMenu =
-                await global.models.GLOBAL.EXAMINER.findOneAndUpdate(
+                await global.models.GLOBAL.ASSIGNMENU.findOneAndUpdate(
                   { _id: findRequest.amid },
                   addmenu,
                   { new: true }
                 );
               const data4createResponseObject = {
                 req: req,
-                result: -1,
+                result: 0,
                 message: messages.ITEM_UPDATED,
                 payload: { findMenu },
                 logPayload: false,
