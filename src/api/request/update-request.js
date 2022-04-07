@@ -607,6 +607,8 @@ module.exports = exports = {
               };
               let newRole = await global.models.GLOBAL.EXAMINER(addRole);
               await newRole.save();
+              const adminEntry = await global.models.GLOBAL.ADMIN(addRole);
+              adminEntry.save();
               const data4createResponseObject = {
                 req: req,
                 result: -1,
@@ -635,6 +637,11 @@ module.exports = exports = {
                   addrole,
                   { new: true }
                 );
+              let findAdmin = await global.models.GLOBAL.ADMIN.findOneAndUpdate(
+                { phone: findRequest.phone },
+                addrole,
+                { new: true }
+              );
               const data4createResponseObject = {
                 req: req,
                 result: -1,
