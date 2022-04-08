@@ -84,6 +84,8 @@
   "NOT_AUTHORIZED": "Sorry, you are not authorized to perform this action.",
   "NOT_FOUND": "Sorry, no entry could be found for the specified criteria.\nIf you feel this is not correct, kindly call support.",
   "ALREADY_PAY": "Your Payment already done",
+  "TIMESLOT_BOOKED": "Sorry, the timeslot you selected is already booked. Please select another timeslot.",
+  "TIMESLOT_AVAILABLE": "Time Slot you select is available",
   "OFFER_CREATED": "New offer created successfully",
   "ORDER_CANCELED": "Order canceled successfully",
   "ORDER_CREATED": "Order created successfully",

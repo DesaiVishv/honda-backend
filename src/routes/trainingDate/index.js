@@ -19,6 +19,8 @@ router.get(
 router.get("/getData", trainingDateApi.getDataByDate.handler);
 router.get("/getDatePrevious", trainingDateApi.getDatePrevious.handler);
 
+router.get("/checkSlot/:id", trainingDateApi.checkSlot.handler);
+
 router.post(
   "/uploadcsv",
   // passport.authenticate(["jwt"], { session: false }),
