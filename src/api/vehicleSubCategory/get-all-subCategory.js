@@ -24,9 +24,8 @@ module.exports = exports = {
         ? {
             vehicleSubCategory: { $regex: req.query.search, $options: "i" },
             isDelete: false,
-            isActive: true,
           }
-        : { isDelete: false, isActive: true };
+        : { isDelete: false };
 
       const count = await global.models.GLOBAL.VEHICLESUBCATEGORY.find(
         search
