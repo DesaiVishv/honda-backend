@@ -42,13 +42,13 @@ module.exports = exports = {
       console.log(req.query.isPage);
       if (req.query.isPage === "true") {
         admin = await global.models.GLOBAL.PARTIAL.find(search)
-          .sort({ registrationDate: -1 })
+          .sort({ createdAt: -1 })
           .skip(skip)
           .limit(limit);
         console.log("in");
       } else {
         admin = await global.models.GLOBAL.PARTIAL.find(search).sort({
-          registrationDate: -1,
+          createdAt: -1,
         });
         console.log("out");
       }

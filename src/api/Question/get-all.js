@@ -32,9 +32,11 @@ module.exports = exports = {
         : { ...dateFilter, isActive: true };
 
       const count = await global.models.GLOBAL.QUESTION.find(search).count();
-      const Questions = await global.models.GLOBAL.QUESTION.find(search).sort({
-        createdAt: -1,
-      });
+      const Questions = await global.models.GLOBAL.QUESTION.find(search)
+        .sort({
+          createdAt: -1,
+        })
+        .populate({ path: "Category", model: "questioncategory" });
 
       if (Questions.length == 0) {
         const data4createResponseObject = {

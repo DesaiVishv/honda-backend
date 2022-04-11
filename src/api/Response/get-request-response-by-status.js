@@ -39,7 +39,7 @@ module.exports = exports = {
       }
       let search = req.query.search
         ? {
-            name: { $regex: req.query.search, $options: "i" },
+            fname: { $regex: req.query.search, $options: "i" },
             ...dateFilter,
             status,
           }
