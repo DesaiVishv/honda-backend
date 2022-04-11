@@ -87,12 +87,12 @@ module.exports = exports = {
         .populate({
           path: "batch",
           model: "batch",
-          populate: { path: "Examiner", model: "examiner" },
+          populate: { path: "Examiner", model: "admin" },
         })
         .populate({
           path: "batch",
           model: "batch",
-          populate: { path: "DataEntry", model: "examiner" },
+          populate: { path: "DataEntry", model: "admin" },
         });
       // let findBatch = await global.models.GLOBAL.BATCH.find({_id:id}).populate({path:"Examiner",model:"examiner"}).populate({path:"DataEntry",model:"examiner"})
       if (findResponse.length == 0) {
