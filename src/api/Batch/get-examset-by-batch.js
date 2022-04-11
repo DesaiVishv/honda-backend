@@ -19,16 +19,11 @@ module.exports = exports = {
       // });
       const Examset = await global.models.GLOBAL.EXAMSET.findOne({
         batchId: ids,
+      })
+      .populate({
+        path: "batchId",
+        model: "batch",
       });
-
-      // .populate({
-      //   path: "question",
-      //   model: "question",
-      // })
-      // .populate({
-      //   path: "batch",
-      //   model: "batch",
-      // });
 
       const data4createResponseObject = {
         req: req,
