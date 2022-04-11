@@ -39,7 +39,7 @@ module.exports = exports = {
     authoritycity: Joi.string().allow(""),
     authoritydistrict: Joi.string().allow(""),
     passportPhoto: Joi.string().allow(null),
-    drivingLicense: Joi.string().allow(null),
+    drivingLicense: Joi.string().allow(""),
     IDproof: Joi.string().allow(null),
     medicalCertificate: Joi.string().allow(null),
     bloodGroup: Joi.string().allow(""),
