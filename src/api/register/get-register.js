@@ -49,6 +49,14 @@ module.exports = exports = {
         },
         {
           $lookup: {
+            from: "courseCategory",
+            localField: "ccid",
+            foreignField: "_id",
+            as: "courseCategory",
+          },
+        },
+        {
+          $lookup: {
             from: "courseName",
             localField: "cnid",
             foreignField: "_id",
