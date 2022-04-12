@@ -46,6 +46,10 @@ module.exports = exports = {
           model: "courseName",
         })
         .populate({
+          path: "ccid",
+          model: "courseCategory",
+        })
+        .populate({
           path: "tdid",
           model: "trainingDate",
         });

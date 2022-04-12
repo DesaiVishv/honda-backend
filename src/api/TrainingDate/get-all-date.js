@@ -44,6 +44,14 @@ module.exports = exports = {
             },
           }
         : {};
+      let findCourseCategory = req.query.search
+        ? {
+            "courseCategory.courseCategory": {
+              $regex: req.query.search,
+              $options: "i",
+            },
+          }
+        : {};
       const count = await global.models.GLOBAL.TRAININGDATE.find(
         search
       ).count();
@@ -67,6 +75,14 @@ module.exports = exports = {
         },
         {
           $lookup: {
+            from: "courseCategory",
+            localField: "ccid",
+            foreignField: "_id",
+            as: "courseCategory",
+          },
+        },
+        {
+          $lookup: {
             from: "courseName",
             localField: "cnid",
             foreignField: "_id",
@@ -75,7 +91,7 @@ module.exports = exports = {
         },
         {
           $match: {
-            $or: [search, findCourseType, findCourseName],
+            $or: [search, findCourseType, findCourseName, findCourseCategory],
           },
         },
       ])

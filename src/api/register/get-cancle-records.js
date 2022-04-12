@@ -42,6 +42,10 @@ module.exports = exports = {
           model: "vehicleCategory",
         })
         .populate({
+          path: "ccid",
+          model: "courseCategory",
+        })
+        .populate({
           path: "cnid",
           model: "courseName",
         })
