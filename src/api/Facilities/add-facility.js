@@ -10,13 +10,15 @@ const utils = require("../../utils");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    image: Joi.array().required(),
+    image: Joi.string().required(),
     description: Joi.string().required(),
+    content: Joi.string(),
+    title: Joi.string(),
     // imagePath: Joi.string().allow("")
   }),
 
   handler: async (req, res) => {
-    const { image, description } = req.body;
+    const { image, description, title, content } = req.body;
     const { user } = req;
 
     if (!image || !description) {
@@ -52,6 +54,8 @@ module.exports = exports = {
       let AmenintiesCreate = {
         image: image,
         description: description,
+        content: content,
+        title: title,
       };
       const newAmeninties = await global.models.GLOBAL.FACILITIES(
         AmenintiesCreate
