@@ -10,7 +10,7 @@ const utils = require("../../utils");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    image: Joi.string().required(),
+    image: Joi.array().required(),
     description: Joi.string().required(),
     content: Joi.string(),
     title: Joi.string(),
