@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 module.exports = (connection) => {
   const preloginSchema = new mongoose.Schema(
     {
-      Device: { type: String },
+      device: { type: String },
       ip: { type: String },
       lastPage: { type: String },
       createdAt: { type: Date, default: Date.now },
