@@ -109,6 +109,7 @@ module.exports = async () => {
           connection_IN_HONDA
         ),
         REQUEST: require("../schema/Request/Request")(connection_IN_HONDA),
+        PRELOGIN: require("../schema/preLogin/preLogin")(connection_IN_HONDA),
         FILEMANAGER: require("../schema/FileManager/filemanager")(
           connection_IN_HONDA
         ),

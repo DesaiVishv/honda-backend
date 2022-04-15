@@ -43,6 +43,8 @@ router.get(
   passport.authenticate(["jwt"], { session: false }),
   adminApi.getAdminLoginLog.handler
 );
+router.post("/add-pre-post-login", adminApi.addPrelogin.handler);
+router.get("/get-pre-post-login", adminApi.getPrelogin.handler);
 router.get(
   "/count",
   passport.authenticate(["jwt"], { session: false }),

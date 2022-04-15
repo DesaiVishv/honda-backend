@@ -7,6 +7,8 @@ const getSuperadmins = require("./get-superadmins");
 const getExaminer = require("./get-examiner");
 const getDataentry = require("./get-dataEntrys");
 const getPartialRecords = require("./get-partial-records");
+const addPrelogin = require("./add-pre-post-login");
+const getPrelogin = require("./get-pre-post-login");
 const updateAdmin = require("./update-admin");
 const adminLogin = require("./admin-login");
 const adminSignup = require("./admin-signup");
@@ -33,6 +35,8 @@ module.exports = exports = {
   getExaminer,
   getDataentry,
   getPartialRecords,
+  addPrelogin,
+  getPrelogin,
   updateAdmin,
   adminLogin,
   adminSignup,
