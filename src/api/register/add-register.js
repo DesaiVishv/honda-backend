@@ -17,7 +17,7 @@ module.exports = exports = {
     cnid: Joi.string(),
     lcid: Joi.string(),
     tdid: Joi.string(),
-    drivingLicenseNumber: Joi.string().allow(""),
+    drivingLicenseNumber: Joi.string().allow(null),
     dateofCourse: Joi.string(),
     fname: Joi.string(),
     mname: Joi.string().allow(""),
