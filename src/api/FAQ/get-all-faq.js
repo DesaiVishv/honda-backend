@@ -26,6 +26,7 @@ module.exports = exports = {
 
       const count = await global.models.GLOBAL.FAQ.find(search).count();
       const Questions = await global.models.GLOBAL.FAQ.find(search)
+        .populate({ path: "fcid", model: "faqCategory" })
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: -1 });
