@@ -86,6 +86,7 @@ module.exports = exports = {
           description: description,
           part: "CMS",
           purpose: "Update",
+          oldData: Item,
         };
         const newAmeninties = await global.models.GLOBAL.REQUEST(
           AmenintiesCreate

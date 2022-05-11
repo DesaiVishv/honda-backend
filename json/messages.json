@@ -75,6 +75,7 @@
   "ITEM_NOT_RETRIEVED": "Some error occurred while retrieving the item",
   "ITEM_NOT_UPDATED": "Some error occurred while updating the item",
   "ITEM_UPDATED": "updated successfully",
+  "REQUEST_ADDED": "A request for an add has been sent to the super-admin",
   "REQUEST_UPDATED": "A request for an update has been sent to the super-admin",
   "BOOKING_CANCEL": "Your Booking is Cancle Successfully",
   "MERCHANT_APPROVED": "Merchant approved.",

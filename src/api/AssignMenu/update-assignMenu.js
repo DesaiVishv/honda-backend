@@ -80,6 +80,7 @@ module.exports = exports = {
           updatedAt: new Date(),
           part: "AssignMenu",
           purpose: "Update",
+          oldData: Item,
         };
         const newAmeninties = await global.models.GLOBAL.REQUEST(
           AmenintiesCreate

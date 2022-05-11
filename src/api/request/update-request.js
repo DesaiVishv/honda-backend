@@ -88,12 +88,17 @@ module.exports = exports = {
                 date: findRequest.date,
                 updatedAt: new Date(),
               };
+
               let findAnnouncement =
                 await global.models.GLOBAL.ANNOUNCEMENT.findOneAndUpdate(
                   { _id: findRequest.acid },
                   addAnnouncement,
                   { new: true }
                 );
+              // findAnnouncement = {
+              //   ...findAnnouncement._doc,
+              //   oldAnnouncement,
+              // };
               const data4createResponseObject = {
                 req: req,
                 result: -1,

@@ -81,6 +81,7 @@ module.exports = exports = {
           image: image,
           part: "Banner",
           purpose: "Update",
+          oldData: Item,
         };
         const newAmeninties = await global.models.GLOBAL.REQUEST(
           AmenintiesCreate
@@ -93,7 +94,7 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        res
+        return res
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       }

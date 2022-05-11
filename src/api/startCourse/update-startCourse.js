@@ -74,6 +74,7 @@ module.exports = exports = {
           description: description,
           part: "startCourse",
           purpose: "Update",
+          oldData: Item,
         };
         const newAmeninties = await global.models.GLOBAL.REQUEST(
           AmenintiesCreate

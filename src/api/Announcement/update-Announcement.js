@@ -58,7 +58,7 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
         const checkMenu = await global.models.GLOBAL.ANNOUNCEMENT.findById(id);
-        if (checkMenu.length > 0) {
+        if (!checkMenu) {
           const data4createResponseObject = {
             req: req,
             result: -400,
@@ -92,6 +92,7 @@ module.exports = exports = {
           updatedAt: new Date(),
           part: "Announcement",
           purpose: "Update",
+          oldData: Item,
         };
         const newAmeninties = await global.models.GLOBAL.REQUEST(
           AmenintiesCreate
@@ -104,7 +105,7 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        res
+        return res
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       }
