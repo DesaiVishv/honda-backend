@@ -44,11 +44,11 @@ module.exports = exports = {
     try {
       let Item = await global.models.GLOBAL.REGISTER.updateMany(
         { _id: { $in: uids } },
-        { isAttendence: true, batchId: batch }
+        { isAttendence: true, batchId: batch, updatedAt: new Date() }
       );
       let update = await global.models.GLOBAL.BATCH.findByIdAndUpdate(
         { _id: batch },
-        { isAttendanceTake: true }
+        { isAttendanceTake: true, updatedAt: new Date() }
       );
       if (!Item) {
         const data4createResponseObject = {
