@@ -26,7 +26,10 @@ module.exports = exports = {
     const { date, endDate, seat, vcid, ctid, ccid, cnid, startTime, endTime } =
       req.body;
     const { user } = req;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    if (
+      user.type !== enums.USER_TYPE.SUPERADMIN &&
+      user.type !== enums.USER_TYPE.ADMIN
+    ) {
       const data4createResponseObject = {
         req: req,
         result: -1,
