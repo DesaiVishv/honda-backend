@@ -147,6 +147,7 @@ module.exports = exports = {
       ctid: ctid,
       uid: uid,
       tdid: tdid,
+      status: "done",
     });
     if (checkPayment.length > 0) {
       const data4createResponseObject = {
