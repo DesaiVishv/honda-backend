@@ -33,6 +33,7 @@ module.exports = exports = {
           vcid: vcid,
           ctid: ctid,
           cnid: cnid,
+          status: "done",
         });
       } else {
         checkPayment = await global.models.GLOBAL.PAYMENT.find({
@@ -41,6 +42,7 @@ module.exports = exports = {
           vcid: vcid,
           ctid: ctid,
           cnid: cnid,
+          status: "done",
         });
       }
       if (checkPayment.length > 0) {

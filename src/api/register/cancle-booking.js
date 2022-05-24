@@ -18,7 +18,7 @@ module.exports = exports = {
     try {
       const findUser = await global.models.GLOBAL.REGISTER.findByIdAndUpdate(
         { _id: uid },
-        { isCancle: true },
+        { isCancle: true, updateAt: Date.now() },
         { new: true }
       )
         .populate({
@@ -49,6 +49,13 @@ module.exports = exports = {
           path: "batchId",
           model: "batch",
         });
+      if (findUser) {
+        let updatePayment = await global.models.GLOBAL.PAYMENT.findOneAndUpdate(
+          { paymentId: findUser.paymentId },
+          { status: "cancle", updateAt: Date.now() },
+          { new: true }
+        );
+      }
       let findRole = await global.models.GLOBAL.ROLE.findOne({
         roleName: "superadmin",
       });

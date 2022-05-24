@@ -80,6 +80,7 @@ module.exports = exports = {
       cnid: cnid,
       tdid: tdid,
       receiptNumber: receiptNumber,
+      status: "done",
     });
     if (checkPayment.length > 0) {
       const data4createResponseObject = {
