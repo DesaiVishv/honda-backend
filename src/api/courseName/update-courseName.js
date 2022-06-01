@@ -25,7 +25,6 @@ module.exports = exports = {
       mode,
       documentRequired,
       validity,
-      systemRequirement,
       certificate,
       vcid,
       ctid,
@@ -114,7 +113,6 @@ module.exports = exports = {
           mode: mode,
           documentRequired: documentRequired,
           validity: validity,
-          systemRequirement: systemRequirement,
           certificate: certificate,
         };
         let Item1 = await global.models.GLOBAL.COURSENAME.findByIdAndUpdate(

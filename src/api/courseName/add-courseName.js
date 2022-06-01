@@ -22,7 +22,6 @@ module.exports = exports = {
     mode: Joi.string(),
     documentRequired: Joi.string(),
     validity: Joi.string(),
-    systemRequirement: Joi.string(),
     certificate: Joi.string(),
     price: Joi.number().required(),
     // imagePath: Joi.string().allow("")
@@ -38,7 +37,6 @@ module.exports = exports = {
       mode,
       documentRequired,
       validity,
-      systemRequirement,
       certificate,
       price,
       vcid,
@@ -114,7 +112,6 @@ module.exports = exports = {
         mode: mode,
         documentRequired: documentRequired,
         validity: validity,
-        systemRequirement: systemRequirement,
         certificate: certificate,
       };
       const newAmeninties = await global.models.GLOBAL.COURSENAME(

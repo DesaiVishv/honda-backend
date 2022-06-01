@@ -17,7 +17,6 @@ module.exports = (connection) => {
       mode: { type: String, default: null },
       documentRequired: { type: String, default: null },
       validity: { type: String, default: null },
-      systemRequirement: { type: String, default: null },
       certificate: { type: String, default: null },
       price: { type: Number },
       isDelete: { type: Boolean, default: false },
