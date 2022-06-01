@@ -91,19 +91,7 @@ module.exports = exports = {
             model: "batch",
           });
       }
-      if (users.length == 0) {
-        const data4createResponseObject = {
-          req: req,
-          result: -400,
-          message: messages.NOT_FOUND,
-          payload: {},
-          logPayload: false,
-        };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
-        return;
-      }
+
       const data4createResponseObject = {
         req: req,
         result: 0,
