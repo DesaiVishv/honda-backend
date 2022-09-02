@@ -207,6 +207,7 @@ module.exports = exports = {
                 titleName: findRequest.titleName,
                 image: findRequest.image,
                 description: findRequest.description,
+                language: findRequest.language,
               };
               let newCMS = await global.models.GLOBAL.CMS(addCMS);
               await newCMS.save();

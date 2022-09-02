@@ -13,10 +13,11 @@ module.exports = exports = {
     titleName: Joi.string().allow(""),
     image: Joi.string().required(),
     description: Joi.string().required(),
+    language: Joi.string().required(),
   }),
 
   handler: async (req, res) => {
-    const { titleName, image, description } = req.body;
+    const { titleName, image, description, language } = req.body;
     const { user } = req;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //     const data4createResponseObject = {
@@ -28,7 +29,7 @@ module.exports = exports = {
     //     };
     //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
     // }
-    if (!image || !description) {
+    if (!image || !description || !language) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -44,6 +45,7 @@ module.exports = exports = {
     try {
       const checkMenu = await global.models.GLOBAL.CMS.find({
         titleName: titleName,
+        language: language,
       });
       if (checkMenu.length > 0) {
         const data4createResponseObject = {
@@ -69,6 +71,7 @@ module.exports = exports = {
         titleName: titleName,
         image: image,
         description: description,
+        language: language,
         part: "CMS",
         purpose: "Add",
       };
