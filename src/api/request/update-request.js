@@ -401,6 +401,7 @@ module.exports = exports = {
               let addContent = {
                 titleName: findRequest.titleName,
                 description: findRequest.description,
+                language: findRequest.language,
               };
               let newContent = await global.models.GLOBAL.CONTENT(addContent);
               await newContent.save();
@@ -422,6 +423,7 @@ module.exports = exports = {
               let addcontent = {
                 titleName: findRequest.titleName,
                 description: findRequest.description,
+                language: findRequest.language,
                 updatedAt: new Date(),
               };
               let findContent =
