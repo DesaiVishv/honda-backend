@@ -42,6 +42,7 @@ module.exports = (connection) => {
       password: { type: String },
       oldData: { type: Object },
       role: { type: mongoose.Schema.Types.ObjectId },
+      language: { type: String, require: true },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {

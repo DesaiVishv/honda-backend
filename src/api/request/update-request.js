@@ -403,6 +403,7 @@ module.exports = exports = {
                 description: findRequest.description,
                 language: findRequest.language,
               };
+              console.log("addContent", addContent);
               let newContent = await global.models.GLOBAL.CONTENT(addContent);
               await newContent.save();
               const data4createResponseObject = {

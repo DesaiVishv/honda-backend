@@ -29,6 +29,7 @@ module.exports = exports = {
           language: req.query.language,
         };
       }
+      console.log("search", search);
       const count = await global.models.GLOBAL.CONTENT.find(search).count();
       const Questions = await global.models.GLOBAL.CONTENT.find(search)
         .skip(skip)
