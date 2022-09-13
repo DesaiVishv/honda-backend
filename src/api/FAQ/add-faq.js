@@ -13,10 +13,11 @@ module.exports = exports = {
     fcid: Joi.string(),
     question: Joi.string().required(),
     answer: Joi.string().required(),
+    language: Joi.string().required(),
   }),
 
   handler: async (req, res) => {
-    const { fcid, question, answer } = req.body;
+    const { fcid, question, answer, language } = req.body;
     const { user } = req;
     // if (user.type !== enums.USER_TYPE.ADMIN) {
     //     const data4createResponseObject = {
@@ -28,7 +29,7 @@ module.exports = exports = {
     //     };
     //     return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
     // }
-    if (!question || !answer) {
+    if (!question || !answer || !language) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -44,6 +45,7 @@ module.exports = exports = {
     try {
       const checkMenu = await global.models.GLOBAL.FAQ.find({
         question: question,
+        language: language,
       });
       if (checkMenu.length > 0) {
         const data4createResponseObject = {
@@ -69,6 +71,7 @@ module.exports = exports = {
         fcid: fcid,
         question: question,
         answer: answer,
+        language: language,
         part: "FAQ",
         purpose: "Add",
       };
