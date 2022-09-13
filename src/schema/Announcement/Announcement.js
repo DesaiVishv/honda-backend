@@ -10,6 +10,7 @@ module.exports = (connection) => {
       image: { type: String, default: null },
       description: { type: String, require: true },
       date: { type: Date, require: true },
+      language: { type: String, require: true },
       isActive: { type: Boolean, default: true },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },

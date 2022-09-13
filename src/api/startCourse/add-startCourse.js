@@ -12,11 +12,12 @@ module.exports = exports = {
   validation: Joi.object({
     titleName: Joi.string(),
     image: Joi.string().required(),
+    language: Joi.string().required(),
     description: Joi.string(),
   }),
 
   handler: async (req, res) => {
-    const { titleName, image, description } = req.body;
+    const { titleName, image, description, language } = req.body;
     const { user } = req;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
@@ -57,6 +58,7 @@ module.exports = exports = {
         titleName: titleName,
         image: image,
         description: description,
+        language: language,
         part: "startCourse",
         purpose: "Add",
       };

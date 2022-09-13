@@ -19,11 +19,30 @@ module.exports = exports = {
       let skip = (parseInt(req.query.page) - 1) * limit;
 
       // let id = req.params.id;
-
       let search = req.query.search
-        ? { name: { $regex: req.query.search, $options: "i" }, isActive: true }
+        ? {
+            faqCategory: { $regex: req.query.search, $options: "i" },
+            isActive: true,
+          }
         : { isActive: true };
+      
+      if (req.query.language) {
+        search = {
+          ...search,
+          language: req.query.language,
+        };
+      }
+      // let search = req.query.search
+      //   ? { name: { $regex: req.query.search, $options: "i" }, isActive: true }
+      //   : { isActive: true };
 
+      //   if (req.query.language) {
+      //     search = {
+      //       ...search,
+      //       language: req.query.language,
+      //     };
+      //   }
+        
       const count = await global.models.GLOBAL.ANNOUNCEMENT.find(
         search
       ).count();

@@ -33,6 +33,12 @@ module.exports = exports = {
             }
           : {};
       }
+      if (req.query.language) {
+        search = {
+          ...search,
+          language: req.query.language,
+        };
+      }
 
       const count = await global.models.GLOBAL.STARTCOURSE.find(search).count();
       const startCourse = await global.models.GLOBAL.STARTCOURSE.find(search)

@@ -9,6 +9,7 @@ module.exports = (connection) => {
       title: { type: String },
       content: { type: String },
       description: { type: String, require: true },
+      language: { type: String, require: true },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {

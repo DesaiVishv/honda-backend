@@ -12,16 +12,17 @@ module.exports = exports = {
   validation: Joi.object({
     image: Joi.array().required(),
     description: Joi.string().required(),
+    language: Joi.string().required(),
     content: Joi.string(),
     title: Joi.string(),
     // imagePath: Joi.string().allow("")
   }),
 
   handler: async (req, res) => {
-    const { image, description, title, content } = req.body;
+    const { image, description, title, content, language } = req.body;
     const { user } = req;
 
-    if (!image || !description) {
+    if (!image || !description || !language) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -37,6 +38,7 @@ module.exports = exports = {
     try {
       const checkMenu = await global.models.GLOBAL.FACILITIES.find({
         image: image,
+        language: language
       });
       if (checkMenu.length > 0) {
         const data4createResponseObject = {
@@ -56,6 +58,7 @@ module.exports = exports = {
         description: description,
         content: content,
         title: title,
+        language: language
       };
       const newAmeninties = await global.models.GLOBAL.FACILITIES(
         AmenintiesCreate

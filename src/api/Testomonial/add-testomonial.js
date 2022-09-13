@@ -13,10 +13,11 @@ module.exports = exports = {
     titleName: Joi.string().required(),
     image: Joi.string(),
     description: Joi.string(),
+    language: Joi.string().required()
   }),
 
   handler: async (req, res) => {
-    const { titleName, image, description } = req.body;
+    const { titleName, image, description, language } = req.body;
     const { user } = req;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
@@ -46,6 +47,7 @@ module.exports = exports = {
     try {
       const checkMenu = await global.models.GLOBAL.TESTOMONIAL.find({
         titleName: titleName,
+        language: language
       });
       if (checkMenu.length > 0) {
         const data4createResponseObject = {
@@ -71,8 +73,9 @@ module.exports = exports = {
       // newAmeninties.save();
       let AmenintiesCreate = {
         titleName: titleName,
-        image: image,
+        imageInformation: image,
         description: description,
+        language: language,
         part: "Testomonial",
         purpose: "Add",
       };

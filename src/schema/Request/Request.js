@@ -31,6 +31,7 @@ module.exports = (connection) => {
       isAccept: { type: Boolean, default: false },
       isReject: { type: Boolean, default: false },
       image: { type: String, default: null },
+      imageInformation: { type: Array, default: null },
       description: { type: String },
       date: { type: Date },
       eid: { type: mongoose.Schema.Types.ObjectId },

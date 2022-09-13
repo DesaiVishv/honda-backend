@@ -12,12 +12,14 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
-      let { id } = req.query;
+      let { id, language } = req.query;
 
-      const count = await global.models.GLOBAL.FAQ.find({ fcid: id }).count();
+      const count = await global.models.GLOBAL.FAQ.find({ fcid: id, language: language }).count();
       const faqCategory = await global.models.GLOBAL.FAQ.find({
         fcid: id,
+        language: language,
       }).sort({ createdAt: -1 });
+      
       if (faqCategory.length == 0) {
         const data4createResponseObject = {
           req: req,

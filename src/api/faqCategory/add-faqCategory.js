@@ -12,10 +12,11 @@ module.exports = exports = {
   validation: Joi.object({
     name: Joi.string(),
     description: Joi.string(),
+    language: Joi.string().required(),
   }),
 
   handler: async (req, res) => {
-    const { name, description } = req.body;
+    const { name, description, language } = req.body;
     const { user } = req;
 
     if (!name) {
@@ -34,6 +35,7 @@ module.exports = exports = {
     try {
       let checkName = await global.models.GLOBAL.FAQCATEGORY.find({
         name: name,
+        language: language
       });
       if (checkName.length > 0) {
         const data4createResponseObject = {
@@ -59,6 +61,7 @@ module.exports = exports = {
       let AmenintiesCreate = {
         name: name,
         description: description,
+        language: language,
         part: "faqCategory",
         purpose: "Add",
       };

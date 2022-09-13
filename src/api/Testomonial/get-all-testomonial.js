@@ -21,9 +21,17 @@ module.exports = exports = {
       // let id = req.params.id;
 
       let search = req.query.search
-        ? { titleName: { $regex: req.query.search, $options: "i" } }
+        ? {
+            titleName: { $regex: req.query.search, $options: "i" },
+          }
         : {};
-
+      
+      if (req.query.language) {
+        search = {
+          ...search,
+          language: req.query.language,
+        };
+      }
       const count = await global.models.GLOBAL.TESTOMONIAL.find(search).count();
       const Testomonial = await global.models.GLOBAL.TESTOMONIAL.find(search)
         .skip(skip)

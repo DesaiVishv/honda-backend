@@ -14,10 +14,11 @@ module.exports = exports = {
     image: Joi.string(),
     video: Joi.string(),
     description: Joi.string(),
+    language: Joi.string().required()
   }),
 
   handler: async (req, res) => {
-    const { titleName, image, description, video } = req.body;
+    const { titleName, image, description, video, language } = req.body;
     const { user } = req;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
@@ -47,6 +48,7 @@ module.exports = exports = {
     try {
       const checkMenu = await global.models.GLOBAL.HELPFULTIPS.find({
         titleName: titleName,
+        language: language,
       });
       if (checkMenu.length > 0) {
         const data4createResponseObject = {
@@ -76,6 +78,7 @@ module.exports = exports = {
         image: image,
         video: video,
         description: description,
+        language: language,
         part: "HelpfulTips",
         purpose: "Add",
       };

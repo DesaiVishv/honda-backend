@@ -9,6 +9,7 @@ module.exports = (connection) => {
       description: { type: String },
       image: { type: String, default: null },
       video: { type: String },
+      language: {type: String},
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
       createdBy: {

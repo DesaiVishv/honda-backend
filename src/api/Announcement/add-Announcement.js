@@ -14,12 +14,13 @@ module.exports = exports = {
     type: Joi.string().required(),
     image: Joi.string().required(),
     description: Joi.string().required(),
+    language: Joi.string().required(), 
     date: Joi.date().required(),
     isActive: Joi.boolean(),
   }),
 
   handler: async (req, res) => {
-    const { name, type, image, description, date, isActive } = req.body;
+    const { name, type, image, description, date, language, isActive } = req.body;
     const { user } = req;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
@@ -33,7 +34,7 @@ module.exports = exports = {
     //     .status(enums.HTTP_CODES.UNAUTHORIZED)
     //     .json(utils.createResponseObject(data4createResponseObject));
     // }
-    if (!name || !type || !image || !description || !date) {
+    if (!name || !type || !image || !description || !date || !language) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -49,6 +50,7 @@ module.exports = exports = {
     try {
       const checkMenu = await global.models.GLOBAL.ANNOUNCEMENT.find({
         name: name,
+        language: language
       });
       if (checkMenu.length > 0) {
         const data4createResponseObject = {
@@ -82,10 +84,12 @@ module.exports = exports = {
         image: image,
         description: description,
         date: date,
+        language: language,
         isActive: isActive,
         part: "Announcement",
         purpose: "Add",
       };
+
       const newAmeninties = await global.models.GLOBAL.REQUEST(
         AmenintiesCreate
       );

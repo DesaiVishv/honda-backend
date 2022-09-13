@@ -21,8 +21,17 @@ module.exports = exports = {
       // let id = req.params.id;
 
       let search = req.query.search
-        ? { title: { $regex: req.query.search, $options: "i" } }
+        ? {
+            faqCategory: { $regex: req.query.search, $options: "i" },
+          }
         : {};
+      
+      if (req.query.language) {
+        search = {
+          ...search,
+          language: req.query.language,
+        };
+      }
 
       const count = await global.models.GLOBAL.FACILITIES.find(search).count();
       const Facility = await global.models.GLOBAL.FACILITIES.find(search)

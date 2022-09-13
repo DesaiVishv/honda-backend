@@ -59,6 +59,7 @@ module.exports = exports = {
                 type: findRequest.type,
                 image: findRequest.image,
                 description: findRequest.description,
+                language: findRequest.language,
                 date: findRequest.date,
               };
               let newAnnouncement = await global.models.GLOBAL.ANNOUNCEMENT(
@@ -252,6 +253,7 @@ module.exports = exports = {
                 fcid: findRequest.fcid,
                 question: findRequest.question,
                 answer: findRequest.answer,
+                language: findRequest.language
               };
               let newFaq = await global.models.GLOBAL.FAQ(addFaq);
               await newFaq.save();
@@ -297,6 +299,7 @@ module.exports = exports = {
               let addFaqCategory = {
                 name: findRequest.name,
                 description: findRequest.description,
+                language: findRequest.language
               };
               let newFaqCategory = await global.models.GLOBAL.FAQCATEGORY(
                 addFaqCategory
@@ -350,6 +353,7 @@ module.exports = exports = {
                 image: findRequest.image,
                 video: findRequest.video,
                 description: findRequest.description,
+                language: findRequest.language
               };
               let newHelp = await global.models.GLOBAL.HELPFULTIPS(addHelp);
               await newHelp.save();
@@ -454,6 +458,7 @@ module.exports = exports = {
                 titleName: findRequest.titleName,
                 image: findRequest.image,
                 description: findRequest.description,
+                language: findRequest.language
               };
               let newInformation = await global.models.GLOBAL.INFORMATION(
                 addInformation
@@ -507,6 +512,7 @@ module.exports = exports = {
                 titleName: findRequest.titleName,
                 image: findRequest.image,
                 description: findRequest.description,
+                language: findRequest.language,
               };
               let newCourse = await global.models.GLOBAL.STARTCOURSE(addCourse);
               await newCourse.save();
@@ -558,6 +564,7 @@ module.exports = exports = {
                 titleName: findRequest.titleName,
                 image: findRequest.image,
                 description: findRequest.description,
+                language: findRequest.language
               };
               let newTestonomial = await global.models.GLOBAL.TESTOMONIAL(
                 addTestonomial

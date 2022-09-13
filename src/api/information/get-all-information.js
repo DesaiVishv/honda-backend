@@ -21,11 +21,20 @@ module.exports = exports = {
 
            
             // let id = req.params.id;
-
-
+                        
+            let search = req.query.search
+              ? {
+                  name: { $regex: req.query.search, $options: "i" },
+                }
+              : {};
             
-            let search = req.query.search ? {name: { $regex: req.query.search , $options: 'i'}} : {}
-            
+            if (req.query.language) {
+              search = {
+                ...search,
+                language: req.query.language,
+              };
+            }
+
             const count = await global.models.GLOBAL.INFORMATION.find(search).count();
             const Questions = await global.models.GLOBAL.INFORMATION.find(search).skip(skip).limit(limit).sort({createdAt:-1});
             if(Questions.length==0){
