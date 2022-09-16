@@ -53,7 +53,7 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        res
+        return res
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       } else {
@@ -71,7 +71,7 @@ module.exports = exports = {
             .json(utils.createResponseObject(data4createResponseObject));
           return;
         }
-        Item = await global.models.GLOBAL.FACILITIES.update(
+        Item = await global.models.GLOBAL.FACILITIES.findOneAndUpdate(
           { _id: id },
           {
             $set: {
@@ -89,7 +89,7 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        res
+        return res
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       }
