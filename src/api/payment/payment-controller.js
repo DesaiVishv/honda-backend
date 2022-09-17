@@ -161,6 +161,7 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.BAD_REQUEST)
         .json(utils.createResponseObject(data4createResponseObject));
     }
+    let gst = (findCoursename.price * 9) / 100;
     const paymentData = await global.models.GLOBAL.PAYMENT({
       uid: uid,
       vcid: vcid,
@@ -168,7 +169,9 @@ module.exports = exports = {
       cnid: cnid,
       tdid: tdid,
       paymentId: paymentId,
-      price: findCoursename.price,
+      cgst: gst,
+      sgst: gst,
+      price: findCoursename.price + gst + gst,
       phone: phone,
       email: email,
       name: name,

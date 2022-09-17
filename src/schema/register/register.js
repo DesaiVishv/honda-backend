@@ -41,6 +41,7 @@ module.exports = (connection) => {
       bloodGroup: { type: String },
       paymentId: { type: String, default: null },
       type: { type: String, required: true },
+      paymentType: { type: String },
       receiptDate: { type: Date },
       isPaymentDone: { type: Boolean, default: false },
       isAttendence: { type: Boolean, default: false },

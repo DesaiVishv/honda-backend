@@ -42,6 +42,7 @@ module.exports = exports = {
     receiptNumber: Joi.string(),
     isPaymentDone: Joi.boolean().required(),
     type: Joi.string(),
+    paymentType: Joi.string().required(),
   }),
 
   handler: async (req, res) => {
@@ -56,6 +57,7 @@ module.exports = exports = {
       receiptNumber,
       isPaymentDone,
       type,
+      paymentType,
     } = req.body;
     const { user } = req;
     const findDate = await global.models.GLOBAL.REGISTER.find({
@@ -101,15 +103,19 @@ module.exports = exports = {
         receiptDate: receiptDate,
         //   receiptNumber:receiptNumber,
         isPaymentDone: isPaymentDone,
+        paymentType: paymentType,
         type: type,
       }
     );
+    let gst = (price * 9) / 100;
     const paymentOffline = await global.models.GLOBAL.PAYMENT({
       cnid: cnid,
       ctid: ctid,
       vcid: vcid,
       tdid: tdid,
-      price: price,
+      cgst: gst,
+      sgst: gst,
+      price: price + gst + gst,
       phone: phone,
       receiptNumber: receiptNumber,
       receiptDate: receiptDate,

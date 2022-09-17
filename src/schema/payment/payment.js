@@ -28,6 +28,8 @@ module.exports = (connection) => {
         type: Number,
       },
       status: { type: String, default: "done" },
+      cgst: { type: Number },
+      sgst: { type: Number },
       phone: { type: Number },
       email: { type: String },
       name: { type: String },
