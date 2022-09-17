@@ -105,6 +105,9 @@ module.exports = exports = {
         isPaymentDone: isPaymentDone,
         paymentType: paymentType,
         type: type,
+      },
+      {
+        new: true,
       }
     );
     let gst = (price * 9) / 100;
