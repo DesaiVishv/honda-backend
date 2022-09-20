@@ -19,11 +19,22 @@ module.exports = exports = {
       let skip = (parseInt(req.query.page) - 1) * limit;
 
       // let id = req.params.id;
-
-      let search = req.query.search
-        ? { fname: { $regex: req.query.search, $options: "i" } }
-        : {};
-
+      const ObjectId = require("mongoose").Types.ObjectId;
+      let data = ObjectId.isValid(req.query.search);
+      let search;
+      if (data == true) {
+        search = req.query.search
+          ? {
+              _id: ObjectId(req.query.search),
+            }
+          : {};
+      } else {
+        search = req.query.search
+          ? {
+              fname: { $regex: req.query.search, $options: "i" },
+            }
+          : {};
+      }
       const count = await global.models.GLOBAL.REGISTER.find(search).count();
       console.log("count", count);
       let Questions = await global.models.GLOBAL.REGISTER.aggregate([
