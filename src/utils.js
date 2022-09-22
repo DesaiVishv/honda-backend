@@ -258,7 +258,7 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
   var dataForSms = qs.stringify({
     token: process.env.TOKEN,
     number: phone4twilio,
-    message: `Your registration OTP for HONDA IDTR Karnal is: ${otp}.`,
+    message: `Your registration OTP for HONDA IDTR Karnal is: ${otp} 9HCAFRqi6kt`,
     msg_type: "normal",
     senderid: "MYTEAM",
     callback_url: process.env.CALLBACK_URL,
