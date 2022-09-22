@@ -24,7 +24,7 @@ module.exports = exports = {
     validity: Joi.string(),
     certificate: Joi.string(),
     price: Joi.number().required(),
-    language: Joi.string(),
+    // language: Joi.string(),
     // imagePath: Joi.string().allow("")
   }),
 
@@ -40,7 +40,7 @@ module.exports = exports = {
       validity,
       certificate,
       price,
-      language,
+      // language,
       vcid,
       ctid,
       ccid,
@@ -58,7 +58,7 @@ module.exports = exports = {
     //     .status(enums.HTTP_CODES.UNAUTHORIZED)
     //     .json(utils.createResponseObject(data4createResponseObject));
     // }
-    if (!vcid || !ctid || !ccid || !language) {
+    if (!vcid || !ctid || !ccid) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -109,7 +109,7 @@ module.exports = exports = {
         ctid: ctid,
         ccid: ccid,
         price: price,
-        language: language,
+        // language: language,
         duration: duration,
         timing: timing,
         mode: mode,
