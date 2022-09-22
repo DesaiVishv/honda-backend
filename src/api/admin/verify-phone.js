@@ -5,7 +5,7 @@ const messages = require("../../../json/messages.json");
 const logger = require("../../logger");
 const utils = require("../../utils");
 const config = require("../../../config.json");
-
+const nodemailer = require("nodemailer");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
@@ -14,6 +14,7 @@ module.exports = exports = {
     state: Joi.string(),
     IDTRcenter: Joi.string(),
     phone: Joi.number().required(),
+    email: Joi.string().allow(""),
     isRegister: Joi.boolean(),
     Registrationtype: Joi.string(),
   }),
@@ -26,9 +27,11 @@ module.exports = exports = {
       state,
       IDTRcenter,
       phone,
+      email,
       Registrationtype,
       isRegister,
     } = req.body;
+
     let code = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
     // const locale = utils.getLocale(req);
     let entry;
@@ -130,8 +133,91 @@ module.exports = exports = {
         .json(utils.createResponseObject(data4createResponseObject));
     } else {
       const event = { ...events.GENERAL };
-      event.message = messages.SMS_VERIFICATION_CODE.format([code]);
+      // event.message = messages.SMS_VERIFICATION_CODE.format([code]);
       const messageDetails = await utils.sendMessage(phone, code);
+      if (email && email.length > 0) {
+        console.log("email-----", email);
+        let transporter = nodemailer.createTransport({
+          service: "gmail",
+          host: "smtp.gmail.com",
+          port: 587,
+          secure: false,
+          auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD,
+          },
+        });
+        let info = await transporter.sendMail({
+          from: process.env.EMAIL,
+          to: email,
+          subject: "Honda| Signup OTP",
+          html: `<!DOCTYPE html>
+            <html lang="en">
+            
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+            </head>
+            <style>
+                body {
+                    font-family: 'Ubuntu', sans-serif;
+                    background-color: #f5f5f5;
+                }
+            
+                * {
+                    box-sizing: border-box;
+                }
+            
+                p:last-child {
+                    margin-top: 0;
+                }
+            
+                img {
+                    max-width: 100%;
+                }
+            </style>
+            
+            <body style="margin: 0; padding: 0;">
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="padding: 20px 0 30px 0;">
+                            <table align="center" cellpadding="0" cellspacing="0" width="600" style=" border-collapse: collapse; border: 1px solid #ececec; background-color: #fff;">
+                                <tr>
+                                    <td align="center" style="position: relative;">
+                                        <div
+                                        class="company-logo-align"
+                                        style=" padding: 2rem 2rem 1rem 2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto;"
+                                        align="center">
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="user-information" 
+                                        style="padding: 25px; background-color: #021f4c; width: 91.6%;"
+                                        >
+                                        <p align="center" style="color: #fff; font-size: 30px; font-weight: 500; margin: 0 0 1rem 0;">Welcome to Honda®</p>
+                                        <span align="center" style="display: block; font-size: 16px; color: #fff;">Thank you for signing up on Honda®</span>
+                                       
+  <p align="center" style="color: #fff; font-size: 30px; font-weight: 500; margin: 1rem 0 1rem 0;">Your otp is ${code}</p>
+
+                                        </div>
+                                      
+                                    </td>
+                                </tr>
+                              
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </body>
+            
+            </html>`,
+        });
+        console.log("Message sent: %s", info.messageId);
+      }
 
       if (!messageDetails) {
         logger.error(

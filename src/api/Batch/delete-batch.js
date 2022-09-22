@@ -16,7 +16,10 @@ module.exports = exports = {
   handler: async (req, res) => {
     const { id } = req.params;
     const { user } = req;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    if (
+      user.type !== enums.USER_TYPE.SUPERADMIN &&
+      user.type !== enums.USER_TYPE.ADMIN
+    ) {
       const data4createResponseObject = {
         req: req,
         result: -1,

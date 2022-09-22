@@ -93,6 +93,24 @@ module.exports = exports = {
 
       //   createdAt: { $lt: Date.now() },
       // });
+      past = JSON.parse(JSON.stringify(past));
+      Cancle = JSON.parse(JSON.stringify(Cancle));
+      for await (let values of past) {
+        const paymentHistory = await global.models.GLOBAL.PAYMENT.find({
+          phone: values.phone,
+          status: "done",
+          type: "offline",
+        }).sort({ created: -1 });
+        values.paymentHistory = paymentHistory[0];
+      }
+      for await (let values of Cancle) {
+        const paymentHistory = await global.models.GLOBAL.PAYMENT.find({
+          phone: values.phone,
+          status: "done",
+          type: "offline",
+        }).sort({ created: -1 });
+        values.paymentHistory = paymentHistory[0];
+      }
 
       const data4createResponseObject = {
         req: req,

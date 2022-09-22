@@ -62,6 +62,17 @@ module.exports = exports = {
           .json(utils.createResponseObject(data4createResponseObject));
         return;
       }
+      for await (let values of Propertys) {
+        values = JSON.parse(JSON.stringify(values));
+        const findPayment = await global.models.GLOBAL.PAYMENT.find({
+          vcid: values.vcid,
+          ctid: values.ctid,
+          cnid: values.cnid,
+          tdid: values.tdid,
+          phone: values.phone,
+        }).sort({ created: -1 });
+        values.paymentHistory = findPayment ? findPayment : null;
+      }
       // const nearProperty=await global.models.GLOBAL.PERSONALINFORMATION.find({_id:{$ne:id} });
       const data4createResponseObject = {
         req: req,

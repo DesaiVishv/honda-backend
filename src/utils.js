@@ -258,7 +258,7 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
   var dataForSms = qs.stringify({
     token: process.env.TOKEN,
     number: phone4twilio,
-    message: `Thank you for connecting with MyTeam11. Your OTP is: ${otp} 9HCAFRqi6kt`,
+    message: `Your registration OTP for HONDA IDTR Karnal is: ${otp}.`,
     msg_type: "normal",
     senderid: "MYTEAM",
     callback_url: process.env.CALLBACK_URL,
@@ -278,7 +278,7 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
     const resp = await axios(config)
       .then(function (response) {
         console.log("Responseeee", response);
-        console.log("Responseeee", JSON.stringify(response.data));
+        console.log("Respons  eeee", JSON.stringify(response.data));
         if (parseInt(response.status / 100) === 2) {
           logger.info(
             "#sendMessage - Message sent to " + phone4twilio + " successfully."

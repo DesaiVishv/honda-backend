@@ -24,7 +24,7 @@ module.exports = exports = {
     validity: Joi.string(),
     certificate: Joi.string(),
     price: Joi.number().required(),
-    language: Joi.string().required()
+    language: Joi.string(),
     // imagePath: Joi.string().allow("")
   }),
 

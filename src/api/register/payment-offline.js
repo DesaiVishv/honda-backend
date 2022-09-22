@@ -110,7 +110,7 @@ module.exports = exports = {
         new: true,
       }
     );
-    let gst = (price * 9) / 100;
+    let gst = (parseInt(price) * 9) / 100;
     const paymentOffline = await global.models.GLOBAL.PAYMENT({
       cnid: cnid,
       ctid: ctid,
@@ -118,7 +118,7 @@ module.exports = exports = {
       tdid: tdid,
       cgst: gst,
       sgst: gst,
-      price: price + gst + gst,
+      price: parseInt(price) + parseInt(gst) + parseInt(gst),
       phone: phone,
       receiptNumber: receiptNumber,
       receiptDate: receiptDate,

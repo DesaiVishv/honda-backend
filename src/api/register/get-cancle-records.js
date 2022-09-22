@@ -25,7 +25,7 @@ module.exports = exports = {
         : { isCancle: true };
 
       const count = await global.models.GLOBAL.REGISTER.find(search).count();
-      const Questions = await global.models.GLOBAL.REGISTER.find(search)
+      let Questions = await global.models.GLOBAL.REGISTER.find(search)
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
@@ -65,6 +65,15 @@ module.exports = exports = {
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
         return;
+      }
+      Questions = JSON.parse(JSON.stringify(Questions));
+      for await (let values of Questions) {
+        const paymentHistory = await global.models.GLOBAL.PAYMENT.find({
+          phone: values.phone,
+          status: "done",
+          type: "offline",
+        }).sort({ created: -1 });
+        values.paymentHistory = paymentHistory[0];
       }
       const data4createResponseObject = {
         req: req,

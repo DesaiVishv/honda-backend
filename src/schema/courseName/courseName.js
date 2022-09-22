@@ -19,7 +19,7 @@ module.exports = (connection) => {
       validity: { type: String, default: null },
       certificate: { type: String, default: null },
       price: { type: Number },
-      language: {type: String, required: true},
+      language: { type: String },
       isDelete: { type: Boolean, default: false },
       createdAt: { type: Date, default: Date.now },
       updatedAt: { type: Date, default: Date.now },
