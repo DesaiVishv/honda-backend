@@ -779,6 +779,7 @@ module.exports = exports = {
             "--no-sandbox",
             "--no-zygote",
             "--single-process",
+            "--use-gl=egl",
           ],
           headless: true,
         });
