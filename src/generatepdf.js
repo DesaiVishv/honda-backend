@@ -781,7 +781,8 @@ module.exports = exports = {
             "--single-process",
             "--use-gl=egl",
           ],
-          headless: false,
+          ignoredefaultargs: ['--disable-extensions'],
+          headless: true,
         });
         const page = await browser.newPage();
         await page.setContent(file.content);
