@@ -8,7 +8,7 @@ const utils = require("./utils");
 const pdf = require("html-pdf");
 const zipLocal = require("zip-local");
 // var html_to_pdf = require("html-pdf-node");
-
+const puppeteer = require("puppeteer");
 // const multer = require("multer");
 // const multerS3 = require("multer-s3");
 var AWS = require("aws-sdk");
@@ -60,6 +60,7 @@ module.exports = exports = {
         body {
         margin: 0;
         padding: 0;
+        margin-top: 170px;
         font-family: 'Inter', sans-serif;
         background-color: #f5f5f5;
         }
@@ -462,15 +463,352 @@ module.exports = exports = {
   </body>
 </html>
 `;
-      const options = {
-        // format: "Letter",
-        orientation: "landscape",
-        // height: "8in",
-        // width: "10.5in",
-      };
-      // let file = { content: html };
+      let html2 = `<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+        margin: 0;
+        padding: 0;
+        margin-top: 170px;
+        font-family: 'Inter', sans-serif;
+        background-color: #f5f5f5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        img  {
+            max-width: 100%;
+        }
+
+        p:last-child {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        h1,h2,h3,h4,h5,h6,p {
+            margin: 0;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .certificate-box-center-alignment {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .certificate-box {
+            width: 900px;
+            background-image: url("https://i.ibb.co/nmw8264/IDTR-Certificate-1.png");
+            background-repeat: no-repeat;
+            height: 600px;
+            padding: 60px;
+            background-size: contain;
+        }
+
+        .sl-no-box-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .sl-no-box-alignment div label {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16px;
+            color: #323232;
+
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .sl-no-box-alignment div input {
+            border: none;
+            border-bottom: 1px solid #010101;
+            font-size: 14px;
+            width: 100px;
+            color: #505050;
+        }
+
+
+        .header-alignment {
+            display: flex;
+            align-items: center;
+            padding: 10px 0 0 0;
+            justify-content: space-between;
+        }
+
+        .header-alignment div:last-child img {
+            max-width: 60px;
+        }
+
+        .header-alignment div:first-child img {
+
+            max-width: 120px;
+        }
+
+
+        .header-alignment div h1 {
+            padding: 5px 20px;
+            border-radius: 9999px;
+            /* background-color: #cc0001; */
+            font-size: 16px;
+            color: #000;
+            cursor: pointer;
+            width: fit-content;
+            margin: 0 auto;
+            font-weight: 600;
+        }
+
+        .header-alignment p {
+            font-size: 14px;
+            margin: 10px 0;
+            font-weight: 500;
+            color: #101010;
+            text-align: center;
+        }
+
+        .header-alignment span {
+            font-size: 12px;
+            text-align: center;
+            color: #010101;
+            font-weight: 500;
+            display: block;
+        }
+
+        .drivers-certificate-text h2 {
+            font-size: 25px;
+            line-height: 30px;
+            color: #cc0001;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .drivers-certificate-text {
+            padding: 10px 0;
+        }
+
+        .drivers-certificate-text span {
+            font-size: 14px;
+            color: #010101;
+            display: block;
+            text-align: center;
+            font-weight: 500;
+            padding: 0 0 5px 0;
+        }
+        .drivers-certificate-text p {
+            font-size: 14px;
+            color: #010101;
+            display: block;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .first-row-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 0 15px 0;
+        }
+
+        .sec-row-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sec-row-alignment div input {
+            width: 150px;
+        }
+        .three-row-alignment {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            justify-content: space-between;
+        }
+
+        .three-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 290px;
+        }
+        .three-row-alignment .sl-no-box-alignment:last-child div input {
+            width: 190px;
+        }
+
+        .fourth-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 220px;
+        }
+        .fifth-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 210px;
+        }
+
+        .fourth-row-alignment {
+            display: flex;
+            align-items: center;
+        }
+
+        .fifth-row-alignment {
+            display: flex;
+            padding: 15px 0;
+            align-items: center;
+        }
+
+        .six-row-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .six-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 178px;
+        }
+
+        .footer-content-alignment {
+            padding: 20px 0 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-content-alignment .sl-no-box-alignment label {
+            display: block;
+            padding: 5px 0 0 0;
+            text-align: center;
+        }
+
+        .photographer-printed-class {
+            border: 1px solid #010101;
+            width: 60px;
+            height: 60px;
+        }
+
+
+
+        .box-title h1 {
+            font-size: 20px;
+            line-height: 30px;
+            color: #cc0001;
+            margin: 0 0 20px 0;
+            font-weight: 600;
+        }
+
+        .box-title p {
+            font-size: 16px;
+            color: #010101;
+            margin: 0 0 20px 0;
+            font-weight: 600;
+        }
+        .box-title span{
+            font-size: 16px;
+            color: #010101;
+            font-weight: 600;
+        }
+
+        .box-title {
+            padding: 0 0 20px 0;
+        }
+
+        .content-text-style span {
+            font-size: 16px;
+            color: #000;
+            font-weight: 600;
+            display: block;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="certificate-box-center-alignment">
+        <div class="certificate-box" style="display: flex; align-items: center; padding: 80px 120px;">
+            <div>
+                <div class="box-title">
+                    <h1>INSTRUCTIONS</h1>
+                    <p>IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED AGANIST PROCESSING CHARGES.</p>
+                    <span>THIS GRADATION PATTERN IS GIVEN BELOW</span>
+                </div>
+                <div class="content-text-style">
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>`;
+      // const options = {
+      //   // format: "Letter",
+      //   orientation: "landscape",
+      //   // height: "8in",
+      //   // width: "10.5in",
+      // };
+      let file = { content: html };
+      let file2 = { content: html2 };
+      let files = [file, file2];
+      for (let k = 0; k < files.length; k++) {
+        console.log(":::::::::::::::::::::", k);
+        const file = files[k];
+        let fileType = "front";
+        const browser = await puppeteer.launch({
+          args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-gpu",
+            "--disable-dev-shm-usage",
+            "--disable-setuid-sandbox",
+            "--no-first-run",
+            "--no-sandbox",
+            "--no-zygote",
+            "--single-process",
+          ],
+          headless: true,
+        });
+        const page = await browser.newPage();
+        await page.setContent(file.content);
+        await page.emulateMediaType("screen");
+        fs.mkdirSync(`./Results/${batch.name}`, { recursive: true });
+        const fileName = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + k + ".pdf";
+        await page.pdf({
+          path: `./Results/${batch.name}/${fileName}`,
+          fitToPage: true,
+          printBackground: true,
+          landscape: true,
+        });
+        fileType = "back";
+        await browser.close();
+      }
+
       // let optionss = {
-      //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      //   args: [
+      //     "--no-sandbox",
+      //     "--disabled-setupid-sandbox",
+      //     "--disable-gpu",
+      //     "--disable-dev-shm-usage",
+      //     "--disable-setuid-sandbox",
+      //     "--no-first-run",
+      //     "--no-sandbox",
+      //     "--no-zygote",
+      //     "--single-process",
+      //   ],
       //   landscape: true,
       //   printBackground: true,
       //   padding: {
@@ -480,68 +818,69 @@ module.exports = exports = {
       //     right: "-0.5in",
       //   },
       // };
-      await pdf
-        .create(html, options)
-        .toFile(`./Results/${batch.name}/${users[i]._id.toString().substring(5, 12) + "-" + users[i].fname}.pdf`, (err, res) => {
+      // await pdf
+      //   .create(html, options)
+      //   .toFile(`./Results/${batch.name}/${users[i]._id.toString().substring(5, 12) + "-" + users[i].fname}.pdf`, (err, res) => {
+      //     if (err) {
+      //       console.log(err);
+      //     }
+      // await html_to_pdf.generatePdf(files[0], optionss).then((pdfBuffer) => {
+      //   fs.mkdirSync(`./Results/${batch.name}`, { recursive: true });
+      //   const fileName = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + ".pdf";
+      //   fs.writeFileSync(`./Results/${batch.name}/${fileName}`, pdfBuffer);
+
+      loop++;
+
+      if (loop == data) {
+        try {
+          zipLocal.sync.zip(`./Results/${batch.name}`).compress().save(`./Results/${batch.name}.zip`);
+        } catch (err) {
+          console.log("error", err);
+        }
+
+        // upload the this zip file in s3 bucket
+        const s3 = new AWS.S3();
+
+        const file = fs.readFileSync(`./Results/${batch.name}.zip`);
+        const params = {
+          Bucket: process.env.BUCKET,
+          Key: `${batch.name}.zip`,
+          Body: file,
+        };
+        s3.upload(params, function (err, data) {
           if (err) {
-            console.log(err);
-          }
-          // await html_to_pdf.generatePdf(file, optionss).then((pdfBuffer) => {
-          //   fs.mkdirSync(`./Results/${batch.name}`, { recursive: true });
-          //   const fileName = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + ".pdf";
-          //   fs.writeFileSync(`./Results/${batch.name}/${fileName}`, pdfBuffer);
-
-          loop++;
-
-          if (loop == data) {
-            try {
-              zipLocal.sync.zip(`./Results/${batch.name}`).compress().save(`./Results/${batch.name}.zip`);
-            } catch (err) {
-              console.log("error", err);
-            }
-
-            // upload the this zip file in s3 bucket
-            const s3 = new AWS.S3();
-
-            const file = fs.readFileSync(`./Results/${batch.name}.zip`);
-            const params = {
-              Bucket: process.env.BUCKET,
-              Key: `${batch.name}.zip`,
-              Body: file,
+            console.log("Error", err);
+            const error = new Error("Error uploading data");
+            const data4createResponseObject = {
+              req: req,
+              result: -1,
+              message: messages.NOT_FOUND,
+              payload: {},
+              logPayload: false,
             };
-            s3.upload(params, function (err, data) {
-              if (err) {
-                console.log("Error", err);
-                const error = new Error("Error uploading data");
-                const data4createResponseObject = {
-                  req: req,
-                  result: -1,
-                  message: messages.NOT_FOUND,
-                  payload: {},
-                  logPayload: false,
-                };
-                return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
-              }
-              if (data) {
-                console.log("Upload Success", data.Location);
-                const data4createResponseObject = {
-                  req: req,
-                  result: 0,
-                  message: messages.SUCCESS,
-                  payload: {
-                    ZipLink: data.Location,
-                    batch: batch,
-                  },
-                  logPayload: false,
-                };
+            return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+          }
+          if (data) {
+            console.log("Upload Success", data.Location);
+            const data4createResponseObject = {
+              req: req,
+              result: 0,
+              message: messages.SUCCESS,
+              payload: {
+                ZipLink: data.Location,
+                batch: batch,
+              },
+              logPayload: false,
+            };
 
-                //delete result folder after response is sent
-                fs.rmdirSync(`./Results`, { recursive: true });
-                return Response.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-              }
-            });
+            //delete result folder after response is sent
+            fs.rmdirSync(`./Results`, { recursive: true });
+            return Response.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
           }
         });
+      }
+
+      // });
     }
   },
 };
