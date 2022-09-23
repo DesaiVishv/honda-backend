@@ -13,6 +13,7 @@ const puppeteer = require("puppeteer");
 // const multerS3 = require("multer-s3");
 var AWS = require("aws-sdk");
 const fs = require("fs");
+const merge = require("easy-pdf-merge");
 
 module.exports = exports = {
   // route validation
@@ -781,7 +782,7 @@ module.exports = exports = {
             "--single-process",
             "--use-gl=egl",
           ],
-          ignoredefaultargs: ['--disable-extensions'],
+          ignoredefaultargs: ["--disable-extensions"],
           headless: true,
         });
         const page = await browser.newPage();
@@ -798,7 +799,28 @@ module.exports = exports = {
         fileType = "back";
         await browser.close();
       }
-
+      const pdf1 = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + 0 + ".pdf";
+      const pdf2 = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + 1 + ".pdf";
+      const merged = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + ".pdf";
+      // await merge([`./Results/${batch.name}/${pdf1}`, `./Results/${batch.name}/${pdf2}`], `./Results/${batch.name}/${merged}`, function (err) {
+      //   if (err) {
+      //     return console.log(err);
+      //   }
+      //   console.log("Successfully merged!");
+      //   fs.unlinkSync(`./Results/${batch.name}/${pdf1}`);
+      //   fs.unlinkSync(`./Results/${batch.name}/${pdf2}`);
+      // });
+      const PDFMerger = require("pdf-merger-js");
+      var merger = new PDFMerger();
+      await (async () => {
+        await merger.add(`./Results/${batch.name}/${pdf1}`); //merge all pages. parameter is the path to file and filename.
+        await merger.add(`./Results/${batch.name}/${pdf2}`);
+        await merger.save(`./Results/${batch.name}/${pdf1}`);
+        // const mergedPdfBuffer = await merger.saveAsBuffer();
+        // fs.writeSync("merged.pdf", mergedPdfBuffer);
+        // fs.unlinkSync(`./Results/${batch.name}/${pdf1}`);
+        fs.unlinkSync(`./Results/${batch.name}/${pdf2}`);
+      })();
       // let optionss = {
       //   args: [
       //     "--no-sandbox",
