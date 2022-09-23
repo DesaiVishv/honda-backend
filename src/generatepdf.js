@@ -464,6 +464,23 @@ module.exports = exports = {
   </body>
 </html>
 `;
+      const percentage = users[i].percentage;
+      let message = "";
+      let grade = "";
+      if (percentage >= 80) {
+        message = "EXCELLENT";
+        grade = "A+";
+      } else if (percentage >= 60) {
+        message = "GOOD";
+        grade = "A";
+      } else if (percentage >= 40) {
+        message = "AVERAGE";
+        grade = "B";
+      } else {
+        message = "POOR";
+        grade = "C";
+      }
+
       let html2 = `<!DOCTYPE html>
 <html lang="en">
 
@@ -742,13 +759,11 @@ module.exports = exports = {
                 <div class="box-title">
                     <h1>INSTRUCTIONS</h1>
                     <p>IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED AGANIST PROCESSING CHARGES.</p>
-                    <span>THIS GRADATION PATTERN IS GIVEN BELOW</span>
                 </div>
                 <div class="content-text-style">
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>PERCENTAGE: "${percentage}"</span>
+                    <span>GRADE: "${grade}"</span>
+                    <span>PERFORMANCE: ${message}</span>
                 </div>
             </div>
         </div>
