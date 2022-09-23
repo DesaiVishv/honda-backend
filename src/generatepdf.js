@@ -465,8 +465,8 @@ module.exports = exports = {
 </html>
 `;
       const percentage = users[i].percentage;
-      let message = "";
-      let grade = "";
+      let message = "BAD";
+      let grade = "D";
       if (percentage >= 80) {
         message = "EXCELLENT";
         grade = "A+";
