@@ -7,7 +7,7 @@ const logger = require("./logger");
 const utils = require("./utils");
 const pdf = require("html-pdf");
 const zipLocal = require("zip-local");
-var html_to_pdf = require("html-pdf-node");
+// var html_to_pdf = require("html-pdf-node");
 
 // const multer = require("multer");
 // const multerS3 = require("multer-s3");
@@ -462,86 +462,86 @@ module.exports = exports = {
   </body>
 </html>
 `;
-      // const options = {
-      //   // format: "Letter",
-      //   orientation: "landscape",
-      //   // height: "8in",
-      //   // width: "10.5in",
-      // };
-      let file = { content: html };
-      let optionss = {
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        landscape: true,
-        printBackground: true,
-        padding: {
-          top: "-0.5in",
-          bottom: "-0.5in",
-          left: "-0.5in",
-          right: "-0.5in",
-        },
+      const options = {
+        // format: "Letter",
+        orientation: "landscape",
+        // height: "8in",
+        // width: "10.5in",
       };
-      // await pdf
-      //   .create(html, options)
-      //   .toFile(`./Results/${batch.name}/${users[i]._id.toString().substring(5, 12) + "-" + users[i].fname}.pdf`, (err, res) => {
-      //     if (err) {
-      //       console.log(err);
-      //     }
-      await html_to_pdf.generatePdf(file, optionss).then((pdfBuffer) => {
-        fs.mkdirSync(`./Results/${batch.name}`, { recursive: true });
-        const fileName = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + ".pdf";
-        fs.writeFileSync(`./Results/${batch.name}/${fileName}`, pdfBuffer);
-
-        loop++;
-
-        if (loop == data) {
-          try {
-            zipLocal.sync.zip(`./Results/${batch.name}`).compress().save(`./Results/${batch.name}.zip`);
-          } catch (err) {
-            console.log("error", err);
+      // let file = { content: html };
+      // let optionss = {
+      //   args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      //   landscape: true,
+      //   printBackground: true,
+      //   padding: {
+      //     top: "-0.5in",
+      //     bottom: "-0.5in",
+      //     left: "-0.5in",
+      //     right: "-0.5in",
+      //   },
+      // };
+      await pdf
+        .create(html, options)
+        .toFile(`./Results/${batch.name}/${users[i]._id.toString().substring(5, 12) + "-" + users[i].fname}.pdf`, (err, res) => {
+          if (err) {
+            console.log(err);
           }
+          // await html_to_pdf.generatePdf(file, optionss).then((pdfBuffer) => {
+          //   fs.mkdirSync(`./Results/${batch.name}`, { recursive: true });
+          //   const fileName = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + ".pdf";
+          //   fs.writeFileSync(`./Results/${batch.name}/${fileName}`, pdfBuffer);
 
-          // upload the this zip file in s3 bucket
-          const s3 = new AWS.S3();
+          loop++;
 
-          const file = fs.readFileSync(`./Results/${batch.name}.zip`);
-          const params = {
-            Bucket: process.env.BUCKET,
-            Key: `${batch.name}.zip`,
-            Body: file,
-          };
-          s3.upload(params, function (err, data) {
-            if (err) {
-              console.log("Error", err);
-              const error = new Error("Error uploading data");
-              const data4createResponseObject = {
-                req: req,
-                result: -1,
-                message: messages.NOT_FOUND,
-                payload: {},
-                logPayload: false,
-              };
-              return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+          if (loop == data) {
+            try {
+              zipLocal.sync.zip(`./Results/${batch.name}`).compress().save(`./Results/${batch.name}.zip`);
+            } catch (err) {
+              console.log("error", err);
             }
-            if (data) {
-              console.log("Upload Success", data.Location);
-              const data4createResponseObject = {
-                req: req,
-                result: 0,
-                message: messages.SUCCESS,
-                payload: {
-                  ZipLink: data.Location,
-                  batch: batch,
-                },
-                logPayload: false,
-              };
 
-              //delete result folder after response is sent
-              fs.rmdirSync(`./Results`, { recursive: true });
-              return Response.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-            }
-          });
-        }
-      });
+            // upload the this zip file in s3 bucket
+            const s3 = new AWS.S3();
+
+            const file = fs.readFileSync(`./Results/${batch.name}.zip`);
+            const params = {
+              Bucket: process.env.BUCKET,
+              Key: `${batch.name}.zip`,
+              Body: file,
+            };
+            s3.upload(params, function (err, data) {
+              if (err) {
+                console.log("Error", err);
+                const error = new Error("Error uploading data");
+                const data4createResponseObject = {
+                  req: req,
+                  result: -1,
+                  message: messages.NOT_FOUND,
+                  payload: {},
+                  logPayload: false,
+                };
+                return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+              }
+              if (data) {
+                console.log("Upload Success", data.Location);
+                const data4createResponseObject = {
+                  req: req,
+                  result: 0,
+                  message: messages.SUCCESS,
+                  payload: {
+                    ZipLink: data.Location,
+                    batch: batch,
+                  },
+                  logPayload: false,
+                };
+
+                //delete result folder after response is sent
+                fs.rmdirSync(`./Results`, { recursive: true });
+                return Response.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+              }
+            });
+          }
+        });
     }
   },
 };
