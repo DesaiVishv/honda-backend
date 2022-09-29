@@ -6,7 +6,10 @@ const logger = require("../../logger");
 const utils = require("../../utils");
 const config = require("../../../config.json");
 const nodemailer = require("nodemailer");
+<<<<<<< HEAD
 const axios = require("axios");
+=======
+>>>>>>> master
 module.exports = exports = {
   // route validation
   validation: Joi.object({
@@ -22,7 +25,20 @@ module.exports = exports = {
 
   // route handler
   handler: async (req, res) => {
+<<<<<<< HEAD
     const { firstName, fatherName, state, IDTRcenter, phone, email, Registrationtype, isRegister } = req.body;
+=======
+    const {
+      firstName,
+      fatherName,
+      state,
+      IDTRcenter,
+      phone,
+      email,
+      Registrationtype,
+      isRegister,
+    } = req.body;
+>>>>>>> master
 
     let code = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
     // const locale = utils.getLocale(req);
@@ -41,7 +57,13 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
+<<<<<<< HEAD
         return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+=======
+        return res
+          .status(enums.HTTP_CODES.BAD_REQUEST)
+          .json(utils.createResponseObject(data4createResponseObject));
+>>>>>>> master
       }
     }
 
@@ -54,14 +76,26 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
+<<<<<<< HEAD
         return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+=======
+        return res
+          .status(enums.HTTP_CODES.BAD_REQUEST)
+          .json(utils.createResponseObject(data4createResponseObject));
+>>>>>>> master
       } else {
         await global.models.GLOBAL.CODE_VERIFICATION.deleteMany({
           phone: phone,
         });
       }
     } catch (error) {
+<<<<<<< HEAD
       logger.error(`${req.originalUrl} - Error while deleting the old codes from the database: ${error.message}\n${error.stack}`);
+=======
+      logger.error(
+        `${req.originalUrl} - Error while deleting the old codes from the database: ${error.message}\n${error.stack}`
+      );
+>>>>>>> master
       let data4createResponseObject = {
         req: req,
         result: -1,
@@ -69,7 +103,13 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
+<<<<<<< HEAD
       return res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
+=======
+      return res
+        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
+        .json(utils.createResponseObject(data4createResponseObject));
+>>>>>>> master
     }
 
     // When USE_TEST_PIN is true (config.json)
@@ -90,7 +130,13 @@ module.exports = exports = {
       try {
         await entry.save();
       } catch (error) {
+<<<<<<< HEAD
         logger.error(`/verify-phone - Error while saving code in database: ${error.message}\n${error.stack}`);
+=======
+        logger.error(
+          `/verify-phone - Error while saving code in database: ${error.message}\n${error.stack}`
+        );
+>>>>>>> master
         let data4createResponseObject = {
           req: req,
           result: -1,
@@ -98,11 +144,18 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
+<<<<<<< HEAD
         return res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
+=======
+        return res
+          .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
+          .json(utils.createResponseObject(data4createResponseObject));
+>>>>>>> master
       }
       let data4createResponseObject = {
         req: req,
         result: 0,
+<<<<<<< HEAD
         message: "[USE_TEST_PIN = true] No SMS was sent out to the mobile number.",
         payload: {},
         logPayload: false,
@@ -114,6 +167,20 @@ module.exports = exports = {
       const apiUrl = `https://smscounter.com/api/url_api.php?api_key=${process.env.msgAPI}&pass=${process.env.msgPassword}&senderid=${process.env.msgSenderId}&template_id=1507165942060322508&message=Your registration OTP for HONDA IDTR Karnal is ${code}&dest_mobileno=${phone}&mtype=TXT`;
       const response = await axios.get(apiUrl);
       // const messageDetails = await utils.sendMessage(phone, code);
+=======
+        message:
+          "[USE_TEST_PIN = true] No SMS was sent out to the mobile number.",
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.OK)
+        .json(utils.createResponseObject(data4createResponseObject));
+    } else {
+      const event = { ...events.GENERAL };
+      // event.message = messages.SMS_VERIFICATION_CODE.format([code]);
+      const messageDetails = await utils.sendMessage(phone, code);
+>>>>>>> master
       if (email && email.length > 0) {
         console.log("email-----", email);
         let transporter = nodemailer.createTransport({
@@ -198,8 +265,15 @@ module.exports = exports = {
         console.log("Message sent: %s", info.messageId);
       }
 
+<<<<<<< HEAD
       if (response.status !== 200) {
         logger.error("/verify-phone - SMS could not be sent - the number specified is invalid.");
+=======
+      if (!messageDetails) {
+        logger.error(
+          "/verify-phone - SMS could not be sent - the number specified is invalid."
+        );
+>>>>>>> master
         let data4createResponseObject = {
           req: req,
           result: -1,
@@ -207,7 +281,13 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
+<<<<<<< HEAD
         return res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
+=======
+        return res
+          .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
+          .json(utils.createResponseObject(data4createResponseObject));
+>>>>>>> master
       }
       partialEntry = await global.models.GLOBAL.PARTIAL({
         firstName: firstName,
@@ -233,7 +313,13 @@ module.exports = exports = {
           await partialEntry.save();
         }
       } catch (error) {
+<<<<<<< HEAD
         logger.error(`/verify-phone - Error while saving code in database: ${error.message}\n${error.stack}`);
+=======
+        logger.error(
+          `/verify-phone - Error while saving code in database: ${error.message}\n${error.stack}`
+        );
+>>>>>>> master
         let data4createResponseObject = {
           req: req,
           result: -1,
@@ -241,7 +327,13 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
+<<<<<<< HEAD
         return res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
+=======
+        return res
+          .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
+          .json(utils.createResponseObject(data4createResponseObject));
+>>>>>>> master
       }
 
       let data4createResponseObject = {
@@ -251,7 +343,13 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
+<<<<<<< HEAD
       return res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+=======
+      return res
+        .status(enums.HTTP_CODES.OK)
+        .json(utils.createResponseObject(data4createResponseObject));
+>>>>>>> master
     }
   },
 };

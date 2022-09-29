@@ -14,4 +14,8 @@ sandbox
 service-account*.json
 uploads/
 .history
+<<<<<<< HEAD
 .env
+=======
+.env
+>>>>>>> master

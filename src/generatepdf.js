@@ -13,7 +13,10 @@ const puppeteer = require("puppeteer");
 // const multerS3 = require("multer-s3");
 var AWS = require("aws-sdk");
 const fs = require("fs");
+<<<<<<< HEAD
 const merge = require("easy-pdf-merge");
+=======
+>>>>>>> master
 
 module.exports = exports = {
   // route validation
@@ -464,6 +467,7 @@ module.exports = exports = {
   </body>
 </html>
 `;
+<<<<<<< HEAD
       const percentage = users[i].percentage;
       let message = "BAD";
       let grade = "D";
@@ -481,6 +485,8 @@ module.exports = exports = {
         grade = "C";
       }
 
+=======
+>>>>>>> master
       let html2 = `<!DOCTYPE html>
 <html lang="en">
 
@@ -759,11 +765,21 @@ module.exports = exports = {
                 <div class="box-title">
                     <h1>INSTRUCTIONS</h1>
                     <p>IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED AGANIST PROCESSING CHARGES.</p>
+<<<<<<< HEAD
                 </div>
                 <div class="content-text-style">
                     <span>PERCENTAGE: "${percentage}"</span>
                     <span>GRADE: "${grade}"</span>
                     <span>PERFORMANCE: ${message}</span>
+=======
+                    <span>THIS GRADATION PATTERN IS GIVEN BELOW</span>
+                </div>
+                <div class="content-text-style">
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+>>>>>>> master
                 </div>
             </div>
         </div>
@@ -797,7 +813,11 @@ module.exports = exports = {
             "--single-process",
             "--use-gl=egl",
           ],
+<<<<<<< HEAD
           ignoredefaultargs: ["--disable-extensions"],
+=======
+          ignoredefaultargs: ['--disable-extensions'],
+>>>>>>> master
           headless: true,
         });
         const page = await browser.newPage();
@@ -814,6 +834,7 @@ module.exports = exports = {
         fileType = "back";
         await browser.close();
       }
+<<<<<<< HEAD
       const pdf1 = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + 0 + ".pdf";
       const pdf2 = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + 1 + ".pdf";
       const merged = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + ".pdf";
@@ -836,6 +857,9 @@ module.exports = exports = {
         // fs.unlinkSync(`./Results/${batch.name}/${pdf1}`);
         fs.unlinkSync(`./Results/${batch.name}/${pdf2}`);
       })();
+=======
+
+>>>>>>> master
       // let optionss = {
       //   args: [
       //     "--no-sandbox",
