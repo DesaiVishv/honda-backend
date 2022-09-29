@@ -46,7 +46,13 @@ functions.config4hashes = {
 };
 
 /* create response-wrapper object */
-functions.createResponseObject = ({ req, result = 0, message = "", payload = {}, logPayload = false }) => {
+functions.createResponseObject = ({
+  req,
+  result = 0,
+  message = "",
+  payload = {},
+  logPayload = false,
+}) => {
   let payload2log = {};
   if (logPayload) {
     payload2log = flatten({ ...payload });
@@ -54,7 +60,10 @@ functions.createResponseObject = ({ req, result = 0, message = "", payload = {},
 
   let messageToLog = `RES [${req.requestId}] [${req.method}] ${req.originalUrl}`;
   messageToLog +=
-    (!_.isEmpty(message) ? `\n${message}` : "") + (!_.isEmpty(payload) && logPayload ? `\npayload: ${JSON.stringify(payload2log, null, 4)}` : "");
+    (!_.isEmpty(message) ? `\n${message}` : "") +
+    (!_.isEmpty(payload) && logPayload
+      ? `\npayload: ${JSON.stringify(payload2log, null, 4)}`
+      : "");
 
   if (result < 0 && (result !== -50 || result !== -51)) {
     logger.error(messageToLog);
@@ -77,7 +86,9 @@ functions.geocode = async (address) => {
     }
     return null;
   } catch (error) {
-    logger.error(`#geocode - Error encountered while getting the geocodes from address: ${error.message}\n${error.stack}`);
+    logger.error(
+      `#geocode - Error encountered while getting the geocodes from address: ${error.message}\n${error.stack}`
+    );
     return null;
   }
 };
@@ -109,12 +120,18 @@ functions.getLocale = (req) => {
       }
     }
 
-    logger.info("#getLocale - (from request headers) " + JSON.stringify(locale));
+    logger.info(
+      "#getLocale - (from request headers) " + JSON.stringify(locale)
+    );
     if (locale.lang !== "en") {
       locale.lang = "en";
     }
     return locale;
-  } else if (typeof req.query.locale !== "undefined" && req.query.locale !== null && req.query.locale.length > 0) {
+  } else if (
+    typeof req.query.locale !== "undefined" &&
+    req.query.locale !== null &&
+    req.query.locale.length > 0
+  ) {
     let localeFromParameter = req.query.locale;
     parts = localeFromParameter.split("_");
     locale.lang = parts[0];
@@ -129,7 +146,11 @@ functions.getLocale = (req) => {
     return locale;
   } else if (typeof req.user !== "undefined" && req.user !== null) {
     let localeFromUser = req.user.locale;
-    if (typeof localeFromUser !== "undefined" && localeFromUser !== null && localeFromUser.length > 0) {
+    if (
+      typeof localeFromUser !== "undefined" &&
+      localeFromUser !== null &&
+      localeFromUser.length > 0
+    ) {
       parts = localeFromUser.split("_");
       locale.lang = parts[0];
       if (parts.length > 1) {
@@ -152,7 +173,9 @@ functions.getLocale = (req) => {
 functions.isLocal = () => process.env.APP_ENVIRONMENT.toLowerCase() === "local";
 
 /* Return true if the app is in production mode */
-functions.isProduction = () => process.env.APP_ENVIRONMENT.toLowerCase() === "production" || process.env.APP_ENVIRONMENT.toLowerCase() === "prod";
+functions.isProduction = () =>
+  process.env.APP_ENVIRONMENT.toLowerCase() === "production" ||
+  process.env.APP_ENVIRONMENT.toLowerCase() === "prod";
 
 /* Return true if the app is in production mode */
 functions.isTest = () => process.env.APP_ENVIRONMENT.toLowerCase() === "test";
@@ -176,12 +199,17 @@ functions.maskPhone = (phone) => {
   let maskedPhone = "";
   if (phone) {
     maskedPhone =
-      phone.substring(0, 4) + phone.substring(4, phone.length - 4).replace(new RegExp("[0-9]", "g"), "*") + phone.substring(phone.length - 4);
+      phone.substring(0, 4) +
+      phone
+        .substring(4, phone.length - 4)
+        .replace(new RegExp("[0-9]", "g"), "*") +
+      phone.substring(phone.length - 4);
   }
   return maskedPhone;
 };
 
-functions.passwordHash = (password) => crypto.createHash("sha256").update(password.toString()).digest("hex");
+functions.passwordHash = (password) =>
+  crypto.createHash("sha256").update(password.toString()).digest("hex");
 
 functions.checkStatus = async (user) => {
   const role = user.role;
@@ -207,13 +235,18 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
   const phone = phoneToUse || "";
 
   if (!phone) {
-    logger.info("#sendMessage - The phone number cannot be empty. No SMS will be sent out.");
+    logger.info(
+      "#sendMessage - The phone number cannot be empty. No SMS will be sent out."
+    );
     return null;
   }
 
   let phone4twilio = phone;
   console.log("phone4twilio", phone4twilio.toString().includes("+"));
-  if (phone4twilio.toString().includes("00") !== 0 && phone4twilio.toString().includes("+") !== 0) {
+  if (
+    phone4twilio.toString().includes("00") !== 0 &&
+    phone4twilio.toString().includes("+") !== 0
+  ) {
     phone4twilio = "91" + phone4twilio;
   } else if (phone4twilio.toString().indexOf("00") === 0) {
     phone4twilio = "+" + phone4twilio.slice(2);
@@ -247,13 +280,19 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
         console.log("Responseeee", response);
         console.log("Respons  eeee", JSON.stringify(response.data));
         if (parseInt(response.status / 100) === 2) {
-          logger.info("#sendMessage - Message sent to " + phone4twilio + " successfully.");
+          logger.info(
+            "#sendMessage - Message sent to " + phone4twilio + " successfully."
+          );
           return response.data;
         }
       })
       .catch(function (error) {
         console.log("ERROR", error);
-        logger.error("#sendMessage - Message sending failed to " + phone4twilio + ". Reason: n.a.");
+        logger.error(
+          "#sendMessage - Message sending failed to " +
+            phone4twilio +
+            ". Reason: n.a."
+        );
         return null;
       });
     console.log("resp", resp);
@@ -271,7 +310,12 @@ functions.sendMessage = async (phoneToUse, otpToUse) => {
     //     return messageDetails;
     // }
   } catch (error) {
-    logger.error("#sendMessage - Message sending failed to " + phone4twilio + ". Reason: " + error);
+    logger.error(
+      "#sendMessage - Message sending failed to " +
+        phone4twilio +
+        ". Reason: " +
+        error
+    );
     return null;
   }
 };
@@ -323,13 +367,20 @@ functions.validatePhoneNumber = async (phone4twilio) => {
     }
 
     try {
-      const phoneDetails = await twilio.lookups.phoneNumbers(phone4twilio).fetch();
+      const phoneDetails = await twilio.lookups
+        .phoneNumbers(phone4twilio)
+        .fetch();
       if (phoneDetails) {
-        logger.info("#validatePhoneNumber - phoneDetails: " + JSON.stringify(phoneDetails, null, 4));
+        logger.info(
+          "#validatePhoneNumber - phoneDetails: " +
+            JSON.stringify(phoneDetails, null, 4)
+        );
         return phoneDetails;
       }
     } catch (error) {
-      logger.error(`#validatePhoneNumber - Error encountered while validating phone number: ${error.stack}`);
+      logger.error(
+        `#validatePhoneNumber - Error encountered while validating phone number: ${error.stack}`
+      );
       return null;
     }
   }

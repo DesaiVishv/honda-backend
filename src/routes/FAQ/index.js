@@ -9,12 +9,24 @@ router.get("/getAllFAQ", faqApi.getAllFAQ.handler);
 // router.get("/getAllMenu", menuApi.getAllMenu.handler);
 
 // Post Methods
-router.post("/addFAQ", validate("body", faqApi.addFAQ.validation), faqApi.addFAQ.handler);
+router.post(
+  "/addFAQ",
+  validate("body", faqApi.addFAQ.validation),
+  faqApi.addFAQ.handler
+);
 
 // // Put Methods
-router.put("/updateFAQ/:id", passport.authenticate(["jwt"], { session: false }), faqApi.updateFAQ.handler);
+router.put(
+  "/updateFAQ/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  faqApi.updateFAQ.handler
+);
 
 // // Delete Methods
-router.delete("/deleteFAQ/:id", passport.authenticate(["jwt"], { session: false }), faqApi.deleteFAQ.handler);
+router.delete(
+  "/deleteFAQ/:id",
+  passport.authenticate(["jwt"], { session: false }),
+  faqApi.deleteFAQ.handler
+);
 
 module.exports = exports = router;
