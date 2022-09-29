@@ -15,20 +15,13 @@
   "dependencies": {
     "@newrelic/winston-enricher": "^1.0.0",
     "aws-sdk": "^2.1077.0",
-<<<<<<< HEAD
     "axios": "^0.21.4",
-=======
-    "axios": "^0.21.1",
->>>>>>> master
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
     "cors": "^2.8.5",
     "docker": "^1.0.0",
     "dotenv": "^10.0.0",
-<<<<<<< HEAD
     "easy-pdf-merge": "^0.2.6",
-=======
->>>>>>> master
     "express": "^4.17.1",
     "firebase-admin": "^9.11.0",
     "flat": "^5.0.2",
@@ -49,10 +42,7 @@
     "nodemailer": "^6.7.2",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-<<<<<<< HEAD
     "pdf-merger-js": "^4.1.1",
-=======
->>>>>>> master
     "pdfkit": "^0.13.0",
     "puppeteer": "^18.0.5",
     "qs": "^6.10.3",
