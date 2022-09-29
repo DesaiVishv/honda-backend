@@ -14,7 +14,6 @@ module.exports = exports = {
 
   // route handler
   handler: async (req, res) => {
-    console.log("user");
     const { id } = req.params;
     const { user } = req;
     if (user.type !== enums.USER_TYPE.CONTENTMANAGER) {
@@ -43,7 +42,6 @@ module.exports = exports = {
     }
 
     try {
-      console.log("try");
       const deletedItem = await global.models.GLOBAL.FAQ.findByIdAndRemove(id);
       if (!deletedItem) {
         const data4createResponseObject = {

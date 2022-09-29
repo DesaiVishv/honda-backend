@@ -351,17 +351,13 @@ module.exports = exports = {
           <div class="sl-no-box-alignment">
             <div>
               <label>Certificate NO: </label>
-              <input type="text" value="${users[i]._id
-                .toString()
-                .substring(5, 12)}" />
+              <input type="text" value="${users[i]._id.toString().substring(5, 12)}" />
             </div>
           </div>
           <div class="sl-no-box-alignment">
             <div>
               <label>REG NO: IDTR </label>
-              <input type="text" value="${users[i]._id
-                .toString()
-                .substring(5, 12)}" />
+              <input type="text" value="${users[i]._id.toString().substring(5, 12)}" />
             </div>
           </div>
         </div>
@@ -808,13 +804,7 @@ module.exports = exports = {
         await page.setContent(file.content);
         await page.emulateMediaType("screen");
         fs.mkdirSync(`./Results/${batch.name}`, { recursive: true });
-        const fileName =
-          users[i]._id.toString().substring(5, 12) +
-          "-" +
-          users[i].fname +
-          " " +
-          k +
-          ".pdf";
+        const fileName = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + k + ".pdf";
         await page.pdf({
           path: `./Results/${batch.name}/${fileName}`,
           fitToPage: true,
@@ -824,25 +814,9 @@ module.exports = exports = {
         fileType = "back";
         await browser.close();
       }
-      const pdf1 =
-        users[i]._id.toString().substring(5, 12) +
-        "-" +
-        users[i].fname +
-        " " +
-        0 +
-        ".pdf";
-      const pdf2 =
-        users[i]._id.toString().substring(5, 12) +
-        "-" +
-        users[i].fname +
-        " " +
-        1 +
-        ".pdf";
-      const merged =
-        users[i]._id.toString().substring(5, 12) +
-        "-" +
-        users[i].fname +
-        ".pdf";
+      const pdf1 = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + 0 + ".pdf";
+      const pdf2 = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + 1 + ".pdf";
+      const merged = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + ".pdf";
       // await merge([`./Results/${batch.name}/${pdf1}`, `./Results/${batch.name}/${pdf2}`], `./Results/${batch.name}/${merged}`, function (err) {
       //   if (err) {
       //     return console.log(err);
@@ -898,10 +872,7 @@ module.exports = exports = {
 
       if (loop == data) {
         try {
-          zipLocal.sync
-            .zip(`./Results/${batch.name}`)
-            .compress()
-            .save(`./Results/${batch.name}.zip`);
+          zipLocal.sync.zip(`./Results/${batch.name}`).compress().save(`./Results/${batch.name}.zip`);
         } catch (err) {
           console.log("error", err);
         }
@@ -926,9 +897,7 @@ module.exports = exports = {
               payload: {},
               logPayload: false,
             };
-            return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(
-              utils.createResponseObject(data4createResponseObject)
-            );
+            return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
           }
           if (data) {
             console.log("Upload Success", data.Location);
@@ -945,9 +914,7 @@ module.exports = exports = {
 
             //delete result folder after response is sent
             fs.rmdirSync(`./Results`, { recursive: true });
-            return Response.status(enums.HTTP_CODES.OK).json(
-              utils.createResponseObject(data4createResponseObject)
-            );
+            return Response.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
           }
         });
       }
