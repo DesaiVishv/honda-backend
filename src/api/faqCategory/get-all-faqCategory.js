@@ -23,15 +23,14 @@ module.exports = exports = {
       let search = req.query.search
         ? {
             faqCategory: { $regex: req.query.search, $options: "i" },
-            isActive: true,
           }
-        : { isActive: true };
-      // if(req.query.isActive){
-      //   search = {
-      //     ...search,
-      //     isActive: req.query.isActive
-      //   }
-      // }
+        : {};
+      if (req.query.isActive) {
+        search = {
+          ...search,
+          isActive: req.query.isActive,
+        };
+      }
       if (req.query.language) {
         search = {
           ...search,
