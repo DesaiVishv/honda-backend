@@ -17,7 +17,7 @@ module.exports = exports = {
     const { id } = req.params;
     const { user } = req;
     const { titleName, description } = req.body;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    if (user.type !== enums.USER_TYPE.CONTENTMANAGER) {
       const data4createResponseObject = {
         req: req,
         result: -1,
