@@ -79,6 +79,7 @@ module.exports = exports = {
           part: "HomeContent",
           purpose: "Update",
           oldData: Item,
+          language: checkMenu.language,
         };
         const newAmeninties = await global.models.GLOBAL.REQUEST(
           AmenintiesCreate
