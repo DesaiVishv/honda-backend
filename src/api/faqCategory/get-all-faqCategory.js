@@ -19,18 +19,19 @@ module.exports = exports = {
       let skip = (parseInt(req.query.page) - 1) * limit;
 
       // let id = req.params.id;
-      
+
       let search = req.query.search
         ? {
             faqCategory: { $regex: req.query.search, $options: "i" },
+            isActive: true,
           }
-        : { };
-      if(req.query.isActive){
-        search = {
-          ...search,
-          isActive: req.query.isActive
-        }
-      }
+        : { isActive: true };
+      // if(req.query.isActive){
+      //   search = {
+      //     ...search,
+      //     isActive: req.query.isActive
+      //   }
+      // }
       if (req.query.language) {
         search = {
           ...search,
