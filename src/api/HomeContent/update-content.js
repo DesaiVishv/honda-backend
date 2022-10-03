@@ -17,7 +17,7 @@ module.exports = exports = {
     const { id } = req.params;
     const { user } = req;
     const { titleName, description } = req.body;
-    if (user.type !== enums.USER_TYPE.SUPERADMIN) {
+    if (user.type !== enums.USER_TYPE.CONTENTMANAGER) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -79,6 +79,7 @@ module.exports = exports = {
           part: "HomeContent",
           purpose: "Update",
           oldData: Item,
+          language: checkMenu.language,
         };
         const newAmeninties = await global.models.GLOBAL.REQUEST(
           AmenintiesCreate

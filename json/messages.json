@@ -53,6 +53,7 @@
   "ROLE_FETCH_SUCCESS": "role fetch successfully",
   "ITEM_FETCHED": "Item fetched successfully",
   "ITEM_INSERTED": "added successfully",
+  "QUESTION_ADDED": "Questions added successfully",
   "BOOKING_SUCCESS": "Your Booking is confirmed. Please pay at the counter and collect your fee receipt to attend the classes",
   "FEEDBACK_ADDED": "Thanks for Your Feedback, Your Response is Added Successfully",
   "ITEM_NOT_CREATED": "Some error occurred while creating the item",

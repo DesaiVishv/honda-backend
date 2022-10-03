@@ -306,6 +306,10 @@ module.exports.setup = () => {
               object.scope = scope;
               object.type = type;
               next(null, object);
+            } else if (type === enums.USER_TYPE.CONTENTMANAGER) {
+              object.scope = scope;
+              object.type = type;
+              next(null, object);
             }
           }
         })
