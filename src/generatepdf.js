@@ -320,148 +320,146 @@ module.exports = exports = {
     <title>Document</title>
   </head>
 
-  <body>
-    <div class="certificate-box-center-alignment">
-      <div class="certificate-box">
-        <div class="sl-no-box-alignment">
-          <div>
-            <label>SL NO: </label>
-            <input type="text" />
-          </div>
+  <div class="certificate-box-center-alignment">
+        <div class="certificate-box">
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>SL NO: </label>
+                    <input type="text"/>
+                </div>
+            </div>
+            <div class="header-alignment">
+                <div>
+                    <img src="https://i.ibb.co/87cN78k/aa.png" />
+                </div>
+                <div>
+                    <h1>Institute of Driver's Training & Research</h1>
+                    <p>A Joint Venture of Transport Department Government of Haryana & Honda</p>
+                    <span>UCHANI VILLAGE, Near New Bus Stand, Tehsil and District Kamal Haryana, 132001</span>
+                </div>
+                <div>
+                    <img src="https://i.ibb.co/XLg1jLn/rre.png" />
+                </div>
+            </div>
+            <div class="drivers-certificate-text">
+                <h2>DRIVER'S CERTIFICATE</h2>
+                <span>Form V</span>
+                <p>See Rule 14(e), 17(1) b, 27(d) and 31A(2)</p>
+            </div>
+            <div class="first-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>Certificate No.: </label>
+                        <input type="text" value="${users[i]._id.toString().substring(5, 12)}" />
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>REG NO: IDTR </label>
+                        <input type="text" value="${users[i]._id.toString().substring(5, 12)}" / >
+                    </div>
+                </div>
+            </div>
+            <div class="sec-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>This is to certify that Sh/ Smt/ Kumari</label>
+                        <input type="text" value="${users[i].fname}" />
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>Sh./Smt. /Son/ Wife / Daughter / of </label>
+                        <input type="text" value="${users[i].lname}" />
+                    </div>
+                </div>
+            </div>
+            <div class="three-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>Residing at </label>
+                        <input type="text" value="${users[i].address}" />
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>was enrolled in this institute on</label>
+                        <input type="text"value="${users[i].Authority}" />
+                    </div>
+                </div>
+            </div>
+            <div class="fourth-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>and his/ her name is registered at serial number</label>
+                        <input type="text"/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>in our register in Form 14 and that</label>
+                    </div>
+                </div>
+            </div>
+            <div class="fifth-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>he/ she has undergone the course of training in driving of</label>
+                        <input type="text" value="${users[i].cnid?.courseName}" />
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>(mention class of vehicle )</label>
+                    </div>
+                </div>
+            </div>
+            <div class="six-row-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>according to the syllabus prescribed for a period from</label>
+                        <input type="text"/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>To</label>
+                        <input type="text"/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <label>satisfactorily.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-content-alignment">
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <input type="text" value="${moment().format("DD-MM-YYYY")}" />
+                        <label>Date</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="photographer-printed-class">
+                      <img src={this?.props?.data?.passportPhoto}/>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <input type="text"/>
+                        <label>Authorized Signatory</label>
+                    </div>
+                </div>
+                <div class="sl-no-box-alignment">
+                    <div>
+                        <input type="text"/>
+                        <label>Principal, IDTR karnal</label>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="header-alignment">
-          <div>
-            <img src="https://i.ibb.co/87cN78k/aa.png" />
-          </div>
-          <div>
-            <h1>Institute of Deriving Training & Research</h1>
-            <p>A Joint Venture of Transport Department Goverment of Haryana & Honda</p>
-            <span>UCHANI VILLAGE, Near New Bus Stand, Tehsil and District Kamal Haryana, 132001</span>
-          </div>
-          <div>
-            <img src="https://i.ibb.co/XLg1jLn/rre.png" />
-          </div>
-        </div>
-        <div class="drivers-certificate-text">
-          <h2>Driver’s CERTIFICATE</h2>
-          <span>Form V</span>
-          <p>See Rule 14(e), 17(1) b, 27(d) and 31A(2)</p>
-        </div>
-        <div class="first-row-alignment">
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>Certificate NO: </label>
-              <input type="text" value="${users[i]._id.toString().substring(5, 12)}" />
-            </div>
-          </div>
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>REG NO: IDTR </label>
-              <input type="text" value="${users[i]._id.toString().substring(5, 12)}" />
-            </div>
-          </div>
-        </div>
-        <div class="sec-row-alignment">
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>This is to Certift that Sh/ Smt/ Kumari/ NO: </label>
-              <input type="text" value="${users[i].fname}" />
-            </div>
-          </div>
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>Sh./Smt. SON/ Wife / Daughter / of </label>
-              <input type="text" value="${users[i].lname}" />
-            </div>
-          </div>
-        </div>
-        <div class="three-row-alignment">
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>Residling at </label>
-              <input type="text" value="${users[i].address}" />
-            </div>
-          </div>
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>was enrolled in this institule on</label>
-              <input type="text" value="${users[i].Authority}" />
-            </div>
-          </div>
-        </div>
-        <div class="fourth-row-alignment">
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>end his/ her name is registerred at serial number</label>
-              <input type="text"  />
-            </div>
-          </div>
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>in our register in Form 14 and that</label>
-            </div>
-          </div>
-        </div>
-        <div class="fifth-row-alignment">
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>he/ she has undergone the course of training in driving of</label>
-              <input type="text" value="${users[i].cnid?.courseName}" />
-            </div>
-          </div>
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>(mention class of vehicle )</label>
-            </div>
-          </div>
-        </div>
-        <div class="six-row-alignment">
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>according to the syllabus prescribed for a perload from</label>
-              <input type="text" />
-            </div>
-          </div>
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>To</label>
-              <input type="text" />
-            </div>
-          </div>
-          <div class="sl-no-box-alignment">
-            <div>
-              <label>Satisfactorily.</label>
-            </div>
-          </div>
-        </div>
-        <div class="footer-content-alignment">
-          <div class="sl-no-box-alignment">
-            <div>
-              <input type="text" value="${moment().format("DD-MM-YYYY")}"/>
-              <label>Date</label>
-            </div>
-          </div>
-          <div>
-            <div class="photographer-printed-class">
-                 <img src='${users[i].passportPhoto}'/>
-            </div>
-          </div>
-          <div class="sl-no-box-alignment">
-            <div>
-              <input type="text" />
-              <label>Authorized Signatory</label>
-            </div>
-          </div>
-          <div class="sl-no-box-alignment">
-            <div>
-              <input type="text" />
-              <label>Principal, IDTR karnal</label>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </body>
 </html>
 `;
       const percentage = users[i].percentage;
@@ -923,174 +921,3 @@ module.exports = exports = {
     }
   },
 };
-
-// users[i].fname;
-// users[i].mname;
-// users[i].lname;
-// users[i].email;
-// users[i].phone; ? users[i].phone; : NO DATA
-// users[i].gender;
-// users[i].address;
-// users[i].city;
-// users[i].DoB;
-// users[i].dateofCourse;
-// users[i].isPass; ? users[i].isPass; : NO DATA
-// users[i].lcid;
-// users[i].percentage;
-// users[i].totalScore;
-// users[i].practicalScore;
-// users[i].total;
-// users[i].status;
-// users[i].type;
-// users[i].authoritydistrict;
-// users[i].authoritycity;
-// users[i]._id
-// users[i].fname;
-
-// let html = `<!DOCTYPE html>
-// <html lang="nl">
-// ​
-// <head>
-//   <meta charset="UTF-8" />
-//   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-//   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-//   <style>
-//     @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
-// ​
-//     * {
-//       box-sizing: border-box;
-//     }
-// ​
-//     html,
-//     body {
-//       padding: 0;
-//       margin: 0;
-//       background: #f5f5f5;
-//       font-family: Inter, sans-serif;
-//       font-weight: 400;
-//       color: #0b273f;
-//     }
-// ​
-//     img {
-//       width: 100%;
-//       object-fit: cover;
-//     }
-// ​
-//     h1,
-//     h2,
-//     h3,
-//     h4,
-//     h5,
-//     h6,
-//     p {
-//       margin: 0;
-//     }
-// ​
-//     .clearfix::after {
-//       content: "";
-//       clear: both;
-//       display: table;
-//     }
-//   </style>
-// ​
-// ​
-// </head>
-// ​
-// <body>
-//   <section class="page" style="  width: 595px;
-//     height: 841px;
-//     background: #f2f2f2;
-//     margin: 0 auto;
-//     position: relative;">
-//     <div class="strip"></div>
-//     <div class="header header1 clearfix" style="padding: 8px 20px 15px;">
-//       <div class="text-float-left" style=" float: left;">
-//         <h1 style=" font-size: 16px;
-//           line-height: 25px;
-//           font-weight: 400;
-//           color: #323232;">Institute of Driving Training & c (Karnal)</h1>
-//         <p style=" font-size: 12px;
-//           line-height: 20px;
-//           color: #777;
-//           max-width: 300px;">A joint venture of Transport Department, Government of Haryana & Honda IDTR</p>
-//       </div>
-//       <div class="honda-logo" style="  float: right;">
-//         <img style="  max-width: 80px;" src="https://i.ibb.co/JkG6hn6/honda.png" alt="honda">
-//       </div>
-//     </div>
-//     <div class="content" style=" padding: 40px 80px 20px 20px;">
-//       <div>
-//         <table class="table1" width="100%" cellspacing="0" cellpadding="0">
-//           <tr>
-//           <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">First Name :<span
-//           style="font-weight: 400;">${users[i].fname}</span></p>
-//           <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Middle Name :<span
-//           style="font-weight: 400;">${users[i].mname}</span></p>
-//             <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Last Name :<span
-//                 style="font-weight: 400;">${users[i].lname}</span></p>
-
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Email :<span
-//                 style="font-weight: 400;">${users[i].email}</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Phone Number :<span
-//                 style="font-weight: 400;">${
-//                   users[i].phone ? users[i].phone : "No Data"
-//                 }</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Gender :<span
-//                 style="font-weight: 400;">${users[i].gender}</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Address :<span
-//                 style="font-weight: 400;">${users[i].address}</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">City :<span
-//                 style="font-weight: 400;">${users[i].city}</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Date of Birth :<span
-//                 style="font-weight: 400;">${users[i].DoB}</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Date of Course:<span
-//                 style="font-weight: 400;">${
-//                   users[i].dateofCourse
-//                 }</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Pass :<span
-//                 style="font-weight: 400;">${
-//                   users[i].isPass ? users[i].isPass : "-"
-//                 }</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">License ID :<span
-//                 style="font-weight: 400;">${users[i].lcid}</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Percentage :<span
-//                 style="font-weight: 400;">${
-//                   users[i].percentage
-//                 }</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Theory Exam Score :<span
-//                 style="font-weight: 400;">${
-//                   users[i].totalScore
-//                 }</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Practical Exam Score :<span
-//                 style="font-weight: 400;">${
-//                   users[i].practicalScore
-//                 }</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Final Score :<span
-//                 style="font-weight: 400;">${users[i].total}</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Status :<span
-//                 style="font-weight: 400;">${users[i].status}</span></p>
-//                 <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Type :<span
-//                 style="font-weight: 400;">${users[i].type}</span>
-//             </p>
-//             <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Authoritydistrict: :<span
-//                 style="font-weight: 400;">${
-//                   users[i].authoritydistrict
-//                 }</span>
-//             </p>
-//             <p style="font-size: 14px; color: #777; line-height: 16px; margin: 0; font-weight: 500;">Authoritycity :<span
-//                 style="font-weight: 400;">${users[i].authoritycity}</span>
-//             </p>
-
-//           </tr>
-//         </table>
-//         <table class="table2" width="100%" cellspacing="0" cellpadding="0">
-// ​
-//         </table>
-// ​
-//       </div>
-//     </div>
-// ​
-//   </section>
-// </body>
-// ​
-// </html>`;
