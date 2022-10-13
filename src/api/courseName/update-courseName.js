@@ -20,7 +20,7 @@ module.exports = exports = {
       courseName,
       displayName,
       description,
-      duration,
+      // duration,
       timing,
       mode,
       documentRequired,
@@ -51,9 +51,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      return res
-        .status(enums.HTTP_CODES.BAD_REQUEST)
-        .json(utils.createResponseObject(data4createResponseObject));
+      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
 
     try {
@@ -67,22 +65,17 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
+        res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
       } else {
-        const findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.findById(
-          {
-            _id: vcid,
-          }
-        );
+        const findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.findById({
+          _id: vcid,
+        });
         console.log("vehicle", findVehicle);
         const findCourseType = await global.models.GLOBAL.COURSETYPE.findById({
           _id: ctid,
         });
         console.log("Type", findCourseType.courseType);
-        const findCourseCategory =
-          await global.models.GLOBAL.COURSECATEGORY.findById({ _id: ccid });
+        const findCourseCategory = await global.models.GLOBAL.COURSECATEGORY.findById({ _id: ccid });
         console.log("Category", findCourseCategory);
         let generateName =
           findCourseType.courseType +
@@ -91,10 +84,6 @@ module.exports = exports = {
           " " +
           "For " +
           findVehicle.vehicleCategory +
-          " : " +
-          "Duration" +
-          " : " +
-          duration +
           " : " +
           "Fees" +
           " : " +
@@ -108,17 +97,14 @@ module.exports = exports = {
           ctid: ctid,
           ccid: ccid,
           price: price,
-          duration: duration,
+          // // duration: duration,
           timing: timing,
           mode: mode,
           documentRequired: documentRequired,
           validity: validity,
           certificate: certificate,
         };
-        let Item1 = await global.models.GLOBAL.COURSENAME.findByIdAndUpdate(
-          { _id: id },
-          Itemupdate
-        );
+        let Item1 = await global.models.GLOBAL.COURSENAME.findByIdAndUpdate({ _id: id }, Itemupdate);
         const data4createResponseObject = {
           req: req,
           result: 0,
@@ -126,14 +112,10 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
+        res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
       }
     } catch (error) {
-      logger.error(
-        `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
-      );
+      logger.error(`${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`);
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -141,9 +123,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };
