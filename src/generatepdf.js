@@ -941,7 +941,7 @@ module.exports = exports = {
                 };
 
                 //delete result folder after response is sent
-                // fs.rmdirSync(`./Results`, { recursive: true }); /////////////////////////////////////////////////////////////////
+                fs.rmdirSync(`./Results`, { recursive: true });
                 return Response.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
               }
             });
