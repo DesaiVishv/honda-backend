@@ -464,22 +464,22 @@ module.exports = exports = {
     </div>
 </html>
 `;
-          const percentage = users[i].percentage;
-          let message = "BAD";
-          let grade = "D";
-          if (percentage >= 80) {
-            message = "EXCELLENT";
-            grade = "A+";
-          } else if (percentage >= 60) {
-            message = "GOOD";
-            grade = "A";
-          } else if (percentage >= 40) {
-            message = "AVERAGE";
-            grade = "B";
-          } else {
-            message = "POOR";
-            grade = "C";
-          }
+          //   const percentage = users[i].percentage;
+          //   let message = "BAD";
+          //   let grade = "D";
+          //   if (percentage >= 80) {
+          //     message = "EXCELLENT";
+          //     grade = "A+";
+          //   } else if (percentage >= 60) {
+          //     message = "GOOD";
+          //     grade = "A";
+          //   } else if (percentage >= 40) {
+          //     message = "AVERAGE";
+          //     grade = "B";
+          //   } else {
+          //     message = "POOR";
+          //     grade = "C";
+          //   }
 
           let html2 = `<!DOCTYPE html>
 <html lang="en">
@@ -758,18 +758,27 @@ module.exports = exports = {
                 <div class="box-title">
                     <h1>INSTRUCTIONS</h1>
                     <p>IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED AGANIST PROCESSING CHARGES.</p>
+                    <span>THIS GRADATION PATTERN IS GIVEN BELOW</span>
                 </div>
                 <div class="content-text-style">
-                    <span>PERCENTAGE: "${percentage}"</span>
-                    <span>GRADE: "${grade}"</span>
-                    <span>PERFORMANCE: ${message}</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
                 </div>
             </div>
         </div>
     </div>
 </body>
 
+
 </html>`;
+
+          {
+            /* <span>PERCENTAGE: "${percentage}"</span>
+                    <span>GRADE: "${grade}"</span>
+                    <span>PERFORMANCE: ${message}</span> */
+          }
           // const options = {
           //   // format: "Letter",
           //   orientation: "landscape",
