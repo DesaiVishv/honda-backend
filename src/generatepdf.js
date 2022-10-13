@@ -762,9 +762,11 @@ module.exports = exports = {
                 </div>
                 <div class="content-text-style">
                     <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
-                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "B" ( 80% - 89% ) : VERY GOOD</span>
+                    <span>GRADE "C" ( 70% - 79% ) : GOOD</span>
+                    <span>GRADE "D" ( 60% - 69% ) : AVERAGE</span>
+                    <span>GRADE "E" ( 50% - 59% ) : PASS</span>
+                    <span>GRADE "F" ( 40% - 49% ) : FAIL</span>
                 </div>
             </div>
         </div>
