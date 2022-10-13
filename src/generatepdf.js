@@ -857,7 +857,7 @@ module.exports = exports = {
           await (async () => {
             await merger.add(`./Results/${batch.name}/${pdf1}`); //merge all pages. parameter is the path to file and filename.
             await merger.add(`./Results/${batch.name}/${pdf2}`);
-            await merger.save(`./Results/${batch.name}/1 ${pdf1}`);
+            await merger.save(`./Results/${batch.name}/${pdf1}`);
             // const mergedPdfBuffer = wait merger.saveAsBuffer();
             // fs.writeSync("merged.pdf", mergedPdfBuffer);
             // fs.unlinkSync(`./Results/${batch.name}/${pdf1}`);
