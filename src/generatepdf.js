@@ -352,13 +352,17 @@ module.exports = exports = {
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>Certificate No.: </label>
-                        <input type="text" value="${users[i]._id.toString().substring(5, 12)}" />
+                        <input type="text" value="${users[i]._id
+                          .toString()
+                          .substring(5, 12)}" />
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>REG NO: IDTR </label>
-                        <input type="text" value="${users[i]._id.toString().substring(5, 12)}" / >
+                        <input type="text" value="${users[i]._id
+                          .toString()
+                          .substring(5, 12)}" / >
                     </div>
                 </div>
             </div>
@@ -407,7 +411,9 @@ module.exports = exports = {
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>he/ she has undergone the course of training in driving of</label>
-                        <input type="text" value="${users[i].cnid?.courseName}" />
+                        <input type="text" value="${
+                          users[i].cnid?.courseName
+                        }" />
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
@@ -438,13 +444,15 @@ module.exports = exports = {
             <div class="footer-content-alignment">
                 <div class="sl-no-box-alignment">
                     <div>
-                        <input type="text" value="${moment().format("DD-MM-YYYY")}" />
+                        <input type="text" value="${moment().format(
+                          "DD-MM-YYYY"
+                        )}" />
                         <label>Date</label>
                     </div>
                 </div>
                 <div>
                     <div class="photographer-printed-class">
-                      <img src={this?.props?.data?.passportPhoto}/>
+                      <img src=${users[i].passportPhoto}/>
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
@@ -848,12 +856,33 @@ module.exports = exports = {
               //   },
             };
             await html_to_pdf.generatePdf(file, optionss).then((pdfBuffer) => {
-              const fileName = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + k + ".pdf";
-              fs.writeFileSync(`./Results/${batch.name}/${fileName}`, pdfBuffer);
+              const fileName =
+                users[i]._id.toString().substring(5, 12) +
+                "-" +
+                users[i].fname +
+                " " +
+                k +
+                ".pdf";
+              fs.writeFileSync(
+                `./Results/${batch.name}/${fileName}`,
+                pdfBuffer
+              );
             });
           }
-          const pdf1 = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + 0 + ".pdf";
-          const pdf2 = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + 1 + ".pdf";
+          const pdf1 =
+            users[i]._id.toString().substring(5, 12) +
+            "-" +
+            users[i].fname +
+            " " +
+            0 +
+            ".pdf";
+          const pdf2 =
+            users[i]._id.toString().substring(5, 12) +
+            "-" +
+            users[i].fname +
+            " " +
+            1 +
+            ".pdf";
           //   const merged = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + ".pdf";
           // await merge([`./Results/${batch.name}/${pdf1}`, `./Results/${batch.name}/${pdf2}`], `./Results/${batch.name}/${merged}`, function (err) {
           //   if (err) {
@@ -911,7 +940,10 @@ module.exports = exports = {
 
           if (loop == data) {
             try {
-              zipLocal.sync.zip(`./Results/${batch.name}`).compress().save(`./Results/${batch.name}.zip`);
+              zipLocal.sync
+                .zip(`./Results/${batch.name}`)
+                .compress()
+                .save(`./Results/${batch.name}.zip`);
             } catch (err) {
               console.log("error", err);
             }
@@ -936,7 +968,9 @@ module.exports = exports = {
                   payload: {},
                   logPayload: false,
                 };
-                return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+                return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(
+                  utils.createResponseObject(data4createResponseObject)
+                );
               }
               if (data) {
                 console.log("Upload Success", data.Location);
@@ -953,7 +987,9 @@ module.exports = exports = {
 
                 //delete result folder after response is sent
                 fs.rmdirSync(`./Results`, { recursive: true });
-                return Response.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+                return Response.status(enums.HTTP_CODES.OK).json(
+                  utils.createResponseObject(data4createResponseObject)
+                );
               }
             });
           }
@@ -967,7 +1003,9 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+        return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(
+          utils.createResponseObject(data4createResponseObject)
+        );
       }
     } catch (err) {
       console.log(err);
@@ -978,7 +1016,9 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(
+        utils.createResponseObject(data4createResponseObject)
+      );
     }
   },
 };
