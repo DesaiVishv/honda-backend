@@ -11,6 +11,7 @@ module.exports = (app, logger) => {
   const courseTypeRoute = require("../routes/courseType/index");
   const courseCategoryRoute = require("../routes/courseCategory/index");
   const courseNameRoute = require("../routes/courseName/index");
+  const BillDeskPayment = require("../routes/BillDeskPayment/index");
   const trainingDateRoute = require("../routes/trainingDate/index");
   const historyRoute = require("../routes/history/index");
   const personalInformationRoute = require("../routes/Personal-Information/index");
@@ -42,7 +43,7 @@ module.exports = (app, logger) => {
   const helpfultipsRoute = require("../routes/HelpfulTIps/index");
   const testomonialRoute = require("../routes/Testomonial/index");
   const requestRoute = require("../routes/request/index");
-
+  const webHook = require("../routes/webHook/index");
   const amenitiesRoute = require("../routes/amenities/index");
   const contactusRoute = require("../routes/contactus/index");
   const roleRoute = require("../routes/role/index");
@@ -93,7 +94,7 @@ module.exports = (app, logger) => {
   app.use(["/api/v1/testomonial"], testomonialRoute);
   app.use(["/api/v1/generatepdf"], generatepdfRoute);
   app.use(["/api/v1/request"], requestRoute);
-
+  app.use(["/api/v1/BillDeskPayment"], BillDeskPayment);
   app.use(["/api/v1/amenities"], amenitiesRoute);
   app.use(["/api/v1/contactus"], contactusRoute);
   app.use(["/api/v1/role"], roleRoute);
@@ -101,6 +102,7 @@ module.exports = (app, logger) => {
   app.use(["/api/v1/purchasehistory"], purchasehistoryRoute);
   app.use(["/api/v1/payment"], paymentRoute);
   app.use(["/api/v1/paymentrefund"], paymentrefundRoute);
+  app.use(["/api/v1/webhook"], webHook);
 
   const { createResponseObject } = require("../utils");
 

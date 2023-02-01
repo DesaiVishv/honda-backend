@@ -126,15 +126,18 @@ module.exports = async () => {
         CODE_REGISTRATION: require("../schema/code/code-registration")(
           mongooseConnections.GLOBAL.HONDA
         ),
-        CODE_VERIFICATION: require("../schema/code/code-verification")(
-          mongooseConnections.GLOBAL.HONDA
-        ),
+        // CODE_VERIFICATION: require("../schema/code/code-verification")(
+        //   mongooseConnections.GLOBAL.HONDA
+        // ),
         LOG: require("../schema/log/log")(mongooseConnections.GLOBAL.HONDA),
         ROLE: require("../schema/role/role")(mongooseConnections.GLOBAL.HONDA),
         CODE_REGISTRATION: require("../schema/code/code-registration")(
           mongooseConnections.GLOBAL.HONDA
         ),
         CODE_VERIFICATION: require("../schema/code/code-verification")(
+          mongooseConnections.GLOBAL.HONDA
+        ),
+        WEBHOOK: require("../schema/webHook/webHook")(
           mongooseConnections.GLOBAL.HONDA
         ),
       },

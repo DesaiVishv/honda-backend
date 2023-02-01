@@ -11,12 +11,13 @@
             "PROPERTY": "property",
             "USER": "user",
             "ROLE": "role",
+            "WEBHOOK": "webHook",
             "AMENITIES": "amenities"
           },
           "NAME": "sip"
         }
       },
-      "URI": "mongodb+srv://vishv123:vishv123@cluster0.p1b0s.mongodb.net/sip",
+      "URI": "mongodb+srv://vishv123:vishv123@cluster0.p1b0s.mongodb.net/honda",
       "USE_TEST_PIN": "false"
     }
   }
