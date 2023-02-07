@@ -15,14 +15,14 @@ const logger = require("../../logger");
 const jwt = require("jsonwebtoken");
 
 module.exports = exports = {
-  pay: async (req, res) => {
+  hearder: async (req, res) => {
     const { user } = req;
+    const { orderId } = req.query;
     const now = new Date();
-
     var secretKey = process.env.SECERT_ID;
     var MerchantID = process.env.MERCHANT_ID;
     var ClientID = process.env.CLIENT_ID;
-    var url = "https://pguat.billdesk.io/payments/ve1_2/orders/create";
+    var url = "https://pguat.billdesk.io/payments/ve1_2/transactions/get";
 
     function createISO8601Timestamp(dateTimeZone) {
       takeLastTwoDigit = dateTimeZone.slice(-2);
@@ -53,25 +53,7 @@ module.exports = exports = {
 
     var payload = {
       mercid: MerchantID,
-      orderid: "ORD" + date.format(now, "YYYYMMDDHHmmss"),
-      amount: "300.00",
-      order_date: newDateTimeZone,
-      currency: "356",
-      ru: "https://idtrkarnal.com",
-      additional_info: {
-        additional_info1: "Details1",
-        additional_info2: "Details2",
-      },
-      itemcode: "DIRECT",
-      device: {
-        init_channel: "internet",
-        ip: "17.233.107.92",
-        mac: "11-AC-58-21-1B-AA",
-        imei: "990000112233445",
-        user_agent: "Mozilla/5.0",
-        accept_header: "text/html",
-        fingerprintid: "61b12c18b5d0cf901be34a23ca64bb19",
-      },
+      orderid: orderId,
     };
 
     const token = jwt.sign(payload, secretKey, signOptions);
@@ -80,12 +62,12 @@ module.exports = exports = {
     main();
 
     async function main() {
-      try {
-        let res = await doRequest(headers, url, token);
-        await decryptedResponse(res);
-      } catch (e) {
-        console.log("main error =>>>>>>", e);
-      }
+      //   try {
+      let res = await doRequest(headers, url, token);
+      await decryptedResponse(res);
+      //   } catch (e) {
+      //     console.log("main error =>>>>>>", e);
+      //   }
     }
 
     function doRequest(headers, url, token) {
@@ -130,13 +112,14 @@ module.exports = exports = {
           },
           logPayload: false,
         };
+
+        console.log("PG Encrypted Response : ", response);
+        console.log("PG Decrypted Response : ", responseJson);
         return res
           .status(enums.HTTP_CODES.OK)
           .json(utils.createResponseObject(data4createResponseObject));
       }
 
-      //   console.log("PG Encrypted Response : ", response);
-      //   console.log("PG Decrypted Response : ", responseJson);
       //   return res.status();
     }
   },

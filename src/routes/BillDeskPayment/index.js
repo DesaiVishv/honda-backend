@@ -13,4 +13,8 @@ router.get(
   billDeskPayment.billDeskPayment.pay
 );
 
+router.get(
+  "/retrieve-transaction",
+  billDeskPayment.retrieveTransaction.hearder
+);
 module.exports = exports = router;
