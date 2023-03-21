@@ -17,6 +17,9 @@ module.exports = (connection) => {
       cnid: {
         type: mongoose.Schema.Types.ObjectId,
       },
+      orderId: {
+        type: String,
+      },
       tdid: {
         type: mongoose.Schema.Types.ObjectId,
       },
@@ -24,10 +27,14 @@ module.exports = (connection) => {
         type: Object,
         default: null,
       },
+      paymentSide: {
+        type: String,
+      },
+      isPaymentDone: { type: String },
       price: {
         type: Number,
       },
-      status: { type: String, default: "done" },
+      status: { type: String, default: "pending" },
       cgst: { type: Number },
       sgst: { type: Number },
       phone: { type: Number },

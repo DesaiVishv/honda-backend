@@ -69,7 +69,7 @@ module.exports = exports = {
           ctid: values.ctid,
           cnid: values.cnid,
           tdid: values.tdid,
-          phone: values.phone,
+          // phone: values.phone,
         }).sort({ created: -1 });
         values.paymentHistory = findPayment ? findPayment : null;
       }

@@ -18,7 +18,7 @@ module.exports = exports = {
       const faqCategory = await global.models.GLOBAL.FAQ.find({
         fcid: id,
         language: language,
-      }).sort({ createdAt: -1 });
+      }).sort({ createdAt: 1 });
       
       if (faqCategory.length == 0) {
         const data4createResponseObject = {

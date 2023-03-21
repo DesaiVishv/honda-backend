@@ -12,9 +12,10 @@
             "USER": "user",
             "ROLE": "role",
             "WEBHOOK": "webHook",
-            "AMENITIES": "amenities"
+            "AMENITIES": "amenities",
+            "TRANSACTION": "transaction"
           },
-          "NAME": "sip"
+          "NAME": "HONDA"
         }
       },
       "URI": "mongodb+srv://vishv123:vishv123@cluster0.p1b0s.mongodb.net/honda",

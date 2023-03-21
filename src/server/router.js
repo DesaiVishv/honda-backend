@@ -1,5 +1,6 @@
 const enums = require("../../json/enums.json");
 const messages = require("../../json/messages.json");
+const transaction = require("../routes/transaction");
 
 module.exports = (app, logger) => {
   // define all route imports here
@@ -52,6 +53,7 @@ module.exports = (app, logger) => {
   const paymentRoute = require("../routes/payment/index");
   const paymentrefundRoute = require("../routes/payment-refund/index");
   const generatepdfRoute = require("../routes/generate-pdf/index");
+  const transaction = require("../routes/transaction/index");
 
   // define all routes here
   app.use(["/api/v1/user"], userRoutes);
@@ -103,6 +105,7 @@ module.exports = (app, logger) => {
   app.use(["/api/v1/payment"], paymentRoute);
   app.use(["/api/v1/paymentrefund"], paymentrefundRoute);
   app.use(["/api/v1/webhook"], webHook);
+  app.use(["/api/v1/transaction"], transaction);
 
   const { createResponseObject } = require("../utils");
 

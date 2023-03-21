@@ -398,7 +398,9 @@ module.exports = exports = {
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>and his/ her name is registered at serial number</label>
-                        <input type="text"/>
+                        <input type="text" value="${users[i]._id
+                          .toString()
+                          .substring(5, 12)}" />
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
@@ -426,13 +428,17 @@ module.exports = exports = {
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>according to the syllabus prescribed for a period from</label>
-                        <input type="text"/>
+                        <input type="text" value="${moment(
+                          users[i].dateofCourse
+                        ).format("DD-MM-YYYY")}" />
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>To</label>
-                        <input type="text"/>
+                        <input type="text" value="${moment(
+                          users[i].tdid?.endDate
+                        ).format("DD-MM-YYYY")}" />
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
@@ -452,7 +458,7 @@ module.exports = exports = {
                 </div>
                 <div>
                     <div class="photographer-printed-class">
-                      <img src=${users[i].passportPhoto}/>
+                      <img src=${users[i].passportPhoto} alt=${users[i].passportPhoto}/>
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
@@ -1016,9 +1022,9 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(
-        utils.createResponseObject(data4createResponseObject)
-      );
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };

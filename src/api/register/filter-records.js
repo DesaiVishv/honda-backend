@@ -79,6 +79,9 @@ module.exports = exports = {
       let Cancle = await global.models.GLOBAL.REGISTER.find({
         uid: id,
         isCancle: true,
+      }).populate({
+        path: "cnid",
+        model: "courseName",
       });
       // console.log("get Records", getRecord);
       // let getDate = await global.models.GLOBAL.TRAININGDATE.find({
@@ -98,16 +101,16 @@ module.exports = exports = {
       for await (let values of past) {
         const paymentHistory = await global.models.GLOBAL.PAYMENT.find({
           phone: values.phone,
-          status: "done",
-          type: "offline",
+          // status: "done",
+          // type: "offline",
         }).sort({ created: -1 });
         values.paymentHistory = paymentHistory[0];
       }
       for await (let values of Cancle) {
         const paymentHistory = await global.models.GLOBAL.PAYMENT.find({
           phone: values.phone,
-          status: "done",
-          type: "offline",
+          // status: "done",
+          // type: "offline",
         }).sort({ created: -1 });
         values.paymentHistory = paymentHistory[0];
       }

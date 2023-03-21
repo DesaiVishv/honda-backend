@@ -13,7 +13,7 @@ const request = require("request");
 const messages = require("../../../json/messages.json");
 const logger = require("../../logger");
 const jwt = require("jsonwebtoken");
-
+ 
 module.exports = exports = {
   pay: async (req, res) => {
     const { user } = req;
@@ -57,7 +57,7 @@ module.exports = exports = {
       amount: "300.00",
       order_date: newDateTimeZone,
       currency: "356",
-      ru: "https://idtrkarnal.com",
+      ru: "https://idtrkarnal.com/",
       additional_info: {
         additional_info1: "Details1",
         additional_info2: "Details2",

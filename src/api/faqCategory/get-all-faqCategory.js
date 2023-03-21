@@ -46,7 +46,7 @@ module.exports = exports = {
       const faqCategory = await global.models.GLOBAL.FAQCATEGORY.find(search)
         .skip(skip)
         .limit(limit)
-        .sort({ createdAt: -1 });
+        .sort({ createdAt: 1 });
       if (faqCategory.length == 0) {
         const data4createResponseObject = {
           req: req,

@@ -1,9 +1,10 @@
+// const { object } = require("joi");
 const mongoose = require("mongoose");
 
 // const enums = require("../../../json/enums.json");
 
 module.exports = (connection) => {
-  const webHookSchema = new mongoose.Schema(
+  const transactionSchema = new mongoose.Schema(
     {
       data: { type: Object },
     },
@@ -14,5 +15,5 @@ module.exports = (connection) => {
   );
 
   // return logsSchema;
-  return connection.model("webHook", webHookSchema, "webHook");
+  return connection.model("transaction", transactionSchema, "transaction");
 };

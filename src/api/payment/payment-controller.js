@@ -3,6 +3,8 @@ const utils = require("../../utils");
 const mongoose = require("mongoose");
 const httpStatus = require("http-status");
 const APIResponse = require("../../APIResponse");
+const { payment } = require("../../utils/billdeskPayment");
+const date = require("date-and-time");
 // const Payment = require("./payment.model");
 // const Order = require("../order/order.model");
 // const User = require("../users/users.model");
@@ -27,7 +29,6 @@ const { verifyEmail } = require("../admin");
 // const utils = require("../../utils");
 const messages = require("../../../json/messages.json");
 const logger = require("../../logger");
-const Razorpay = require("razorpay");
 
 module.exports = exports = {
   // route validation
@@ -37,7 +38,7 @@ module.exports = exports = {
     ctid: Joi.string().required(),
     cnid: Joi.string().required(),
     tdid: Joi.string().required(),
-    paymentId: Joi.string().required(),
+    paymentSide: Joi.string().required(),
     phone: Joi.number(),
     email: Joi.string(),
     name: Joi.string(),
@@ -46,8 +47,19 @@ module.exports = exports = {
   }),
 
   pay: async (req, res) => {
-    const { uid, vcid, ctid, cnid, tdid, paymentId, phone, email, name, type } =
-      req.body;
+    console.log("req.body", req.body);
+    const {
+      uid,
+      vcid,
+      ctid,
+      cnid,
+      tdid,
+      paymentSide,
+      phone,
+      email,
+      name,
+      type,
+    } = req.body;
     const { user } = req;
     if (!cnid) {
       const data4createResponseObject = {
@@ -63,24 +75,24 @@ module.exports = exports = {
     }
     if (uid) {
       const findUser = await global.models.GLOBAL.ADMIN.findOne({ _id: uid });
-      // console.log("findUsre", findUser);
-      if (!findUser) {
-        const data4createResponseObject = {
-          req: req,
-          result: -1,
-          message: messages.NOT_FOUND,
-          payload: {},
-          logPayload: false,
-        };
-        return res
-          .status(enums.HTTP_CODES.BAD_REQUEST)
-          .json(utils.createResponseObject(data4createResponseObject));
-      }
+      console.log("findUsre", findUser);
+      // if (!findUser) {
+      //   const data4createResponseObject = {
+      //     req: req,
+      //     result: -1,
+      //     message: messages.NOT_FOUND,
+      //     payload: {},
+      //     logPayload: false,
+      //   };
+      //   return res
+      //     .status(enums.HTTP_CODES.BAD_REQUEST)
+      //     .json(utils.createResponseObject(data4createResponseObject));
+      // }
     }
     const findVehicle = await global.models.GLOBAL.VEHICLECATEGORY.findOne({
       _id: vcid,
     });
-    // console.log("vehicle", findVehicle);
+    console.log("vehicle", findVehicle);
     if (!findVehicle) {
       const data4createResponseObject = {
         req: req,
@@ -128,7 +140,7 @@ module.exports = exports = {
     const findDate = await global.models.GLOBAL.TRAININGDATE.findOne({
       _id: tdid,
     });
-    // console.log("Date", findDate);
+    console.log("Date", findDate);
     if (!findDate) {
       const data4createResponseObject = {
         req: req,
@@ -161,60 +173,87 @@ module.exports = exports = {
         .status(enums.HTTP_CODES.BAD_REQUEST)
         .json(utils.createResponseObject(data4createResponseObject));
     }
+    // console.log("hello world");
     let gst = (findCoursename.price * 9) / 100;
+    const now = new Date();
+    let orderId = "ORD" + date.format(now, "YYYYMMDDHHmmss");
+    let price = findCoursename.price + gst + gst;
     const paymentData = await global.models.GLOBAL.PAYMENT({
       uid: uid,
       vcid: vcid,
       ctid: ctid,
       cnid: cnid,
       tdid: tdid,
-      paymentId: paymentId,
+      orderId: orderId,
+      paymentSide: paymentSide,
       cgst: gst,
       sgst: gst,
-      price: findCoursename.price + gst + gst,
+      price: price.toFixed(2),
       phone: phone,
       email: email,
       name: name,
       type: type,
     });
-    // const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate({ cnid: cnid }, { paymentId: paymentId })
-    // if (!updateRegister) {
-    //   const data4createResponseObject = {
-    //     req: req,
-    //     result: -1,
-    //     message: messages.NOT_FOUND,
-    //     payload: {},
-    //     logPayload: false
-    //   };
-    //   return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
-    // }
-    if (paymentData) {
-      const updateSeat =
-        await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate(
-          { vcid: vcid, ctid: ctid, cnid: cnid, _id: tdid },
-          { $inc: { seat: -1 } }
-        );
-      if (!updateSeat) {
-        const data4createResponseObject = {
-          req: req,
-          result: -1,
-          message: messages.NOT_FOUND,
-          payload: {},
-          logPayload: false,
-        };
-        return res
-          .status(enums.HTTP_CODES.BAD_REQUEST)
-          .json(utils.createResponseObject(data4createResponseObject));
-      }
+    const updateRegister = await global.models.GLOBAL.REGISTER.findOneAndUpdate(
+      { cnid: cnid },
+      { $set: { paymentId: orderId } }
+    );
+    if (!updateRegister) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_FOUND,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
     }
+    // let price = findCoursename.price + gst + gst;
+    let paymentResponse = await payment(orderId, price.toFixed());
+    console.log("paymentResponse", paymentResponse);
+    if (!paymentResponse) {
+      const data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.NOT_FOUND,
+        payload: {},
+        logPayload: false,
+      };
+      return res
+        .status(enums.HTTP_CODES.BAD_REQUEST)
+        .json(utils.createResponseObject(data4createResponseObject));
+    }
+    // if (paymentData) {
+    //   const updateSeat =
+    //     await global.models.GLOBAL.TRAININGDATE.findOneAndUpdate(
+    //       { vcid: vcid, ctid: ctid, cnid: cnid, _id: tdid },
+    //       { $inc: { seat: -1 } }
+    //     );
+    //   console.log("updateSeat", updateSeat);
+    //   if (!updateSeat) {
+    //     const data4createResponseObject = {
+    //       req: req,
+    //       result: -1,
+    //       message: messages.NOT_FOUND,
+    //       payload: {},
+    //       logPayload: false,
+    //     };
+    //     return res
+    //       .status(enums.HTTP_CODES.BAD_REQUEST)
+    //       .json(utils.createResponseObject(data4createResponseObject));
+    //   }
+    // }
     await paymentData.save();
     // res.send(paymentData)
+    console.log("paymentResponse", paymentResponse);
     if (paymentData) {
       const data4createResponseObject = {
         req: req,
         result: 0,
         message: messages.SUCCESS_PAYMENT,
-        payload: { paymentData },
+        payload: { paymentData, paymentResponse },
         logPayload: false,
       };
       return res

@@ -93,7 +93,8 @@ module.exports = exports = {
     const { user } = req;
     if (
       user.type !== enums.USER_TYPE.SUPERADMIN &&
-      user.type !== enums.USER_TYPE.USER
+      user.type !== enums.USER_TYPE.USER &&
+      user.type !== enums.USER_TYPE.ADMIN
     ) {
       const data4createResponseObject = {
         req: req,

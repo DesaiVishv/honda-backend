@@ -122,6 +122,7 @@ module.exports = exports = {
       phone: phone,
       receiptNumber: receiptNumber,
       receiptDate: receiptDate,
+      status: "done",
       //   receiptNumber:receiptNumber,
       isPaymentDone: isPaymentDone,
       type: type,

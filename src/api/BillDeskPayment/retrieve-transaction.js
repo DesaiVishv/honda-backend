@@ -57,7 +57,7 @@ module.exports = exports = {
     };
 
     const token = jwt.sign(payload, secretKey, signOptions);
-    // console.log("JWT : ", token);
+    console.log("JWT : ", token);
 
     main();
 

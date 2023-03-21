@@ -255,7 +255,7 @@ module.exports = exports = {
         let data4createResponseObject = {
           req: req,
           result: -1,
-          message: messages.FAILED_VERIFICATION,
+          message: messages.FAILED_VERIFICATION_PHONE,
           payload: { error: error },
           logPayload: false,
         };
