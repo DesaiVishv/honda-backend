@@ -23,13 +23,9 @@ module.exports = exports = {
   }),
 
   handler: async (req, res) => {
-    const { date, endDate, seat, vcid, ctid, ccid, cnid, startTime, endTime } =
-      req.body;
+    const { date, endDate, seat, vcid, ctid, ccid, cnid, startTime, endTime } = req.body;
     const { user } = req;
-    if (
-      user.type !== enums.USER_TYPE.SUPERADMIN &&
-      user.type !== enums.USER_TYPE.ADMIN
-    ) {
+    if (user.type !== enums.USER_TYPE.SUPERADMIN && user.type !== enums.USER_TYPE.ADMIN) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -37,9 +33,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      return res
-        .status(enums.HTTP_CODES.UNAUTHORIZED)
-        .json(utils.createResponseObject(data4createResponseObject));
+      return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
     }
     if (!date || !vcid || !ctid || !ccid || !cnid || !startTime || !endTime) {
       const data4createResponseObject = {
@@ -49,9 +43,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      return res
-        .status(enums.HTTP_CODES.BAD_REQUEST)
-        .json(utils.createResponseObject(data4createResponseObject));
+      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
 
     try {
@@ -71,6 +63,7 @@ module.exports = exports = {
         date: date,
         endDate: endDate,
         seat: seat,
+        totalSeat: seat,
         vcid: vcid,
         ctid: ctid,
         ccid: ccid,
@@ -78,9 +71,7 @@ module.exports = exports = {
         startTime: startTime,
         endTime: endTime,
       };
-      const newAmeninties = await global.models.GLOBAL.TRAININGDATE(
-        AmenintiesCreate
-      );
+      const newAmeninties = await global.models.GLOBAL.TRAININGDATE(AmenintiesCreate);
       newAmeninties.save();
       let addHis = {
         // uid: user._id,
@@ -103,13 +94,9 @@ module.exports = exports = {
         payload: { newAmeninties },
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
     } catch (error) {
-      logger.error(
-        `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
-      );
+      logger.error(`${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`);
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -117,9 +104,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };

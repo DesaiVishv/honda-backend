@@ -1,14 +1,13 @@
 const express = require("express");
-const {
-  loadConfigurationFromFile,
-  loadConfigurationFromDatabase,
-} = require("./configuration-loader");
+const { loadConfigurationFromFile, loadConfigurationFromDatabase } = require("./configuration-loader");
 const initDataBase = require("./database");
+const helmet = require("helmet");
 // const initFirestore = require("./firestore-database");
 const os = require("os");
 const initMiddleware = require("./middlewares");
 const initRouter = require("./router");
 const http = require("http");
+const setCronJob = require("./cronJob.js");
 
 global.config = {};
 global.limits = {};
@@ -64,11 +63,9 @@ const runServer = async () => {
   //     socket.on('disconnect', () => {
   //     });
   // });
-
+  setCronJob();
   server.listen(process.env.APP_PORT, async () => {
-    logger.info(
-      `${process.env.APP_RELEASE} server STARTED on port: ${process.env.APP_PORT}\n`
-    );
+    logger.info(`${process.env.APP_RELEASE} server STARTED on port: ${process.env.APP_PORT}\n`);
     await global.models.GLOBAL.LOG({
       description: `${process.env.APP_RELEASE} server STARTED on port: ${process.env.APP_PORT}`,
       time: Date.now(),
@@ -85,59 +82,35 @@ const runServer = async () => {
   // process.setMaxListeners(30); // or set to Infinity
   process.on("SIGINT", () => {
     server.close(async () => {
-      const convertToMB = (data) =>
-        Math.round((data / 1024 / 1024) * 100) / 100;
+      const convertToMB = (data) => Math.round((data / 1024 / 1024) * 100) / 100;
       const formatMemoryUsage = (data) => `${convertToMB(data)} MB`;
       const memoryData = process.memoryUsage();
       const memoryUsage = {
         rss: `Total memory allocated: ${formatMemoryUsage(memoryData.rss)}, `,
-        heapTotal: `Total heap size: ${formatMemoryUsage(
-          memoryData.heapTotal
-        )}, `,
-        heapUsed: `Actual memory used during the execution: ${formatMemoryUsage(
-          memoryData.heapUsed
-        )}, `,
-        external: `V8 external memory: ${formatMemoryUsage(
-          memoryData.external
-        )}`,
+        heapTotal: `Total heap size: ${formatMemoryUsage(memoryData.heapTotal)}, `,
+        heapUsed: `Actual memory used during the execution: ${formatMemoryUsage(memoryData.heapUsed)}, `,
+        external: `V8 external memory: ${formatMemoryUsage(memoryData.external)}`,
       };
-      const usageInPercent = Number(
-        (convertToMB(memoryData.heapUsed) * 100) /
-          convertToMB(memoryData.heapTotal)
-      ).toFixed(2);
+      const usageInPercent = Number((convertToMB(memoryData.heapUsed) * 100) / convertToMB(memoryData.heapTotal)).toFixed(2);
       const usageText = `${memoryUsage.rss}\n${memoryUsage.heapTotal}\n${memoryUsage.heapUsed}\n${memoryUsage.external}\nHeap usage is: ${usageInPercent}%`;
-      const msg = `\`${process.env.APP_ENVIRONMENT}\` \`${
-        process.env.APP_RELEASE
-      }\` \`${os.hostname()}\` server *STOPPED* on *SIGINT*\`\`\`${usageText}\`\`\``;
+      const msg = `\`${process.env.APP_ENVIRONMENT}\` \`${process.env.APP_RELEASE}\` \`${os.hostname()}\` server *STOPPED* on *SIGINT*\`\`\`${usageText}\`\`\``;
       logger.error(msg.replace(/\//g, "").replace(/`/g, ""));
     });
   });
   process.on("SIGTERM", () => {
     server.close(async () => {
-      const convertToMb = (data) =>
-        Math.round((data / 1024 / 1024) * 100) / 100;
+      const convertToMb = (data) => Math.round((data / 1024 / 1024) * 100) / 100;
       const formatMemoryUsage = (data) => `${convertToMb(data)} MB`;
       const memoryData = process.memoryUsage();
       const memoryUsage = {
         rss: `Total memory allocated: ${formatMemoryUsage(memoryData.rss)}, `,
-        heapTotal: `Total heap size: ${formatMemoryUsage(
-          memoryData.heapTotal
-        )}, `,
-        heapUsed: `Actual memory used during the execution: ${formatMemoryUsage(
-          memoryData.heapUsed
-        )}, `,
-        external: `V8 external memory: ${formatMemoryUsage(
-          memoryData.external
-        )}`,
+        heapTotal: `Total heap size: ${formatMemoryUsage(memoryData.heapTotal)}, `,
+        heapUsed: `Actual memory used during the execution: ${formatMemoryUsage(memoryData.heapUsed)}, `,
+        external: `V8 external memory: ${formatMemoryUsage(memoryData.external)}`,
       };
-      const usageInPercent = Number(
-        (convertToMb(memoryData.heapUsed) * 100) /
-          convertToMb(memoryData.heapTotal)
-      ).toFixed(2);
+      const usageInPercent = Number((convertToMb(memoryData.heapUsed) * 100) / convertToMb(memoryData.heapTotal)).toFixed(2);
       const usageText = `${memoryUsage.rss}\n${memoryUsage.heapTotal}\n${memoryUsage.heapUsed}\n${memoryUsage.external}\nHeap usage is: ${usageInPercent}%`;
-      const msg = `\`${process.env.APP_ENVIRONMENT}\` \`${
-        process.env.APP_RELEASE
-      }\` \`${os.hostname()}\` server *STOPPED* on *SIGINT*\`\`\`${usageText}\`\`\``;
+      const msg = `\`${process.env.APP_ENVIRONMENT}\` \`${process.env.APP_RELEASE}\` \`${os.hostname()}\` server *STOPPED* on *SIGINT*\`\`\`${usageText}\`\`\``;
       logger.error(msg.replace(/\//g, "").replace(/`/g, ""));
     });
   });

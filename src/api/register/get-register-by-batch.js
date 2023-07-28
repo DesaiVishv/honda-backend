@@ -44,19 +44,25 @@ module.exports = exports = {
         .skip(skip)
         .limit(limit)
         .sort({ createdAt: -1 })
-        .populate({
-          path: "cnid",
-          model: "courseName",
-          populate: {
-            path: "ccid",
-            model: "courseCategory",
+        .populate([
+          {
+            path: "uid",
+            model: "admin",
+          },
+          {
+            path: "cnid",
+            model: "courseName",
             populate: {
-              path: "ctid",
-              model: "courseType",
-              populate: { path: "vcid", model: "vehicleCategory" },
+              path: "ccid",
+              model: "courseCategory",
+              populate: {
+                path: "ctid",
+                model: "courseType",
+                populate: { path: "vcid", model: "vehicleCategory" },
+              },
             },
           },
-        })
+        ])
         .populate({
           path: "tdid",
           model: "trainingDate",
@@ -107,9 +113,7 @@ module.exports = exports = {
       },
       logPayload: false,
     };
-    res
-      .status(enums.HTTP_CODES.OK)
-      .json(utils.createResponseObject(data4createResponseObject));
+    res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
     // } catch (error) {
     //   logger.error(
     //     `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`

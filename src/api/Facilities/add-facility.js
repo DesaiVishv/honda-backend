@@ -30,15 +30,13 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      return res
-        .status(enums.HTTP_CODES.BAD_REQUEST)
-        .json(utils.createResponseObject(data4createResponseObject));
+      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
 
     try {
       const checkMenu = await global.models.GLOBAL.FACILITIES.find({
         image: image,
-        language: language
+        language: language,
       });
       if (checkMenu.length > 0) {
         const data4createResponseObject = {
@@ -48,9 +46,7 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
+        res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
         return;
       }
       let AmenintiesCreate = {
@@ -58,11 +54,9 @@ module.exports = exports = {
         description: description,
         content: content,
         title: title,
-        language: language
+        language: language,
       };
-      const newAmeninties = await global.models.GLOBAL.FACILITIES(
-        AmenintiesCreate
-      );
+      const newAmeninties = await global.models.GLOBAL.FACILITIES(AmenintiesCreate);
       newAmeninties.save();
       const data4createResponseObject = {
         req: req,
@@ -71,13 +65,9 @@ module.exports = exports = {
         payload: { newAmeninties },
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
     } catch (error) {
-      logger.error(
-        `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
-      );
+      logger.error(`${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`);
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -85,9 +75,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };

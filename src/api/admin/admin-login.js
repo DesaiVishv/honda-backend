@@ -7,6 +7,7 @@ const messages = require("../../../json/messages.json");
 const jwtOptions = require("../../auth/jwt-options");
 const logger = require("../../logger");
 const utils = require("../../utils");
+const { ObjectID } = require("mongodb");
 
 module.exports = exports = {
   // router validation
@@ -15,12 +16,13 @@ module.exports = exports = {
     password: Joi.string().required(),
     lastPage: Joi.string(),
     type: Joi.string(),
+    ip: Joi.string(),
   }),
 
   // route handler
   handler: async (req, res) => {
-    let { phone, password, lastPage, type } = req.body;
-    // console.log("vishv---------", req.headers["user-agent"], req.ip);
+    let { phone, password, lastPage, type, ip } = req.body;
+
     if (!password) {
       logger.error(messages.FIELD_REQUIRE);
       const data4createResponseObject = {
@@ -30,9 +32,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
       return;
     }
 
@@ -57,11 +57,54 @@ module.exports = exports = {
         model: "role",
         select: "_id roleName",
       });
+      console.log("🚀 ~ file: admin-login.js:58 ~ handler: ~ admin:", admin);
+
+      let authenticatedIp = await global.models.GLOBAL.IP.find({ ip: ip, uid: { $in: [ObjectID(admin._id)] } });
+      console.log("authenticatedIp", authenticatedIp);
+      if (admin.role.roleName !== "user") {
+        if (authenticatedIp.length < 1) {
+          const data4createResponseObject = {
+            req: req,
+            result: -1,
+            message: messages.IP_NOT_ALLOWED,
+            payload: {},
+            logPayload: false,
+          };
+          return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+        }
+      }
+      if (admin.status.name !== "active") {
+        const data4createResponseObject = {
+          req: req,
+          result: -1,
+          message: messages.USER_NOT_ACTIVE,
+          payload: {},
+          logPayload: false,
+        };
+        return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+      }
+      if (admin.attempt >= 10) {
+        await global.models.GLOBAL.ADMIN.findOneAndUpdate(
+          {
+            _id: admin._id,
+          },
+          {
+            $set: { "status.name": "blocked" },
+          },
+          { new: true }
+        );
+        const data4createResponseObject = {
+          req: req,
+          result: -400,
+          message: messages.ATTEMPT_COMPLETE,
+          payload: {},
+          logPayload: false,
+        };
+        return res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+      }
       console.log("admin", admin);
       if (admin.length == 0) {
-        logger.error(
-          `/login - No ADMIN (phone: ${phone}) found with the provided password!`
-        );
+        logger.error(`/login - No ADMIN (phone: ${phone}) found with the provided password!`);
         const data4createResponseObject = {
           req: req,
           result: -1,
@@ -69,11 +112,17 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        return res
-          .status(enums.HTTP_CODES.BAD_REQUEST)
-          .json(utils.createResponseObject(data4createResponseObject));
+        return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
       } else {
         if (admin.password !== password && findRole.password !== password) {
+          let updateCount = await global.models.GLOBAL.ADMIN.findOneAndUpdate(
+            {
+              $or: [{ phone: phone }, { email: phone }],
+            },
+            { $set: { attempt: admin?.attempt + 1 || 1 } },
+            { new: true }
+          );
+          console.log("updateCount", updateCount);
           const data4createResponseObject = {
             req: req,
             result: -1,
@@ -81,9 +130,7 @@ module.exports = exports = {
             payload: {},
             logPayload: false,
           };
-          return res
-            .status(enums.HTTP_CODES.BAD_REQUEST)
-            .json(utils.createResponseObject(data4createResponseObject));
+          return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
         }
       }
       const rolename = await global.models.GLOBAL.ROLE.findOne({
@@ -158,13 +205,17 @@ module.exports = exports = {
         payload: payload,
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
-    } catch (error) {
-      logger.error(
-        `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
+      let updateCount = await global.models.GLOBAL.ADMIN.findOneAndUpdate(
+        {
+          $or: [{ phone: phone }, { email: phone }],
+        },
+        { $set: { attempt: 0 } },
+        { new: true }
       );
+      console.log("updateCount", updateCount);
+      res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
+    } catch (error) {
+      logger.error(`${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`);
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -172,9 +223,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };

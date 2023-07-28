@@ -54,6 +54,7 @@ module.exports = (app, logger) => {
   const paymentrefundRoute = require("../routes/payment-refund/index");
   const generatepdfRoute = require("../routes/generate-pdf/index");
   const transaction = require("../routes/transaction/index");
+  const script = require("../routes/script/index");
 
   // define all routes here
   app.use(["/api/v1/user"], userRoutes);
@@ -106,6 +107,7 @@ module.exports = (app, logger) => {
   app.use(["/api/v1/paymentrefund"], paymentrefundRoute);
   app.use(["/api/v1/webhook"], webHook);
   app.use(["/api/v1/transaction"], transaction);
+  app.use(["/api/v1/script"], script);
 
   const { createResponseObject } = require("../utils");
 
@@ -124,9 +126,7 @@ module.exports = (app, logger) => {
 
   // Async error handler
   app.use((error, req, res, next) => {
-    logger.error(
-      `${req.originalUrl} - Error caught by error-handler (router.js): ${error.message}\n${error.stack}`
-    );
+    logger.error(`${req.originalUrl} - Error caught by error-handler (router.js): ${error.message}\n${error.stack}`);
     const data4responseObject = {
       req: req,
       result: -999,
@@ -135,8 +135,6 @@ module.exports = (app, logger) => {
       logPayload: false,
     };
 
-    return res
-      .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-      .json(createResponseObject(data4responseObject));
+    return res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(createResponseObject(data4responseObject));
   });
 };

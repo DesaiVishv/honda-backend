@@ -27,19 +27,25 @@ module.exports = exports = {
         batchId: id,
       })
         .sort({ createdAt: -1 })
-        .populate({
-          path: "cnid",
-          model: "courseName",
-          populate: {
-            path: "ccid",
-            model: "courseCategory",
+        .populate([
+          {
+            path: "uid",
+            model: "admin",
+          },
+          {
+            path: "cnid",
+            model: "courseName",
             populate: {
-              path: "ctid",
-              model: "courseType",
-              populate: { path: "vcid", model: "vehicleCategory" },
+              path: "ccid",
+              model: "courseCategory",
+              populate: {
+                path: "ctid",
+                model: "courseType",
+                populate: { path: "vcid", model: "vehicleCategory" },
+              },
             },
           },
-        })
+        ])
         .populate({
           path: "tdid",
           model: "trainingDate",
@@ -53,6 +59,7 @@ module.exports = exports = {
       console.log("generatepdf-------users.length===", users.length);
       if (users.length > 0) {
         for (i = 0; i < users.length; i++) {
+          console.log("heyy", users[i]);
           let html = `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -121,6 +128,17 @@ module.exports = exports = {
             line-height: 16px;
             color: #323232;
 
+        }
+
+        
+        .custom-width div input {
+            width: fit-content !important;
+            max-width: 140px !important;
+        }
+
+        .custom-width-sm div input {
+            width: fit-content !important;
+            max-width: 110px !important;
         }
 
         input:focus {
@@ -318,6 +336,13 @@ module.exports = exports = {
             font-weight: 600;
             display: block;
         }
+        .sss{
+            margin: 0 20px 0 0;
+            
+        }
+        .sss input{
+            width : 200px;
+        }
     </style>
     <title>Document</title>
   </head>
@@ -335,9 +360,9 @@ module.exports = exports = {
                     <img src="https://i.ibb.co/87cN78k/aa.png" />
                 </div>
                 <div>
-                    <h1>Institute of Driver's Training & Research</h1>
+                    <h1>Institute of Driving Training & Research</h1>
                     <p>A Joint Venture of Transport Department Government of Haryana & Honda</p>
-                    <span>UCHANI VILLAGE, Near New Bus Stand, Tehsil and District Kamal Haryana, 132001</span>
+                    <span>UCHANI VILLAGE, Near New Bus Stand, Tehsil and District Karnal Haryana, 132001</span>
                 </div>
                 <div>
                     <img src="https://i.ibb.co/XLg1jLn/rre.png" />
@@ -349,20 +374,16 @@ module.exports = exports = {
                 <p>See Rule 14(e), 17(1) b, 27(d) and 31A(2)</p>
             </div>
             <div class="first-row-alignment">
-                <div class="sl-no-box-alignment">
+                <div class="sl-no-box-alignment custom-width">
                     <div>
                         <label>Certificate No.: </label>
-                        <input type="text" value="${users[i]._id
-                          .toString()
-                          .substring(5, 12)}" />
+                        <input type="text" value="${users[i].customId.toString()}" />
                     </div>
                 </div>
-                <div class="sl-no-box-alignment">
+                <div class="sl-no-box-alignment custom-width">
                     <div>
-                        <label>REG NO: IDTR </label>
-                        <input type="text" value="${users[i]._id
-                          .toString()
-                          .substring(5, 12)}" / >
+                        <label>REG NO: </label>
+                        <input type="text" value="${users[i].uid.customId.toString()}" / >
                     </div>
                 </div>
             </div>
@@ -375,8 +396,8 @@ module.exports = exports = {
                 </div>
                 <div class="sl-no-box-alignment">
                     <div>
-                        <label>Sh./Smt. /Son/ Wife / Daughter / of </label>
-                        <input type="text" value="${users[i].lname}" />
+                        <label>/Son/ Wife / Daughter of Sh./Smt. </label>
+                        <input type="text" value="${users[i].uid.fatherName}" />
                     </div>
                 </div>
             </div>
@@ -398,9 +419,7 @@ module.exports = exports = {
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>and his/ her name is registered at serial number</label>
-                        <input type="text" value="${users[i]._id
-                          .toString()
-                          .substring(5, 12)}" />
+                        <input type="text" value="${users[i]._id.toString().substring(5, 12)}" />
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
@@ -413,9 +432,7 @@ module.exports = exports = {
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>he/ she has undergone the course of training in driving of</label>
-                        <input type="text" value="${
-                          users[i].cnid?.courseName
-                        }" />
+                        <input type="text" value="${users[i].cnid?.ccid?.ctid?.vcid?.vehicleCategory}" />
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
@@ -428,21 +445,17 @@ module.exports = exports = {
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>according to the syllabus prescribed for a period from</label>
-                        <input type="text" value="${moment(
-                          users[i].dateofCourse
-                        ).format("DD-MM-YYYY")}" />
+                        <input type="text" value="${moment(users[i].dateofCourse).format("DD-MM-YYYY")}" />
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
                     <div>
                         <label>To</label>
-                        <input type="text" value="${moment(
-                          users[i].tdid?.endDate
-                        ).format("DD-MM-YYYY")}" />
+                        <input type="text" value="${moment(users[i].tdid?.endDate).format("DD-MM-YYYY")}" />
                     </div>
                 </div>
                 <div class="sl-no-box-alignment">
-                    <div>
+                    <div>   
                         <label>satisfactorily.</label>
                     </div>
                 </div>
@@ -450,9 +463,7 @@ module.exports = exports = {
             <div class="footer-content-alignment">
                 <div class="sl-no-box-alignment">
                     <div>
-                        <input type="text" value="${moment().format(
-                          "DD-MM-YYYY"
-                        )}" />
+                        <input type="text" value="${moment().format("DD-MM-YYYY")}" />
                         <label>Date</label>
                     </div>
                 </div>
@@ -771,7 +782,7 @@ module.exports = exports = {
             <div>
                 <div class="box-title">
                     <h1>INSTRUCTIONS</h1>
-                    <p>IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED AGANIST PROCESSING CHARGES.</p>
+                    <p>IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED AGAINST PROCESSING CHARGES.</p>
                     <span>THIS GRADATION PATTERN IS GIVEN BELOW</span>
                 </div>
                 <div class="content-text-style">
@@ -792,8 +803,8 @@ module.exports = exports = {
 
           {
             /* <span>PERCENTAGE: "${percentage}"</span>
-                    <span>GRADE: "${grade}"</span>
-                    <span>PERFORMANCE: ${message}</span> */
+                                <span>GRADE: "${grade}"</span>
+                                <span>PERFORMANCE: ${message}</span> */
           }
           // const options = {
           //   // format: "Letter",
@@ -862,33 +873,12 @@ module.exports = exports = {
               //   },
             };
             await html_to_pdf.generatePdf(file, optionss).then((pdfBuffer) => {
-              const fileName =
-                users[i]._id.toString().substring(5, 12) +
-                "-" +
-                users[i].fname +
-                " " +
-                k +
-                ".pdf";
-              fs.writeFileSync(
-                `./Results/${batch.name}/${fileName}`,
-                pdfBuffer
-              );
+              const fileName = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + k + ".pdf";
+              fs.writeFileSync(`./Results/${batch.name}/${fileName}`, pdfBuffer);
             });
           }
-          const pdf1 =
-            users[i]._id.toString().substring(5, 12) +
-            "-" +
-            users[i].fname +
-            " " +
-            0 +
-            ".pdf";
-          const pdf2 =
-            users[i]._id.toString().substring(5, 12) +
-            "-" +
-            users[i].fname +
-            " " +
-            1 +
-            ".pdf";
+          const pdf1 = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + 0 + ".pdf";
+          const pdf2 = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + " " + 1 + ".pdf";
           //   const merged = users[i]._id.toString().substring(5, 12) + "-" + users[i].fname + ".pdf";
           // await merge([`./Results/${batch.name}/${pdf1}`, `./Results/${batch.name}/${pdf2}`], `./Results/${batch.name}/${merged}`, function (err) {
           //   if (err) {
@@ -946,10 +936,7 @@ module.exports = exports = {
 
           if (loop == data) {
             try {
-              zipLocal.sync
-                .zip(`./Results/${batch.name}`)
-                .compress()
-                .save(`./Results/${batch.name}.zip`);
+              zipLocal.sync.zip(`./Results/${batch.name}`).compress().save(`./Results/${batch.name}.zip`);
             } catch (err) {
               console.log("error", err);
             }
@@ -974,9 +961,7 @@ module.exports = exports = {
                   payload: {},
                   logPayload: false,
                 };
-                return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(
-                  utils.createResponseObject(data4createResponseObject)
-                );
+                return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
               }
               if (data) {
                 console.log("Upload Success", data.Location);
@@ -987,20 +972,60 @@ module.exports = exports = {
                   payload: {
                     ZipLink: data.Location,
                     batch: batch,
+                    user: users,
                   },
                   logPayload: false,
                 };
 
                 //delete result folder after response is sent
-                fs.rmdirSync(`./Results`, { recursive: true });
-                return Response.status(enums.HTTP_CODES.OK).json(
-                  utils.createResponseObject(data4createResponseObject)
-                );
+                // fs.rmdirSync(`./Results`, { recursive: true });
+                return Response.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
               }
             });
           }
           //   });
         }
+        let pdfs = [];
+        let files = fs.readdirSync(`./Results/${batch.name}`);
+
+        /*merge file code*/
+        for (let i = 0; i < files.length; i++) {
+          let file = fs.readFileSync(`./Results/${batch.name}/${files[i]}`);
+          pdfs.push(file);
+        }
+        const PDFDocument = require("pdf-lib").PDFDocument;
+
+        // var pdfBuffer1 = fs.readFileSync("./pdf1.pdf");
+        // var pdfBuffer2 = fs.readFileSync("./pdf2.pdf");
+
+        // var pdfsToMerge = [pdfBuffer1, pdfBuffer2];
+
+        const mergedPdf = await PDFDocument.create();
+        for (const pdfBytes of pdfs) {
+          const pdf = await PDFDocument.load(pdfBytes);
+          const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+          copiedPages.forEach((page) => {
+            mergedPdf.addPage(page);
+          });
+        }
+
+        const buf = await mergedPdf.save(); // Uint8Array
+
+        let path = `./Results/${batch.name}/merged.pdf`;
+        fs.open(path, "w", function (err, fd) {
+          fs.write(fd, buf, 0, buf.length, null, function (err) {
+            fs.close(fd, function () {
+              console.log("wrote the file successfully");
+            });
+          });
+        });
+        /* create zip for all pdfs */
+        try {
+          zipLocal.sync.zip(`./Results/${batch.name}`).compress().save(`./Results/${batch.name}.zip`);
+        } catch (err) {
+          console.log("error", err);
+        }
+        console.log("users", users, "batch", batch.name, "files", files);
       } else {
         const data4createResponseObject = {
           req: req,
@@ -1009,9 +1034,7 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(
-          utils.createResponseObject(data4createResponseObject)
-        );
+        return Response.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
       }
     } catch (err) {
       console.log(err);
@@ -1022,9 +1045,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      return res
-        .status(enums.HTTP_CODES.BAD_REQUEST)
-        .json(utils.createResponseObject(data4createResponseObject));
+      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };

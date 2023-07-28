@@ -10,14 +10,14 @@ const utils = require("../../utils");
 module.exports = exports = {
   // route validation
   validation: Joi.object({
-    title: Joi.string(),
-    image: Joi.string().required(),
-    isActive: Joi.boolean(),
+    id: Joi.string().required(),
+    status: Joi.string().required(),
   }),
-
   handler: async (req, res) => {
-    const { title, image, isActive } = req.body;
+    const { id, skip, limit, status } = req.query;
     const { user } = req;
+    console.log("user", user);
+    let page = skip * limit - limit;
     // if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //   const data4createResponseObject = {
     //     req: req,
@@ -26,58 +26,38 @@ module.exports = exports = {
     //     payload: {},
     //     logPayload: false,
     //   };
-    //   return res
-    //     .status(enums.HTTP_CODES.UNAUTHORIZED)
-    //     .json(utils.createResponseObject(data4createResponseObject));
+    //   return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
     // }
-    if (!title || !image) {
+    if (!status || status === undefined) {
       const data4createResponseObject = {
         req: req,
         result: -1,
-        message: messages.FILL_DETAILS,
+        message: messages.INVALID_PARAMETERS,
         payload: {},
         logPayload: false,
       };
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
-
+    let criteria = {};
+    if (status === "active") {
+      criteria["status.name"] = enums.USER_STATUS.ACTIVE;
+    } else if (status === "blocked") {
+      criteria["status.name"] = enums.USER_STATUS.BLOCKED;
+    } else if (status === "disabled") {
+      criteria["status.name"] = enums.USER_STATUS.DISABLED;
+    } else if (status === "inactive") {
+      criteria["status.name"] = enums.USER_STATUS.INACTIVE;
+    }
+    console.log("criteria", criteria);
     try {
-      const checkMenu = await global.models.GLOBAL.BANNER.find({
-        image: image,
-      });
-      if (checkMenu.length > 0) {
-        const data4createResponseObject = {
-          req: req,
-          result: -400,
-          message: messages.EXISTS_MENU,
-          payload: {},
-          logPayload: false,
-        };
-        res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
-        return;
-      }
-      // let AmenintiesCreate = {
-      //   title: title,
-      //   image: image,
-      //   isActive: isActive,
-      // };
-      // const newAmeninties = await global.models.GLOBAL.BANNER(AmenintiesCreate);
-      // newAmeninties.save();
-
-      let AmenintiesCreate = {
-        title: title,
-        image: image,
-        isActive: isActive,
-        part: "Banner",
-        purpose: "Add",
-      };
-      const newAmeninties = await global.models.GLOBAL.REQUEST(AmenintiesCreate);
-      newAmeninties.save();
+      let totalCount = await global.models.GLOBAL.ADMIN.find(criteria).count();
+      let findUser = await global.models.GLOBAL.ADMIN.find(criteria).skip(page).limit(limit);
+      console.log("findUser", findUser);
       const data4createResponseObject = {
         req: req,
         result: 0,
-        message: messages.REQUEST_ADDED,
-        payload: { newAmeninties },
+        message: messages.SUCCESS,
+        payload: { users: findUser, count: totalCount },
         logPayload: false,
       };
       res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));

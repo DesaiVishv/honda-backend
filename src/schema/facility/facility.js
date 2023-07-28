@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 module.exports = (connection) => {
   const facilitiesSchema = new mongoose.Schema(
     {
-      image: [{ type: String, default: null }],
+      image: [{ image: { type: String, default: null }, name: { type: String } }],
       title: { type: String },
       content: { type: String },
       description: { type: String, require: true },

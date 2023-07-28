@@ -26,6 +26,11 @@ const verifyPhone = require("./verify-phone");
 const isAprove = require("./isAprove");
 const getRequest = require("./get-request");
 const sendQuestionSet = require("./send-questionSet");
+const getBlockUser = require("./get-block-user");
+const addIP = require("./add-ip");
+const getIp = require("./get-ip");
+const getrolewiseUsers = require("./role-wise-user");
+const deleteIP = require("./delete-ip");
 
 module.exports = exports = {
   getUsers,
@@ -55,4 +60,9 @@ module.exports = exports = {
   isAprove,
   getRequest,
   sendQuestionSet,
+  getBlockUser,
+  addIP,
+  getIp,
+  getrolewiseUsers,
+  deleteIP,
 };

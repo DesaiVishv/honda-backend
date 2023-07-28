@@ -8,6 +8,7 @@ module.exports = (connection) => {
       date: { type: Date, require: true },
       endDate: { type: Date, default: null },
       seat: { type: Number, default: null },
+      totalSeat: { type: Number, default: null },
       vcid: { type: mongoose.Schema.Types.ObjectId, require: true },
       ctid: { type: mongoose.Schema.Types.ObjectId, require: true },
       ccid: { type: mongoose.Schema.Types.ObjectId, require: true },

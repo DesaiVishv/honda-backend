@@ -11,8 +11,8 @@ const utils = require("../../utils");
 module.exports = exports = {
   // route handler
   handler: async (req, res) => {
-    const { user } = req;
-
+    // const { user } = req;
+    console.log("hello");
     //  if (user.type !== enums.USER_TYPE.SUPERADMIN) {
     //    const data4createResponseObject = {
     //      req: req,
@@ -34,6 +34,7 @@ module.exports = exports = {
 
       let Role = await global.models.GLOBAL.ROLE.find({
         $or: [
+          { roleName: "superadmin" },
           { roleName: "Examiner" },
           { roleName: "Data Entry" },
           { roleName: "admin" },
@@ -55,13 +56,9 @@ module.exports = exports = {
         payload: { Role: Role },
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
     } catch (error) {
-      logger.error(
-        `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
-      );
+      logger.error(`${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`);
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -69,9 +66,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };

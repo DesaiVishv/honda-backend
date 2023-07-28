@@ -68,6 +68,7 @@ module.exports = exports = {
       // let search = req.query.search ? { name: { $regex: req.query.search, $options: 'i' },date:{$in:ids},cnid:{$in:id},startTime:{$in:starttime},endTime:{$in:endtime} } : { date:{$in:ids},cnid:{$in:id},startTime:{$in:starttime},endTime:{$in:endtime} };
       // const findCourse = await global.models.GLOBAL.TRAININGDATE.
       // let search = req.query.search ? {name:{$regex:req.query.search,$options:'i'}, filter0:filter0} :{filter0:filter0}
+      console.log(filter0);
       const count = await global.models.GLOBAL.TRAININGDATE.find({
         ...filter0,
         vcid: vcid,
@@ -76,6 +77,7 @@ module.exports = exports = {
         ctid: ctid,
         endTime: { $gte: new Date(Date.now()) },
       }).count();
+      console.log("count", count);
       const subMenus = await global.models.GLOBAL.TRAININGDATE.find({
         ...filter0,
         vcid: vcid,
@@ -87,6 +89,7 @@ module.exports = exports = {
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit);
+      console.log("subMenus", subMenus);
       if (subMenus.length == 0) {
         const data4createResponseObject = {
           req: req,
@@ -95,9 +98,7 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
+        res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
         return;
       }
       const data4createResponseObject = {
@@ -107,13 +108,9 @@ module.exports = exports = {
         payload: { subMenu: subMenus, count: count },
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
     } catch (error) {
-      logger.error(
-        `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
-      );
+      logger.error(`${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`);
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -121,9 +118,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };

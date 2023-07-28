@@ -70,8 +70,8 @@ module.exports = exports = {
       for await (let values of Questions) {
         const paymentHistory = await global.models.GLOBAL.PAYMENT.find({
           phone: values.phone,
-          status: "done",
-          type: "offline",
+          // status: "done",
+          // type: "offline",
         }).sort({ created: -1 });
         values.paymentHistory = paymentHistory[0];
       }

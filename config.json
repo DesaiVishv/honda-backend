@@ -13,7 +13,8 @@
             "ROLE": "role",
             "WEBHOOK": "webHook",
             "AMENITIES": "amenities",
-            "TRANSACTION": "transaction"
+            "TRANSACTION": "transaction",
+            "IP": "ip"
           },
           "NAME": "HONDA"
         }

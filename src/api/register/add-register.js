@@ -91,11 +91,7 @@ module.exports = exports = {
       Registrationtype,
     } = req.body;
     const { user } = req;
-    if (
-      user.type !== enums.USER_TYPE.SUPERADMIN &&
-      user.type !== enums.USER_TYPE.USER &&
-      user.type !== enums.USER_TYPE.ADMIN
-    ) {
+    if (user.type !== enums.USER_TYPE.SUPERADMIN && user.type !== enums.USER_TYPE.USER && user.type !== enums.USER_TYPE.ADMIN) {
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -103,9 +99,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      return res
-        .status(enums.HTTP_CODES.UNAUTHORIZED)
-        .json(utils.createResponseObject(data4createResponseObject));
+      return res.status(enums.HTTP_CODES.UNAUTHORIZED).json(utils.createResponseObject(data4createResponseObject));
     }
     let createdByAdmin = false;
     if (user.type == enums.USER_TYPE.SUPERADMIN) {
@@ -132,9 +126,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      return res
-        .status(enums.HTTP_CODES.BAD_REQUEST)
-        .json(utils.createResponseObject(data4createResponseObject));
+      return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
     }
 
     try {
@@ -181,6 +173,63 @@ module.exports = exports = {
       //     .status(enums.HTTP_CODES.BAD_REQUEST)
       //     .json(utils.createResponseObject(data4createResponseObject));
       // }
+
+      // // console.log("randomString", randomString(3));
+      let findCustomId = await global.models.GLOBAL.REGISTER.findOne({}).sort({ createdAt: -1 });
+      // console.log(findCustomId);
+      // let customId;
+      let currentId;
+      if (findCustomId.customId) {
+        currentId = findCustomId.customId;
+      } else {
+        currentId = "IDTRKNBOA00000";
+      }
+
+      // Define the input string
+      // const inputString = "IDTRKNBOA00000";
+
+      // Extract the number using regex
+      const regex = /\d+/;
+      const match = currentId.match(regex);
+
+      // Get the extracted number as a string
+      const numberString = match[0];
+
+      // Output the extracted number
+      console.log(numberString);
+      // for (let i = 0; i < findObj.length; i++) {
+      const element = numberString;
+
+      // if(element.customId)
+
+      // Extract the current letter code and number from the user ID
+      const currentLetter = currentId.substring(8, 9);
+      const currentNumber = parseInt(currentId.substring(9));
+
+      // Check if the current number is 99999 and the current letter code is "Z"
+      if (currentNumber === 99999 && currentLetter === "Z") {
+        // If the current number is 99999 and the current letter code is "Z", reset the letter code to "A" and the number to 1
+        currentId = "IDTRKNBOA00001";
+      } else {
+        // If the current number is not 99999 or the current letter code is not "Z", increment the letter code or the number as appropriate
+        let newLetter = currentLetter;
+        let newNumber = currentNumber;
+
+        if (currentNumber === 99999) {
+          newLetter = String.fromCharCode(currentLetter.charCodeAt(0) + 1);
+          newNumber = 1;
+        } else {
+          newNumber += 1;
+        }
+        // Generate the new user ID
+        currentId = `IDTRKNBO${newLetter}${String(newNumber).padStart(5, "0")}`;
+      }
+
+      // let updateAdmin = await global.models.GLOBAL.REGISTER.findOneAndUpdate({ _id: element._id }, { $set: { customId: currentId } });
+      console.log("ok");
+      // Output the new user ID
+      console.log(currentId);
+      console.log("currentId", currentId);
       let AmenintiesCreate = {
         uid: uid,
         vcid: vcid,
@@ -189,6 +238,7 @@ module.exports = exports = {
         cnid: cnid,
         lcid: lcid,
         tdid: tdid,
+        customId: currentId,
         // dateofCourse:dateofCourse,
         drivingLicenseNumber: drivingLicenseNumber,
         dateofCourse: dateofCourse,
@@ -223,9 +273,7 @@ module.exports = exports = {
         isPaymentDone: isPaymentDone,
         createdByAdmin: createdByAdmin,
       };
-      const newAmeninties = await global.models.GLOBAL.REGISTER(
-        AmenintiesCreate
-      );
+      const newAmeninties = await global.models.GLOBAL.REGISTER(AmenintiesCreate);
       newAmeninties.save();
       let addHis = {
         uid: uid,
@@ -245,14 +293,10 @@ module.exports = exports = {
           payload: { newAmeninties },
           logPayload: false,
         };
-        return res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
+        return res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
       }
     } catch (error) {
-      logger.error(
-        `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
-      );
+      logger.error(`${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`);
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -260,9 +304,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };

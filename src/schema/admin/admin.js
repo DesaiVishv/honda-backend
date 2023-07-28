@@ -8,11 +8,13 @@ module.exports = (connection) => {
       firstName: { type: String },
       fatherName: { type: String },
       email: { type: String },
+      customId: { type: String },
       // lname:{ type: String },
       phone: { type: String },
       state: { type: String },
       IDTRcenter: { type: String },
       password: { type: String },
+      attempt: { type: Number, default: 0 },
       isAttendence: { type: Boolean, default: false },
       Registrationtype: { type: String },
       isRegister: { type: Boolean },
@@ -25,13 +27,7 @@ module.exports = (connection) => {
       status: {
         name: {
           type: String,
-          enum: [
-            enums.USER_STATUS.ACTIVE,
-            enums.USER_STATUS.BLOCKED,
-            enums.USER_STATUS.DISABLED,
-            enums.USER_STATUS.INACTIVE,
-            enums.USER_STATUS.INVITED,
-          ],
+          enum: [enums.USER_STATUS.ACTIVE, enums.USER_STATUS.BLOCKED, enums.USER_STATUS.DISABLED, enums.USER_STATUS.INACTIVE, enums.USER_STATUS.INVITED],
         },
         modificationDate: Date,
       },

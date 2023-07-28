@@ -61,22 +61,28 @@ module.exports = exports = {
         .populate({
           path: "uid",
           model: "register",
-          populate: {
-            path: "cnid",
-            model: "courseName",
-            populate: {
-              path: "ccid",
-              model: "courseCategory",
+          populate: [
+            {
+              path: "cnid",
+              model: "courseName",
               populate: {
-                path: "ctid",
-                model: "courseType",
+                path: "ccid",
+                model: "courseCategory",
                 populate: {
-                  path: "vcid",
-                  model: "vehicleCategory",
+                  path: "ctid",
+                  model: "courseType",
+                  populate: {
+                    path: "vcid",
+                    model: "vehicleCategory",
+                  },
                 },
               },
             },
-          },
+            {
+              path: "uid",
+              model: "admin",
+            },
+          ],
         })
         .populate({
           path: "uid",
@@ -103,9 +109,7 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
+        res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
         return;
       }
       const data4createResponseObject = {
@@ -118,13 +122,9 @@ module.exports = exports = {
         },
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
     } catch (error) {
-      logger.error(
-        `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
-      );
+      logger.error(`${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`);
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -132,9 +132,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };

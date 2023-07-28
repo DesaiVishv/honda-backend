@@ -35,6 +35,7 @@ module.exports = exports = {
       let inc = {};
       for (j = 0; j < category?.length; j++) {
         inc = { ...inc, [j]: 0 };
+        console.log(" category[j]?._id", category[j]?._id);
         Questions[j] = await utils.shuffle(
           await global.models.GLOBAL.QUESTION.find({
             Category: category[j]?._id,
@@ -42,14 +43,12 @@ module.exports = exports = {
             isActive: true,
           })
         );
-        console.log("---------vishv---------", Questions[j].length);
+        console.log("Questions[j].length", Questions[j].length);
       }
-      console.log("inc", inc);
+      // console.log("inc", inc);
       Questions = utils.shuffle(Questions);
-      console.log(
-        utils.shuffle([1, 2, 3, 4, 5, 6, 7]),
-        utils.shuffle(Questions)
-      );
+      // console.log(utils.shuffle([1, 2, 3, 4, 5, 6, 7]), utils.shuffle(Questions));
+      console.log("Questions.length", Questions.length);
       if (Questions.length == 0) {
         const data4createResponseObject = {
           req: req,
@@ -58,9 +57,7 @@ module.exports = exports = {
           payload: {},
           logPayload: false,
         };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
+        res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
         return;
       }
       let data1 = new Set();
@@ -78,7 +75,7 @@ module.exports = exports = {
         }
         for (j = 0; j < category.length; j++) {
           if (Questions[j][i]) {
-            console.log("iiiiiinnnnnn", j, i);
+            // console.log("iiiiiinnnnnn", j, i);
             data1.add(Questions[j][i]);
             c++;
             if (c == 20) {
@@ -109,18 +106,16 @@ module.exports = exports = {
       data1.forEach((x) => data.push(x));
 
       // console.log("------------", data.values());
-      console.log("kfbkdsbfweif", data, data.length);
+      // console.log("kfbkdsbfweif", data, data.length);
       if (data.length < no) {
         const data4createResponseObject = {
           req: req,
           result: -1,
           message: messages.ADD_MORE,
-          payload: {},
+          payload: { category },
           logPayload: false,
         };
-        res
-          .status(enums.HTTP_CODES.NOT_FOUND)
-          .json(utils.createResponseObject(data4createResponseObject));
+        res.status(enums.HTTP_CODES.NOT_FOUND).json(utils.createResponseObject(data4createResponseObject));
       } else {
         let examsetBody = {
           batchId: batch,
@@ -131,25 +126,18 @@ module.exports = exports = {
         };
         let examset = await global.models.GLOBAL.EXAMSET(examsetBody);
         await examset.save();
-        let update = await global.models.GLOBAL.BATCH.findByIdAndUpdate(
-          { _id: batch },
-          { isExamGenerate: true }
-        );
+        let update = await global.models.GLOBAL.BATCH.findByIdAndUpdate({ _id: batch }, { isExamGenerate: true });
         const data4createResponseObject = {
           req: req,
           result: 0,
           message: messages.SUCCESS,
-          payload: { Question: data, count: data.length },
+          payload: { category: category, Question: data, count: data.length },
           logPayload: false,
         };
-        res
-          .status(enums.HTTP_CODES.OK)
-          .json(utils.createResponseObject(data4createResponseObject));
+        res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
       }
     } catch (error) {
-      logger.error(
-        `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
-      );
+      logger.error(`${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`);
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -157,9 +145,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };

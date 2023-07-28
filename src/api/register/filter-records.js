@@ -12,6 +12,7 @@ module.exports = exports = {
 
   handler: async (req, res) => {
     try {
+      const { user } = req;
       let id = req.query.uid;
       let tdid = await global.models.GLOBAL.REGISTER.find({
         uid: id,
@@ -79,10 +80,27 @@ module.exports = exports = {
       let Cancle = await global.models.GLOBAL.REGISTER.find({
         uid: id,
         isCancle: true,
-      }).populate({
-        path: "cnid",
-        model: "courseName",
-      });
+      })
+        .populate({
+          path: "uid",
+          model: "admin",
+        })
+        .populate({
+          path: "ctid",
+          model: "courseType",
+        })
+        .populate({
+          path: "vcid",
+          model: "vehicleCategory",
+        })
+        .populate({
+          path: "cnid",
+          model: "courseName",
+        })
+        .populate({
+          path: "tdid",
+          model: "trainingDate",
+        });
       // console.log("get Records", getRecord);
       // let getDate = await global.models.GLOBAL.TRAININGDATE.find({
       //   _id: getRecord.tdid,
@@ -101,7 +119,7 @@ module.exports = exports = {
       for await (let values of past) {
         const paymentHistory = await global.models.GLOBAL.PAYMENT.find({
           phone: values.phone,
-          // status: "done",
+          status: "done",
           // type: "offline",
         }).sort({ created: -1 });
         values.paymentHistory = paymentHistory[0];
@@ -109,7 +127,7 @@ module.exports = exports = {
       for await (let values of Cancle) {
         const paymentHistory = await global.models.GLOBAL.PAYMENT.find({
           phone: values.phone,
-          // status: "done",
+          status: "done",
           // type: "offline",
         }).sort({ created: -1 });
         values.paymentHistory = paymentHistory[0];
@@ -129,13 +147,9 @@ module.exports = exports = {
         },
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.OK)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.OK).json(utils.createResponseObject(data4createResponseObject));
     } catch (error) {
-      logger.error(
-        `${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`
-      );
+      logger.error(`${req.originalUrl} - Error encountered: ${error.message}\n${error.stack}`);
       const data4createResponseObject = {
         req: req,
         result: -1,
@@ -143,9 +157,7 @@ module.exports = exports = {
         payload: {},
         logPayload: false,
       };
-      res
-        .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-        .json(utils.createResponseObject(data4createResponseObject));
+      res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
     }
   },
 };
