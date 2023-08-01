@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        p:last-child {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+            margin: 0;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .certificate-box-center-alignment {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .certificate-box {
+            width: 900px;
+            background-image: url("https://i.ibb.co/nmw8264/IDTR-Certificate-1.png");
+            background-repeat: no-repeat;
+            height: 600px;
+            padding: 60px;
+            background-size: contain;
+        }
+
+        .sl-no-box-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .sl-no-box-alignment div label {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16px;
+            color: #323232;
+
+        }
+
+        .custom-width div input {
+            width: fit-content !important;
+            max-width: 140px !important;
+        }
+
+        .custom-width-sm div input {
+            width: fit-content !important;
+            max-width: 110px !important;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .sl-no-box-alignment div input {
+            border: none;
+            border-bottom: 1px solid #010101;
+            font-size: 14px;
+            width: 100px;
+            color: #505050;
+        }
+
+
+        .header-alignment {
+            display: flex;
+            align-items: center;
+            padding: 10px 0 0 0;
+            justify-content: space-between;
+        }
+
+        .header-alignment div:last-child img {
+            max-width: 60px;
+        }
+
+        .header-alignment div:first-child img {
+
+            max-width: 120px;
+        }
+
+
+        .header-alignment div h1 {
+            padding: 5px 20px;
+            border-radius: 9999px;
+            /* background-color: #cc0001; */
+            font-size: 16px;
+            color: #000;
+            cursor: pointer;
+            width: fit-content;
+            margin: 0 auto;
+            font-weight: 600;
+        }
+
+        .header-alignment p {
+            font-size: 14px;
+            margin: 10px 0;
+            font-weight: 500;
+            color: #101010;
+            text-align: center;
+        }
+
+        .header-alignment span {
+            font-size: 12px;
+            text-align: center;
+            color: #010101;
+            font-weight: 500;
+            display: block;
+        }
+
+        .drivers-certificate-text h2 {
+            font-size: 25px;
+            line-height: 30px;
+            color: #cc0001;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .drivers-certificate-text {
+            padding: 10px 0;
+        }
+
+        .drivers-certificate-text span {
+            font-size: 14px;
+            color: #010101;
+            display: block;
+            text-align: center;
+            font-weight: 500;
+            padding: 0 0 5px 0;
+        }
+
+        .drivers-certificate-text p {
+            font-size: 14px;
+            color: #010101;
+            display: block;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .first-row-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 0 15px 0;
+        }
+
+        .sec-row-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sec-row-alignment div input {
+            width: 150px;
+        }
+
+        .three-row-alignment {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            justify-content: space-between;
+        }
+
+        .three-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 290px;
+        }
+
+        .three-row-alignment .sl-no-box-alignment:last-child div input {
+            width: 190px;
+        }
+
+        .fourth-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 220px;
+        }
+
+        .fifth-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 210px;
+        }
+
+        .fourth-row-alignment {
+            display: flex;
+            align-items: center;
+        }
+
+        .fifth-row-alignment {
+            display: flex;
+            padding: 15px 0;
+            align-items: center;
+        }
+
+        .six-row-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .six-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 178px;
+        }
+
+        .footer-content-alignment {
+            padding: 20px 0 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-content-alignment .sl-no-box-alignment label {
+            display: block;
+            padding: 5px 0 0 0;
+            text-align: center;
+        }
+
+        .photographer-printed-class {
+            border: 1px solid #010101;
+            width: 60px;
+            height: 60px;
+        }
+
+
+
+        .box-title h1 {
+            font-size: 20px;
+            line-height: 30px;
+            color: #cc0001;
+            margin: 0 0 20px 0;
+            font-weight: 600;
+        }
+
+        .box-title p {
+            font-size: 16px;
+            color: #010101;
+            margin: 0 0 20px 0;
+            font-weight: 600;
+        }
+
+        .box-title span {
+            font-size: 16px;
+            color: #010101;
+            font-weight: 600;
+        }
+
+        .box-title {
+            padding: 0 0 20px 0;
+        }
+
+        .content-text-style span {
+            font-size: 16px;
+            color: #000;
+            font-weight: 600;
+            display: block;
+        }
+
+        .sss {
+            margin: 0 20px 0 0;
+
+        }
+
+        .sss input {
+            width: 200px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<div class="certificate-box-center-alignment">
+    <div class="certificate-box">
+        <div class="sl-no-box-alignment">
+            <div>
+                <label>SL NO: </label>
+                <input type="text" />
+            </div>
+        </div>
+        <div class="header-alignment">
+            <div>
+                <img src="https://i.ibb.co/87cN78k/aa.png" />
+            </div>
+            <div>
+                <h1>Institute of Driving Training & Research</h1>
+                <p>A Joint Venture of Transport Department Government of Haryana & Honda</p>
+                <span>UCHANI VILLAGE, Near New Bus Stand, Tehsil and District Karnal Haryana, 132001</span>
+            </div>
+            <div>
+                <img src="https://i.ibb.co/XLg1jLn/rre.png" />
+            </div>
+        </div>
+        <div class="drivers-certificate-text">
+            <h2>DRIVER'S CERTIFICATE</h2>
+            <span>Form V</span>
+            <p>See Rule 14(e), 17(1) b, 27(d) and 31A(2)</p>
+        </div>
+        <div class="first-row-alignment">
+            <div class="sl-no-box-alignment custom-width">
+                <div>
+                    <label>Certificate No.: </label>
+                    <input type="text" value="IDTRKNBOA00145" />
+                </div>
+            </div>
+            <div class="sl-no-box-alignment custom-width-sm">
+                <div>
+                    <label>REG NO: </label>
+                    <input type="text" value="IDTRKNA00023" />
+                </div>
+            </div>
+        </div>
+        <div class="sec-row-alignment">
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>This is to certify that Sh/ Smt/ Kumari</label>
+                    <input type="text" value="${users[i].fname}" />
+                </div>
+            </div>
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>/Son/ Wife / Daughter of Sh./Smt. </label>
+                    <input type="text" value="${users[i].lname}" />
+                </div>
+            </div>
+        </div>
+        <div class="three-row-alignment">
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>Residing at </label>
+                    <input type="text" value="${users[i].address}" />
+                </div>
+            </div>
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>was enrolled in this institute on</label>
+                    <input type="text" value="${users[i].Authority}" />
+                </div>
+            </div>
+        </div>
+        <div class="fourth-row-alignment">
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>and his/ her name is registered at serial number</label>
+                    <input type="text" value="${users[i]._id.toString().substring(5, 12)}" />
+                </div>
+            </div>
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>in our register in Form 14 and that</label>
+                </div>
+            </div>
+        </div>
+        <div class="fifth-row-alignment">
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>he/ she has undergone the course of training in driving of</label>
+                    <input type="text" value="${users[i].cnid?.ccid?.ctid?.vcid?.vehicleCategory}" />
+                </div>
+            </div>
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>(mention class of vehicle )</label>
+                </div>
+            </div>
+        </div>
+        <div class="six-row-alignment">
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>according to the syllabus prescribed for a period from</label>
+                    <input type="text" value="${moment(users[i].dateofCourse).format(" DD-MM-YYYY")}" />
+                </div>
+            </div>
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>To</label>
+                    <input type="text" value="${moment(users[i].tdid?.endDate).format(" DD-MM-YYYY")}" />
+                </div>
+            </div>
+            <div class="sl-no-box-alignment">
+                <div>
+                    <label>satisfactorily.</label>
+                </div>
+            </div>
+        </div>
+        <div class="footer-content-alignment">
+            <div class="sl-no-box-alignment">
+                <div>
+                    <input type="text" value="${moment().format(" DD-MM-YYYY")}" />
+                    <label>Date</label>
+                </div>
+            </div>
+            <div>
+                <div class="photographer-printed-class">
+                    <img src=${users[i].passportPhoto} alt=${users[i].passportPhoto} />
+                </div>
+            </div>
+            <div class="sl-no-box-alignment">
+                <div>
+                    <input type="text" />
+                    <label>Authorized Signatory</label>
+                </div>
+            </div>
+            <div class="sl-no-box-alignment">
+                <div>
+                    <input type="text" />
+                    <label>Principal, IDTR karnal</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+`;
+// const percentage = users[i].percentage;
+// let message = "BAD";
+// let grade = "D";
+// if (percentage >= 80) {
+// message = "EXCELLENT";
+// grade = "A+";
+// } else if (percentage >= 60) {
+// message = "GOOD";
+// grade = "A";
+// } else if (percentage >= 40) {
+// message = "AVERAGE";
+// grade = "B";
+// } else {
+// message = "POOR";
+// grade = "C";
+// }
+
+let html2 = `
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        p:last-child {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+            margin: 0;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        .certificate-box-center-alignment {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .certificate-box {
+            width: 900px;
+            background-image: url("https://i.ibb.co/nmw8264/IDTR-Certificate-1.png");
+            background-repeat: no-repeat;
+            height: 600px;
+            padding: 60px;
+            background-size: contain;
+        }
+
+        .sl-no-box-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .sl-no-box-alignment div label {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16px;
+            color: #323232;
+
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .sl-no-box-alignment div input {
+            border: none;
+            border-bottom: 1px solid #010101;
+            font-size: 14px;
+            width: 100px;
+            color: #505050;
+        }
+
+
+        .header-alignment {
+            display: flex;
+            align-items: center;
+            padding: 10px 0 0 0;
+            justify-content: space-between;
+        }
+
+        .header-alignment div:last-child img {
+            max-width: 60px;
+        }
+
+        .header-alignment div:first-child img {
+
+            max-width: 120px;
+        }
+
+
+        .header-alignment div h1 {
+            padding: 5px 20px;
+            border-radius: 9999px;
+            /* background-color: #cc0001; */
+            font-size: 16px;
+            color: #000;
+            cursor: pointer;
+            width: fit-content;
+            margin: 0 auto;
+            font-weight: 600;
+        }
+
+        .header-alignment p {
+            font-size: 14px;
+            margin: 10px 0;
+            font-weight: 500;
+            color: #101010;
+            text-align: center;
+        }
+
+        .header-alignment span {
+            font-size: 12px;
+            text-align: center;
+            color: #010101;
+            font-weight: 500;
+            display: block;
+        }
+
+        .drivers-certificate-text h2 {
+            font-size: 25px;
+            line-height: 30px;
+            color: #cc0001;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .drivers-certificate-text {
+            padding: 10px 0;
+        }
+
+        .drivers-certificate-text span {
+            font-size: 14px;
+            color: #010101;
+            display: block;
+            text-align: center;
+            font-weight: 500;
+            padding: 0 0 5px 0;
+        }
+
+        .drivers-certificate-text p {
+            font-size: 14px;
+            color: #010101;
+            display: block;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .first-row-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 0 15px 0;
+        }
+
+        .sec-row-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sec-row-alignment div input {
+            width: 150px;
+        }
+
+        .three-row-alignment {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            justify-content: space-between;
+        }
+
+        .three-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 290px;
+        }
+
+        .three-row-alignment .sl-no-box-alignment:last-child div input {
+            width: 190px;
+        }
+
+        .fourth-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 220px;
+        }
+
+        .fifth-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 210px;
+        }
+
+        .fourth-row-alignment {
+            display: flex;
+            align-items: center;
+        }
+
+        .fifth-row-alignment {
+            display: flex;
+            padding: 15px 0;
+            align-items: center;
+        }
+
+        .six-row-alignment {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .six-row-alignment .sl-no-box-alignment:first-child div input {
+            width: 178px;
+        }
+
+        .footer-content-alignment {
+            padding: 20px 0 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-content-alignment .sl-no-box-alignment label {
+            display: block;
+            padding: 5px 0 0 0;
+            text-align: center;
+        }
+
+        .photographer-printed-class {
+            border: 1px solid #010101;
+            width: 60px;
+            height: 60px;
+        }
+
+
+
+        .box-title h1 {
+            font-size: 20px;
+            line-height: 30px;
+            color: #cc0001;
+            margin: 0 0 20px 0;
+            font-weight: 600;
+        }
+
+        .box-title p {
+            font-size: 16px;
+            color: #010101;
+            margin: 0 0 20px 0;
+            font-weight: 600;
+        }
+
+        .box-title span {
+            font-size: 16px;
+            color: #010101;
+            font-weight: 600;
+        }
+
+        .box-title {
+            padding: 0 0 20px 0;
+        }
+
+        .content-text-style span {
+            font-size: 16px;
+            color: #000;
+            font-weight: 600;
+            display: block;
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="certificate-box-center-alignment">
+        <div class="certificate-box" style="display: flex; align-items: center; padding: 80px 120px;">
+            <div>
+                <div class="box-title">
+                    <h1>INSTRUCTIONS</h1>
+                    <p>IF THIS CERTIFICATE IS LOST, A DUPLCATE COPY WILL BE ISSUED AGAINST PROCESSING CHARGES.</p>
+                    <span>THIS GRADATION PATTERN IS GIVEN BELOW</span>
+                </div>
+                <div class="content-text-style">
+                    <span>GRADE "A" ( 90% - 100% ) : EXCELLENT</span>
+                    <span>GRADE "B" ( 80% - 89% ) : VERY GOOD</span>
+                    <span>GRADE "C" ( 70% - 79% ) : GOOD</span>
+                    <span>GRADE "D" ( 60% - 69% ) : AVERAGE</span>
+                    <span>GRADE "E" ( 50% - 59% ) : PASS</span>
+                    <span>GRADE "F" ( 40% - 49% ) : FAIL</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>

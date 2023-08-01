@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 module.exports = (connection) => {
   const verificationCodeSchema = new mongoose.Schema({
     phone: { type: String, required: true },
+    email: { type: String },
     code: { type: String, required: true },
     date: { type: Date, required: true },
     attempt: { type: Number, default: 0 },

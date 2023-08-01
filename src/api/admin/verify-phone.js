@@ -45,23 +45,20 @@ module.exports = exports = {
         return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
       }
     }
-
     // try {
-    // let alreadyExist = await global.models.GLOBAL.PARTIAL.findOne({
-    //   phone: phone,
-    // });
-    // if (alreadyExist) {
-    //   let data4createResponseObject = {
-    //     req: req,
-    //     result: -1,
-    //     message: messages.FAILED_VERIFICATION_PHONE,
-    //     payload: {},
-    //     logPayload: false,
-    //   };
-    //   return res
-    //     .status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR)
-    //     .json(utils.createResponseObject(data4createResponseObject));
-    // }
+    let alreadyExist = await global.models.GLOBAL.ADMIN.findOne({
+      phone: phone,
+    });
+    if (alreadyExist && isRegister == true) {
+      let data4createResponseObject = {
+        req: req,
+        result: -1,
+        message: messages.EXISTS_PHONE,
+        payload: {},
+        logPayload: false,
+      };
+      return res.status(enums.HTTP_CODES.INTERNAL_SERVER_ERROR).json(utils.createResponseObject(data4createResponseObject));
+    }
     if (!phone) {
       let data4createResponseObject = {
         req: req,
@@ -71,8 +68,8 @@ module.exports = exports = {
         logPayload: false,
       };
       return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
-    } else {
     }
+
     // } catch (error) {
     //   logger.error(`${req.originalUrl} - Error while deleting the old codes from the database: ${error.message}\n${error.stack}`);
     //   let data4createResponseObject = {
@@ -169,25 +166,128 @@ module.exports = exports = {
       let findPhone = await global.models.GLOBAL.CODE_VERIFICATION.findOne({ phone: phone });
       if (findPhone) {
         console.log("entry-----------", findPhone);
-        if (findPhone.attempt >= 10) {
-          if (isRegister === false) {
-            let data4createResponseObject = {
-              req: req,
-              result: -1,
-              message: "Your account has been blocked as you have reached the maximum number of login attempts. Please contact helpdesk.",
-              payload: {},
-              logPayload: false,
-            };
-            return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+
+        // if (findPhone.attempt >= 10) {
+        //   if (isRegister === false) {
+        //     let data4createResponseObject = {
+        //       req: req,
+        //       result: -1,
+        //       message: "Your account has been blocked as you have reached the maximum number of login attempts. Please contact helpdesk.",
+        //       payload: {},
+        //       logPayload: false,
+        //     };
+        //     return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+        //   } else {
+        //     let data4createResponseObject = {
+        //       req: req,
+        //       result: -1,
+        //       message: "Your mobile number has been blocked as you have reached the maximum number of OTP attempts. Please contact helpdesk or try with some other mobile number.",
+        //       payload: {},
+        //       logPayload: false,
+        //     };
+        //     return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+        //   }
+        // }
+        if (req.body.email === "") {
+          let findAllAttempt = await global.models.GLOBAL.CODE_VERIFICATION.find({ phone: phone });
+          console.log(findAllAttempt);
+          let totalAttempt = 0;
+          for (let i = 0; i < findAllAttempt.length; i++) {
+            const element = findAllAttempt[i];
+            totalAttempt = totalAttempt + element.attempt;
+          }
+          console.log("find only phone =====", totalAttempt);
+          if (totalAttempt >= 10) {
+            await global.models.GLOBAL.CODE_VERIFICATION.updateMany({ phone: phone }, { $set: { attempt: 10 } });
+            if (isRegister === false) {
+              await global.models.GLOBAL.ADMIN.updateOne({ phone: phone }, { $set: { "status.name": "blocked" } }, { new: true });
+              let data4createResponseObject = {
+                req: req,
+                result: -1,
+                message: "Your account has been blocked as you have reached the maximum number of login attempts. Please contact helpdesk.",
+                payload: {},
+                logPayload: false,
+              };
+              return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+            } else {
+              let data4createResponseObject = {
+                req: req,
+                result: -1,
+                message:
+                  "Your mobile number has been blocked as you have reached the maximum number of OTP attempts. Please contact helpdesk or try with some other mobile number.",
+                payload: {},
+                logPayload: false,
+              };
+              return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+            }
+          }
+        }
+        if (req.body.email !== "") {
+          let findAllAttempt = await global.models.GLOBAL.CODE_VERIFICATION.find({ email: email });
+          console.log(findAllAttempt);
+          let totalAttempt = 0;
+          for (let i = 0; i < findAllAttempt.length; i++) {
+            const element = findAllAttempt[i];
+            totalAttempt = totalAttempt + element.attempt;
+          }
+          console.log("find email =======", totalAttempt);
+          if (totalAttempt >= 10) {
+            console.log(findAllAttempt);
+            await global.models.GLOBAL.CODE_VERIFICATION.updateMany({ email: email }, { $set: { attempt: 10 } });
+            if (isRegister === false) {
+              await global.models.GLOBAL.ADMIN.updateOne({ phone: phone }, { $set: { "status.name": "blocked" } }, { new: true });
+              let data4createResponseObject = {
+                req: req,
+                result: -1,
+                message: "Your account has been blocked as you have reached the maximum number of login attempts. Please contact helpdesk.",
+                payload: {},
+                logPayload: false,
+              };
+              return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+            } else {
+              let data4createResponseObject = {
+                req: req,
+                result: -1,
+                message:
+                  "Your mobile number has been blocked as you have reached the maximum number of OTP attempts. Please contact helpdesk or try with some other mobile number.",
+                payload: {},
+                logPayload: false,
+              };
+              return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+            }
           } else {
-            let data4createResponseObject = {
-              req: req,
-              result: -1,
-              message: "Your mobile number has been blocked as you have reached the maximum number of OTP attempts. Please contact helpdesk or try with some other mobile number.",
-              payload: {},
-              logPayload: false,
-            };
-            return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+            let findAllPhoneAttempt = await global.models.GLOBAL.CODE_VERIFICATION.find({ phone: phone });
+            console.log(findAllPhoneAttempt);
+            let totalPhoneAttempt = 0;
+            for (let i = 0; i < findAllPhoneAttempt.length; i++) {
+              const element = findAllPhoneAttempt[i];
+              totalPhoneAttempt = totalPhoneAttempt + element.attempt;
+            }
+            console.log("find phone =======", totalPhoneAttempt);
+            if (totalPhoneAttempt >= 10) {
+              await global.models.GLOBAL.CODE_VERIFICATION.updateMany({ phone: phone }, { $set: { attempt: 10 } });
+              if (isRegister === false) {
+                await global.models.GLOBAL.ADMIN.updateOne({ phone: phone }, { $set: { "status.name": "blocked" } }, { new: true });
+                let data4createResponseObject = {
+                  req: req,
+                  result: -1,
+                  message: "Your account has been blocked as you have reached the maximum number of login attempts. Please contact helpdesk.",
+                  payload: {},
+                  logPayload: false,
+                };
+                return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+              } else {
+                let data4createResponseObject = {
+                  req: req,
+                  result: -1,
+                  message:
+                    "Your mobile number has been blocked as you have reached the maximum number of OTP attempts. Please contact helpdesk or try with some other mobile number.",
+                  payload: {},
+                  logPayload: false,
+                };
+                return res.status(enums.HTTP_CODES.BAD_REQUEST).json(utils.createResponseObject(data4createResponseObject));
+              }
+            }
           }
         }
         // console.log("(findPhone.attempt || 0) + 1 ==========", findPhone.attempt);
@@ -196,6 +296,7 @@ module.exports = exports = {
           {
             $set: {
               phone: phone,
+              email: email || findPhone.email,
               code: code,
               isSignUp: isRegister,
               attempt: (findPhone.attempt || 0) + 1,
@@ -207,7 +308,7 @@ module.exports = exports = {
           { new: true }
         );
         // console.log("entry", entry);
-        if (isRegister == true) {
+        if (isRegister == false) {
           let checkAlradyInDatabase = await global.models.GLOBAL.PARTIAL.findOne({
             // firstName: firstName,
             // fatherName: fatherName,
@@ -234,18 +335,21 @@ module.exports = exports = {
         entry = global.models.GLOBAL.CODE_VERIFICATION({
           phone: phone,
           code: code,
+          email: email,
           date: Date.now(),
           expirationDate: Date.now() + 300 * 1000,
           isSignUp: isRegister,
           failedAttempts: 0,
         });
+        console.log("entry=======", entry);
         await entry.save();
-        if (isRegister == true) {
+        if (isRegister == false) {
           let checkAlradyInDatabase = await global.models.GLOBAL.PARTIAL.findOne({
             // firstName: firstName,
             // fatherName: fatherName,
             // state: state,
             // IDTRcenter: IDTRcenter,
+            // email: email,
             phone: phone,
             // Registrationtype: Registrationtype,
           });
